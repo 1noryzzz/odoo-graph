@@ -33,6 +33,16 @@ pip install -e .
 
 ### 1) Dump 一次 registry
 
+**推荐方式：复用你现成的 `odoo.conf`**
+
+```bash
+odoo-graph dump -c odoo.conf -d odoo_demo --odoo-path ./odoo-17.0
+```
+
+`odoo-graph` 会从 `[options]` 读 `db_host / db_port / db_user / db_password / addons_path`，并把 `-c` 透传给 `odoo-bin`，所以 `data_dir / log_level / unoconv` 等其他选项也会被 Odoo 自己读入。`-d` 在命令行给的话会覆盖 conf 里的 `db_name`；不给就用 conf 里的。
+
+**无 conf 时的完整参数形式：**
+
 ```bash
 PGPASSWORD=odoo odoo-graph dump \
   -d odoo_demo \
@@ -40,6 +50,8 @@ PGPASSWORD=odoo odoo-graph dump \
   --addons-path ./odoo-17.0/addons-oabay \
   --db-user odoo --db-password odoo
 ```
+
+**CLI 优先级规则：** `命令行参数 > -c conf > 默认值`。比如 `-c odoo.conf --db-host foo` 会用 `foo`，不用 conf 里的 `db_host`。
 
 输出默认缓存到 `~/.cache/odoo-graph/<db>/`。包含 `nodes.jsonl` / `edges.jsonl` / `edges_resolved.jsonl` / `summary.json` / `meta.json`。
 

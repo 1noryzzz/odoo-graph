@@ -41,6 +41,7 @@ def dump(
     db_port: int = 5432,
     db_user: str = "odoo",
     db_password: Optional[str] = "odoo",
+    config_file: Optional[str] = None,
     out_dir: Optional[str] = None,
     python_exe: Optional[str] = None,
     extra_env: Optional[Dict[str, str]] = None,
@@ -53,6 +54,10 @@ def dump(
         addons_path: Optional extra addons dirs. The default Odoo `addons/`
             is always added if `odoo_path/addons` exists.
         db_host/db_port/db_user/db_password: Postgres connection.
+        config_file: Optional odoo.conf. When set, passed through to `odoo-bin
+            -c <file>` so Odoo itself also reads all other options
+            (data_dir, log settings, unoconv, etc.). The caller should have
+            already merged its connection/addons values into the args above.
         out_dir: Where to write JSONL. Defaults to ~/.cache/odoo-graph/<db>/.
         python_exe: Python interpreter to use (defaults to current sys.executable).
         extra_env: Extra env vars passed to subprocess.
@@ -77,13 +82,21 @@ def dump(
         addons_list.append(str(default_addons))
     if addons_path:
         for p in addons_path:
-            addons_list.append(_abs_str(p))
+            absp = _abs_str(p)
+            if absp not in addons_list:
+                addons_list.append(absp)
 
     py = python_exe or sys.executable
     cmd = [
         py,
         os.path.join(odoo_root, "odoo-bin"),
         "shell",
+    ]
+    if config_file:
+        # Let odoo-bin read the same file too. CLI flags below will override
+        # anything in the conf, so explicit values stay authoritative.
+        cmd += ["-c", _abs_str(config_file)]
+    cmd += [
         "-d", database,
         "--db_host", db_host,
         "--db_port", str(db_port),
