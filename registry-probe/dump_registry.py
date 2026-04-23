@@ -24,7 +24,8 @@ import inspect
 import os
 from collections import defaultdict
 
-OUT_DIR = os.environ.get("REGISTRY_DUMP_DIR", "/home/inoryzzz/repos/odoo-relationship-analysis/registry-probe/out")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+OUT_DIR = os.environ.get("REGISTRY_DUMP_DIR", f"{current_dir}/out")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 

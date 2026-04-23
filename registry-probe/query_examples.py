@@ -13,7 +13,8 @@ import json
 import os
 from collections import defaultdict
 
-OUT = os.environ.get("REGISTRY_DUMP_DIR", "/workspace/registry-probe/out")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+OUT = os.environ.get("REGISTRY_DUMP_DIR", f"{current_dir}/out")
 
 def iter_jsonl(name):
     with open(os.path.join(OUT, name), "r", encoding="utf-8") as f:
