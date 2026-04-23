@@ -1,0 +1,5 @@
+.venv/
+odoo-17.0/
+*.pyc
+__pycache__/
+/registry-probe/out/
