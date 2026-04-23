@@ -12,7 +12,7 @@ import json
 import os
 from collections import defaultdict
 
-OUT = os.environ.get("REGISTRY_DUMP_DIR", "/workspace/registry-probe/out")
+OUT = os.environ.get("REGISTRY_DUMP_DIR", "/home/inoryzzz/repos/odoo-relationship-analysis/registry-probe/out")
 
 def iter_jsonl(name):
     with open(os.path.join(OUT, name), "r", encoding="utf-8") as f:
