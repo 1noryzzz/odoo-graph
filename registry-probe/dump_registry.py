@@ -24,8 +24,12 @@ import inspect
 import os
 from collections import defaultdict
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-OUT_DIR = os.environ.get("REGISTRY_DUMP_DIR", f"{current_dir}/out")
+try:
+    _here = os.path.dirname(os.path.abspath(__file__))
+except NameError:
+    # Running via `odoo-bin shell < dump_registry.py` where __file__ is unset
+    _here = os.path.join(os.getcwd(), "registry-probe")
+OUT_DIR = os.environ.get("REGISTRY_DUMP_DIR", os.path.join(_here, "out"))
 os.makedirs(OUT_DIR, exist_ok=True)
 
 
@@ -190,6 +194,15 @@ for model_name, ModelCls in sorted(registry.models.items()):
         summary["fields"] += 1
         f_module = getattr(field, "_module", None)
         f_modules = list(getattr(field, "_modules", ()) or ())
+        # _inherits delegate: field is auto-added with _module=None. Attribute it to the
+        # source field's module instead, so origin tracking stays meaningful.
+        is_inherited = bool(getattr(field, "inherited", False))
+        inh_field = getattr(field, "inherited_field", None)
+        if is_inherited and inh_field is not None:
+            if not f_module and getattr(inh_field, "_module", None):
+                f_module = inh_field._module
+            if not f_modules and getattr(inh_field, "_modules", None):
+                f_modules = list(inh_field._modules)
         if len(f_modules) > 1:
             summary["fields_multi_module"] += 1
         if field.compute:
@@ -198,6 +211,17 @@ for model_name, ModelCls in sorted(registry.models.items()):
             summary["fields_related"] += 1
         if field.inverse:
             summary["fields_inverse"] += 1
+        if is_inherited:
+            summary["fields_inherited_delegate"] = summary.get("fields_inherited_delegate", 0) + 1
+
+        # field.related is a dotted string; split it, never list()-coerce the string.
+        related_val = getattr(field, "related", None)
+        if isinstance(related_val, str):
+            related_path = related_val.split(".")
+        elif related_val:
+            related_path = list(related_val)
+        else:
+            related_path = None
 
         field_id = f"field::{model_name}.{fname}"
         emit_node({
@@ -210,12 +234,14 @@ for model_name, ModelCls in sorted(registry.models.items()):
             "readonly": bool(field.readonly),
             "required": bool(field.required),
             "compute": getattr(field, "compute", None) if isinstance(field.compute, str) else (field.compute.__name__ if field.compute else None),
-            "related": list(getattr(field, "related", ()) or ()) if field.related else None,
+            "related": related_path,
             "inverse": field.inverse.__name__ if field.inverse and not isinstance(field.inverse, str) else field.inverse,
             "comodel_name": getattr(field, "comodel_name", None),
             "inverse_name": getattr(field, "inverse_name", None),
             "module": f_module,
             "modules": f_modules,
+            "inherited": is_inherited,
+            "inherited_from_model": getattr(inh_field, "model_name", None) if inh_field is not None else None,
             "depends_context": list(registry.field_depends_context.get(field, ()) or ()),
         })
 
@@ -272,8 +298,13 @@ for model_name, ModelCls in sorted(registry.models.items()):
                     "dst": meth_id,
                 })
 
-        # depends_field edges - computed depend paths are on the owning model
+        # depends_field edges - dedup because get_depends() may concat duplicates
+        # across the MRO compute funcs (semantically equivalent).
+        seen_paths = set()
         for dep_path in registry.field_depends.get(field, ()) or ():
+            if dep_path in seen_paths:
+                continue
+            seen_paths.add(dep_path)
             emit_edge({
                 "kind": "FIELD_DEPENDS_ON_PATH",
                 "src": field_id,
