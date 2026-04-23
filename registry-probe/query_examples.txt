@@ -1,0 +1,118 @@
+Resolved 8544 FIELD_DEPENDS_ON_FIELD edges; 38 unresolved
+
+Lineage incoming to sale.order.amount_total:
+
+Downstream recomputes if sale.order.line.price_subtotal changes:
+
+Unresolved sample (first 5):
+  {'src': 'field::avatar.mixin.avatar_1920', 'path': 'name', 'failed_at': 'avatar.mixin.name'}
+  {'src': 'field::avatar.mixin.avatar_1024', 'path': 'name', 'failed_at': 'avatar.mixin.name'}
+  {'src': 'field::avatar.mixin.avatar_512', 'path': 'name', 'failed_at': 'avatar.mixin.name'}
+  {'src': 'field::avatar.mixin.avatar_256', 'path': 'name', 'failed_at': 'avatar.mixin.name'}
+  {'src': 'field::avatar.mixin.avatar_128', 'path': 'name', 'failed_at': 'avatar.mixin.name'}
+Total unresolved paths: 38
+
+======================================================================
+Q1: Which models are extended by >=3 modules? (top 15 by breadth)
+======================================================================
+  [ 6] res.partner                              ['base', 'ifs_hr', 'mail', 'sms', 'website', 'website_partner']
+  [ 4] ifs.partner.merchant                     ['ifs_gar_contract', 'ifs_gar_partner_relationship', 'ifs_gar_risk_manage', 'ifs_partner']
+  [ 3] sms.sms                                  ['galaxy_aliyun', 'galaxy_common', 'sms']
+  [ 3] ifs.partner.supplier                     ['ifs_gar_contract', 'ifs_gar_partner_relationship', 'ifs_partner']
+  [ 3] ifs.partner.factor                       ['ifs_gar_invite', 'ifs_gar_partner_relationship', 'ifs_partner']
+
+======================================================================
+Q2: res.partner field origins by module (top 20 with multi-module)
+======================================================================
+  [2] vat                            origin=mail               modules=['mail', 'base']  type=char
+  [2] user_id                        origin=mail               modules=['mail', 'base']  type=many2one  compute
+  [2] type                           origin=wechat             modules=['base', 'wechat']  type=selection
+  [2] phone                          origin=mail               modules=['mail', 'base']  type=char
+  [2] parent_id                      origin=mail               modules=['mail', 'base']  type=many2one
+  [2] name                           origin=mail               modules=['mail', 'base']  type=char
+  [2] email                          origin=mail               modules=['mail', 'base']  type=char
+  [2] area_id                        origin=wechat             modules=['ifs_base', 'wechat']  type=many2one
+  [1] zip                            origin=base               modules=['base']  type=char
+  [1] write_uid                      origin=base               modules=['base']  type=many2one
+  [1] write_date                     origin=base               modules=['base']  type=datetime
+  [1] work_external_user_ids         origin=wechat             modules=['wechat']  type=one2many
+  [1] website_url                    origin=website            modules=['website']  type=char  compute
+  [1] website_short_description      origin=website_partner    modules=['website_partner']  type=text
+  [1] website_published              origin=website            modules=['website']  type=boolean  compute
+  [1] website_meta_title             origin=website            modules=['website']  type=char
+  [1] website_meta_og_img            origin=website            modules=['website']  type=char
+  [1] website_meta_keywords          origin=website            modules=['website']  type=char
+  [1] website_meta_description       origin=website            modules=['website']  type=text
+  [1] website_message_ids            origin=portal             modules=['portal']  type=one2many
+
+======================================================================
+Q3: If res.partner.name changes, which stored/compute fields depend on it?
+======================================================================
+  discuss.channel.member.display_name  depends on 'partner_id.name'  (root=discuss.channel.member, owner-module=mail)
+  mail.followers.name  depends on 'partner_id.name'  (root=mail.followers, owner-module=mail)
+  mail.resend.partner.name  depends on 'partner_id.name'  (root=mail.resend.partner, owner-module=mail)
+  res.company.name  depends on 'partner_id.name'  (root=res.company, owner-module=base)
+  res.partner.avatar_1024  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_1024  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_128  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_128  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_1920  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_1920  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_256  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_256  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_512  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.avatar_512  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.commercial_company_name  depends on 'commercial_partner_id.name'  (root=res.partner, owner-module=base)
+  res.partner.complete_name  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.complete_name  depends on 'parent_id.name'  (root=res.partner, owner-module=base)
+  res.partner.display_name  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.email_formatted  depends on 'name'  (root=res.partner, owner-module=base)
+  res.partner.parent_name  depends on 'parent_id.name'  (root=res.partner, owner-module=base)
+  res.partner.bank.acc_holder_name  depends on 'partner_id.name'  (root=res.partner.bank, owner-module=base)
+  res.users.name  depends on 'partner_id.name'  (root=res.users, owner-module=base)
+  website.visitor.name  depends on 'partner_id.name'  (root=website.visitor, owner-module=website)
+  wechat.offiaccount.user.name  depends on 'partner_id.name'  (root=wechat.offiaccount.user, owner-module=wechat)
+  wechat.user.mixin.name  depends on 'partner_id.name'  (root=wechat.user.mixin, owner-module=wechat)
+  ... total 27 dependent paths
+
+======================================================================
+Q4: Most-overridden methods (chain length >= 3) — top 15
+======================================================================
+  depth=10  res.users.write  addons=['hr', 'auth_totp_mail', 'auth_signup', 'mail', 'mail', 'resource', 'base', 'base', 'base']
+  depth=10  ir.http.session_info  addons=['galaxy_tdesign', 'partner_autocomplete', 'mail_bot', 'mail', 'google_recaptcha', 'web_tour', 'bus', 'base_setup', 'auth_totp', 'web']
+  depth= 9  res.users.create  addons=['digest', 'hr', 'auth_signup', 'mail', 'mail', 'base', 'base', 'base']
+  depth= 6  res.partner.write  addons=['snailmail', 'base', 'mail', 'mail', 'website']
+  depth= 6  ir.http._pre_dispatch  addons=['website', 'auth_signup', 'web_editor', 'http_routing', 'web', 'base']
+  depth= 6  hr.employee.write  addons=['ifs_hr', 'hr_skills', 'hr', 'mail', 'mail']
+  depth= 6  hr.employee.create  addons=['ifs_hr', 'hr_skills', 'hr', 'mail', 'resource']
+  depth= 5  res.users.authenticate  addons=['ifs_hr', 'wechat', 'website', 'auth_signup', 'base']
+  depth= 5  res.groups.write  addons=['mail', 'base', 'base', 'base']
+  depth= 5  res.company.create  addons=['partner_autocomplete', 'resource', 'web', 'base']
+  depth= 5  ir.qweb.field.contact.attributes  addons=['web_editor', 'web_editor', 'website_blog', 'web_editor', 'base']
+  depth= 5  ir.http.get_frontend_session_info  addons=['website', 'google_recaptcha', 'http_routing', 'bus', 'web']
+  depth= 5  ir.actions.server._get_eval_context  addons=['galaxy_external_api', 'website', 'mail', 'base', 'base']
+  depth= 5  ifs.work.position.write  addons=['ifs_partner_hr', 'ifs_hr', 'mail', 'mail']
+  depth= 5  hr.employee.unlink  addons=['ifs_hr', 'hr', 'mail', 'mail']
+
+======================================================================
+Q5: Fields extended by multiple modules (conflict-watch) — top 15
+======================================================================
+  [4] website.page.type origin=None modules=['mail', 'web_hierarchy', 'website', 'base']
+  [4] website.controller.page.type origin=None modules=['mail', 'web_hierarchy', 'website', 'base']
+  [4] oa.callback.action.state origin=None modules=['mail', 'base', 'sms', 'oa_integrated']
+  [4] ifs.gar.entry.supplier.zip origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.website_id origin=None modules=['ifs_base', 'ifs_gar_invite', 'website', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.website origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.vat origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.uses_default_logo origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.user_ids origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.street2 origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.street origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.state_id origin=None modules=['ifs_base', 'ifs_gar_invite', 'base', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.social_youtube origin=None modules=['ifs_base', 'ifs_gar_invite', 'social_media', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.social_twitter origin=None modules=['ifs_base', 'ifs_gar_invite', 'social_media', 'ifs_gar_entry']
+  [4] ifs.gar.entry.supplier.social_tiktok origin=None modules=['ifs_base', 'ifs_gar_invite', 'social_media', 'ifs_gar_entry']
+
+======================================================================
+Q6: PRD example check — pick a compute field with paths crossing modules
+======================================================================
