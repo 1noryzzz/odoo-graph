@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from . import __version__
+from .config import ConfigValues, load_config, merge
 from .dump import DumpError, _default_cache_dir, dump as dump_registry
 from .formatters import FORMATS, emit
 from .graph import OdooGraph, load_graph
@@ -51,15 +52,47 @@ def _load(args: argparse.Namespace) -> OdooGraph:
 # ---------- subcommands ----------------------------------------------------
 
 def cmd_dump(args: argparse.Namespace) -> int:
+    # Build CLI values first, then fold in conf values so explicit flags win.
+    cli_vals = ConfigValues(
+        db_host=args.db_host,
+        db_port=args.db_port,
+        db_user=args.db_user,
+        db_password=args.db_password,
+        db_name=args.database,
+        addons_path=list(args.addons_path or []),
+    )
+    conf_vals = ConfigValues()
+    if args.config:
+        try:
+            conf_vals = load_config(args.config)
+        except FileNotFoundError as exc:
+            print(f"[odoo-graph] {exc}", file=sys.stderr)
+            return 1
+        print(
+            f"[odoo-graph] loaded config: {conf_vals.source_path}",
+            file=sys.stderr,
+        )
+
+    effective = merge(cli_vals, conf_vals)
+    database = effective.db_name
+    if not database:
+        print(
+            "[odoo-graph] database name required: pass -d or set db_name in the "
+            "config file",
+            file=sys.stderr,
+        )
+        return 2
+
     try:
         result = dump_registry(
-            database=args.database,
+            database=database,
             odoo_path=args.odoo_path,
-            addons_path=args.addons_path or None,
-            db_host=args.db_host,
-            db_port=args.db_port,
-            db_user=args.db_user,
-            db_password=args.db_password,
+            addons_path=effective.addons_path or None,
+            db_host=effective.db_host or "127.0.0.1",
+            db_port=effective.db_port or 5432,
+            db_user=effective.db_user or "odoo",
+            db_password=effective.db_password,
+            config_file=args.config,
             out_dir=args.out_dir,
         )
     except DumpError as exc:
@@ -149,16 +182,30 @@ def build_parser() -> argparse.ArgumentParser:
 
     # dump
     pd = sub.add_parser("dump", help="Run Odoo and dump the registry graph.")
-    pd.add_argument("-d", "--database", required=True, help="Odoo database name")
+    pd.add_argument(
+        "-c", "--config", default=os.environ.get("ODOO_RC"),
+        help="Path to an Odoo config file (odoo.conf / ~/.odoorc). "
+             "Provides defaults for db_host/db_port/db_user/db_password/"
+             "addons_path. Explicit CLI flags override conf values. "
+             "The file is also passed through to `odoo-bin -c` so Odoo "
+             "reads its other options (data_dir, log settings, ...).",
+    )
+    pd.add_argument("-d", "--database", default=None,
+                    help="Odoo database name (or read from conf 'db_name')")
     pd.add_argument("--odoo-path", default=os.environ.get("ODOO_PATH", "./odoo-17.0"),
                     help="Path to Odoo source tree (contains odoo-bin). "
                          "Default: $ODOO_PATH or ./odoo-17.0")
     pd.add_argument("--addons-path", action="append", default=[],
-                    help="Extra addons dir (repeatable)")
-    pd.add_argument("--db-host", default="127.0.0.1")
-    pd.add_argument("--db-port", type=int, default=5432)
-    pd.add_argument("--db-user", "-r", default="odoo")
-    pd.add_argument("--db-password", "-w", default=os.environ.get("PGPASSWORD", "odoo"))
+                    help="Extra addons dir (repeatable). Merged with "
+                         "addons_path from -c.")
+    pd.add_argument("--db-host", default=None,
+                    help="Postgres host (default from conf or 127.0.0.1)")
+    pd.add_argument("--db-port", type=int, default=None,
+                    help="Postgres port (default from conf or 5432)")
+    pd.add_argument("--db-user", "-r", default=None,
+                    help="Postgres user (default from conf or 'odoo')")
+    pd.add_argument("--db-password", "-w", default=os.environ.get("PGPASSWORD"),
+                    help="Postgres password (default from conf or $PGPASSWORD)")
     pd.add_argument("--out-dir", "-o", default=None,
                     help="Defaults to ~/.cache/odoo-graph/<db>/")
     pd.add_argument("--format", "-f", choices=FORMATS, default="human")
