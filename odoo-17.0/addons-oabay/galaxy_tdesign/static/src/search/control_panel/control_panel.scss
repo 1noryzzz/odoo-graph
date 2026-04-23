@@ -1,0 +1,22 @@
+.o_control_panel {
+    .o_cp_bottom_right {
+        @include media-breakpoint-up(md) {
+            column-gap: unset !important;
+        }
+    }
+}
+
+.item_childs_expand {
+    position: absolute;
+    z-index: 1000;
+    background-color: #FFFFFF;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 10px 10px;
+    margin: 0px;
+    font-size: 1.08333333rem;
+    color: #495057;
+    text-align: left;
+    line-height: 25px;
+    box-shadow: 0 1rem 1.1rem rgba(0, 0, 0, 0.1);
+}

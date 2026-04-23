@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="galaxy_tdesign.signature_form" name="手写签名">
+    <t t-set="signature_form_props" t-value="{
+        'callUrl': call_url,
+        'defaultName': default_name,
+        'mode': mode,
+        'sendLabel': send_label,
+        'signatureRatio': signature_ratio,
+        'signatureType': signature_type,
+        'fontColor': font_color
+    }"/>
+    <owl-component name="galaxy_tdesign.signature_form" t-att-props="json.dumps(signature_form_props)"/>
+  </template>
+</odoo>

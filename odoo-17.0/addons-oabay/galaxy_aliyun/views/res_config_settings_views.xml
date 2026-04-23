@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.galaxy.aliyun</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="88"/>
+    <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//setting[@name='galaxy_aliyun']" position="after">
+        <setting string="阿里云市场参数" invisible="not module_galaxy_aliyun">
+          <div class="mt8">
+            <label class="col-lg-3 o_light_label" for="aliyun_access_key_id"/>
+            <field name="aliyun_access_key_id"/>
+          </div>
+          <div class="mt8">
+            <label class="col-lg-3 o_light_label" for="aliyun_access_key_secret" />
+            <field name="aliyun_access_key_secret"/>
+          </div>
+        </setting>
+        <setting string="OSS设置" invisible="not module_galaxy_aliyun">
+          <div class="d-flex">
+            <field name="enable_aliyun_oss" class="ml16"/>
+            <label for="enable_aliyun_oss" class="o_light_label"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_region_id"/>
+            <field name="aliyun_oss_region_id"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_vod_region_id"/>
+            <field name="aliyun_vod_region_id"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_public_bucket" string="Bucket(pub)"/>
+            <field name="aliyun_oss_public_bucket"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_bucket" />
+            <field name="aliyun_oss_bucket"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_vod_bucket" />
+            <field name="aliyun_vod_bucket"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_public_endpoint" string="Endpoint(pub)" />
+            <field name="aliyun_oss_public_endpoint"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_public_endpoint_internal" string="Endpoint(Int)" />
+            <field name="aliyun_oss_public_endpoint_internal"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_endpoint" />
+            <field name="aliyun_oss_endpoint"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_endpoint_internal" string="Endpoint(Int)"/>
+            <field name="aliyun_oss_endpoint_internal" />
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_vod_endpoint" />
+            <field name="aliyun_vod_endpoint"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_role_arn"/>
+            <field name="aliyun_oss_role_arn" />
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_oss_max_per_batch"/>
+            <field name="aliyun_oss_max_per_batch" />
+          </div>
+        </setting>
+        <setting string="短信设置" invisible="not module_galaxy_aliyun">
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_sms_endpoint" />
+            <field name="aliyun_sms_endpoint"/>
+          </div>
+        </setting>
+        <setting string="阿里云市场设置" invisible="not module_galaxy_aliyun">
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_market_app_key" />
+            <field name="aliyun_market_app_key"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_market_app_secret" />
+            <field name="aliyun_market_app_secret"/>
+          </div>
+          <div class="row">
+            <label class="col-lg-3 o_light_label" for="aliyun_market_app_code" />
+            <field name="aliyun_market_app_code"/>
+          </div>
+        </setting>
+      </xpath>
+    </field>
+  </record>
+</odoo>

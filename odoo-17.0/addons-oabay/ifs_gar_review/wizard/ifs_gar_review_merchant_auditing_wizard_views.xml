@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_review_merchant_auditing_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.review.merchant.auditing.wizard.view.form</field>
+    <field name="model">ifs.gar.review.merchant.auditing.wizard</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <sheet>
+          <field name="entry_id" invisible="1" />
+          <field name="user_company_id" invisible="1"/>
+          <group string="商业保理风控评估意见" col="2">
+            <group>
+              <field name="entry_date"/>
+              <field name="factor_approval_opinion_output" widget="radio" options="{'horizontal': true}"/>
+              <field name="factor_business_risk" widget="radio" options="{'horizontal': true}"/>
+              <field name="factor_guarantor_name_risk" widget="radio" options="{'horizontal': true}"/>
+            </group>
+            <group>
+              <field name="factor_approval_user_id" options="{'no_create': true, 'no_open': true}" domain="[('company_id', '=', user_company_id)]"/>
+              <field name="factor_business_base" widget="radio" options="{'horizontal': true}"/>
+              <field name="factor_legal_person_risk" widget="radio" options="{'horizontal': true}"/>
+              <field name="factor_other_risk" widget="radio" options="{'horizontal': true}"/>
+            </group>
+            <group colspan="2">
+              <field name="factor_approval_opinion"/>
+            </group>
+          </group>
+          <footer>
+            <button name="action_save" type="object" class="btn-primary" string="暂存"/>
+            <button name="action_confirm" type="object" class="btn-primary" string="审核通过"/>
+            <button class="btn-secondary" special="cancel" string="取消"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

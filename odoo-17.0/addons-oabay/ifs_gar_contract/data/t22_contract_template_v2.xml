@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="T22_contract_v2" model="ifs.contract.template">
+      <field name="name">最高额不可撤销担保书_V2</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">T22</field>
+      <field name="need_partner">two</field>
+      <field name="tag_ids" eval="[(4, ref('ifs_contract.ifs_contract_tag_gjxy'))]"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[{"chaptes": [{"offsetX": 0.30,"offsetY": 0.67}],"page": -1}]</field>
+      <field name="body_html" type="html">
+        <div>
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_content main_content main_content_ol_font">
+            <div class="word_doc_title">最高额不可撤销担保书</div>
+            <div class="word_doc_sub_title">
+              <t t-out="params.get('name')" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_sub_title" style="text-decoration:none;">与</div>
+            <div class="word_doc_sub_title">
+              <t t-out="params.get('factor_name')" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_sub_title" style="margin-top:100px; text-decoration:none;">合同编号</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.code" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">
+                T1720220815001</t>
+            </div>
+            <div class="word_doc_content_mini" style="margin-top: 280px;margin-bottom:150px;">合同版本 - T22</div>
+            <div class="word_content_title" style="margin-top:70px">致：亚洲保理（深圳）有限公司</div>
+            <p>鉴于贵机构和              <t t-out="params.get('name')" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>（“买方”）签订或即将签订《买方账款转让最高额子额度合同》（“《子额度合同》”），
+            同意在子额度合同约定的期间（以下简称“额度期间”，即债权确定期间）内，向买方提供总额为人民币              <t t-out="params.get('mer_account_compensation_limit')">1111</t> 元的买方账款代偿额度（以下简称“代偿额度”）。
+            </p>
+            <p>本人同意出具本担保书，自愿为买方在《子额度合同》项下所欠贵机构的所有债务承担连带保证责任。具体担保事项如下∶</p>
+            <div class="word_content_title">一、保证范围</div>
+            <ol>
+              <li>本保证人提供保证担保的范围为贵机构根据《子额度合同》在代偿额度内为买方提供账款代偿及其他融资款项之和（最高限额为人民币                <t t-out="params.get('ceiling')">9999</t>
+                元整），以及相关违约金、滞纳金、保理费用、实现担保权和债权的费用和其他相关费用。包括但不限于∶                <br />
+                1) 《子额度合同》项下具体业务中尚未清偿的余额部分；<br />
+                2) 贵机构受让的对买方账款债权及相应的违约金、滞纳金、赔付金及相关保理费用。<br />
+                3) 贵机构为买方提供保理融资而产生的买方应偿还的融资款本金及利息、罚息、复息、违约金、滞纳金及相关保理费用。<br />
+                4) 贵机构实现担保权和债权而发生的费用（包括但不限于诉讼/仲裁费、律师费、公告费、送达费、差旅费等）及其他一切相关费用。<br />
+                5) 买方对《子额度合同》项下贵机构及保理业务参与方所负的全部债务。<br />
+              </li>
+              <li>就循环额度而言，如贵机构向买方提供的保理服务或其他融资本金余额超过本最高额度金额，则本保证人对超出部分的金额不承担保证责任，仅就最高额度金额内的本金余额部分及其利息，罚息. 复息、违约金、滞纳金、赔付金、实现担保权和债权的费用和其他相关费用等承担连带保证责任。</li>
+            </ol>
+            <div class="word_content_title">二、保证方式 </div>
+            <ol>
+              <li>本保证人确认对保证范围内买方的所有债务承担经济上、法律上的连带责任。如买方未按具体业务文本约定及时清偿应付款项本息、违约金、滞纳金及相关费用，或具体业务文本所约定的任何一项违约事件发生时，贵机构有权直接向本保证人追索，而无须先行向买方或其他担保人追索或诉讼/仲裁。
+              </li>
+              <li>本保证人同意在收到贵机构书面索偿通知后五日内，如数偿还买方以上全部债务，而无须贵机构出具任何证明及其他文件。除非发生明显及重大错误，本保证人接受贵机构索偿要求的款项金额。 </li>
+              <li>贵机构有权采取认为适当的方式，包括但不限于邮寄、短信、微信、专人送达、公告等方式对本保证人进行催收。</li>
+            </ol>
+            <div class="word_content_title">三、保证责任期间 </div>
+            <ol>
+              <li>本保证人的保证责任期间为自本担保书生效之日起至《子额度合同》项下贵机构受让的应收账款债权到期日或每笔代偿款、融资款到期日另加三年。</li>
+              <li>任一项具体额度展期，则保证期间延续至展期期间届满后另加三年止。</li>
+            </ol>
+            <div class="word_content_title">四、担保书独立性 </div>
+            <ol>
+              <li>
+                          本担保书是独立、持续有效、不可撤销和无条件的，不因《子额度合同》及各具体业务文本的无效而无效，不受买方与任何第三方签订的任何协议、文件的影响，也不因买方欺诈、重组、停业、解散、清算、破产、合并（兼并）、分立、改制、营业期限届满等任何变化而变化，不受贵机构给予买方任何时间上的宽限、延期或贵机构延缓行使追讨买方所欠款项的权利而受任何影响。
+              </li>
+              <li>
+                          在同时另有抵、质押担保或其他保证人的情况下，贵机构有权选择分别、先后或同时向各抵/质押人、保证人（含本保证人）主张担保权利。贵机构放弃、变更或解除抵、质押担保，或变更、解除其他保证人保证责任，或延迟向任意抵/质押人/其他保证人主张权利，均不影响本保证人在本担保书项下的担保责任，本保证人依然有义务按本担保书对买方所欠贵机构（含贵机构债权受让方）的全部债务承担连带保证责任。
+              </li>
+            </ol>
+            <div class="word_content_title">五、特别声明和保证</div>
+            <ol>
+              <li>本保证人具有完全民事行为能力，愿意用本保证人所有或依法有权处分的资产作担保，保证履行本担保书规定的义务。</li>
+              <li>本保证人出具本担保书已获得充分授权（如家庭财产共有人或上级部门/董事会等有权机构）。 </li>
+              <li>出具本担保书是本保证人的真实意思表示，不存在任何欺诈或胁迫的因素。</li>
+              <li>本担保书失效之前，本保证人全部对外担保总金额未超出本人拥有的资产或权益总额。</li>
+              <li>本保证人按贵机构要求，及时提供财务账册/报表、年度财务报告，并及时通报本保证人生产、经营和管理方面的重大决策和变化。</li>
+              <li>本保证人提供的财务资料和其他所有文件，均是真实合法的，本保证人的实际控制人、法定代表人或其他责任人对此负有不可推卸的法律责任。</li>
+              <li>本保证人的继承人或受让人均受本担保书全部条款的约束。非经贵机构书面同意，不会转让上述保证义务。</li>
+              <li>本保证人及时按贵机构要求提供配偶对担保的确认函件，并确保其签署真实有效。</li>
+              <li>本保证人未按本担保书清偿所担保的债务，贵机构有权委托其他金融机构冻结/扣划本保证人开立的任意账户资金，直至付清所有担保债务。不足部分贵机构有权继续向本保证人追索。</li>
+            </ol>
+            <div class="word_content_title">六、不视为弃权</div>
+            <p>
+                      在本担保书有效期间，贵机构对买方和本保证人的任何违约或延误行为施以任何宽容、宽限或延缓执行具体业务文件和本担保书内贵机构应享有的权益或权利，均不能损害、影响或限制贵机构依有关规定和约定作为债权人应享有的一切权益和权利，也不能视为贵机构放弃对现有或将来违约行为采取行动的权利。
+            </p>
+            <div class="word_content_title">七、转让</div>
+            <ol>
+              <li>无论最高额保证担保的债权是否确定，贵机构将《子额度合同》项下具体业务产生的债权全部转让给第三方的，最高额担保从权利均一并自动转让给债权受让人。</li>
+              <li>本担保书担保的债权确定后，贵机构转让部分债权的，本保证人担保从权利也部分随之转让，贵机构以未转让部分债权与受让人依各自债权金额按份享有对本保证人的担保权益。</li>
+              <li>
+                          本担保书担保的债权确定前，贵机构转让部分债权的，担保权益也部分随之转让，原最高额担保所担保的贵机构主债权最高额相应减少（即原最高额担保的贵机构主债权最高额扣减已转让部分债权金额），待贵机构未转让部分主债权确定后，贵机构以未转让部分债权与受让人按各自债权金额按份享有对本保证人的担保权益。
+              </li>
+            </ol>
+            <div class="word_content_title">八、其他约定事项 </div>
+            <ol>
+              <li>本保证人如变更提供贵机构的联系信息，应自变更日起五个工作日将变更后信息通知贵机构，否则贵机构有权按原联系信息送达，在发出后满七日或退件日（以较早者为准）视为送达日。本保证人自行承担因此可能产生的损失。
+              </li>
+              <li>本保证人确认，贵机构为买方办理具体业务的各项操作，以及贵机构涉及本担保书的各项操作，可由贵机构委托第三方处理并生成，签发或出具相关函件，该第三方的业务操作及函件视同贵机构行为，对双方具有约束力。</li>
+              <li>本担保书有效期内，本保证人如发生分立、合并（兼并）等情形，贵机构有权选择由变更后的机构承担或分别承担本担保书项下义务。</li>
+              <li>如担保债务非人民币时，贵机构有权直接将依据本担保书约定收回的款项按清偿时市场汇率进行购汇，用以清偿担保债务。具体业务文本项下非人民币债务金额的计算，以清偿时市场汇率（买入价）换算金额为准。 </li>
+              <li>因本担保书所产生的争议及纠纷，本保证人同意采取《子额度合同》所约定的纠纷解决方式解决。</li>
+              <li>本担保书在本保证人签字或盖章之日起生效，一式三份，贵机构、买方、本保证人各执一份，具有同等法律效力。未经贵机构同意，本担保书不可变更或撤销。 </li>
+
+            </ol>
+            <div class="word_content_title">特别提示 </div>
+            <p>本担保书经本人充分理解和协商情况下签署，所有条款已由贵机构向本担保人做出相应的说明，本担保人确认对本担保书条款的理解与贵机构完全一致。同时，贵机构已提请本担保人特别注意有关免除或限制贵机构责任、贵机构单方拥有某些权利、增加本担保人责任或限制本担保人权利的条款，并对其作全面、准确的理解。
+            </p>
+            <p>（以下无正文）</p>
+            <div class="word_doc_inner_title" style="margin-top:80px;">连带责任保证人（签字）：    <img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" height="80px" />
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:15px;">【附：身份证号：    <t t-out="params.get('card_no')"> NA </t> 
+                                                                        电话：    <t t-out="params.get('mobile')"> NA </t> 】
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">签署日期：    <t t-out="format_date(object.write_date)"/>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

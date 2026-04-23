@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="ifs_gar_entry_definition_business_info" model="ifs.gar.entry.definition">
+      <field name="name">企业经营信息配置</field>
+      <field name="params_definition">[{"name": "business_address", "type": "char", "string": "实际经营地址", "default": ""}, {"name": "category", "type": "selection", "string": "店铺类型", "default": false, "selection": [["55ef39ee379dfe26", "chain"], ["1f097730f3d0891b", "single"], ["ea5bb1b6cb81b512", "indep_chain"], ["0db46c6001a97acd", "clinic"], ["8d1d775df678fbab", "other"]], "view_in_cards": true}, {"name": "list_type", "type": "integer", "string": "名单类型", "default": 0, "view_in_cards": true}, {"name": "medical_insurance", "type": "boolean", "string": "医保资质", "default": false, "view_in_cards": true}, {"name": "source", "type": "integer", "string": "来源", "default": 0, "view_in_cards": true}, {"name": "list_reason", "type": "char", "string": "拉入名单原因", "default": "", "view_in_cards": true}]</field>
+    </record>
+
+    <record id="ifs_gar_entry_definition_contact_info" model="ifs.gar.entry.definition">
+      <field name="name">紧急联系人参数配置</field>
+      <field name="params_definition">[{"name": "name", "type": "char", "string": "紧急联系人", "default": ""}, {"name": "relationships", "type": "char", "string": "关系", "default": false}, {"name": "phone", "type": "char", "string": "联系电话", "default": ""}]</field>
+    </record>
+
+    <record id="ifs_gar_entry_definition_legal_info" model="ifs.gar.entry.definition">
+      <field name="name">法人信息部分参数</field>
+      <field name="params_definition">[{"name": "home_address", "type": "char", "string": "实际居住地", "default": "", "view_in_cards": true}, {"name": "phone", "type": "char", "string": "联系电话", "default": "", "view_in_cards": true}]</field>
+    </record>
+
+    <record id="ifs_gar_entry_definition_guarantor_info" model="ifs.gar.entry.definition">
+      <field name="name">担保人部分信息</field>
+      <field name="params_definition">[{"name": "guarantor_family_address", "type": "char", "string": "实际居住地", "default": ""}, {"name": "guarantor_is_married", "type": "boolean", "string": "是否婚配", "default": false}, {"name": "guarantor_phone", "type": "char", "string": "联系电话", "default": ""}, {"name": "guarantor_email", "type": "char", "string": "邮箱", "default": ""}, {"name": "guarantor_education", "type": "char", "string": "最高学历", "default": ""}]</field>
+    </record>
+  </data>
+</odoo>

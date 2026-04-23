@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_partner_funder_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.funder.view.form.inherited</field>
+    <field name="model">ifs.partner.funder</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_funder_view_form"/>
+    <field name="arch" type="xml">
+      <header position="inside">
+        <button name="create_or_update_sign" type="object" string="更新法人签名" class="btn-primary" />
+      </header>
+      <xpath expr="//group[@class='gp_legal']" position="after">
+        <group class="gp_legal_attach" string="附件">
+          <group colspan="2">
+            <field name="signature" widget="image" class="ifs-attachment-without-autoheight" />
+          </group>
+        </group>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

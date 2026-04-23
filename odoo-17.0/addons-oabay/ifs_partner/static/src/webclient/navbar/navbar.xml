@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+  <t t-inherit="web.NavBar" t-inherit-mode="extension" owl="1">
+    <xpath expr="//div[hasclass('sidebar_head')]" position="replace">
+      <div class="sidebar_head">
+        <div style="float: left;width: 100%;">
+          <t t-if="currentCompany.ifs_partner == 'factor'">保理方后台</t>
+          <t t-elif="currentCompany.ifs_partner == 'funder'">资金方后台</t>
+          <t t-elif="currentCompany.ifs_partner == 'franchisee'">事业合伙人后台</t>
+          <t t-elif="currentCompany.ifs_partner == 'merchant'">采购方后台</t>
+          <t t-elif="currentCompany.ifs_partner == 'supplier'">供应方后台</t>
+          <t t-elif="currentCompany.ifs_partner == 'guarantor'">担保方后台</t>
+          <t t-else="">管理后台</t>
+        </div>
+      </div>
+    </xpath>
+  </t>
+</templates>

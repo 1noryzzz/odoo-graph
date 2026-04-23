@@ -1,0 +1,39 @@
+.gar_container {
+    .gar_s_col {
+        display: flex;
+        justify-content: center;
+        margin-top: 120px;
+    }
+
+    .gar_title_body {
+        .gar_text_color {  
+            color: #D4D4D4;
+        }
+    }
+
+    .gar_card {
+        width: 300px;
+        text-align:  center;
+        border: 2px solid #002060;
+        overflow: unset;
+        
+        .gar_card_body {
+            background-color: transparent !important;
+            color: #002060;
+    
+            .gar_card_icon {
+                width: 146px;
+                height: 146px;
+                border-radius: 50%;
+                margin-top: -103px;
+                margin-bottom: 30px;
+            }
+    
+            .gar_card_title {
+                font-size: 25px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+

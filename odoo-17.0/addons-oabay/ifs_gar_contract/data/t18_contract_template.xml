@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="T18_contract" model="ifs.contract.template">
+      <field name="name">买方账款最高子额度合同</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">T18</field>
+      <field name="need_partner">three</field>
+      <field name="tag_ids" eval="[(4, ref('ifs_contract.ifs_contract_tag_gjxy'))]"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.25,"offsetY": 0.60}],"page": -1},
+        {"chaptes": [{"offsetX": 0.25,"offsetY": 0.75}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <div class="word_content main_content margin_left">
+            <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+            <div class="word_doc_title">买方账款最高子额度合同</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_sub_title" style="text-decoration:none;">与</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_sub_title" style="margin-top:100px; text-decoration:none;">合同编号</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.code" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">
+                  T1720220815001</t>
+            </div>
+            <div class="word_doc_content_mini" style="margin-top: 280px;">合同版本 - T18</div>
+            <div class="word_doc_inner_title" style="margin-top: 160px;">
+              甲方（买方/经销商）：            <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_inner_text" style="margin-top: 20px;">
+              <table style="text-indent: 0.25em;">
+                <tbody>
+                  <tr style="height:30px">
+                    <td width="120px">法定代表人：</td>
+                    <td width="200px">
+                      <t t-out="object.partner_one.legal_id.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">李波</t>
+                    </td>
+                    <td width="80px">承办人：</td>
+                    <td width="200px">
+                      <t t-out="object.partner_one.legal_name if object.partner_one.is_self_guarantee else object.partner_one.guarantor_name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">李波</t>
+                    </td>
+                    <td width="80px">电话：</td>
+                    <td width="200px">
+                      <t t-out="object.partner_one.phone" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">18888888888</t>
+                    </td>
+                  </tr>
+                  <tr style="height:30px">
+                    <td>E-mail：</td>
+                    <td>
+                      <t t-out="object.partner_one.email" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">lb@yzbfp.com</t>
+                    </td>
+                    <td>地址：</td>
+                    <td colspan="3">
+                      <t t-out="object.partner_one.business_address" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">京基100</t>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top: 20px;">
+              乙方（保理商）：            <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_inner_text" style="margin-top: 20px;">
+              <table style="text-indent: 0.25em;">
+                <tbody>
+                  <tr style="height:30px">
+                    <td width="120px">法定代表人：</td>
+                    <td width="200px">
+                      <t t-out="object.partner_two.legal_id.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXX</t>
+                    </td>
+                    <td width="80px">承办人：</td>
+                    <td width="200px">
+                      <t t-out="object.partner_two.principal_id.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXX</t>
+                    </td>
+                    <td width="80px">电话：</td>
+                    <td width="200px">
+                      <t t-out="object.partner_two.phone" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">18888888888</t>
+                    </td>
+                  </tr>
+                  <tr style="height:30px">
+                    <td>E-mail：</td>
+                    <td>
+                      <t t-out="object.partner_two.email" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">cloud@mail.oabay.com</t>
+                    </td>
+                    <td>地址：</td>
+                    <td colspan="3">
+                      <t t-out="object.partner_two.business_address" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">京基100</t>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="word_content_title">一、基础交易合同</div>
+              <div class="word_inner_content" style="padding-left: 2em;text-indent:0">
+                  卖方：              <t t-out="params.get('supplier_name')"></t>
+                <br />
+                  合同名称：购销合同              <br />
+                  货物名称/服务项目：              <t t-out="params.get('product_scope')"></t>
+                <br />
+                  基础交易总价款：人民币              <t t-out="params.get('approved_quota')"></t> 元              <br />
+                  签约日期：              <t t-out="params.get('supplier_sign_date')"></t>
+                <br />
+              </div>
+              <div class="word_content_title">二、买方账款最高额子额度</div>
+              <p>保理商为买方核定买方账款最高额子额度：买方账款最高额子额度=基础交易合同有效期内基础交易总价款。额度性质：可循环，不限次</p>
+              <div class="word_content_title">三、买方账款及其从权益</div>
+              <p>具体以《应付账款转让确认书》约定的金额及付款日期为准，且随新的交易而增加，随陆续付款而减少。</p>
+              <p>以下应收账款及其从属的一切权利和权益由卖方转为保理商。该等从权利和权益包括：1）逾期利息、违约金、赔偿金、滞纳金、抵债物等相关款项的权利；2）担保权益；3）
+                  保险权益；4）再次转让权；5）同意买方延期支付的权利；6）可变现的独立请求权；7）实现权利的费用追索权；8）采取法律允许的一切措施要求买方支付应收账款的权利；9）提起诉讼或仲裁的权利；10）
+                  参加清算或其他类似程序的权利；及11）法律法规或基础交易合同赋予卖方的其他从权利和补偿；12）应由债权人享有的各项权益。</p>
+              <div class="word_content_title">四、买方账款回款账户</div>
+              <div class="word_inner_content" style="padding-left: 2em;text-indent:0">
+                  开户名称：              <t t-out="object.partner_two.account_name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t>
+                <br />
+                  开户银行：              <t t-out="object.partner_two.deposit_bank" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t>
+                <br />
+                  银行账号：              <t t-out="object.partner_two.account_no" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t>
+                <br />
+                  根据实际的业务需求，保理商可以调整应收账款回款账户。              <br />
+              </div>
+              <div class="word_content_title">五、买方账款操作流程</div>
+              <ol>
+                <li>卖方在保理商核定的应收账款转让最高限额内，转让对买方的应收账款给保理商。</li>
+                <li>保理商受让卖方应收账款后，取得该单笔《应收账款转让确认书》确认的应收账款及一切权利和权益。</li>
+                <li>买方出具单笔《应付账款转让确认书》，或通过其他方式知道或应当知道卖方将应收账款转让给保理商，即表明买方知悉该应收账款债权人已由卖方转为保理商。</li>
+                <li>买方有义务及时配合保理商在央行征信中心动产融资统一登记公示系统办理应收账款质押登记、所有权保留登记、生产设备或原材料等保理登记，以及变更抵质押登记、变更保险受益人等各项手续。</li>
+                <li>买方知道或应当知道与卖方应收账款相关一切资料和信息（包括但不限于基础交易合同、证明应收账款的账目、对账单、通知书、催告函、电子数据记录和其他文件、凭证、应收账款付款人的确认证明及其他能确定权利义务的商业文件等）后3个工作日内无异议，则视为以上记载准确无误。
+                </li>
+                <li>买方按《应付账款转让确认书》确定的还款金额及期限付款，该期限内应付账款资金占用费、利息由保理商指定的第三方承担，买方无须承担。</li>
+                <li>买方逾期付款的，按当期应付款金额的2.5%/月支付违约金；逾期按逾期付款金额的万分之七每日支付滞纳金，直至还清。保理商有权为确保受让应收账款顺利回收，要求买方提供银行每月流水明细。</li>
+                <li>买方付清《应付账款转让确认书》的还款金额及相应的违约金、滞纳金等后，买方账款最高子额度自动恢复。保理商有权根据实际业务情况，对买方账款最高子额度进行冻结、下调或上调，无须再另行签署合同。</li>
+                <li>基础交易合同项下买方任何形式的支付（包括但不限于现金、汇款、票据和担保、抵债物等）和由此产生的附属权利，应付至保理商或其指定账户。</li>
+                <li>买方如对应付账款存在任何异议，包括但不限于货物、服务、出租资产或发票相关争议，以及针对应付账款提出（包括由于第三方对应付账款主张权利而引起）扣减、抗辩、抵销或反索赔，应自行与卖方妥善解决，不影响履行本合同约定义务。
+                </li>
+              </ol>
+              <div class="word_content_title">六、买方账款催收</div>
+              <ol>
+                <li>保理商对买方逾期付款经催告在合理期限内仍未付款的，或发生危及、损害或可能危及、损害保理商债权实现的其他事件（如买方停业、歇业，被吊销、被查封冻结，严重负债或亏损等），保理商有权要求买方偿还全部应付款项（无论是否已到期）。
+                </li>
+                <li>买方逾期付款，保理商有权自行或委托第三方采取下列措施中的一项或几项：                <br />
+                      （1）催告限期改正。<br />
+                      （2）电话、函件、上门催收。<br />
+                      （3）缩减或撤销额度、或缩短额度有效期。<br />
+                      （4）提前到期付款并支付逾期违约金、滞纳金及实现债权费用（如律师费、调查费等）。<br />
+                      （5）向合作方、上下游客户、媒体等予以通报，或公开催收。<br />
+                      （6）将买方违约信息提供给征信中心、征信机构、行业主管部门、行业协会及社会公众。<br />
+                      （7）诉讼仲裁、财产保全、强制执行、财产查控。<br />
+                      （8）法律法规或双方认可的其他救济措施。<br />
+                </li>
+                <li>买方付款不足以清偿全部债务时，应按保理商因追索债权而产生的费用（包括催告费、诉讼或仲裁费用、财产保全费、公告费、律师费、强制执行费）、违约金、滞纳金、保理融资款/买方账款本金的先后顺序进行清偿。
+                </li>
+                <li>买方如与他人合谋或有其他不诚信行为，或不配合保理商调查、催收等工作，由买方承担因此造成保理商的损失。</li>
+                </ol>
+                <div class="word_content_title">七、买方承诺</div>
+                <ol>
+                <li>每一笔基础交易真实、合法且有效，并确保：  <br />
+                                    （1）不存在正在或已预见将发生基础交易合同纠纷；<br />
+                                    （2）不存在无条件退货条款、附条件付款条款；<br />
+                                    （3）买卖双方不得擅自修改、解除基础交易合同或达成和解、调解、折让等；<br />
+                                    （4）不得以转让、赠与、设定担保权益等方式处分已转让的应收账款及其相关任何权益；<br />
+                                    （5）其他不利于保理商买方账款回款的情形。<br />
+                </li>
+                <li>每笔付款均符合法律法规并获得所有必要的同意、批准和授权，不存在任何法律上的瑕疵。买方接受货物、服务或设施以及支付应付账款，不以买方与其他任何第三人的合同、协议或付款条件等为条件。</li>
+                <li>
+                                    提供的所有资料真实、准确、完整、合法且有效。资料信息（如名称、地址、证照、有效期等）发生变更的，应在信息发生变更日起7日内通知保理商更新，并提供相关文件资料。保理商向买方预留联络方式发送资料成功，即视为送达。因不及时提供变更信息而引起的责任及产生的损失，由买方自行承担。
+                </li>
+                <li>积极及时配合提供保理商要求的授信协议、董事会决议、资信证明、连带担保、历史交易记录等，包括买方实际控制人、股东、董监高成员签署的连带保证责任书等。</li>
+                <li>
+                                    授权并配合保理商向信用信息基础数据库及其他有关部门如电信运营商、线上支付等有关单位、部门及个人，了解、查询买方及其关联方信用状况（如其财产、资信、联络信息及信用信息、地址位置信息等），留存其财产、资历等信息资料，获取征信报告，用于额度审批、应收款管理及催收等。
+                </li>
+                <li>同意并授权保理商向金融信用信息基础数据库及有关部门批准建立的信用数据库的征信机构报送其信用信息。</li>
+                <li>
+                                    提供的资料信息（如名称、地址、证照、有效期等）发生变更的，应在信息发生变更日起7日内通知保理商更新。保理商向买方预留联络方式发送资料成功，即视为送达至买方。因不及时提供变更信息而引起的责任及产生的损失，由买方自行承担。
+                </li>
+                <li>买卖双方已发生或可能发生任何基础交易合同项下的违约、不可抗力等任何已经或可能不利影响应付账款的情形，买方均应毫不迟延地书面通知保理商。</li>
+                <li>买方清偿前作任何形式的处分（包括但不限于资产处置或权利放弃、赠予、设定质押、设定信托等），应事前告知保理商，并确保不影响保理商的债权实现</li>
+                <li>买卖双方变更、撤销或解除基础交易合同，或和解、调解，应立即告知保理商且保障保理商权益不受减损。应付账款发生变化应及时告知保理商，经卖方及保理商确认后买方付款相应调整。</li>
+                <li>
+                                    买方发生或可能发生重大变化（包括但不限于实施承包、联营、公司制改造、股份制改造、企业出售、合并、分立、对外投资或担保、减资、清算执行、解散破产、重大涉诉、重大负债、重大资产处置、被冻结查封、被吊销撤销、停产歇业等），或涉及违法犯罪活动，应立即书面通知保理商，并采取保理商采取补救措施。
+                </li>
+                <li>买方如发生或可能发生任何基础交易合同项下的违约、不可抗力等任何已经或可能不利于买方账款清偿的情形，应3个工作日内告知保理商，并提供基础交易合同纠纷原因、纠纷金额、可能发生的结果等相关信息、案件资料等。
+                </li>
+                <li>买方向保理商提交的所有材料均是真实、准确和完整的，未隐瞒可能影响其财务状况和偿债能力的任何信息，不存在导致保理商对卖方及／或买方及／或基础交易做出错误或不完整判断的任何欺诈、故意或重大过失等情形。
+                </li>
+
+                </ol>
+                <div class="word_content_title">八、保理服务费</div>
+                <ol>
+                <li>保理服务费为对保理商所耗费的操作成本、人工成本及商业机会以及从事本合同项下应收账款管理、催收、付款保证的对价。</li>
+                <li>保理服务费由卖方支付，买方免于支付。</li>
+                </ol>
+                <div class="word_content_title">九、保密条款</div>
+                <p>
+                                一方应对另一方或其代表提供的有关本合同及本合同项下交易的所有信息予以保密，未经披露一方事先书面同意，另一方不得向无关第三方（不包括与本合同及本合同项下交易有关而需要获知以上信息的接收方的雇员、董事、监事、股东、外部顾问等）披露此类信息，非因履行本合同需要不得使用该等信息。
+                </p>
+                <div class="word_content_title">十、其他约定事项</div>
+                <ol>
+                <li>
+                                    本合同签署前，双方已仔细阅读本合同条款及全部附件，并对其中的全部约定予以充分注意。如有疑问一方有权要求另一方做出书面解释，直至重新修订达成一致。本合同一旦签署，即视为已充分注意并完全理解合同的全部条款和条件且自愿接受。
+                </li>
+                <li>
+                                    双方皆为合法设立且有效存续的民事主体，能够独立承担法律责任，并就本合同签署和履行，已根据章程或其他相关决策文件获得必要的批准，不违反与第三方约定及相关法律法规的规定、法院/仲裁机构裁判、相关主管部门行政命令，并同意接受全部条款与条件的约束。
+                </li>
+                <li>本合同未约定的，不影响或排除一方根据法律和其他合同享有的权利。一方对其任何权利的不行使、部分行使和/或延迟行使，均不构成对该权利的放弃或部分放弃，也不影响、阻止和妨碍其对该权利的继续行使或对其他权利的行使。
+                </li>
+                <li>
+                                    基础交易合同项下应由卖方承担的任何义务、承诺、保证、责任等并不随应收账款的转让而转让。保理商除受让卖方应收账款并按与卖方约定承担义务外，不承担基础交易合同项下任何义务或责任，基础交易合同产生的纠纷由买卖双方自行解决，保理商并无任何义务予以承担或代为履行。
+                </li>
+                <li>保理商依据买方信用及财务状况等综合判断，自主决定是否扩大、缩减或撤销买方账款最高限额，延长或缩短付款期限。</li>
+                <li>为便于应收账款实现，保理商有权将本合同下其已受让应收账款或其受益权全部或部分转让给其他第三方。</li>
+                <li>如本合同因国家法律、法规或政策原因致使本合同不可履行的，各方应秉持诚信原则并在最大限度尊重本合同约定的前提下修订有关条款。</li>
+                <li>本次合作引起或与本合作有关的所有争议协商不成的，提交深圳仲裁委员会依法裁决。</li>
+                <li>本合同自双方签署日起生效，一式两份，各执一份。本合同任何附件、修改或补充均构成本合同不可分割的组成部分，与本合同具有同等法律效力。</li>
+              </ol>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:150px;">
+                  买方（盖章）：<t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+                  法定代表人/授权代表（签字）：<img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:35px;">
+                  保理商（盖章）：<t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+                  法定代表人/授权代表（签字）：<img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:35px;">
+                  签署日期：<t t-out="format_date(object.write_date)" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">2022/08/15</t>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+    
+  </data>
+</odoo>

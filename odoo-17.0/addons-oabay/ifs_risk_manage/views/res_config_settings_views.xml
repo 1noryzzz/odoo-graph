@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.ifs.base</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="88"/>
+    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//setting[@name='ifs_external_api_setting_container']" position="after">
+        <setting name="ifs_risk_manage_bairong_setting_container" string="百融征信接口">
+          <div class="mt8">
+            <label class="col-lg-3" for="risk_manage_credits_update_frequency"/>
+            <field name="risk_manage_credits_update_frequency"/>
+          </div>
+          <div class="mt8">
+            <label class="col-lg-3" for="bairong_app_code"/>
+            <field name="bairong_app_code" placeholder="百融征信信息获取的APP Code"/>
+          </div>
+          <div class="mt8">
+            <label class="col-lg-3" for="bairong_app_key"/>
+            <field name="bairong_app_key" placeholder="百融征信信息获取的APP Key"/>
+          </div>
+          <div class="mt8">
+            <label class="col-lg-3" for="bairong_default_domain"/>
+            <field name="bairong_default_domain" placeholder="百融征信信息接口访问的域名"/>
+          </div>
+        </setting>
+      </xpath>
+    </field>
+  </record>
+</odoo>

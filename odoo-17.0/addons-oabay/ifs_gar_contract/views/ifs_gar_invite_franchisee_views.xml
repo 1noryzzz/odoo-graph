@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_invite_franchisee_view_form_contract_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.franchisee.view.form.contract.inherited</field>
+    <field name="model">ifs.gar.invite.franchisee</field>
+    <field name="inherit_id" ref="ifs_gar_invite.ifs_gar_invite_franchisee_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <field name="can_preview_p01" invisible="1"/>
+        <button name="draft_contract_p01" type="object" string="合同预览" class="btn-primary" 
+        invisible="not can_preview_p01"
+        groups="ifs_partner.group_ifs_partner_factor_user" />
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

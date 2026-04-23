@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_base_company_legal_idcard_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.base.company.legal.idcard.wizard.view.form</field>
+    <field name="model">ifs.base.company.legal.idcard.wizard</field>
+    <field name="priority">0</field>
+    <field name="arch" type="xml">
+      <form string="法人信息" class="main_step" js_class="partner_entry">
+        <field name="ifs_company_id" invisible="1" force_save="1"/>
+        <field name="current_step" invisible="1"/>
+        <header>
+          <div class="o_galaxy_step_buttons">
+            <div class="o_galaxy_steps">
+              <button string="上传正面照" step="1" current_step="current_step" class="o_galaxy_step"/>
+              <button string="上传背面照" step="2" current_step="current_step" class="o_galaxy_step"/>
+              <button string="确认信息" step="3" current_step="current_step" class="o_galaxy_step"/>
+            </div>
+          </div>
+        </header>
+        <sheet>
+          <div class="o_ifs_idcard" invisible="front_image">
+            <field name="front_image" widget="image" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_front_image.png'}"/>
+          </div>
+          <div class="o_ifs_idcard" invisible="not front_image or back_image">
+            <field name="back_image" widget="image" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_back_image.png'}"/>
+          </div>
+          <group invisible="not front_image or not back_image">
+            <group>
+              <field name="name" readonly="1" force_save="1"/>
+              <field name="idcard_no" readonly="1" force_save="1"/>
+              <field name="birthday" readonly="1" force_save="1"/>
+              <field name="start_date" readonly="1" force_save="1"/>
+            </group>
+            <group>
+              <field name="nationality" readonly="1" force_save="1"/>
+              <field name="gender" readonly="1" force_save="1"/>
+              <field name="authority" readonly="1" force_save="1"/>
+              <field name="end_date" readonly="1" force_save="1"/>
+            </group>
+            <group colspan="2">
+              <field name="address"/>
+            </group>
+            <group>
+              <field name="front_image" widget="image" readonly="1" force_save="1"/>
+            </group>
+            <group>
+              <field name="back_image" widget="image" readonly="1" force_save="1"/>
+            </group>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_confirm" type="object" string="确认" class="btn-primary" invisible="not front_image or not back_image" data-hotkey="c"/>
+          <button name="nosave_redo" type="object" string="重新上传" class="btn-secondary" data-hotkey="b"/>
+          <button string="稍后再填" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

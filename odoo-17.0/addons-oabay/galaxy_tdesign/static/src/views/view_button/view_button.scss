@@ -1,0 +1,88 @@
+.o_form_view {
+    .o_galaxy_step_buttons {
+        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 10px;
+
+        .o_galaxy_steps {
+            display: flex;
+            padding-bottom: 30px;
+
+            .o_galaxy_step {
+                display: inherit;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                flex-grow: 1;
+                opacity: 1;
+
+                span {
+                    display: inherit;
+                    justify-content: center;
+                }
+
+                .circle {
+                    width: 27px;
+                    height: 27px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    z-index: 10;
+                }
+
+                .background_dark_blue {
+                    background-color: #00367A;
+                }
+
+                .done::before {
+                    content: "";
+                    width: 15px;
+                    height: 8px;
+                    border: 3px solid #FFFFFF;
+                    border-right: none;
+                    border-top: none;
+                    transform: rotate(-45deg) translate(1px, -2px);
+                }
+
+                .current::before {
+                    content: "";
+                    width: 13px;
+                    height: 13px;
+                    border: 3px solid #FFFFFF;
+                    border-right: none;
+                    border-top: none;
+                    transform: rotate(225deg) translate(2px, -2px);
+                }
+
+                .background_gray {
+                    background-color: #C8C8C8;
+                }
+
+                .galaxy_step_text_container {
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    top: 35px;
+                    align-items: center;
+
+                    .galaxy_item_text {
+                        color: #616161;
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .o_galaxy_step:not(:first-child)::after {
+                content: "";
+                height: 1px;
+                width: 100%;
+                background-color: #E5E5E5;
+                position: absolute;
+                left: -50%;
+                z-index: 0;
+            }
+        }
+    }
+}

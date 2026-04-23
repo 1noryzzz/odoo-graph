@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="jzq_callback_code_event_sign" model="oa.callback.code">
+      <field name="name">君子签事件：签约</field>
+      <field name="value">sign.status</field>
+      <field name="value_type">sign</field>
+      <field name="value_from">jzq</field>
+    </record>
+
+    <record id="jzq_callback_code_event_organization" model="oa.callback.code">
+      <field name="name">君子签事件：企业实名认证</field>
+      <field name="value">organization.audit.status</field>
+      <field name="value_type">organization</field>
+      <field name="value_from">jzq</field>
+    </record>
+  </data>
+</odoo>

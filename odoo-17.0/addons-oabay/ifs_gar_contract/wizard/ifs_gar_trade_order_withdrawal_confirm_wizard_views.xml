@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_trade_order_withdrawal_confirm_wizard_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.withdrawal.confirm.wizard.view.from.inherited</field>
+    <field name="model">ifs.gar.trade.order.withdrawal.confirm.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_trade.ifs_gar_trade_order_withdrawal_confirm_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="attributes">
+        <attribute name="class">oe_form_configuration o_base_settings</attribute>
+        <attribute name="js_class">ifs_contract_sign</attribute>
+      </xpath>
+      <xpath expr="//div[hasclass('contract_title_suffix')]" position="inside">
+        <div>
+              发起日期          <field name="trade_create_date" class="clause-1" widget="date"/>
+        </div>
+        <div>
+              编号          <field name="seq_code" class="clause-1"/>
+        </div>
+      </xpath>
+      <xpath expr="//div[hasclass('word_inner_content')]" position="after">
+        <field name="sign_token_id" invisible="1"></field>
+        <field name="sign_url" invisible="1"></field>
+        <div class="doc_title">操作</div>
+        <div class="sign_container">
+          <div class="word_inner_content">
+            <div style="color:red;margin-top:40px">未签署确认</div>
+            <div>如确认上述无误，烦请拥权人              <br/>
+            扫描右边的二维码进行签约并提交</div>
+          </div>
+          <div class="qrcode">
+            <field name="sign_qrcode" widget="image" />
+          </div>
+        </div>
+      </xpath>
+      <button name="action_confirm" position="replace"></button>
+    </field>
+  </record>
+
+</odoo>

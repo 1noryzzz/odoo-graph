@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_payment_plan_withdraw_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.payment.plan.withdraw.wizard.view.form</field>
+    <field name="model">ifs.gar.payment.plan.withdraw.wizard</field>
+    <field name="arch" type="xml">
+      <form string="" class="o_galaxy_form_view">
+        <field name="payment_plan_id" invisible="1" force_save="1"/>
+        <field name="currency_id" invisible="1"/>
+        <field name="withdraw_state" invisible="1"></field>
+        <sheet>
+          <group string="银行账户信息">
+            <group>
+              <field name="account_name"/>
+              <field name="account_no"/>
+            </group>
+            <group>
+              <field name="deposit_bank"/>
+            </group>
+          </group>
+          <group>
+            <group colspan="2" class="o_two_line_cell">
+              <label for="withdraw_amount"/>
+              <div class="oe_inline" style="display: inline;">
+                <field name="withdraw_amount" class="oe_inline oe_monetary_lg"/>
+                <span class="oe_monetary_uppercase">（大写）：<field name="withdraw_amount_uppercase" class="oe_inline"/></span>
+              </div>
+            </group>
+            <group class="gp_remark" colspan="2">
+              <field name="is_readonly" invisible="1"></field>
+              <field name="remark" readonly="is_readonly" force_save="1"/>
+            </group>
+          </group>
+          <!-- <group string="财务联系人">
+            <group>
+              <field name="finance_name"/>
+            </group>
+            <group>
+              <field name="finance_phone"/>
+            </group>
+          </group> -->
+        </sheet>
+        <footer>
+          <button name="action_withdraw" type="object" string="立即还款" class="btn-primary" data-hotkey="c" invisible="withdraw_state != 'pending'"/>
+          <button name="action_withdraw_confirm" type="object" string="打款完成" class="btn-primary" data-hotkey="b" invisible="withdraw_state != 'waiting'"/>
+          <button string="取消" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

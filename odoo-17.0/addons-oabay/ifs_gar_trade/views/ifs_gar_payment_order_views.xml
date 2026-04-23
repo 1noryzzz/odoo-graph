@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_payment_order_view_search" model="ir.ui.view">
+    <field name="name">ifs.gar.payment.order.view.search</field>
+    <field name="model">ifs.gar.payment.order</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="seq_code"/>
+        <field name="merchant_id" />
+        <field name="pay_amount"/>
+        <field name="currency_id" groups="base.group_multi_currency"/>
+        <searchpanel>
+          <field name="state" icon="fa-folder-open" enable_counters="1"/>
+        </searchpanel>
+        <separator/>
+        <filter name="state_draft" string="草稿" domain="[('state', '=', 'draft')]" />
+        <filter name="state_freeze" string="冻结额度成功" domain="[('state', '=', 'freeze')]" />
+        <filter name="state_refund" string="退款成功" domain="[('state', '=', 'refund')]" />
+        <filter name="state_part_refund" string="部分退款" domain="[('state', '=', 'part_refund')]" />
+        <filter name="state_loan" string="资方用信成功" domain="[('state', '=', 'loan')]" />
+        <group>
+          <filter name="group_state" context="{'group_by': 'state'}" />
+          <filter name="group_merchant_code" context="{'group_by': 'merchant_code'}" />
+          <filter name="group_url_type" context="{'group_by': 'url_type'}" />
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_gar_payment_order_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.payment.order.view.tree</field>
+    <field name="model">ifs.gar.payment.order</field>
+    <field name="arch" type="xml">
+      <tree sample="1" decoration-muted="state in ['refund', 'part_refund']" decoration-bf="state == 'loan'" expand="1" create="0">
+        <field name="currency_id" column_invisible="1"/>
+        <field name="seq_code" string="支付订单号"/>
+        <field name="merchant_id"/>
+        <field name="pay_amount" string="支付金额" sum="总支付金额"/>
+        <field name="url_type" optional="show"/>
+        <field name="state" widget="badge"
+          decoration-info="state == 'draft'"
+          decoration-warning="state in ['freeze']"
+          decoration-success="state == 'loan'"
+          decoration-danger="state == 'refund'"
+          decoration-muted="state == 'part_refund'"/>
+        <field name="expiration" optional="hide"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_payment_order_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.payment.order.view.form</field>
+    <field name="model">ifs.gar.payment.order</field>
+    <field name="arch" type="xml">
+      <form create="0" edit="0" class="o_galaxy_form_view">
+        <field name="id" invisible="1"/>
+        <field name="seq_code" invisible="1"/>
+        <field name="state" invisible="1"/>
+        <field name="currency_id" invisible="1"/>
+        <header>
+          <field name="state" widget="statusbar" statusbar_visible="draft,freeze,refund,part_refund,loan"/>
+        </header>
+        <sheet>
+          <notebook>
+            <page name="payment_info" string="支付信息">
+              <group string="基础信息" class="o_group_label_lg">
+                <group>
+                  <field name="seq_code" string="支付订单号"/>
+                  <field name="merchant_id"/>
+                  <field name="pay_amount" string="支付金额"/>
+                  <field name="state" string="支付状态" widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'freeze'"
+                    decoration-success="state == 'loan'"
+                    decoration-danger="state == 'refund'"
+                    decoration-muted="state == 'part_refund'"/>
+                  <field name="url_type" string="url类型"/>
+                </group>
+                <group>
+                  <field name="token"/>
+                  <field name="token_valid" string="Token是否有效"/>
+                  <field name="expiration" string="Token过期时间"/>
+                  <field name="after_payment" string="支付后界面"/>
+                </group>
+              </group>
+              <group string="交易订单列表" name="fields_trade_list">
+                <group colspan="2">
+                  <field name="trade_list" nolabel="1" mode="tree" colspan="2">
+                    <tree create="0" edit="0" delete="0" no_open="0">
+                      <field name="supplier_code"/>
+                      <field name="trade_code"/>
+                      <field name="trade_amount"/>
+                      <field name="reduce_amount" />
+                      <field name="final_amount"/>
+                      <field name="trade_date"/>
+                      <field name="state" widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-warning="state == 'freeze'"
+                        decoration-success="state == 'loan'"
+                        decoration-danger="state == 'refund'"/>
+                      <field name="currency_id" column_invisible="1"/>
+                    </tree>
+                  </field>
+                </group>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_gar_payment_order_act_window" model="ir.actions.act_window">
+    <field name="name">支付订单</field>
+    <field name="res_model">ifs.gar.payment.order</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'search_default_group_state': 1}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        未查询到支付订单
+      </p>
+      <p>
+        <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+      </p>
+    </field>
+  </record>
+</odoo>

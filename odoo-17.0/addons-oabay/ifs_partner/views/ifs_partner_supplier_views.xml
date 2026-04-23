@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_partner_supplier_view_search" model="ir.ui.view">
+    <field name="name">ifs.partner.supplier.view.search</field>
+    <field name="model">ifs.partner.supplier</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_mixin_view_search" />
+    <field name="arch" type="xml">
+      <search position="attributes">
+        <attribute name="string">供应方查询</attribute>
+      </search>
+      <search position="inside">
+        <field name="seq_code" string="供应方编号"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_partner_supplier_view_tree" model="ir.ui.view">
+    <field name="name">ifs.partner.supplier.view.tree</field>
+    <field name="model">ifs.partner.supplier</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_tree" />
+    <field name="arch" type="xml">
+      <tree position="attributes">
+        <attribute name="string">供应方列表</attribute>
+        <attribute name="create">false</attribute>
+        <attribute name="expand">1</attribute>
+      </tree>
+      <field name="company_registry" position="attributes">
+        <attribute name="optional">hide</attribute>
+      </field>
+      <field name="company_code" position="before">
+        <field name="seq_code" string="供应方编号"/>
+      </field>
+      <field name="email" position="after">
+        <field name="state" widget="badge" decoration-danger="state == 'paused'" decoration-success="state == 'normal'"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_partner_supplier_view_form" model="ir.ui.view">
+    <field name="name">ifs.partner.supplier.view.form</field>
+    <field name="model">ifs.partner.supplier</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_form" />
+    <field name="arch" type="xml">
+      <form position="attributes">
+        <attribute name="js_class">ifs_partner_form</attribute>
+      </form>
+      <field name="company_id" position="after">
+        <field name="ifs_company_id" invisible="1"/>
+      </field>
+      <span name="ifs_base_company_code" position="replace">
+        <span invisible="not seq_code">供应方编号：          <field name="seq_code" class="oe_inline" />
+        </span>
+      </span>
+      <field name="name" position="attributes">
+        <attribute name="placeholder">供应方名称</attribute>
+      </field>
+    </field>
+  </record>
+
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_factor_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.partner.factor.wizard.view.form</field>
+    <field name="model">ifs.partner.factor.wizard</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <button step="2" position="after">
+        <button string="营业执照" step="3" current_step="current_step" class="o_galaxy_step"/>
+        <button string="银行账户" step="4" current_step="current_step" class="o_galaxy_step"/>
+      </button>
+    </field>
+  </record>
+</odoo>

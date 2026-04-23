@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="web.PropertyDefinition" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('mb-3')]/*[1]" position="before">
+            <div t-if="props.canChangeName" class="d-contents mb-3 mb-sm-0">
+                <label t-att-for="getUniqueDomID('name')"
+                    class="o_form_label align-self-center text-900">
+                    Field Name
+                </label>
+                <h6 t-if="props.readonly" t-out="state.propertyDefinition.name"
+                    class="text-truncate"/>
+                <input
+                    class="o_input o_field_property_definition_header"
+                    type="text"
+                    required=""
+                    placeholder="Property Key"
+                    autocomplete="off"
+                    t-model="props.propertyDefinition.name"
+                    t-on-change="onNameChange"
+                />
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_field_property_definition_model')]" position="after">
+            <div t-if="state.propertyDefinition.type === 'many2one' || state.propertyDefinition.type === 'many2many'" class="o_field_property_definition_model_field d-contents mb-3 mb-sm-0">
+                <label t-att-for="getUniqueDomID('field')" class="o_form_label align-self-center text-900">Field</label>
+                <span t-if="props.readonly">
+                    <t t-if="state.resModelDescription" t-out="state.resModelDescription"/>
+                </span>
+                <ModelFieldSelector
+                    t-elif="state.resModel"
+                    path="state.propertyDefinition.field || ''"
+                    resModel="state.resModel"
+                    readonly="props.readonly"
+                    update.bind="onModelFieldChange"
+                    isDebugMode="!!env.debug"
+                />
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_field_property_definition_kanban')]" position="after">
+            <div t-if="state.showRequiredOption"
+                class="o_field_property_definition_required d-contents mb-3 mb-sm-0">
+                <label t-att-for="getUniqueDomID('required')" class="o_form_label align-self-center text-900">
+                    是否必填
+                    <sup class="text-info" title="此属性是否为必填">?</sup>
+                </label>
+                <CheckBox
+                    id="getUniqueDomID('required')"
+                    value="props.propertyDefinition.is_required"
+                    disabled="props.readonly"
+                    onChange.bind="onFieldIsRequiredChange"
+                />
+            </div>
+        </xpath>
+    </t>
+</templates>

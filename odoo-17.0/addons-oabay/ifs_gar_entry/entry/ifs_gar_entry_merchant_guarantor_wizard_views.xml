@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_entry_merchant_guarantor_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.guarantor.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.merchant.guarantor.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_entry_merchant_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <group col="1" class="ifs-inform">
+          <group>
+            <div style="margin-bottom: 25px;" class="entry_column_item_inform_a">担保人告知</div>
+          </group>
+          <group>
+            <div>
+              <field name="clause_one_is_agree" widget="checkbox" class="oe_inline" nolabel="1"/>
+              <label for="clause_one_is_agree" string="本人对被担保人的经营项目，已经做了充分了解并愿意成为其担保人;" />
+            </div>
+          </group>
+          <group>
+            <div>
+              <field name="clause_two_is_agree" widget="checkbox" class="oe_inline" nolabel="1"/>
+              <label for="clause_two_is_agree" string="本人清楚如签订了担保合同，本人将对借款人未偿还的借款提供连带偿还责任;"/>
+            </div>
+          </group>
+          <group>
+            <div>
+              <field name="clause_three_is_agree" widget="checkbox" class="oe_inline" nolabel="1"/>
+              <label for="clause_three_is_agree" string="本人愿意当借款人债务逾期无法偿还时，本人有义务协助贵司进行催收工作;"/>
+            </div>
+          </group>
+          <group>
+            <div style="font-size: 12px;">
+              <img style="width: 11px; height: 11px;" src="/ifs_gar_entry/static/img/warning.png" alt="打钩"/>
+                请在以上              <span style="font-size: 20px;">□</span>打钩进行确认阅读；
+            </div>
+          </group>
+        </group>
+      </xpath>
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="replace">
+        <div class="o_ifs_center_img">
+          <field name="is_self_guarantee" widget="checkbox" class="oe_inline" nolabel="1" />
+          <label for="is_self_guarantee" string="担保人为法人"/>
+        </div>
+        <group class="o_ifs_gar_step_controller" col="3">
+          <group colspan="3"></group>
+          <group></group>
+          <group>
+            <button name="nosave_prev" type="object" class="btn btn-secondary btn-next" invisible="not has_prev_step">上一步</button>
+            <button name="action_guarantor_info" string="本人已知晓" type="object" class="btn btn-primary btn-next" confirm="若担保人同法人，请勾选右侧选项！若漏选，请点击下面《取消》重新选择。"/>
+          </group>
+          <group></group>
+        </group>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="ifs_gar_entry_merchant_guarantor_wizard_info_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.guarantor.wizard.info.view.form</field>
+    <field name="model">ifs.gar.entry.merchant.guarantor.wizard.info</field>
+    <field name="inherit_id" ref="ifs_gar_entry_merchant_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="attributes">
+        <attribute name="class">o_galaxy_form_view</attribute>
+      </xpath>
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <field name="currency_id" invisible="1"/>
+        <field name="guarantor_info_config_detail_id" invisible="1"/>
+        <field name="guarantor_info_definition_id" invisible="1"/>
+        <field name="guarantor_info_is_required" invisible="1"/>
+        <field name="guarantor_info_is_visible" invisible="1"/>
+        <field name="is_self_guarantee" invisible="1" force_save="1"/>
+        <div class="o_ifs_center_img" invisible="guarantor_front_image">
+          <field name="guarantor_front_image" widget="image" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_front_image.png'}"/>
+        </div>
+        <div class="o_ifs_center_img" invisible="not guarantor_front_image or guarantor_back_image">
+          <field name="guarantor_back_image" widget="image" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_back_image.png'}"/>
+        </div>
+
+        <group string="担保人基本信息" invisible="not guarantor_front_image or not guarantor_back_image">
+          <group>
+            <field name="guarantor_name" readonly="1" force_save="1"/>
+            <field name="guarantor_idcard_no" readonly="1" force_save="1"/>
+            <field name="guarantor_birthday" readonly="1" force_save="1"/>
+            <field name="guarantor_start_date" readonly="1" force_save="1"/>
+          </group>
+          <group>
+            <field name="guarantor_nationality" readonly="1" force_save="1"/>
+            <field name="guarantor_gender" readonly="1" force_save="1"/>
+            <field name="guarantor_authority" readonly="1" force_save="1"/>
+            <field name="guarantor_end_date" readonly="1" force_save="1"/>
+          </group>
+          <group colspan="2">
+            <field name="guarantor_address" readonly="1" force_save="1"/>
+          </group>
+          <field name="guarantor_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+          <group>
+            <field name="guarantor_front_image" widget="image" />
+          </group>
+          <group>
+            <field name="guarantor_back_image" widget="image" />
+          </group>
+        </group>
+
+        <group string="担保人财产相关" col="4" invisible="not guarantor_front_image or not guarantor_back_image">
+          <group>
+            <field name="is_has_guarantor_housing_assets" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group colspan="3">
+            <field name="guarantor_housing_assets" required="is_has_guarantor_housing_assets" invisible="not is_has_guarantor_housing_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_guarantor_vehicle_assets" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group colspan="3">
+            <field name="guarantor_vehicle_assets" required="is_has_guarantor_vehicle_assets" invisible="not is_has_guarantor_vehicle_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_guarantor_other_assets" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group>
+            <field name="guarantor_other_assets" required="is_has_guarantor_other_assets" invisible="not is_has_guarantor_other_assets"/>
+          </group>
+          <group colspan="2">
+            <field name="guarantor_other_assets_remarks" required="is_has_guarantor_other_assets" invisible="not is_has_guarantor_other_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_guarantor_loan" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group>
+            <field name="guarantor_loan_amount" required="is_has_guarantor_loan" invisible="not is_has_guarantor_loan"/>
+          </group>
+          <group colspan="2">
+            <field name="guarantor_loan_remarks" required="is_has_guarantor_loan" invisible="not is_has_guarantor_loan"/>
+          </group>
+
+          <group>
+            <field name="is_has_guarantor_guarantee" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group>
+            <field name="guarantor_guarantee_amount" required="is_has_guarantor_guarantee" invisible="not is_has_guarantor_guarantee"/>
+          </group>
+          <group colspan="2">
+            <field name="guarantor_guarantee_remarks" required="is_has_guarantor_guarantee" invisible="not is_has_guarantor_guarantee"/>
+          </group>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>

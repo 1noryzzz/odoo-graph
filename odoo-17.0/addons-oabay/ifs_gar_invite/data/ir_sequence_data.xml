@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <!-- Sequences for ifs.gar.invite.supplier -->
+    <record id="seq_ifs_gar_invite_supplier" model="ir.sequence">
+      <field name="name">供应方邀约流水号</field>
+      <field name="code">ifs.gar.invite.supplier</field>
+      <field name="prefix">SV%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <!-- Sequences for ifs.gar.invite.merchant -->
+    <record id="seq_ifs_gar_invite_merchant" model="ir.sequence">
+      <field name="name">采购方邀约流水号</field>
+      <field name="code">ifs.gar.invite.merchant</field>
+      <field name="prefix">MV%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <!-- Sequences for ifs.gar.invite.franchisee -->
+    <record id="seq_ifs_gar_invite_franchisee" model="ir.sequence">
+      <field name="name">事业合伙人邀约流水号</field>
+      <field name="code">ifs.gar.invite.franchisee</field>
+      <field name="prefix">FV%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <!-- Sequences for ifs.gar.invite.lawfirm -->
+    <record id="seq_ifs_gar_invite_lawfirm" model="ir.sequence">
+      <field name="name">律师事务所邀约流水号</field>
+      <field name="code">ifs.gar.invite.lawfirm</field>
+      <field name="prefix">LV%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+  </data>
+</odoo>

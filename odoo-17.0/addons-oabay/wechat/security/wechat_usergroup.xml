@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="group_wechat_push" model="res.groups">
+    <field name="name">Wechat Message Push Service</field>
+    <field name="category_id" ref="base.module_category_hidden"/>
+    <field name="users" eval="[(4, ref('base.user_admin')),]"/>
+    <field name="implied_ids" eval="[(4, ref('oa_integrated.group_oa_integrated_push_service'))]"/>
+  </record>
+
+  <record id="group_wechat_work_push" model="res.groups">
+    <field name="name">Wechat Work Message Push Service</field>
+    <field name="category_id" ref="base.module_category_hidden"/>
+    <field name="users" eval="[(4, ref('base.user_admin')),]"/>
+  </record>
+
+  <record id="group_wechat_setting" model="res.groups">
+    <field name="name">Wechat Setting</field>
+    <field name="category_id" ref="base.module_category_website_website"/>
+    <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+  </record>
+
+  <!-- User Template 
+  <record id="tencent_wechat" model="res.users">
+    <field name="name">Tencent Wechat</field>
+    <field name="login">tencent_wechat</field>
+    <field name="password"></field>
+    <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('website.group_website_publisher')])]"/>
+    <field name="active" eval="False"/>
+  </record>
+  -->
+
+  <record id="base.group_system" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('wechat.group_wechat_setting'))]"/>
+  </record>
+</odoo>

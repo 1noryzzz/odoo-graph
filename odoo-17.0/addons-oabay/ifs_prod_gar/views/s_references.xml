@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="gar_s_references" name="参照-合作银行">
+    <section class="o_cc o_cc2" data-vcss="001">
+      <div class="s_references o_mail_snippet_general" data-snippet="s_references">
+        <div class="gar_container gar_references_container">
+          <div class="gar_title_body">
+            <div class="gar_text_zh">合作银行</div>
+            <div class="gar_text_en">Cooperative Bank</div>
+          </div>
+          <div class="row gar_row">
+            <div class="col-lg-3 pt16 pb16">
+              <img src="/ifs_prod_gar/static/src/snippets/s_references/img/交通银行.png" class="img img-fluid mx-auto" alt=""/>
+            </div>
+            <div class="col-lg-3 pt16 pb16">
+              <img src="/ifs_prod_gar/static/src/snippets/s_references/img/渤海银行.png" class="img img-fluid mx-auto" alt=""/>
+            </div>
+            <div class="col-lg-3 pt16 pb16">
+              <img src="/ifs_prod_gar/static/src/snippets/s_references/img/广农银行.png" class="img img-fluid mx-auto" alt=""/>
+            </div>
+            <div class="col-lg-3 pt16 pb16">
+              <img src="/ifs_prod_gar/static/src/snippets/s_references/img/华润银行.png" class="img img-fluid mx-auto" alt=""/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <record id="ifs_prod_gar.gar_s_references_001_scss" model="ir.asset">
+    <field name="name">References 001 SCSS</field>
+    <field name="bundle">web.assets_frontend</field>
+    <field name="path">ifs_prod_gar/static/src/snippets/s_references/scss/001.scss</field>
+    <field name="active" eval="True"/>
+  </record>
+
+</odoo>

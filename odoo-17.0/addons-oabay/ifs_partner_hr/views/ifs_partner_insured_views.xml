@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_partner_insured_view_form_partner_hr_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.insured.view.form.partner.hr.inherited</field>
+    <field name="model">ifs.partner.insured</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_insured_view_form"/>
+    <field name="arch" type="xml">
+      <field name="ifs_company_id" position="after">
+        <field name="root_employee_id" invisible="1"/>
+      </field>
+      <header position="inside">
+        <button name="action_create_root_user" type="object" string="创建根账户" 
+          class="btn-primary" data-hotkey="a" invisible="root_employee_id"
+          groups="ifs_partner.group_ifs_partner_insurant_system,ifs_partner.group_ifs_partner_channelsp_system"/>
+        <button name="action_create_legal_idcard" type="object" string="更新法人身份证信息" 
+          class="btn-primary" data-hotkey="a" invisible="not root_employee_id"
+          groups="ifs_partner.group_ifs_partner_insurant_system,ifs_partner.group_ifs_partner_channelsp_system"/>
+      </header>
+    </field>
+  </record>
+
+</odoo>

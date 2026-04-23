@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="wechat_offiaccount_layout" name="Wechat Inner Layout">
+    <t t-call="website.layout">
+      <t t-set="no_header" t-value="true"/>
+      <t t-set="no_footer" t-value="true"/>
+      <t t-set="head">
+        <!-- <t t-call-assets="wechat.assets_wechat_frontend" t-js="false"/> -->
+        <t t-call-assets="wechat.assets_wechat_frontend" t-css="false" defer_load="True"/>
+        <script type="text/javascript">
+          window.addEventListener('load', function () {
+            odoo.define('wechat.offiaccount_entry', [], function (require) {
+              wx.config({
+                debug: false,
+                appId: '<t t-esc="wx_config['app_id']"/>',
+                timestamp: '<t t-esc="wx_config['timestamp']"/>',
+                nonceStr: '<t t-esc="wx_config['nonceStr']"/>',
+                signature: '<t t-esc="wx_config['signature']"/>',
+                jsApiList: ['updateAppMessageShareData']
+              });
+              wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                wx.updateAppMessageShareData({ 
+                  title: '餐饮拼团购，价格打下来',
+                  desc: '青钱供应链，优质食材，优惠价格，快来拼团吧！',
+                  link: '<t t-esc="wx_config['url']"/>',
+                  imgUrl: '<t t-esc="wx_config['domain']"/>' + '/wechat/static/img/brand.png?v=2',
+                  success: function () {
+                  }
+                })
+              });
+              <!-- wx.checkJsApi({
+                jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+                success: function(res) {
+                  alert('oka');
+                },
+                fail: function(res) {
+                  alert('err');
+                }
+              }); -->
+            });
+          });
+        </script>
+      </t>
+      <t t-raw="0"/>
+    </t>
+  </template>
+
+
+  <template id="wechat_offiaccount_sharing" name="餐饮拼团购">
+    <t t-call="wechat.wechat_offiaccount_layout">
+      <t t-set="title">餐饮拼团购，价格打下来</t>
+      <a href="https://work.weixin.qq.com/ca/cawcde0636af24c5d8">
+        <img src="/wechat/static/img/activity.png?v=2" style="width: 100%;"/>
+      </a>
+    </t>
+  </template>
+</odoo>

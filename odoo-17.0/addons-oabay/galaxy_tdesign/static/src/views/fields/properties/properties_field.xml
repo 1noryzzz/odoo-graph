@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-inherit="web.PropertiesField" t-inherit-mode="extension">
+    
+  </t>
+</templates>

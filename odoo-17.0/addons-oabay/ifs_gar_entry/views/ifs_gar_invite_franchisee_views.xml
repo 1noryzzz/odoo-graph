@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- <record id="ifs_gar_invite_franchisee_view_form_readonly" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.franchisee.view.form.readonly</field>
+    <field name="model">ifs.gar.invite.franchisee</field>
+    <field name="inherit_id" ref="ifs_gar_invite.ifs_gar_invite_franchisee_view_form"/>
+    <field name="priority">1000</field>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="attributes">
+        <attribute name="edit">0</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="ifs_gar_invite_franchisee_view_search_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.franchisee.view.search.inherited</field>
+    <field name="model">ifs.gar.invite.franchisee</field>
+    <field name="inherit_id" ref="ifs_gar_invite.ifs_gar_invite_franchisee_view_search"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='code']" position="after">
+        <field name="franchisee_code"/>
+      </xpath>
+      <xpath expr="//field[@name='name']" position="replace">
+        <field name="display_name"/>
+      </xpath>
+      <xpath expr="//field[@name='principal_name']" position="replace">
+        <field name="display_principal_name"/>
+      </xpath>
+      <xpath expr="//field[@name='phone']" position="replace">
+        <field name="display_phone"/>
+      </xpath>
+      <xpath expr="//field[@name='email']" position="replace">
+        <field name="display_email"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="ifs_gar_invite_franchisee_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.franchisee.view.tree.inherited</field>
+    <field name="model">ifs.gar.invite.franchisee</field>
+    <field name="inherit_id" ref="ifs_gar_invite.ifs_gar_invite_franchisee_view_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='code']" position="before">
+        <field name="franchisee_id" invisible="1"/>
+        <field name="entry_date" widget="date"/>
+      </xpath>
+      <xpath expr="//field[@name='code']" position="after">
+        <field name="franchisee_code"/>
+      </xpath>
+      <xpath expr="//field[@name='name']" position="replace">
+        <field name="display_name"/>
+      </xpath>
+      <xpath expr="//field[@name='principal_name']" position="replace">
+        <field name="display_principal_name" string="姓名"/>
+      </xpath>
+      <xpath expr="//field[@name='phone']" position="replace">
+        <field name="display_phone"/>
+      </xpath>
+      <xpath expr="//field[@name='email']" position="replace">
+        <field name="display_email"/>
+      </xpath>
+    </field>
+  </record> -->
+
+  <record id="ifs_gar_invite_franchisee_tips_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.franchisee.tips.view.form</field>
+    <field name="model">ifs.gar.invite.franchisee</field>
+    <field name="priority">1000</field>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <form create="0" edit="0">
+        <sheet>
+          <group>
+            <div class="alert alert-success text-center o_form_header" role="status">
+              <div>
+                <strong>恭喜邀请成功！请用手机端登录并完成进件操作</strong>
+              </div>
+            </div>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

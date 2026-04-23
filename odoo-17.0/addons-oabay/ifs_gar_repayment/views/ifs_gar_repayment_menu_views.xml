@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <menuitem id="ifs_gar_repayment_order_menu" name="还款单"
+    action="ifs_gar_repayment.ifs_gar_repayment_order_act_window"
+    groups="ifs_gar_repayment.group_ifs_gar_repayment_factor_user,ifs_gar_repayment.group_ifs_gar_repayment_merchant_user,ifs_gar_repayment.group_ifs_gar_repayment_supplier_user"
+    sequence="4" parent="ifs_gar_trade.ifs_gar_trade_order_menu_root"/>
+</odoo>

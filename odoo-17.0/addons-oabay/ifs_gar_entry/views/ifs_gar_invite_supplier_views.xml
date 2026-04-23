@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_invite_supplier_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.supplier.view.tree.inherited</field>
+    <field name="model">ifs.gar.invite.supplier</field>
+    <field name="inherit_id" ref="ifs_gar_invite.ifs_gar_invite_supplier_view_tree" />
+    <field name="arch" type="xml">
+      <field name="company_code" position="before">
+        <field name="entry_id" column_invisible="1"/>
+      </field>
+    </field>
+  </record>
+</odoo>

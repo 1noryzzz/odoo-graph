@@ -1,0 +1,1068 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ifs_gar_invite
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-16 07:03+0000\n"
+"PO-Revision-Date: 2022-09-16 07:03+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_create_template
+msgid "/ifs_gar_invite/create"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_create_template
+msgid ""
+"<span>\n"
+"              <b>受邀公司名称</b>\n"
+"            </span>"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_create_template
+msgid ""
+"<span>\n"
+"              <b>联系方式</b>\n"
+"            </span>"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_create_template
+msgid ""
+"<span>\n"
+"              <b>负责人</b>\n"
+"            </span>"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_create_template
+msgid ""
+"<span>\n"
+"              <b>邮箱</b>\n"
+"            </span>"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:mail.template,body_html:ifs_gar_invite.invite_merchant_mail
+msgid ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"      <tbody>\n"
+"        <tr>\n"
+"          <td align=\"center\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"              <tbody>\n"
+"                <!-- HEADER -->\n"
+"                <tr>\n"
+"                  <td style=\"min-width: 590px;\">\n"
+"                    <p style=\"margin:0px 0 12px 0;box-sizing:border-box;\">\n"
+"                      致 <br/>\n"
+"                      <t t-out=\"object.company_id.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">\n"
+"                        ***********有限公司</t>， <t t-out=\"object.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">***</t>\n"
+"                      <br/>\n"
+"\n"
+"\n"
+"                    </p>\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td colspan=\"2\" style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;\" contenteditable=\"false\"/>\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <!-- CONTENT -->\n"
+"                <tr>\n"
+"                  <td style=\"min-width: 590px;\">\n"
+"                    <p style=\"text-indent: 2em;\">受 <t t-out=\"object.user_id.company_id.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">***********有限公司</t>， <t t-out=\"object.user_id.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">***</t>邀请您加入应收保供应链体系，加入应收保您将获得账期内免息采购额度；</p>\n"
+"                    <p style=\"text-indent: 2em;\">接下来您需要准备以下资料,以便我们可以更快的获准您的申请；</p>\n"
+"                    <table border=\"1\" width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;\">\n"
+"                      <tbody>\n"
+"                        <tr>\n"
+"                          <td width=\"15%\">资料类别</td>\n"
+"                          <td width=\"30%\">资料名称</td>\n"
+"                          <td width=\"25%\">上传文件类型</td>\n"
+"                          <td width=\"15%\">是否必须</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td rowspan=\"6\">公司信息</td>\n"
+"                          <td>营业执照</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>公司章程</td>\n"
+"                          <td>文件（Word类型）</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>近半年的营业报表（非审计）</td>\n"
+"                          <td>文件（Excel类型）</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>企业近六个月的银行对账单</td>\n"
+"                          <td>文件（网上银行下载）</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>经营场所的租赁合同</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>企业办公相关照片</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td rowspan=\"3\">个人资料</td>\n"
+"                          <td>负责人近六月银行对账单</td>\n"
+"                          <td>文件（网上银行下载）</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>负责人资产证明（行驶证）</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>有</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>身份证正反面</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                        </tr>\n"
+"                      </tbody>\n"
+"                    </table>\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td>备注 <br/>\n"
+"                    请准备以上资料，后点击下方网址进入, 尽快提交申请；\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td>应收保登入域名: https://cloud.oabay.com</td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td>登录账号: <t t-esc=\"object.login\"/></td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td>登录密码: <t t-esc=\"object.phone[5:]\"/></td>\n"
+"                </tr>\n"
+"\n"
+"                <tr>\n"
+"                  <td style=\"text-align:center;\">\n"
+"                    <br/><br/>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\" contenteditable=\"false\"/>\n"
+"                  </td>\n"
+"                </tr>\n"
+"\n"
+"                <!-- FOOTER -->\n"
+"                <tr>\n"
+"                  <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                      <tbody>\n"
+"                        <tr>\n"
+"                          <td valign=\"middle\" align=\"left\">\n"
+"                            盈众商业保理（平潭）有限公司\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                            +755 2511-9601 | cloud@mail.oabay.com | https://cloud.oabay.com\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                      </tbody>\n"
+"                    </table>\n"
+"                  </td>\n"
+"                </tr>\n"
+"              </tbody>\n"
+"            </table>\n"
+"          </td>\n"
+"        </tr>\n"
+"        <!-- POWERED BY -->\n"
+"        <tr>\n"
+"          <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"              <tbody>\n"
+"                <tr>\n"
+"                  <td style=\"text-align: center; font-size: 13px;\">\n"
+"                    由<a target=\"_blank\" href=\"https://www.liefwiz.cn\" style=\"color: #875A7B;\">云腾智慧（深圳）</a>提供技术支持\n"
+"                  </td>\n"
+"                </tr>\n"
+"              </tbody>\n"
+"            </table>\n"
+"          </td>\n"
+"        </tr>\n"
+"      </tbody>\n"
+"    </table>\n"
+"\n"
+"      "
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:mail.template,body_html:ifs_gar_invite.invite_supplier_mail
+msgid ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\">\n"
+"      <tbody>\n"
+"        <tr>\n"
+"          <td align=\"center\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"              <tbody>\n"
+"                <!-- HEADER -->\n"
+"                <tr>\n"
+"                  <td style=\"min-width: 590px;\">\n"
+"                    <p style=\"margin:0px 0 12px 0;box-sizing:border-box;\">\n"
+"                      致 <br/>\n"
+"                      <t t-out=\"object.company_id.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">\n"
+"                        ***********有限公司</t>， <t t-out=\"object.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">***</t>\n"
+"                      <br/>\n"
+"\n"
+"\n"
+"                    </p>\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td colspan=\"2\" style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;\" contenteditable=\"false\"/>\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <!-- CONTENT -->\n"
+"                <tr>\n"
+"                  <td style=\"min-width: 590px;\">\n"
+"                    <span style=\"margin-left:45px;\"/>受 <t t-out=\"object.user_id.company_id.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">***********有限公司</t>， <t t-out=\"object.user_id.name\" data-oe-t-inline=\"true\" contenteditable=\"false\" oe-keep-contenteditable=\"\">***</t>邀请您加入应收保供应链体系，加入应收保您将获得账期内免息采购额度；\n"
+"                    <br/>\n"
+"                    <span style=\"margin-left:45px;\"/>接下来您需要准备以下资料,以便我们可以更快的获准您的申请；\n"
+"                    <br/>\n"
+"                    <table border=\"1\" width=\"100%\" style=\"box-sizing:border-box;border-collapse:collapse;\">\n"
+"                      <tbody>\n"
+"                        <tr>\n"
+"                          <td width=\"15%\">资料类别</td>\n"
+"                          <td width=\"30%\">资料名称</td>\n"
+"                          <td width=\"25%\">上传文件类型</td>\n"
+"                          <td width=\"15%\">是否必须</td>\n"
+"                          <td width=\"15%\">备注</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td rowspan=\"6\">公司信息</td>\n"
+"                          <td>营业执照</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                          <td>\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>公司章程</td>\n"
+"                          <td>文件（Word类型）</td>\n"
+"                          <td>是</td>\n"
+"                          <td/>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>近半年的营业报表（非审计）</td>\n"
+"                          <td>文件（Excel类型）</td>\n"
+"                          <td>是</td>\n"
+"                          <td/>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>企业近六个月的银行对账单</td>\n"
+"                          <td>文件（网上银行下载）</td>\n"
+"                          <td>是</td>\n"
+"                          <td/>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>经营场所的租赁合同</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                          <td/>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>企业办公相关照片</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>是</td>\n"
+"                          <td/>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td rowspan=\"2\">个人资料</td>\n"
+"                          <td>负责人近六月银行对账单</td>\n"
+"                          <td>文件（网上银行下载）</td>\n"
+"                          <td>是</td>\n"
+"                          <td/>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td>负责人资产证明（行驶证）</td>\n"
+"                          <td>照片</td>\n"
+"                          <td>有</td>\n"
+"                          <td>如有提供</td>\n"
+"                        </tr>\n"
+"\n"
+"                      </tbody>\n"
+"                    </table>\n"
+"                  </td>\n"
+"                </tr>\n"
+"                <tr>\n"
+"                  <td>备注 <br/>\n"
+"                    请准备以上资料，后点击 <a t-att-href=\"object.signup_url\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                      接受邀请\n"
+"                    </a>尽快提交申请；\n"
+"\n"
+"                  </td>\n"
+"                </tr>\n"
+"\n"
+"                <tr>\n"
+"                  <td style=\"text-align:center;\">\n"
+"                    <br/><br/>\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\" contenteditable=\"false\"/>\n"
+"                  </td>\n"
+"                </tr>\n"
+"\n"
+"                <!-- FOOTER -->\n"
+"                <tr>\n"
+"                  <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                      <tbody>\n"
+"                        <tr>\n"
+"                          <td valign=\"middle\" align=\"left\">\n"
+"                            盈众商业保理（平潭）有限公司\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                          <td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                            +1 650-123-4567 | info@yourcompany.com | http://www.example.com\n"
+"                          </td>\n"
+"                        </tr>\n"
+"                      </tbody>\n"
+"                    </table>\n"
+"                  </td>\n"
+"                </tr>\n"
+"              </tbody>\n"
+"            </table>\n"
+"          </td>\n"
+"        </tr>\n"
+"        <!-- POWERED BY -->\n"
+"        <tr>\n"
+"          <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"              <tbody>\n"
+"                <tr>\n"
+"                  <td style=\"text-align: center; font-size: 13px;\">\n"
+"                    由<a target=\"_blank\" href=\"https://www.odoo.com?utm_source=db&amp;utm_medium=portalinvite\" style=\"color: #875A7B;\">Odoo</a>提供技术支持\n"
+"                  </td>\n"
+"                </tr>\n"
+"              </tbody>\n"
+"            </table>\n"
+"          </td>\n"
+"        </tr>\n"
+"      </tbody>\n"
+"    </table>\n"
+"\n"
+"      "
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_needaction
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_needaction
+msgid "Action Needed"
+msgstr "需要采取动作"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_ids
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_ids
+msgid "Activities"
+msgstr "活动"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_exception_decoration
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "活动异常勋章"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_state
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_state
+msgid "Activity State"
+msgstr "活动状态"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_type_icon
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "活动类型图表"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_attachment_count
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__image_1920
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__image_1920
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__image_1920
+msgid "Company Logo"
+msgstr "公司 Logo"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__create_uid
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_follower_ids
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_partner_ids
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_type_icon
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "完美的图标，例如FA任务"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__has_message
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__has_message
+msgid "Has Message"
+msgstr "有信息"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_exception_icon
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_exception_icon
+msgid "Icon"
+msgstr "图标"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_exception_icon
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "表示异常活动的图标"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_needaction
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_unread
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_needaction
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 出现提示消息."
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_has_error
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_has_sms_error
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_has_error
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些消息将会产生传递错误。"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_is_follower
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_is_follower
+msgid "Is Follower"
+msgstr "关注者"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant____last_update
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier____last_update
+msgid "Last Modified on"
+msgstr "最后修改时间"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__write_uid
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__write_date
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_main_attachment_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "主要附件"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_has_error
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_has_error
+msgid "Message Delivery error"
+msgstr "消息传递错误"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_ids
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_ids
+msgid "Messages"
+msgstr "消息"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__my_activity_date_deadline
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "我的活动截止时间"
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_mixin.py:0
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_mixin.py:0
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_mixin.py:0
+#, python-format
+msgid "New"
+msgstr "新建"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_date_deadline
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "下一活动截止日期"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_summary
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_summary
+msgid "Next Activity Summary"
+msgstr "下一活动摘要"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_type_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_type_id
+msgid "Next Activity Type"
+msgstr "下一活动类型"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_needaction_counter
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_needaction_counter
+msgid "Number of Actions"
+msgstr "动作数量"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_has_error_counter
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_has_error_counter
+msgid "Number of errors"
+msgstr "错误数"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_needaction_counter
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要采取动作消息数量"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_has_error_counter
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "发送错误的消息数量"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__message_unread_counter
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息数量"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__partner_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__partner_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__partner_id
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_user_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_user_id
+msgid "Responsible User"
+msgstr "负责用户"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_has_sms_error
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "短信发送错误"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_state
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"基于活动的状态 \n"
+" 逾期：已经超过截止日期 \n"
+" 现今：活动日期是当天 \n"
+" 计划：未来活动。"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__activity_exception_decoration
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "记录的异常活动类型。"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_unread
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__message_unread_counter
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息数"
+
+#. module: ifs_gar_invite
+#: model:ir.model,name:ifs_gar_invite.model_res_users
+msgid "Users"
+msgstr "用户"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__website_message_ids
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__website_message_ids
+msgid "Website Messages"
+msgstr "网站消息"
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__website_message_ids
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__website_message_ids
+msgid "Website communication history"
+msgstr "网上沟通记录"
+
+#. module: ifs_gar_invite
+#: model:mail.template,subject:ifs_gar_invite.invite_merchant_mail
+#: model:mail.template,subject:ifs_gar_invite.invite_supplier_mail
+msgid ""
+"{{ object.user_id.company_id.name }} 的 {{ object.user_id.name }} 邀请您来应收保进件"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__company_id
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_mixin__company_id
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_supplier__company_id
+msgid "与此工商登记信息相应的公司"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__sales_id
+msgid "业务员"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_supplier_view_form
+msgid "企业基本信息"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__supplier_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__display_name
+msgid "供应方"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_merchant.py:0
+#, python-format
+msgid "供应方才可以使用邀请功能！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.actions.act_window,name:ifs_gar_invite.ifs_gar_invite_supplier_act_window
+#: model:ir.ui.menu,name:ifs_gar_invite.ifs_gar_invite_supplier_menu
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_supplier_view_tree
+msgid "供应方管理"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.module.category,name:ifs_gar_invite.module_category_ifs_partner_supplier_entry
+#: model:res.groups,name:ifs_gar_invite.group_ifs_gar_supplier_entry
+msgid "供应方进件"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__factor_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__factor_id
+msgid "保理方"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model,name:ifs_gar_invite.model_ifs_partner_factor
+msgid "保理方基本信息"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_supplier.py:0
+#, python-format
+msgid "保理方才可以使用供应方邀请功能！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__charter
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__charter
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__charter
+msgid "公司章程"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_supplier_view_form
+msgid "受邀公司名称"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__name
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__name
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__name
+msgid "受邀方名称"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:res.groups,comment:ifs_gar_invite.group_ifs_gar_supplier_entry
+msgid "在应收保产品中，供应方进件过程中使用的权限"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:res.groups,comment:ifs_gar_invite.group_ifs_gar_invite_supplier
+msgid "在应收保产品中，可以邀请供应方前来进件的员工"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:res.groups,comment:ifs_gar_invite.group_ifs_gar_invite_merchant
+msgid "在应收保产品中，可以邀请采购方前来进件的员工"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:res.groups,comment:ifs_gar_invite.group_ifs_gar_merchant_entry
+msgid "在应收保产品中，采购方进件过程中使用的权限"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__muti_factor
+msgid "多保理方"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__company_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__company_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__company_id
+msgid "对应的公司"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_supplier__state__ready
+msgid "已开通"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__reject
+msgid "已拒绝"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__btw
+msgid "已驳回"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__ready
+msgid "开通"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__auditing
+msgid "待审批"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_supplier__state__activation
+msgid "待开通"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__approve
+msgid "待授信"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__waiting
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_supplier__state__waiting
+msgid "待提交"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields.selection,name:ifs_gar_invite.selection__ifs_gar_invite_merchant__state__activation
+msgid "待激活"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_partner_factor__offiaccount_id
+msgid "微信公众号"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_supplier.py:0
+#, python-format
+msgid "您已邀请过此供应方！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_merchant.py:0
+#, python-format
+msgid "您已邀请过此采购方！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__business_date_to
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__business_date_to
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__business_date_to
+msgid "执照到期时间"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:mail.template,name:ifs_gar_invite.invite_supplier_mail
+msgid "授权注册：供应商邀约"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:mail.template,name:ifs_gar_invite.invite_merchant_mail
+msgid "授权注册：采购方邀约"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__website_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__website_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__website_id
+msgid "收单网站"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.module.category,description:ifs_gar_invite.module_category_ifs_partner_supplier_entry
+msgid "普惠金融业务合作伙伴权根集合（供应方进件）"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.module.category,description:ifs_gar_invite.module_category_ifs_partner_merchant_entry
+msgid "普惠金融业务合作伙伴权根集合（采购方进件）"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model,name:ifs_gar_invite.model_ifs_work_position
+msgid "普惠金融场景下的员工职位管理"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,help:ifs_gar_invite.field_ifs_gar_invite_merchant__factor_supplier_id
+msgid "此份邀请的发起人（供应方发起，但必须有对应的保理方，所以这里是供应方和保理方共同发起）"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_supplier.py:0
+#, python-format
+msgid "此供应方已开通！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/ifs_gar_invite_merchant.py:0
+#, python-format
+msgid "此采购方已开通！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__legal_person
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__legal_person
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__legal_person
+msgid "法人代表"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__principal_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__principal_name
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__principal_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__principal_name
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__principal_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__principal_name
+msgid "法人姓名"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__address
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__address
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__address
+msgid "注册地址"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__establish_date
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__establish_date
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__establish_date
+msgid "注册时间"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__capital
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__capital
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__capital
+msgid "注册资本"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.actions.act_window,help:ifs_gar_invite.ifs_gar_invite_merchant_act_window
+msgid "点击左上角的“创建”邀请，让我们开始吧！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.actions.act_window,help:ifs_gar_invite.ifs_gar_invite_supplier_act_window
+msgid "点击左上角的“邀请”，让我们开始吧！"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__state
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__state
+msgid "状态"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.actions.act_window,help:ifs_gar_invite.ifs_gar_invite_merchant_act_window
+#: model_terms:ir.actions.act_window,help:ifs_gar_invite.ifs_gar_invite_supplier_act_window
+msgid "盈众官网"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__business_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__credit_no
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__business_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__credit_no
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__business_id
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__credit_no
+msgid "社会统一信用代码"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__phone
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__phone
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__phone
+msgid "联系方式"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__business_license
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__business_license
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__business_license
+msgid "营业执照"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__full_name
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__full_name
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__full_name
+msgid "营业执照名称"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__create_date
+msgid "进件时间"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_supplier_view_form
+msgid "进件邀约"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: code:addons/ifs_gar_invite/models/res_users.py:0
+#, python-format
+msgid "邀约邮件发送失败！%s 没有邮箱地址。"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__factor_supplier_id
+msgid "邀请人"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model,name:ifs_gar_invite.model_ifs_gar_invite_supplier
+#: model:res.groups,name:ifs_gar_invite.group_ifs_gar_invite_supplier
+msgid "邀请供应方进件"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model,name:ifs_gar_invite.model_ifs_gar_invite_mixin
+msgid "邀请注册的基本信息"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__code
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__code
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__code
+msgid "邀请编号"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_supplier_view_form
+msgid "邀请编号："
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_create_template
+msgid "邀请采购方"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model,name:ifs_gar_invite.model_ifs_gar_invite_merchant
+#: model:res.groups,name:ifs_gar_invite.group_ifs_gar_invite_merchant
+msgid "邀请采购方进件"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_merchant__email
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_mixin__email
+#: model:ir.model.fields,field_description:ifs_gar_invite.field_ifs_gar_invite_supplier__email
+msgid "邮箱"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.actions.act_window,name:ifs_gar_invite.ifs_gar_invite_merchant_act_window
+#: model:ir.ui.menu,name:ifs_gar_invite.ifs_gar_invite_merchant_menu
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_merchant_view_tree
+msgid "采购方管理"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model:ir.module.category,name:ifs_gar_invite.module_category_ifs_partner_merchant_entry
+#: model:res.groups,name:ifs_gar_invite.group_ifs_gar_merchant_entry
+msgid "采购方进件"
+msgstr ""
+
+#. module: ifs_gar_invite
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_invite.ifs_gar_invite_supplier_view_form
+msgid "验证"
+msgstr ""

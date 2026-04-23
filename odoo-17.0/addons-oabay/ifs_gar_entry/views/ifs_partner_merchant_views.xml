@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_merchant_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.tree.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_tree" />
+    <field name="arch" type="xml">
+      <field name="state" position="before">
+        <field name="entry_date"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_partner_merchant_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.form.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+        <button class="oe_stat_button" icon="fa-list" name="view_entrys" type="object">
+          <div class="o_form_field o_stat_info">
+            <span class="o_stat_text">进件记录</span>
+          </div>
+        </button>
+      </xpath>
+      <xpath expr="//page[hasclass('pg_contact')]" position="before">
+        <page string="特许经营" name="franchise_info" class="pg_franchise" invisible="not practice_license">
+          <group class="gp_franchise" string="医疗机构执业许可证信息">
+            <group/>
+            <field name="practice_definition_id" invisible="1"/>
+            <field name="practice_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+          </group>
+          <group class="o_group_label_lg" string="医疗机构执业许可证" name="gp_franchise">
+            <group colspan="2" class="o_ifs_flex_container">
+              <div class="o_ifs_center_img">
+                <div class="o_ifs_img">
+                  <field name="practice_license" widget="image" readonly="1" nolabel="1"/>
+                  <div class="o_ifs_img_text">医疗机构执业许可证</div>
+                </div>
+              </div>
+            </group>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,34 @@
+.o_ifs_flex_container {
+    display: flex;
+}
+
+.o_ifs_center_img {
+    width: 100%;
+    text-align: center;
+    background-color: #ffffff;
+    padding-top: 30px;
+
+    .o_ifs_img {
+        display: inline-block;
+
+        .o_field_image, .o_field_pdf_viewer {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 0 30px;
+        }
+
+        .o_ifs_img_text {
+            margin: -10px 0 30px 0;
+        }
+    }
+
+    .o_ifs_contract {
+        display: inline-block;
+        margin: 0px 20px;
+
+        .o_ifs_contract_text {
+            margin: 20px 0 30px 0;
+        }
+    }
+}

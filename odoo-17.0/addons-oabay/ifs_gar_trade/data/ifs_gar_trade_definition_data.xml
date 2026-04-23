@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="ifs_gar_trade_definition_order_info" model="ifs.gar.trade.definition">
+      <field name="name">交易订单信息配置</field>
+      <field name="params_definition">[{"name": "express_mode", "type": "char", "string": "物流方式", "default": ""}, {"name": "express_num", "type": "char", "string": "物流单号", "default": ""}]</field>
+    </record>
+  </data>
+</odoo>

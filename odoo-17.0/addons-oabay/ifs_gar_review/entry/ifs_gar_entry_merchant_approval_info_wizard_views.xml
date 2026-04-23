@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_entry_merchant_approval_info_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.approval.info.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.merchant.approval.info.wizard</field>
+    <field name="arch" type="xml">
+      <form class="o_base_settings" js_class="ifs_gar_entry_form">
+        <field name="currency_id" invisible="1"/>
+        <field name="entry_id" invisible="1" force_save="1"/>
+        <sheet>
+          <div class="entry_column_item_inform_a">
+            <img src="/ifs_gar_entry/static/img/attention.png" alt="签约"/> 签约</div>
+          <hr/>
+          <div style="margin-top:20px;">
+            尊敬的客户：<br/>
+            <br/>
+            <span class="entry_column_item_inform">您的进件已经审批通过</span>
+          </div>
+          <hr style="border: 1px dashed"/>
+          <group>
+            <group colspan="2">
+              <field name="supplier_final_quota"/>
+            </group>
+          </group>
+          <div class="word_doc_inner_title" style="margin-top:45px;">
+            <img src="/ifs_gar_entry/static/img/tips.png" alt="tips"/>
+            <span class="entry_column_item_inform">“鸥贝云”品牌的归属权为鸥贝云信用科技（深圳）有限公司</span>
+          </div>
+          <group class="gp_next" col="3" style="margin-top:50px;">
+            <group></group>
+            <group>
+              <button name="action_sign" type="object" class="btn btn-primary btn-next">确认开通</button>
+            </group>
+            <group></group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

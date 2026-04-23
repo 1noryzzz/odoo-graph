@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!--保理方权限-->
+  <record id="group_ifs_gar_repayment_factor_user" model="res.groups">
+    <field name="name">还款管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_factor"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_gar_trade.group_ifs_gar_trade_order_factor_user'))]"/>
+    <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    <field name="comment">普惠金融场景下，可查看还款情况的用户(保理方)</field>
+  </record>
+  <record id="group_ifs_gar_repayment_factor_manager" model="res.groups">
+    <field name="name">还款管理：审核还款</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_factor"/>
+    <field name="implied_ids" eval="[Command.link(ref('group_ifs_gar_repayment_factor_user'))]"/>
+    <field name="comment">普惠金融场景下，可审核确认已收到还款的用户(保理方)</field>
+  </record>
+
+  <!--采购方权限-->
+  <record id="group_ifs_gar_repayment_merchant_user" model="res.groups">
+    <field name="name">还款管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_merchant"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_gar_trade.group_ifs_gar_trade_order_merchant_user')])]"/>
+    <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    <field name="comment">普惠金融场景下，可查看还款情况的用户(采购方)</field>
+  </record>
+  <record id="group_ifs_gar_repayment_merchant_manager" model="res.groups">
+    <field name="name">还款管理：发起还款</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_merchant"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_gar_trade.group_ifs_gar_trade_order_merchant_manager')), Command.link(ref('group_ifs_gar_repayment_merchant_user'))]"/>
+    <field name="comment">普惠金融场景下，可发起还款的用户(采购方)</field>
+  </record>
+
+  <!--供应方权限-->
+  <record id="group_ifs_gar_repayment_supplier_user" model="res.groups">
+    <field name="name">还款管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_supplier"/>
+    <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_gar_trade.group_ifs_gar_trade_order_supplier_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看还款情况的用户(供应方)</field>
+  </record>
+  <record id="group_ifs_gar_repayment_supplier_manager" model="res.groups">
+    <field name="name">还款管理：回款</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_supplier"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_gar_trade.group_ifs_gar_trade_order_supplier_manager')), Command.link(ref('group_ifs_gar_repayment_supplier_user'))]"/>
+    <field name="comment">普惠金融场景下，可发起回款结清的用户(供应方)</field>
+  </record>
+
+  <data noupdate="0">
+    <record id="ifs_partner.group_ifs_partner_factor_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_gar_repayment_factor_manager'))]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_merchant_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_gar_repayment_merchant_manager'))]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_supplier_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_gar_repayment_supplier_manager'))]"/>
+    </record>
+  </data>
+</odoo>

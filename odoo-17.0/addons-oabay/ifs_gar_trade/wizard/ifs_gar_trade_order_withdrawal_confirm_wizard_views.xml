@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_trade_order_withdrawal_confirm_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.withdrawal.confirm.wizard.view.form</field>
+    <field name="model">ifs.gar.trade.order.withdrawal.confirm.wizard</field>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <form edit="0">
+        <sheet>
+          <field name="currency_id" invisible="1"/>
+          <field name="trade_order_id" invisible="1"/>
+          <field name="can_refuse" invisible="1"/>
+          <field name="order_info_definition_id" invisible="1" force_save="1"/>
+          <div class="contract_title_suffix">
+          </div>
+          <div class="doc_title">总览</div>
+          <div class="doc_table_box">
+            <div class="title">付款企业</div>
+            <div class="value"><field name="merchant_id" options="{'no_open': True}"/></div>
+            <div class="title">收款企业</div>
+            <div class="value"><field name="supplier_id" options="{'no_open': True}"/></div>
+            <div class="title">基础合同编号</div>
+            <div class="value"><field name="order_code"/></div>
+            <div class="title">基础合同签订时间</div>
+            <div class="value"><field name="trade_date"/></div>
+            <div class="title">请款金额</div>
+            <div class="value_auto">
+              <field name="withdrawal_amount"/>
+              <div style="width:100px">（大写）</div>
+              <field name="withdrawal_amount_uppercase"/>
+            </div>
+            <div class="title">账期</div>
+            <div class="value"><field name="credit_term"/>天</div>
+            <div class="title">费用承担到期日</div>
+            <div class="value"><field name="repayment_date"/></div>
+          </div>
+          <field name="order_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+          <div class="doc_title dv_title">供应货物/服务明细</div>
+          <div class="dv_items">
+          <field name="item_ids" nolabel="1" mode="tree">
+            <tree editable="bottom" edit="1" no_open="1">
+              <field name="sequence" widget="handle" />
+              <field name="name" />
+              <field name="model" />
+              <field name="quantity" />
+              <field name="price" />
+              <field name="amount" />
+              <field name="currency_id" invisible="1"/>
+            </tree>
+          </field>
+          </div>
+          <div class="doc_title">重要事项说明</div>
+          <div class="word_inner_content">
+            a/请务必保证基础合同编号的真实性，后期产生纠纷，我司需要贵司提供基础合同编号项下的合同影印本<br/>
+            b/该请款单发起后需要买方确认，如买方未确认的情况下，请勿勾选货物与服务<br/>
+            c/建议订单发出前先与买方确认供货的金额、数量等关键因素，以免造成不必须要流程繁琐<br/>
+            d/当买方确认后情尽快组织商品或服务的交割<br/>
+          </div>
+        </sheet>
+        <footer>
+          <button name="action_confirm" string="确认" type="object" class="btn-primary"/>
+          <button name="action_refuse" string="拒绝交易" type="object" class="btn-primary" invisible="not can_refuse"
+            groups="ifs_gar_trade.group_ifs_gar_trade_order_merchant_manager" confirm="此操作将拒绝当前交易，请确认！"/>
+          <button string="取消" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

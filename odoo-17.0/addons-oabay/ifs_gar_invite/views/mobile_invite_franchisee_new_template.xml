@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="ifs_gar_invite_franchisee_register_template" name="注册" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>注册</div>
+      </t>
+      <t t-set="o_form_action">/ifs_gar_invite/new/franchisee/register/business</t>
+      <div class="main gar_invite_main franchisee_register_main r_main">
+        <div class="gar_input">
+          <label>手机号</label>
+          <input type="text" name="phone" required="required"/>
+        </div>
+        <div class="gar_input">
+          <label>注册类型</label>
+          <select class="gar_select" name="reg_mer_type">
+            <option selected="selected" hidden="hidden" value="placeholder">请选择注册类型</option>
+          </select>
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="注册" />
+      </div>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_franchisee_register_basic_new_template" name="合伙人注册-基本信息" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <form id="idcardForm" action="/ifs_gar_invite/new/franchisee/register/other" method="post" enctype="multipart/form-data">
+        <div class="main gar_invite_main franchisee_register_main">
+          <div class="progressbar" data-current-step="basic"></div>
+
+          <div class="person_main">
+            <div class="title">
+					个人身份信息
+            </div>
+            <div class="idcard_content n_idcard_container">
+              <div>
+                <input type="file" hidden="hidden" name="idcard_front_image" capture="camera"/>
+                <img id="idcard_front_image" class="idcard_img" src="/galaxy_tdesign/static/src/img/mobile_idcard_front_image.png"/>
+              </div>
+              <div>
+                <input type="file" hidden="hidden" name="idcard_back_image" capture="camera"/>
+                <img id="idcard_back_image" class="idcard_img" src="/galaxy_tdesign/static/src/img/mobile_idcard_back_image.png"/>
+              </div>
+            </div>
+            <div>
+              <div class="gar_input">
+                <label>姓名</label>
+                <input type="text" name="name" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>性别</label>
+                <input type="text" name="gender" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>出生日期</label>
+                <input type="date" name="birthday" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>身份证号</label>
+                <input type="text" name="card_no" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>住址</label>
+                <input type="text" name="family_address" />
+              </div>
+              <div class="gar_input">
+                <label>有效期</label>
+                <input type="text" name="idcard_expiry_date" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>签发机关</label>
+                <input type="text" name="authority" disabled="disabled"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="person_register_warring">
+			业务申请中，我们会收取您的相关资料并进行加密储存，保证不向第三方公开您的个人资料。
+        </div>
+
+        <div class="rounded-0 fade show d-print-none css_editable_mode_hidden galaxy_mobile_footer">
+          <div class="container">
+            <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" value="下一步"/>
+          </div>
+        </div>
+      </form>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_franchisee_register_business_new_template" name="合伙人注册-企业信息" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <form id="businessForm" action="/ifs_gar_invite/new/franchisee/register/basic" method="post" enctype="multipart/form-data">
+        <div class="main gar_invite_main franchisee_register_main">
+          <div class="progressbar" data-current-step="business"></div>
+
+          <div class="license_main">
+            <div class="title">
+					营业执照信息
+            </div>
+            <div class="license_img">
+              <input type="file" hidden="hidden" name="business_license" capture="camera"/>
+              <img id="business_license" class="img" src="/galaxy_tdesign/static/src/img/mobile_business_license.png"/>
+            </div>
+            <div>
+              <div class="gar_input">
+                <label>执照名称</label>
+                <input type="text" name="full_name" disabled="disabled" t-att-value="business.name"/>
+              </div>
+              <div class="gar_input">
+                <label>法人姓名</label>
+                <input type="text" name="legal_person" disabled="disabled" t-att-value="business.legal_person"/>
+              </div>
+              <div class="gar_input">
+                <label>执照编号</label>
+                <input type="text" name="credit_no" disabled="disabled" t-att-value="business.credit_no"/>
+              </div>
+              <div class="gar_input">
+                <label>注册时间</label>
+                <input type="date" name="establish_date" disabled="disabled" t-att-value="business.establish_date"/>
+              </div>
+              <div class="gar_input">
+                <label>注册住址</label>
+                <input type="text" name="address" disabled="disabled" t-att-value="business.address"/>
+              </div>
+              <div class="gar_input">
+                <label>有效期至</label>
+                <input type="text" name="business_date_to" disabled="disabled" t-att-value="business.business_date_to"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="settlement_main">
+            <div class="title">
+					结算信息
+            </div>
+            <div>
+              <div class="gar_input">
+                <label>账户名称</label>
+                <input type="text" name="account_name" required="required"/>
+              </div>
+              <div class="gar_input">
+                <label>企业账号</label>
+                <input type="text" name="account_no" required="required"/>
+              </div>
+              <div class="gar_input">
+                <label>开户银行</label>
+                <input type="text" name="deposit_bank" required="required"/>
+              </div>
+            </div>
+            <div class="img-container">
+              <div class="title">
+            开户许可证上传
+              </div>
+              <div class="img-body">
+                <input type="file" hidden="hidden" name="deposit_license" capture="camera"/>
+                <img id="deposit_license" class="img" src="/galaxy_tdesign/static/src/img/plus.png"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-0 fade show d-print-none css_editable_mode_hidden galaxy_mobile_footer">
+          <div class="container">
+            <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" value="下一步"/>
+          </div>
+        </div>
+      </form>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_franchisee_register_other_new_template" name="合伙人注册-其他" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <form id="docForm" action="/ifs_gar_invite/franchisee/action_and_goto_sign" method="post" enctype="multipart/form-data">
+        <div class="main gar_invite_main franchisee_register_main">
+          <div class="progressbar" data-current-step="other"></div>
+          <div class="img-container">
+            <div class="title">
+            前台照
+            </div>
+            <div class="img-body">
+              <input type="file" hidden="hidden" name="reception" capture="camera"/>
+              <img id="reception" class="img" src="/galaxy_tdesign/static/src/img/plus.png"/>
+            </div>
+          </div>
+          <div class="img-container">
+            <div class="title">
+            办公区照片
+            </div>
+            <div class="img-body">
+              <input type="file" hidden="hidden" name="office_area" capture="camera"/>
+              <img id="office_area" class="img" src="/galaxy_tdesign/static/src/img/plus.png"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-0 fade show d-print-none css_editable_mode_hidden galaxy_mobile_footer">
+          <div class="container">
+            <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" value="下一步"/>
+          </div>
+        </div>
+      </form>
+    </xpath>
+  </template>
+</odoo>

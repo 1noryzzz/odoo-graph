@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+
+    <record id="ifs_partner_merchant_view_form_business_inherited" model="ir.ui.view">
+      <field name="name">ifs.partner.merchant.view.form.business.inherited</field>
+      <field name="model">ifs.partner.merchant</field>
+      <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_form"/>
+      <field name="arch" type="xml">
+        <page name="mechant_business_credits" position="after">
+          <page name="mechant_business_info" string="股权穿透" class="pg_business" groups="ifs_partner.group_ifs_partner_factor_user,ifs_partner.group_ifs_partner_supplier_manager">
+            <group name="business_stock" string="企业股权穿透图" col="1">
+              <group/>
+              <div class="oe_org_tree_view">
+                <code name="equityPenetrate"/>
+                <field name="shareholder_ids" orient="top" nolabel="1" next="fetch_shareholder_data" mode="tree">
+                  <tree>
+                    <field name="display_name"></field>
+                    <!-- <field name="lineContent"></field> -->
+                  </tree>
+                </field>
+                <field name="branch_ids" orient="bottom" nolabel="1" next="fetch_branch_data" mode="tree">
+                  <tree>
+                    <field name="display_name"></field>
+                    <!-- <field name="lineContent"></field> -->
+                  </tree>
+                </field>
+              </div>
+            </group>
+            <group name="business_framework" string="企业架构图" col="1">
+              <group/>
+              <div class="oe_org_tree_view">
+                <code name="architecture"/>
+                <field name="left_arch_category_ids" orient="left" nolabel="1" mode="tree">
+                  <tree>
+                    <field name="display_name"></field>
+                  </tree>
+                </field>
+                <field name="right_arch_category_ids" orient="right" nolabel="1" mode="tree">
+                  <tree>
+                    <field name="display_name"></field>
+                  </tree>
+                </field>
+                <field name="top_arch_category_ids" orient="top" nolabel="1" mode="tree">
+                  <tree>
+                    <field name="display_name"></field>
+                  </tree>
+                </field>
+                <field name="bottom_arch_category_ids" orient="bottom" nolabel="1" mode="tree">
+                  <tree>
+                    <field name="display_name"></field>
+                  </tree>
+                </field>
+              </div>
+            </group>
+          </page>
+        </page>
+      </field>
+    </record>
+
+  </data>
+</odoo>

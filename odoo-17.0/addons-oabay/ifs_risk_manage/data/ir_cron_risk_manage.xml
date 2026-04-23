@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record forcecreate="True" id="ir_cron_fetch_company_info" model="ir.cron">
+      <field name="name">鸥贝云风险管理：获取公司信息</field>
+      <field name="model_id" ref="model_ifs_base_company"/>
+      <field name="state">code</field>
+      <field name="code">model.start_fetch(['TYC-WZBA','TYC-LSGDJLSFR','TYC-DYDJ','TYC-SXBZXR','TYC-QYWXGZH','TYC-QYZL','TYC-RJZZQ','TYC-SFXZ','TYC-YCML','TYC-ZPZZQ','TYC-ZZZS','TYC-PJWS','TYC-QYBZXR','TYC-QYSB','TYC-NSRLX','TYC-QYJBXXJZYRY','TYC-QYWB','TYC-XZCF','TYC-QYGYS','TYC-QYKH'])</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="numbercall">-1</field>
+      <field name="active" eval="False" />
+      <field name="doall" eval="False" />
+    </record>
+
+    <record forcecreate="True" id="ir_cron_fetch_risk_manage_br_credits_info" model="ir.cron">
+      <field name="name">鸥贝云风险管理：获取公司主要人员个人征信信息(百融征信)</field>
+      <field name="model_id" ref="model_ifs_risk_manage_credits"/>
+      <field name="state">code</field>
+      <field name="code">model.start_risk_fetch(['BR-QYZXCX-STR', 'BR-QYZXCX-MCP'])</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="numbercall">-1</field>
+      <field name="active" eval="False" />
+      <field name="doall" eval="False" />
+    </record>
+
+    <record forcecreate="True" id="ir_cron_fetch_risk_manage_pd_credits_info" model="ir.cron">
+      <field name="name">鸥贝云风险管理：获取公司主要人员个人征信信息(朴道征信)</field>
+      <field name="model_id" ref="model_ifs_risk_manage_credits"/>
+      <field name="state">code</field>
+      <field name="code">model.start_risk_fetch_pd(['PDZX-GFXXYPF-BZB', 'PDZX-SCORE-FRAUD-MICROSCORE-EST', 'PDZX-XWQYZHXYPF-BZB', 'PDZX-SBXYPFXWB-BZB', 'PDZX-GWSBFXBQ-BZB', 'PDZX-RALA-NW', 'PDZX-RISK-IND', 'PDZX-HKNLDJ-BZB', 'PDZX-CZNLDJ-BZB', 'PDZX-WEALTH', 'PDZX-FXFQZPF-BZB'])</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="numbercall">-1</field>
+      <field name="active" eval="False" />
+      <field name="doall" eval="False" />
+    </record>
+    <!--, 'PDZX-DRJDSQXW-BZB',  'PDZX-GXWLDJ-BZB', 'PDZX-JDSQXW-BZB'(百融已经有), 'PDZX-LABEL-COM', 'PDZX-QZF-BZB', 'PDZX-SCORE-PY-BASIC', 'PDZX-TOTAL-DEBIT',  已通但暂时不需要-->
+    <!--, 'PDZX-JDPGBQ-BZB' 缺少参数-->
+    <!--, 'PDZX-ZHFXBQ-BZB', 'PDZX-FQZFXPF-BZB' 没有文档-->
+    <!--, 'PDZX-GWSWSJSJHHY-BZB', 'PDZX-SPECIAL-PLUS'(百融已经有), 'PDZX-SCORE-XYCREDIT'(需要使用但是未开通), 'PDZX-RISKBRHAVIOR-ASSESS', 'PDZX-SBFXXYPF-TYKQ', 'PDZX-FQZPF-BZB' 未开通-->
+  </data>
+</odoo>

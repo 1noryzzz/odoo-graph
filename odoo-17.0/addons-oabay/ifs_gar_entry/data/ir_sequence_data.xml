@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="seq_ifs_gar_entry_supplier" model="ir.sequence">
+      <field name="name">供应方进件流水号</field>
+      <field name="code">ifs.gar.entry.supplier</field>
+      <field name="prefix">SE%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <record id="seq_ifs_gar_entry_merchant" model="ir.sequence">
+      <field name="name">采购方进件流水号</field>
+      <field name="code">ifs.gar.entry.merchant</field>
+      <field name="prefix">ME%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <record id="seq_ifs_gar_entry_franchisee" model="ir.sequence">
+      <field name="name">事业合伙人进件流水号</field>
+      <field name="code">ifs.gar.entry.franchisee</field>
+      <field name="prefix">FE%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <record id="seq_ifs_gar_entry_lawfirm" model="ir.sequence">
+      <field name="name">律师事务所进件流水号</field>
+      <field name="code">ifs.gar.entry.lawfirm</field>
+      <field name="prefix">LE%(year)s%(month)s%(day)s%(h24)s%(min)s%(sec)s</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+
+  </data>
+</odoo>

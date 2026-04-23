@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_trade_order_circuit_breaker_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.circuit.breaker.wizard.view.form</field>
+    <field name="model">ifs.gar.trade.order.circuit.breaker.wizard</field>
+    <field name="arch" type="xml">
+      <form string="" class="o_galaxy_form_view">
+        <field name="trade_order_id" invisible="1" force_save="1"/>
+        <field name="currency_id" invisible="1"/>
+        <field name="trade_state" invisible="1"/>
+        <sheet>
+          <div class="alert alert-warning" role="alert">
+            请注意，此操作将会熔断本笔应收账款转让，请确认订单信息，谨慎操作。
+          </div>
+          <group string="基础信息" class="o_group_label_lg">
+            <group colspan="2">
+              <field name="merchant_id"/>
+            </group>
+            <group>
+              <field name="order_code" />
+              <field name="trade_amount" />
+              <field name="withdrawal_amount" />
+              <field name="credit_term"/>
+            </group>
+            <group>
+              <field name="trade_date" />
+              <field name="trade_start_date" />
+              <field name="repayment_date" />
+              <field name="days_left"/>
+            </group>
+          </group>
+          <group string="金额信息" class="o_group_label_lg">
+            <group colspan="2" class="o_two_line_cell">
+              <label for="order_bills_amount"/>
+              <div class="oe_inline" style="display: inline;">
+                <field name="order_bills_amount" class="oe_inline oe_monetary_lg"/>
+                <span class="oe_monetary_uppercase">（大写）：<field name="order_bills_amount_uppercase" class="oe_inline"/></span>
+              </div>
+              <field name="fee_amount" class="oe_red"/>
+              <field name="fuse_remark" readonly="trade_state == 'fuse'"/>
+            </group>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_breaker" type="object" string="确认熔断" class="btn-primary" data-hotkey="c" invisible="trade_state not in ['confirmed', 'period_repaid', 'fuse']"/>
+          <button string="再想想" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

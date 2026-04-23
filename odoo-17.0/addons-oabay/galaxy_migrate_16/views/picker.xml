@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+  <template id="galaxy_picker5" name="城市联动选择器">
+    <t t-call="web.layout">
+
+      <t t-set="head">
+        <t t-call-assets="web.assets_frontend" t-js="true"/>
+      </t>
+      <!-- <button class="picker5">选择</button> -->
+
+      <input class="picker5" placeholder="------选择城市------"></input>
+    </t>
+    
+  </template>
+
+</odoo>

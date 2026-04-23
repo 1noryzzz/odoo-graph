@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="C11_contract" model="ifs.contract.template">
+      <field name="name">律师催收函</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">C11</field>
+      <field name="need_partner">two</field>
+      <field name="need_faceid">False</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_notf"/>
+      <field name="sign_position_params">[
+        {},
+        {"chaptes": [{"offsetX": 0.65,"offsetY": 0.3}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_content">
+
+            <div class="word_doc_title">律师催收函</div>
+            <div class="word_inner_content_right song_typeface word_inner_content">信函编码：
+              <t t-out="object.code">NA</t>
+            </div>
+            <div class="word_content_start">致：</div>
+            <div>
+              <span class="word_content_start">债务人：</span>
+              <span class="decoration_line">
+                <t t-out="object.partner_one.name"> NA 有限公司</t>
+              </span>
+              <span class="word_content_start">法定代表人：</span>
+              <span class="decoration_line">
+                <t t-out="object.partner_one.legal_id.name"> NA </t>
+              </span>
+              <br />
+              <span class="word_content_start">保证人/抵押人/质押人：</span>
+              <span class="decoration_line">
+                <t t-out="object.partner_one.legal_id.name"> NA </t>
+              </span>
+              <br />
+
+            </div>
+            <div class="word_inner_content song_typeface">
+              <p>
+                受亚洲保理（深圳）有限公司（以下简称“亚洲保理”）委托，按照委托人提供的贵方签署的《买方账款最高子额度合同》、《应付账款转让确认书》（合同编号     NA          ）
+                等文件约定：截至本函发送之日，贵方应付亚洲保理账款本金  NA 万元、违约金 NA  万元、滞纳金  NA 万元，以上合计      万元。
+              </p>
+              <p>以上款项亚洲保理已多次催收，但至今贵方未能如约付款，且对以上应付款项也无任何异议，已构成严重违约。依照双方签署的相关协议文件以及我国民法典等相关法律法规规定，特催告如下：</p>
+              <p>一、自本函发送日3日内，贵方应支付 NA   万元至亚洲保理指定的如下账户：<t t-out="object.partner_two.account_name" />
+                开户行：              <t t-out="object.partner_two.deposit_bank" />
+                账号：              <t t-out="object.partner_two.account_no" />
+              </p>
+              <p>二、贵方如仍未付清以上款项，则亚洲保理有权将贵方违约相关信息上报至中国人民银行征信管理中心、征信机构、行业主管部门、行业协会及社会公众。
+                  由此产生的不良影响由你方承担，如银行车贷、房贷及其他贷款提前到期或新增贷款审批等。
+              </p>
+              <p>三、贵方如仍未付清以上款项，我方有权向贵方的合作方、上下游客户、媒体、行业协会等予以通报，或公开催收。</p>
+              <p>四、贵方如仍未付清以上款项，我方有权申请仲裁、财产保全、强制执行、财产查控，对贵方及担保人名下财产予以冻结、查封、扣押，并对贵方进行司法审计，追究拒不执行生效判决、偷税逃税、
+                  资金侵占或挪用等刑事责任，相关责任人被限制高消费、出入境、子女就学、行政拘留、刑事立案等。</p>
+              <p>五、我方为实现债权而产生的律师费、调查费、仲裁费、保险费、保全费、执行费、评估费、审计费、公证费、拍卖费、公告费、调查费等维权费用，皆由贵方承担。</p>
+              <p>为了避免付诸司法程序、降低诉累、损失扩大，请贵方立即付款。如贵方已付清，则无需理会本函。</p>
+              <p>如有疑议请联系亚洲保理受托人，联系人              <span class="decoration_line">
+                  <t t-out="object.partner_two.legal_id.name">NA</t>
+                </span>联系电话              <span class="decoration_line">
+                  <t t-out="object.partner_two.phone">NA</t>
+                </span>；
+              </p>
+              <p class="word_content_start">特此函告</p>
+              <div class="word_inner_content_right song_typeface word_inner_content">
+                <div>湾区律师事务所</div>
+                <div>
+                  <t t-out="format_date(object.write_date)">年 月 日</t>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

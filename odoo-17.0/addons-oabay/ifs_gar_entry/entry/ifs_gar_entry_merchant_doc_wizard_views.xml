@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_entry_merchant_doc_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.doc.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.merchant.doc.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_entry_merchant_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="attributes">
+        <attribute name="class">o_galaxy_form_view</attribute>
+      </xpath>
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <div class="o_ifs_center_img">
+          <div class="o_ifs_img">
+            <field name="reception_picture" widget='image' options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '法人在前台的合影照片'}" nolabel="1"/>
+            <div class="o_ifs_img_text">前台照</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="office_area_picture" widget='image' options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '办公区域照片'}" nolabel="1"/>
+            <div class="o_ifs_img_text">公司办公区</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="charter" widget='pdf_viewer' 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '企业章程扫描件上传（加盖公章）如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'charter_preview','size': ['300', '190']}" nolabel="1"/>
+            <div class="o_ifs_img_text">企业章程扫描件上传（加盖公章）</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="half_year_balance_sheet" widget='pdf_viewer' 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '近半年的资产负债表 如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'half_year_balance_sheet_preview','size': ['300', '190']}" nolabel="1"/>
+            <div class="o_ifs_img_text">近半年的资产负债表</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="half_year_cash_flow_sheet" widget='pdf_viewer' 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '近半年现金流量表（加盖公章）如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'half_year_cash_flow_sheet_preview','size': ['300', '190']}" nolabel="1"/>
+            <div class="o_ifs_img_text">近半年现金流量表</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="half_year_assets_gains_losses_sheet" widget='pdf_viewer' 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '近半年资产损益表（加盖公章）如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'half_year_assets_gains_losses_sheet_preview','size': ['300', '190']}" nolabel="1"/>
+            <div class="o_ifs_img_text">近半年资产损益表</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="lease_contract" widget='pdf_viewer' 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '办公区租赁合同 如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'lease_contract_preview','size': ['300', '190']}" nolabel="1"/>
+            <div class="o_ifs_img_text">办公区租赁合同</div>
+          </div>
+          <div class="o_ifs_img">
+            <field name="enterprise_property_certificate" widget='pdf_viewer' 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '企业名下相关财产证明（如有请提供）', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'enterprise_property_certificate_preview','size': ['300', '190']}" nolabel="1"/>
+            <div class="o_ifs_img_text">企业相关财产证明</div>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

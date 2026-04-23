@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_invite_supplier_view_form_contract_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.supplier.view.form.contract.inherited</field>
+    <field name="model">ifs.gar.invite.supplier</field>
+    <field name="inherit_id" ref="ifs_gar_invite.ifs_gar_invite_supplier_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <button name="choice_fee_solution" type="object" string="收费方案选择" class="btn-primary" 
+         invisible="state not in ['draft', 'sended', 'waiting']"
+        groups="ifs_gar_account.group_ifs_gar_account_factor_user" />
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

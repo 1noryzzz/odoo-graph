@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <record id="galaxy_migrate_data_api_view_tree" model="ir.ui.view">
+      <field name="name">galaxy.migrate.data.api.view.tree</field>
+      <field name="model">galaxy.migrate.data.api</field>
+      <field name="arch" type="xml">
+        <tree string="api列表">
+          <field name="code"/>
+          <field name="name"/>
+          <field name="active"/>
+          <field name="state"/>
+          <field name="category_id"/>
+          <field name="platform_id"/>
+          <field name="vendor_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="galaxy_migrate_data_api_view_search" model="ir.ui.view">
+      <field name="name">galaxy.migrate.data.api.view.search</field>
+      <field name="model">galaxy.migrate.data.api</field>
+      <field name="arch" type="xml">
+        <search string="外部接口查询">
+        <field name="platform_id"/>
+          <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+          
+          <field name="vendor_id"/>
+          <searchpanel>
+            <field name="category_id" icon="fa-folder-open" enable_counters="1"/>
+          </searchpanel>
+          <field name="code"/>
+          <field name="base_uri"/>
+          <field name="request_method"/>
+          <field name="request_body_format"/>
+          <separator/>
+          <filter name="inactive" string="已归档接口" domain="[('active','=',False)]" help="显示已归档接口"/>
+          <group expand="1" string="Group By">
+            <filter name="group_state" context="{'group_by': 'state'}"/>
+            <filter name="group_platform_id" context="{'group_by': 'platform_id'}"/>
+            <filter name="group_vendor_id" context="{'group_by': 'vendor_id'}"/>
+            <filter name="group_request_method" context="{'group_by': 'request_method'}"/>
+            <filter name="group_request_body_format" context="{'group_by': 'request_body_format'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+   <record id="galaxy_migrate_data_api_wizard_view_from" model="ir.ui.view">
+      <field name="name">galaxy.migrate.data.api.wizard.view.form</field>
+      <field name="model">galaxy.migrate.data.api.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <field name="api_data_ids" />
+          </sheet>
+          <footer>
+            <button special="cancel" data-hotkey="q" string="取消" class="btn-secondary"/>
+            <button name="start_migrate_data" string="开始导入" type="object" class="btn btn-primary" data-hotkey="z"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="galaxy_migrate_data_api_wizard_action" model="ir.actions.act_window">
+      <field name="name">数据导入</field>
+      <field name="res_model">galaxy.migrate.data.api.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="binding_model_id" ref="model_galaxy_migrate_data_api"/>
+    </record>
+
+    <record id="galaxy_migrate_data_api_act_window" model="ir.actions.act_window">
+      <field name="name">数据迁移列表</field>
+      <field name="res_model">galaxy.migrate.data.api</field>
+      <field name="view_mode">tree,form</field>
+      <field name="target">current</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有外部接口分类，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <!-- <menuitem id="galaxy_migrate_data_api_menu" name="接口数据" action="galaxy_migrate_data_api_act_window" groups="base.group_system" parent="galaxy_external_api.galaxy_external_api_root_menu" sequence="9"/> -->
+
+  </data>
+</odoo>

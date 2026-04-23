@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_partner_insured_view_search" model="ir.ui.view">
+    <field name="name">ifs.partner.insured.view.search</field>
+    <field name="model">ifs.partner.insured</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_mixin_view_search" />
+    <field name="arch" type="xml">
+      <search position="attributes">
+        <attribute name="string">被保人查询</attribute>
+      </search>
+      <search position="inside">
+        <field name="seq_code" string="被保人编号"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_partner_insured_view_tree" model="ir.ui.view">
+    <field name="name">ifs.partner.insured.view.tree</field>
+    <field name="model">ifs.partner.insured</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_tree" />
+    <field name="arch" type="xml">
+      <tree position="attributes">
+        <attribute name="string">被保人列表</attribute>
+        <attribute name="js_class">ifs_partner_create_list</attribute>
+        <attribute name="expand">1</attribute>
+      </tree>
+      <field name="company_code" position="before">
+        <field name="seq_code" string="被保人编号"/>
+      </field>
+      <tree position="inside">
+        <control>
+          <create name="add_line_control" string="Add a line"/>
+          <!-- <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+          <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/> -->
+        </control>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_partner_insured_view_form" model="ir.ui.view">
+    <field name="name">ifs.partner.insured.view.form</field>
+    <field name="model">ifs.partner.insured</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_form" />
+    <field name="arch" type="xml">
+      <form position="attributes">
+        <attribute name="js_class">ifs_partner_form</attribute>
+      </form>
+      <field name="company_id" position="after">
+        <field name="ifs_company_id" invisible="1"/>
+      </field>
+      <span name="ifs_base_company_code" position="replace">
+        <span invisible="not seq_code">被保人编号：<field name="seq_code" class="oe_inline" /></span>
+      </span>
+      <field name="name" position="attributes">
+        <attribute name="placeholder">被保人名称</attribute>
+      </field>
+      <group name="gp_account" position="replace"/>
+      <xpath expr="//group[hasclass('gp_legal')]" position="after">
+        <field name="finance_id" invisible="1"/>
+        <field name="partner_id" invisible="1"/>
+        <group class="gp_finance" string="财务联系人信息" invisible="not finance_id">
+          <group>
+            <field name="finance_name"/>
+          </group>
+          <group>
+            <field name="finance_phone"/>
+          </group>
+        </group>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

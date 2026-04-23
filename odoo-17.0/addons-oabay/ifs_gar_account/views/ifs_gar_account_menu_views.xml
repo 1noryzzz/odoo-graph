@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <menuitem id="ifs_gar_account_fee_config_menu" name="收费和计息" 
+    parent="ifs_partner.ifs_partner_config_menu" sequence="2"/>
+
+  <menuitem id="ifs_gar_account_supplier_fee_solution_menu" name="收费方案" 
+    action="ifs_gar_account.ifs_gar_partner_fee_solution_act_window" groups="ifs_partner.group_ifs_partner_platform_system,ifs_partner.group_ifs_partner_factor_system" 
+    parent="ifs_gar_account_fee_config_menu" sequence="1"/>
+
+  <menuitem id="ifs_gar_account_supplier_fee_type_menu" name="收费项目设置" 
+    action="ifs_gar_account.ifs_gar_partner_fee_type_act_window" groups="ifs_partner.group_ifs_partner_platform_system,ifs_partner.group_ifs_partner_factor_system" 
+    parent="ifs_gar_account_fee_config_menu" sequence="2"/>
+
+  <menuitem id="ifs_gar_account_supplier_interest_solution_menu" name="计息方案" 
+    action="ifs_gar_account.ifs_gar_partner_interest_solution_act_window" groups="ifs_partner.group_ifs_partner_platform_system,ifs_partner.group_ifs_partner_factor_system" 
+    parent="ifs_gar_account_fee_config_menu" sequence="3"/>
+
+  <menuitem id="ifs_gar_account_menu_root" name="账户管理" web_icon="ifs_gar_account,static/img/ifs_gar_account.png" />
+  <menuitem id="ifs_gar_account_upgrade_quota_apply_menu" name="额度调整审批" 
+    action="ifs_gar_account.ifs_gar_upgrade_quota_apply_act_window" 
+    groups="ifs_gar_account.group_ifs_gar_account_factor_user,ifs_gar_account.group_ifs_gar_account_supplier_user"
+    parent="ifs_gar_account_menu_root"/>
+
+  <menuitem id="ifs_gar_account_bill_menu" name="账单列表" 
+    action="ifs_gar_account.ifs_gar_loan_account_bill_act_window" 
+    groups="ifs_gar_account.group_ifs_gar_account_factor_user_ro,ifs_gar_account.group_ifs_gar_account_merchant_user_ro,ifs_gar_account.group_ifs_gar_account_supplier_user_ro"
+    parent="ifs_gar_account_menu_root" sequence="1"/>
+
+  <!-- <menuitem id="ifs_gar_account_bill_menu" name="未出账单" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/>
+  <menuitem id="ifs_gar_need_pay_bill_order_menu" name="待还账单" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/>
+  <menuitem id="ifs_gar_account_bill_d30_order_menu" name="逾期D30" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/>
+  <menuitem id="ifs_gar_account_bill_d60_order_menu" name="逾期D60" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/>
+  <menuitem id="ifs_gar_account_bill_d90_order_menu" name="逾期D90" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/>
+  <menuitem id="ifs_gar_history_bill_order_menu" name="历史账单" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/>
+  <menuitem id="ifs_gar_shutup_bill_order_menu" name="账单熔断" 
+    action="ifs_gar_withdrawal.ifs_gar_withdrawal_order_act_window" 
+    groups="ifs_partner.group_ifs_partner_factor_user"
+    parent="ifs_gar_account_menu_root"/> -->
+</odoo>

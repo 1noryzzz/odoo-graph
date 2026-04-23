@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="ifs_gar_invite_merchant_template" name="邀请采购方" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>邀请采购方</div>
+      </t>
+      <t t-set="o_portal_fullwidth_footer">
+        <input class="submit" type="submit" value="发起邀约" />
+      </t>
+      <t t-set="o_form_action">/ifs_gar_invite/create</t>
+      <div class="main">
+        <div>
+          <div id="collection">
+            <span>
+              <b>受邀公司名称</b>
+            </span>
+            <div>
+              <input name="company_name"/>
+            </div>
+            <span>
+              <b>负责人</b>
+            </span>
+            <div>
+              <input name="principal"/>
+            </div>
+            <span>
+              <b>联系方式</b>
+            </span>
+            <div>
+              <input name="phone"/>
+            </div>
+            <span>
+              <b>邮箱</b>
+            </span>
+            <div>
+              <input name="email"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_merchant_inform_template" name="温馨提示" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>温馨提示</div>
+      </t>
+      <t t-set="o_form_action">/ifs_gar_invite/merchant/register/business</t>
+      <div class="main gar_invite_main franchisee_inform_main">
+        <p>
+          本政策仅适用于鸥贝云信用科技(深圳)有限公司(后简称：“鸥贝云”或“我们”)【应收保】业务事业合伙人操作系统。包括注册/登录、现金提款、更新信息、获取产品信息等业务功能。
+        </p>
+        <p>
+          我们深知个人信息对您的重要性，并将按照法律法规要求和业界成熟的安全标准，采取相应的安全保护措施来保护您的个人信息。我们希望通过本隐私政策向您清晰 地介绍在使用我们的产品/服务时，我们如何处理您的个人信息，以及我们为您提供的访问、更正、删除和保护这些信息的方式。
+        </p>
+
+        <input class="btn btn-primary btn-block galaxy-btn-primary inform_agree_btn" type="submit" value="已阅读并同意" />
+      </div>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_merchant_register_business_template" name="采购方注册-企业信息" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <form id="businessForm" action="/ifs_gar_invite/merchant/register/basic" method="post" enctype="multipart/form-data">
+        <div class="main gar_invite_main merchant_register_main">
+          <div class="merchant_progressbar" data-current-step="basic"></div>
+
+          <div class="license_main">
+            <div class="title">
+					营业执照信息
+            </div>
+            <div class="license_img">
+              <input type="file" hidden="hidden" name="business_license" capture="camera"/>
+              <img id="merchant_business_license" class="img" src="/galaxy_tdesign/static/src/img/mobile_business_license.png"/>
+            </div>
+            <div>
+              <div class="gar_input">
+                <label>执照名称</label>
+                <input type="text" name="full_name" disabled="disabled" t-att-value="business.name"/>
+              </div>
+              <div class="gar_input">
+                <label>法人姓名</label>
+                <input type="text" name="legal_person" disabled="disabled" t-att-value="business.legal_person"/>
+              </div>
+              <div class="gar_input">
+                <label>执照编号</label>
+                <input type="text" name="credit_no" disabled="disabled" t-att-value="business.credit_no"/>
+              </div>
+              <div class="gar_input">
+                <label>注册时间</label>
+                <input type="date" name="establish_date" disabled="disabled" t-att-value="business.establish_date"/>
+              </div>
+              <div class="gar_input">
+                <label>注册住址</label>
+                <input type="text" name="address" disabled="disabled" t-att-value="business.address"/>
+              </div>
+              <div class="gar_input">
+                <label>有效期至</label>
+                <input type="text" name="business_date_to" disabled="disabled" t-att-value="business.business_date_to"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="settlement_main">
+            <div class="title">
+					结算信息
+            </div>
+            <div>
+              <div class="gar_input">
+                <label>账户名称</label>
+                <input type="text" name="account_name" required="required"/>
+              </div>
+              <div class="gar_input">
+                <label>企业账号</label>
+                <input type="text" name="account_no" required="required"/>
+              </div>
+              <div class="gar_input">
+                <label>开户银行</label>
+                <input type="text" name="deposit_bank" required="required"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-0 fade show d-print-none css_editable_mode_hidden galaxy_mobile_footer">
+          <div class="container">
+            <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" disabled="disabled" value="下一步"/>
+          </div>
+        </div>
+      </form>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_merchant_register_basic_template" name="采购方注册-基本信息" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <form id="idcardForm" action="/ifs_gar_invite/merchant/register/docs" method="post" enctype="multipart/form-data">
+        <div class="main gar_invite_main merchant_register_main">
+          <div class="merchant_progressbar" data-current-step="contact"></div>
+
+          <div class="person_main">
+            <div class="title">
+					个人身份信息
+            </div>
+            <div class="merchant_idcard_content">
+              <div>
+                <input type="file" hidden="hidden" name="idcard_front_image" capture="camera"/>
+                <img id="idcard_front_image" class="idcard_img" src="/galaxy_tdesign/static/src/img/mobile_idcard_front_image.png"/>
+              </div>
+              <div>
+                <input type="file" hidden="hidden" name="idcard_back_image" capture="camera"/>
+                <img id="idcard_back_image" class="idcard_img" src="/galaxy_tdesign/static/src/img/mobile_idcard_back_image.png"/>
+              </div>
+            </div>
+            <div>
+              <div class="gar_input">
+                <label>姓名</label>
+                <input type="text" name="name" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>性别</label>
+                <input type="text" name="gender" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>出生日期</label>
+                <input type="date" name="birthday" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>身份证号</label>
+                <input type="text" name="card_no" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>住址</label>
+                <input type="text" name="family_address" />
+              </div>
+              <div class="gar_input">
+                <label>有效期</label>
+                <input type="text" name="idcard_expiry_date" disabled="disabled"/>
+              </div>
+              <div class="gar_input">
+                <label>签发机关</label>
+                <input type="text" name="authority" disabled="disabled"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="person_register_warring">
+			业务申请中，我们会收取您的相关资料并进行加密储存，保证不向第三方公开您的个人资料。
+        </div>
+
+        <div class="rounded-0 fade show d-print-none css_editable_mode_hidden galaxy_mobile_footer">
+          <div class="container">
+            <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" disabled="disabled" value="下一步"/>
+          </div>
+        </div>
+      </form>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_merchant_register_docs_template" name="合伙人注册-相关资质" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+
+      <div class="main gar_invite_main merchant_register_main">
+        <div class="merchant_progressbar" data-current-step="docs"></div>
+        <form class="s_donation_form" t-attf-action="/ifs_gar_invite/merchant/register/sign" method="post" role="form" enctype="multipart/form-data">
+          <div class="person_main">
+            <div class="title">
+					相关资质
+            </div>
+            <div>
+              <div class="license_img">前台照
+                <input type="file" class="o_forum_file_upload" name="doorhead_picture" capture="camera" accept="image/*" hidden="hidden" required="required"/>
+                <img class="img,picture" id="doorhead_picture" name="doorhead_picture" src="/galaxy_tdesign/static/src/img/plus.png" />
+              </div>
+              <div class="license_img">室内照片
+                <input type="file" class="o_forum_file_upload" name="indoor_picture" capture="camera" accept="image/*" hidden="hidden" required="required"/>
+                <img class="img,picture" id="indoor_picture" name="indoor_picture" src="/galaxy_tdesign/static/src/img/plus.png"/>
+              </div>
+              <div class="license_img">自拍照（手持身份证）
+                <input type="file" class="o_forum_file_upload" name="selfie_picture" capture="camera" accept="image/*" hidden="hidden" required="required"/>
+                <img class="img,picture" id="selfie_picture" name="selfie_picture" src="/galaxy_tdesign/static/src/img/plus.png"/>
+              </div>
+
+            </div>
+          </div>
+          <div class="btn btn-primary btn-block galaxy-btn-primary">
+            <button type="submit" class="btn btn-primary o_wprofile_submit_btn">下一步</button>
+          </div>
+        </form>
+      </div>
+
+    </xpath>
+  </template>
+
+
+  <template id="ifs_gar_invite_merchant_register_other_template" name="合伙人注册-其他" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <t t-set="o_portal_fullwidth_footer">
+        <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" disabled="disabled" value="下一步" />
+      </t>
+      <t t-set="o_form_action">/ifs_gar_invite/merchant/register/sign</t>
+      <div class="main gar_invite_main merchant_register_main">
+        <div class="merchant_progressbar" data-current-step="other"></div>
+
+        <div class="person_main">
+          <div class="title">
+					个人资源
+          </div>
+          <div>
+            <div class="gar_input">
+              <label>从事行业</label>
+              <!-- <select class="gar_select" name="industry">
+                <option selected="selected" hidden="hidden" value="placeholder">行业选择</option>
+              </select> -->
+            </div>
+            <div class="gar_input">
+              <label>从业年限</label>
+              <input type="text" name="industry_time" required="required"/>
+            </div>
+            <div class="gar_input">
+              <label>行业资源</label>
+              <div class="gar_input_radio">
+                <div>
+                  <input type="radio" name="industry_resources" value="highlymatch" required="required"/>
+高度匹配
+                </div>
+                <div>
+                  <input type="radio" name="industry_resources" value="diggable" required="required"/>
+可挖掘
+                </div>
+                <div>
+                  <input type="radio" name="industry_resources" value="general" required="required"/>
+一般
+                </div>
+              </div>
+            </div>
+            <div class="gar_input gar_input_textarea">
+              <label>建议与意见</label>
+              <textarea rows="6" placeholder="您可用在此说明您的建议与意见，我们会第一时间给予改进；" name="franchisee_suggest"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_merchant_register_sign_template" name="采购方注册-签署" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>资料上传</div>
+      </t>
+      <t t-set="o_portal_fullwidth_footer">
+        <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" disabled="disabled" value="下一步" />
+      </t>
+      <t t-set="o_form_action">/ifs_gar_invite/merchant/register/finish</t>
+      <div class="main gar_invite_main merchant_register_main">
+        <div class="merchant_progressbar" data-current-step="sign"></div>
+
+        <div class="merchant_sign_main">
+          <div class="title">
+					合同签署
+          </div>
+          <div class="sign_content">
+            <div class="description_one">
+						确认合同并签名
+            </div>
+            <div class="description_two">
+						请使用正楷字体进行签名
+            </div>
+
+            <div class="merchant_sign">
+						请点击此签名
+            </div>
+          </div>
+
+          <div class="sign_inform">
+            <div class="sign_inform_checkbox">
+              <input type="checkbox" name="" />
+            </div>
+            <div>
+              本人已阅读并确认签署                
+              <t t-foreach="contract_infos" t-as="contract">
+                <a t-attf-href="/contract?contract_id={{contract['id']}}">《                  <t t-esc="contract['name']"/>
+》</a>
+              </t>
+            </div>
+          </div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_invite_merchant_register_finish_template" name="采购方注册完成" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">ifs_gar_invite.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <!-- <t t-set="o_form_action">/ifs_gar_invite/supplier/create</t> -->
+      <div class="main gar_invite_main register_finish_main">
+        <div class="galaxy_message_center">
+          <img src="/ifs_gar_invite/static/src/img/success_icon.png" />
+          <div class="success_text mt-3">提交成功</div>
+          <div class="success_text_two mt-2">我们将尽快处理您的申请，请您耐心等候</div>
+          <div class="galaxy_buttons">
+            <!-- <form action="/ifs_gar_invite/franchisee/register/business" method="get"> -->
+              <input class="btn btn-primary btn-block galaxy-btn-primary" type="submit" value="确定" />
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="merchant_sign" name="合同签署" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">galaxy_tdesign.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-call="galaxy_tdesign.signature_form">
+        <t t-set="call_url" t-value="'/ifs_gar_invite/merchant/register/signature'"/>
+        <t t-set="signature_ratio" t-value="0.75" />
+      </t>
+    </xpath>
+  </template>
+</odoo>

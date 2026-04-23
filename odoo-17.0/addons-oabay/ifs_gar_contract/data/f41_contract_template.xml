@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="F41_contract" model="ifs.contract.template">
+      <field name="name">征信查询授权书</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">F41</field>
+      <field name="need_partner">one</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_glob"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.15,"offsetY": 0.70}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_content main_content">
+
+            <div class="word_doc_title">征信查询授权书</div>
+            <div class="word_content_start word_content_start_font">重要提示：              <br />
+              <p style="font-weight: bolder;">尊敬的客户：为了维护您的权益，请在签署本授权书前，仔细阅读本授权书各条款（特别是黑体字条款），关注您在授权书中的权利、义务，您点击确认本协议的，即表示同意并不可撤销地授权。如有任何疑问，请向经办公司咨询。
+              </p>
+              <span style="text-decoration:underline;">亚洲保理（深圳）有限公司：</span>
+            </div>
+            <p>本人不可撤销地授权贵公司在向本人提供金融产品和金融服务以及与贵公司开展其他业务过程中，有权按照《征信业管理条例》的规定查询、使用、报送、采集、整理、加工、分析、评估、存储本人全部或部分信息，具体约定如下：</p>
+            <div class="word_content_start word_content_start_font" style="margin-top: 50px;">
+            本人同意并授权贵公司在办理以下涉及到本人的业务时，可以向中国人民银行征信中心金融信用信息基础数据库（以下简称“人行征信中心”）、百行征信有限公司、其他依法设立的征信机构、其他有权机关及贵公司合作的征信机构（包括但不限于“元素征信有限责任公司”、“百融云创科技股份有限公司”及其关联公司、“吉信数据”、“算话科技有限公司”、“鹏元征信有限公司”、“同盾网络科技有限公司”、“上海生腾数据科技有限公司”）建立的信息数据库查询本人的信息，并有权对查询到的本人信息进行打印、保存和使用：
+            </div>
+            <p>（壹）本人向贵公司申请、办理授信业务，用于授信前调查、审查审批、放款、授信后管理等用途的。</p>
+            <p>（贰）审核本人作为担保人，用于提供担保的审核与贷后管理等用途的。</p>
+            <p>（叁）本人实际控制或任职高管的企业向贵公司申请办理信贷业务，需要了解本人信用状况的。</p>
+            <p>（肆）本人提出信息异议，用于处理异议核查的。</p>
+            <p>（伍）其他事项（请具体说明） / 。</p>
+            <div class="word_content_start word_content_start_font">
+              <p>二、本人在此确认并同意，在办理上述第一条所述的涉及本人的业务中，贵公司因授信审查审批、授信后管理等需要与第三方机构（包括但不限“于元素征信有限责任公司”、“百融云创科技股份有限公司”及其关联公司、“吉信数据”、“算话科技有限公司”、“鹏元征信有限公司”、“同盾网络科技有限公司”、“上海生腾数据科技有限公司”）合作的，则与贵公司合作的第三方机构在贵公司的授权许可下开展的查询、打印、保存和使用本人信息的行为，亦属于本授权书的授权范围。
+              </p>
+              <p>三、本人同意并授权贵公司或贵公司上级机构向人行征信中心、百行征信有限公司或其他依法设立的征信机构、其他有权机关及贵公司合作的征信机构（包括但不限“于元素征信有限责任公司”、“百融云创科技股份有限公司”及其关联公司、“吉信数据”、“算话科技有限公司”、“鹏元征信有限公司”、“同盾网络科技有限公司”、“上海生腾数据科技有限公司”）等提供本人的信息，以及出于为本人办理第一条所述的业务之目的视情况向贵公司及贵公司合作的第三方机构提供本人的信息，用于查验应答、分析及留存等，核实本人信息的真实性、进行风险判断等。
+              </p>
+              <p>四、本人知晓并确认，贵公司及人行征信中心、百行征信有限公司或其他依法设立的征信机构、其他有权机关及贵公司合作的第三方机构（包括但不限“于元素征信有限责任公司”、“百融云创科技股份有限公司”及其关联公司、“吉信数据”、“算话科技有限公司”、“鹏元征信有限公司”、“同盾网络科技有限公司”、“上海生腾数据科技有限公司”）可能采集的本人的信息包括但不限于姓名/名称、性别、出生日期、身份证件号码、照片、学历学位信息、社保账户、公积金账户、纳税信息、手机/电话号码、淘宝/支付宝/微信/京东等互联网账号、电子邮箱、收货地址、地理位置信息、网银在线账号、银行卡信息及相关附加信息、投资信息、失信人信息、法院判决信息、司法拍卖信息、知识产权信息、法院公告信息、行政处罚信息、刑事处罚信息等相关信息。
+              </p>
+              <p>五、若上述第一条所述的涉及本人的业务审批不通过、未实际发生，本人同意贵公司保留本授权书以及本人的基础资料、信用报告、信贷业务申请书等，就本授权的范围内涉及本人信息的采集、提供、传输、处理、披露，将不视为对本人任何权利和利益的侵犯。
+              </p>
+              <p>六、本授权书自出具之日起生效，在上述第一条所述的涉及本人的业务办理及持续期间持续有效，非经贵公司书面同意本授权书不可撤销。</p>
+              <p>本人郑重声明，贵公司已经依法向本人提示了相关条款，贵公司已应本人的要求对上述条款作出相应的说明。本人已经完全知悉并充分理解本授权书条款的内容及相应的法律后果，并愿意接受本授权书条款的约定。本授权书是本人真实意思表示，本人同意承担由此带来的一切法律后果。
+              </p>
+            </div>
+            <div class="d-flex">
+              <div class="word_doc_content_mini word_doc_content_mini_left" style="width:50%;">
+                <div style="margin-top:50px">授权人：                  <t t-out="params.get('name')" />
+                </div>
+                <div style="margin-top:100px">身份证号码：                  <t t-out="params.get('id_number')"/>
+                </div>
+                <div style="margin-top:100px">出具日期：                  <t t-out="format_date(object.write_date)"/>
+                </div>
+              </div>
+              <div style="margin-top:50px;">
+                <img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" height="80px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+
+  </data>
+</odoo>

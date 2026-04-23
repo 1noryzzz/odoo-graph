@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="galaxy_common.SubviewX2ManyField" owl="1">
+        <div t-attf-class="o_field_x2many o_field_x2many_{{viewMode}}">
+            <View t-props="viewProps" />
+        </div>
+    </t>
+
+</templates>

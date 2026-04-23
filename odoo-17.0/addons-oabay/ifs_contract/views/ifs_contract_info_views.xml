@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_contract_info_view_search" model="ir.ui.view">
+    <field name="name">ifs.contract.info.view.search</field>
+    <field name="model">ifs.contract.info</field>
+    <field name="arch" type="xml">
+      <search string="">
+        <field name="signer_name" string="签约方名称"/>
+        <field name="code"/>
+        <field name="name" string="合同名称"/>
+        <!-- <field name="lang"/>
+          <field name="validity_period_view"/>
+          <field name="model_id"/>
+          <searchpanel>
+            <field name="category_id" icon="fa-folder-open" enable_counters="1"/>
+          </searchpanel>
+          <group expand="0" string="Group by...">
+            <filter name="group_by_category_id" context="{'group_by': 'category_id'}"/>
+            <filter string="Model" name="model" domain="[]" context="{'group_by':'model_id'}"/>
+          </group> -->
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_contract_info_view_form" model="ir.ui.view">
+    <field name="name">ifs.contract.info.view.form</field>
+    <field name="model">ifs.contract.info</field>
+    <field name="priority" eval="10"/>
+    <field name="arch" type="xml">
+      <form string="合同预览" class="contract_sign">
+        <field name="need_partner" invisible="1"/>
+        <header>
+          <field name="state" widget="statusbar" statusbar_visible="draft,signed" invisible="need_partner != 'one'"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed" invisible="need_partner == 'one'"/>
+        </header>
+        <sheet>
+          <field name="report_content"/>
+        </sheet>
+        <footer>
+          <button string="关闭" class="btn-secondary" special="cancel" data-hotkey="z"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_contract_info_view_form_detail" model="ir.ui.view">
+    <field name="name">ifs.contract.info.view.form.detail</field>
+    <field name="model">ifs.contract.info</field>
+    <field name="priority" eval="90"/>
+    <field name="arch" type="xml">
+      <form string="合同信息查看" class="o_galaxy_form_view" edit="0" create="0">
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button class="oe_stat_button" icon="fa-file-pdf-o" name="contract_view" type="object" invisible="state == 'signed'">
+              <div class="o_form_field o_stat_info">
+                <span class="o_stat_text">合同预览</span>
+              </div>
+            </button>
+          </div>
+          <group string="基本信息">
+            <group>
+              <field name="code" />
+              <field name="partner_one" />
+              <field name="partner_three" />
+              <field name="state" />
+              <field name="expire_date"/>
+            </group>
+            <group >
+              <field name="name" />
+              <field name="partner_two" />
+              <field name="partner_four" />
+              <field name="sign_date"/>
+            </group>
+            <group string="已签合同存档" colspan="2" invisible="state != 'signed'">
+              <field name="contract" widget="pdf_viewer" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'contract_preview','size': ['300', '190']}"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_contract_info_view_tree" model="ir.ui.view">
+    <field name="name">ifs.contract.info.view.tree</field>
+    <field name="model">ifs.contract.info</field>
+    <field name="arch" type="xml">
+      <tree string="" expand="1" edit="0" create="0">
+        <field name="code"/>
+        <field name="name"/>
+        <field name="partner_one"/>
+        <field name="partner_two"/>
+        <field name="partner_three"/>
+        <field name="partner_four"/>
+        <field name="state"/>
+        <field name="sign_date"/>
+        <field name="expire_date"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_contract_act_window" model="ir.actions.act_window">
+    <field name="name">合同</field>
+    <field name="res_model">ifs.contract.info</field>
+    <field name="view_mode">form,tree</field>
+    <field name="target">current</field>
+    <!-- <field name="context">{'search_default_group_by_category_id': True}</field> -->
+    <field name="view_ids" eval="[
+      (5,0,0),
+      (0,0,{'view_mode': 'tree','view_id': ref('ifs_contract_info_view_tree')}),
+      (0,0,{'view_mode': 'form','view_id': ref('ifs_contract_info_view_form_detail')})]"/>
+
+  </record>
+
+  <menuitem id="ifs_gar_contract_management_menu" name="合同管理" sequence="9" 
+    groups="group_ifs_contract_user" action="ifs_gar_contract_act_window" parent="ifs_contract_template_menu"/>
+</odoo>

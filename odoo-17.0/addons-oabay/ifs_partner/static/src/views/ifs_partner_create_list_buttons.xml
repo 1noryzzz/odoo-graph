@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+  <t t-name="ifs_partner.ListView" t-inherit="web.ListView" owl="1" t-inherit-mode="primary">
+    <xpath expr="//button[hasclass('o_list_button_add')]" position="replace">
+      <button type="button" class="btn btn-primary o_list_button_invite" 
+        data-hotkey="c" t-on-click="onClickCreate" data-bounce-button="">
+          <t t-out="createButtonText"/>
+      </button>
+    </xpath>
+    <!-- <xpath expr="//t[@t-if='props.showButtons']" position="before">
+            <button t-if="nbSelected" type="button" t-on-click="onClickOrder" class="o_button_order btn btn-primary me-1">
+                Order
+            </button>
+            <button t-if="nbSelected" type="button" t-on-click="onClickSnooze" class="o_button_snooze btn btn-primary me-1">
+                Snooze
+            </button>
+        </xpath> -->
+  </t>
+
+</templates>

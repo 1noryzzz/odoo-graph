@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="Z20_contract" model="ifs.contract.template">
+      <field name="name">购销合同</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">Z20</field>
+      <field name="need_partner">two</field>
+      <field name="need_faceid">False</field>
+      <field name="tag_ids" eval="[(4, ref('ifs_contract.ifs_contract_tag_gjxy'))]"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_sup"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.33,"offsetY": 0.70}],"page": -1},
+        {"chaptes": [{"offsetX": 0.33,"offsetY": 0.85}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <t t-set="params" t-value="json.loads(object.params)"/>
+
+          <div class="z-main">
+            <div class="title bold">购 销 合 同</div>
+            <div class="right-text">合同编号：              <span style="min-width: 80px;" class="text-underline" t-esc="object.code"></span>
+            </div>
+            <div class="z-header">
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">甲方（供应商）：</div>
+                  <div class="text" t-esc="params.get('partner_one_name')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">乙方（采购方）：</div>
+                  <div class="text" t-esc="params.get('partner_two_name')"></div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">地址：</div>
+                  <div class="text" t-esc="params.get('partner_one_address')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">地址：</div>
+                  <div class="text" t-esc="params.get('partner_two_address')"></div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">法定代表人：</div>
+                  <div class="text" t-esc="params.get('partner_one_corp_name')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">法定代表人：</div>
+                  <div class="text" t-esc="params.get('partner_two_corp_name')"></div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">联系电话：</div>
+                  <div class="text" t-esc="params.get('partner_one_phone')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">联系电话：</div>
+                  <div class="text" t-esc="params.get('partner_two_phone')"></div>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <div>
+                <p>鉴于甲方为合法注册并拥有相关产品供应资质的企业，乙方为合法注册并有采购需求的
+						企业，双方根据《中华人民共和国合同法》及相关法律法规的规定，经友好协商，就产品购
+						销事宜达成如下协议：</p>
+              </div>
+              <div>
+                <div class="sub-title">一、合作内容</div>
+                <div>
+                  <p>甲方作为供应商，根据乙方提供的客户订单信息及具体配送要求、负责准时、准确地向
+							乙方指定的客户配送所需货物。乙方作为采购方需负责向甲方提供详细的配送清单，并按合
+							同规定结算配送货物款项。配送清单内容应包括但不限于商品名称、规格型号、数量、单价
+							及总价等详细信息。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">二、配送与签收</div>
+                <div>
+                  <p>1、甲方应确保按照乙方提供的客户配送清单准确、及时地进行配送。</p>
+                  <p>2、甲方每次配送完成后，需立即通过电子化方式（如微信、电子邮件等）向乙方提供
+							配送签收单。该签收单须清晰列明货物明细，包括但不限于商品名称、规格、单价、数量、
+							总价及乙方客户签收人签收信息等，确保与乙方提供的订单信息一致性、完整性和准确性。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">三、付款条款</div>
+                <div>
+                  <p>付款方式：乙方通过银行转账的方式向甲方支付货款。</p>
+                  <p>甲方确认的银行账户信息如下：</p>
+                  <p>账户名：                    <span style="min-width: 200px;" class="text-underline" t-esc="params.get('account_name')"></span>
+                  </p>
+                  <p>账号：                    <span style="min-width: 200px;" class="text-underline" t-esc="params.get('bank_no')"></span>
+                  </p>
+                  <p>开户行：                    <span style="min-width: 200px;" class="text-underline" t-esc="params.get('bank_name')"></span>
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">四、货款结算与贸易纠纷处理</div>
+                <div>
+                  <p>1、乙方在收到甲方提供的经乙方客户签收确认无误的有效配送签收单后的一个工作日
+							内，支付配送货款总额的_90__%（扣除双方事先约定的_2_%贸易差价，该差价作为乙方的服
+							务费用。）</p>
+                  <p>2、若甲方对配送货款有异议的，经双方友好协商后，乙方按双方同意修正后的货款金额
+							进行结算。若乙方客户对单价有异议或存在其他贸易纠纷，甲方需直接与乙方客户沟通确认，
+							待问题解决后再行付款流程。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">五、双方权利与义务</div>
+                <div>
+                  <p>甲方权利与义务：</p>
+                  <p>1、确保提供的商品质量符合国家相关标准及乙方要求。</p>
+                  <p>2、按时、按量、按质完成配送任务。</p>
+                  <p>3、及时提供准确的配送签收单及发票。</p>
+                  <p>4、所有贸易风险均由甲方自行承担，甲方应确保货物质量，妥善处理与客户间的纠纷，并
+							承担由此产生的一切费用和责任。</p>
+
+                  <p>乙方权利与义务：</p>
+                  <p>1、提前向甲方提供准确的客户信息及配送要求。</p>
+                  <p>2、按照约定的付款方式和时间支付货款。</p>
+                  <p>3、对甲方提供的商品进行验收，如有质量问题及时提出。</p>
+                  <p>4、乙方不承担甲方在贸易过程中产生的任何风险，包括但不限于货物质量、运输损失、
+							价格波动、客户违约等。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">六、违约责任</div>
+                <div>
+                  <p>1、如任何一方违反本合同约定，违约方应赔偿守约方因此遭受的所有损失（包括但不限
+							于直接经济损失、律师费、诉讼费等）。</p>
+                  <p>2、因不可抗力导致合同无法履行的，双方互不承担责任，但应及时通知对方并提供相关
+							证明。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">七、货款保证金、履约及发票开立之约定</div>
+                <div>
+                  <p>第一条 保证金扣除与设立</p>
+                  <p>1.1 甲方（供应商）同意，在每次向乙方（采购商）供应货物并结算货款时，乙方有权从
+							应付给甲方的货款中直接扣除每笔货款的 10%作为保证金（以下简称“保证金”）。</p>
+                  <p>1.2 该保证金旨在确保乙方客户（以下简称“终端客户”）能够按照约定履行还款义务，
+							并作为甲方对商品质量及发票开立合规性的担保。</p>
+
+                  <p>第二条 保证金用途与履约保证</p>
+                  <p>2.1 保证金主要用于保障乙方及其终端客户之间交易项下的还款履约事宜。具体而言，若
+							终端客户未能按约定时间或条件向乙方支付货款，乙方有权根据本协议规定使用该保证金作
+							为违约赔偿或损失补偿的一部分。</p>
+                  <p>2.2 乙方承诺，一旦终端客户按约定完成还款义务，且甲方无任何违反本协议中关于商品
+							质量或发票开立规定的情形，乙方应在收到终端客户全额还款后的[具体天数，如 15 天]内，
+							将相应保证金无息退还给甲方。</p>
+
+                  <p>第三条 保证金与甲方义务</p>
+                  <p>3.1 甲方保证，向乙方提供的所有商品均符合双方约定的质量标准及规格要求，并承诺不
+							会因商品质量问题导致乙方或终端客户遭受损失。</p>
+                  <p>3.2 甲方应在每次供货后，按照双方约定的时间和方式向乙方开具合法、有效的发票。若
+							甲方未能按期开立发票，乙方有权从保证金中扣除相应金额作为违约金，直至甲方完成发票
+							开立义务。</p>
+                  <p>3.3 特别约定：若因甲方提供的商品质量问题导致终端客户拒绝支付货款或乙方需向终端
+							客户承担赔偿责任的，乙方有权优先从保证金中扣除相应损失金额，不足部分仍有权向甲方
+							追偿。</p>
+
+                  <p>第四条 保证金退还条件</p>
+                  <p>4.1 除上述 3.2 条及 3.3 条所述情形外，一旦终端客户完成还款，且甲方已履行完毕本协
+							议项下的所有义务（包括但不限于商品交付、质量保证、发票开立等），乙方应及时退还保
+							证金。</p>
+                  <p>4.2 退还保证金时，双方应确认无其他争议或待解决事项，以确保退还过程的顺利进行。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">八、保密条款</div>
+                <div>
+                  <p>双方应对本合同内容及合作过程中获取的商业秘密予以保密，未经对方书面同意，不得
+							泄露给第三方。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">九、争议解决</div>
+                <div>
+                  <p>双方因执行本合同发生争议时，应首先通过友好协商解决；协商不成时，可提交乙方所
+							在地人民法院诉讼解决。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">十、其他</div>
+                <div>
+                  <p>1、本合同自双方签字盖章之日起生效，有效期至<span style="min-width: 40px;" class="text-underline" t-esc="object.expire_date.year"></span>年                    <span style="min-width: 40px;" class="text-underline" t-esc="object.expire_date.month"></span>月                    <span style="min-width: 40px;" class="text-underline" t-esc="object.expire_date.day"></span>日止。
+                  </p>
+                  <p>2、本合同一式两份，甲乙双方各执一份，具有同等法律效力。</p>
+                  <p>3、本合同未尽事宜，双方可另行签订补充协议，补充协议与本合同具有同等法律效力。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="z-footer">
+              <div style="margin-bottom: 40px;">（此页无正文）</div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">甲方（盖章）：</div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">乙方（盖章）：</div>
+                </div>
+              </div>
+              <div style="margin-top: 48px;" class="z-row">
+                <div class="z-col">
+                  <div class="label">法定代表人（签字）：</div>
+                  <div class="text">
+                    <img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" alt="甲方法定代表人（签字）" />
+                  </div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">法定代表人（签字）：</div>
+                  <div class="text">
+                    <img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" alt="乙方法定代表人（签字）" />
+                  </div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-row">
+                  <div class="z-col">
+                    <div class="label">日期：</div>
+                    <div class="text">
+                      <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.year"></span>年                      <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.month"></span>月                      <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.day"></span>日
+                    </div>
+                  </div>
+
+                  <div class="z-col">
+                    <div class="label">日期：</div>
+                    <div class="text">
+                      <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.year"></span>年                      <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.month"></span>月                      <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.day"></span>日
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

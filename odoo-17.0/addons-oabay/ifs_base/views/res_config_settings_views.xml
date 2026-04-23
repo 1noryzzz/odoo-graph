@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.ifs.base</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="88"/>
+    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="inside">
+        <app data-string="ifs_base" string="普惠金融" name="ifs_base" groups="ifs_base.group_ifs_manager">
+          <block title="接口调用策略">
+            <setting name="ifs_external_api_setting_container" string="工商登记接口">
+              <div class="mt8">
+                <label class="col-lg-3" string="工商登记" for="business_registration_api_code"/>
+                <field name="business_registration_api_code"/>
+              </div>
+              <div class="mt8">
+                <label class="col-lg-3" string="刷新频率" for="business_registration_update_frequency"/>
+                <field name="business_registration_update_frequency"/>
+              </div>
+              <div class="mt8">
+                <label class="col-lg-3" string="营业执照OCR" for="business_reg_ocr_api_code"/>
+                <field name="business_reg_ocr_api_code"/>
+              </div>
+              <div class="text-muted">
+                <field name="verification_business_license"/>
+                  是否校验营业执照
+              </div>
+            </setting>
+          </block>
+        </app>
+      </xpath>
+    </field>
+  </record>
+</odoo>

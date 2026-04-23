@@ -1,0 +1,332 @@
+.o_main_navbar {
+  .o_menu_sections {
+    .o_nav_entry, .dropdown-toggle {
+      background: unset;
+    }
+  }
+}
+
+.top_heading {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  border-right: 2px solid $o-brand-odoo;
+  margin: 12px 0;
+
+  li.dropdown {
+    list-style: none;
+  }
+
+  a.o_menu_brand {
+    font-weight: bolder !important;
+  }
+}
+
+.c_sidebar_active {
+  height: 46px;
+  width: 60px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background-color: $o-brand-primary;
+  color: $o-sidebar-color !important;
+  margin-right: 1.5rem !important;
+  clip-path: polygon(0 0, 100% 0%, 86% 100%, 0% 100%);
+
+  &:hover {
+    background-color: rgba($o-brand-primary, .08);
+    transition: all 0.1s linear;
+
+    .c_dots_menu {
+      background-image: url('/galaxy_tdesign/static/src/img/icons/dots-menu-primary.png');
+    }
+  }
+}
+
+.c_sidebar_passive {
+  height: 46px;
+  width: 60px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background-color: $o-sidebar-color;
+  color: $o-brand-primary !important;
+  clip-path: polygon(0 0, 100% 0%, 86% 100%, 0% 100%);
+}
+
+.c_dots_menu {
+  background-image: url('/galaxy_tdesign/static/src/img/icons/dots-menu.png');
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.c_dots_menu_toggled {
+  background-image: url('/galaxy_tdesign/static/src/img/icons/dots-menu-primary.png');
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.o_main_navbar_brand {
+  background-image: url('/galaxy_tdesign/static/src/img/icons/brand.png');
+  width: 100px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 20px;
+}
+
+#sidebar_panel {
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  background-color: $o-sidebar-background-color;
+  border-right: $o-sidebar-border;
+  display: none;
+  width: 250px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;
+  /* Hide scrollbar for Firefox */
+  z-index: 999;
+}
+
+#sidebar_panel::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.sidebar_menu {
+  margin-top: 20px !important;
+}
+
+.sidebar_panel {
+  .sidebar {
+    padding: 0;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    padding-top: 0px;
+
+    .sidebar_logo {
+      padding-top: 20px;
+      text-align: center;
+      padding-bottom: 20px;
+
+      img {
+        max-width: 150px;
+      }
+    }
+
+    .sidebar_head {
+      background-color: $o-brand-primary;
+      padding-top: 10px;
+      // padding-left: 20px;
+      text-align: center;
+      color: $o-sidebar-color;
+      font-size: 18px;
+      font-weight: bold;
+      height: 45px;
+    }
+
+    .sidebar_menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+        padding: 0;
+        border: 0px;
+        display: block;
+
+        a {
+          margin: 8px;
+          border: 0px;
+          border-radius: 3px;
+          display: block;
+          cursor: pointer;
+          overflow: hidden;
+          padding: 8px 10px 8px 25px;
+          color: $o-navbar-entry-color;
+          font-size: 13px;
+          transition: .1s all;
+
+          .sidebar_img {
+            width: 20px;
+            margin-right: 8px;
+          }
+        }
+
+        a:hover {
+          background: $o-sidebar-bg--hover;
+        }
+      }
+
+      .nav-link {
+        opacity: 1 !important;
+        transition: .1s all;
+
+        &:hover {
+          transform: scale(1.05) !important;
+          transition: all 0.1s linear !important;
+        }
+
+        &.active {
+          // color: $o-sidebar-color !important;
+          border-left: 4px solid $o-brand-primary;
+          background-color: $o-sidebar-bg--hover;
+          opacity: 1;
+        
+          img {
+            margin-left: -0.5rem !important;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar_close {
+    display: none;
+    position: absolute;
+    padding-top: 8px;
+    top: 0;
+    left: 10px;
+    z-index: 1;
+
+    a#closeSidebar {
+      font-size: 18px;
+      margin-right: 10px;
+      color: #ffffff;
+      opacity: .3;
+    }
+
+    a#closeSidebar img {
+      width: 15px;
+    }
+  }
+}
+
+.menu_dispaly {
+  display: flex !important;
+  justify-content: space-between;
+  margin: 0px 10px !important;
+}
+
+.menu_fold {
+  transform: rotate(270deg);
+  font-size: 20px;
+}
+
+.menu_passive {
+  display: none;
+}
+
+.scroll_menu {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.first-div {
+  position: sticky;
+  top: 0;
+}
+
+//Responsive starts
+@media (min-width:993px) {
+  nav {
+    .o_menu_sections {
+      margin-left: 20px;
+    }
+  }
+  .o_action_manager {
+    margin: 8px 8px 0px 258px;
+
+    &.sidebar_margin {
+      margin: 8px 8px 0px 258px;
+      transition: all .1s linear;
+    }
+
+    &.sidebar_close {
+      margin: 8px 8px 0px 8px;
+      transition: all .1s linear;
+    }
+  }
+
+  .top_heading {
+    margin-left: 240px;
+
+    &.sidebar_margin {
+      margin-left: 240px;
+      transition: all .1s linear;
+    }
+
+    &.sidebar_close {
+      margin-left: 0px;
+      transition: all .1s linear;
+    }
+  }
+
+  #sidebar_panel {
+    display: block;
+  }
+
+  .dropdown {
+    #openSidebar {
+      display: none;
+    }
+
+    #closeSidebar {
+      display: block;
+    }
+  }
+}
+
+@media (max-width:992px) {
+  .o_action_manager {
+    margin: 0px;
+    &.sidebar_margin {
+      margin: 0px;
+    }
+    &.sidebar_close {
+      margin: 0px;
+    }
+  }
+
+  .top_heading {
+    margin-left: 0;
+    &.sidebar_margin {
+      margin-left: 0px;
+    }
+    &.sidebar_close {
+      margin-left: 0px;
+    }
+  }
+
+  .sidebar_panel {
+    .sidebar {
+      position: relative;
+      padding-top: 0px !important;
+    }
+
+    .sidebar_close {
+      display: block !important;
+    }
+  }
+
+  .dropdown {
+    #openSidebar {
+      display: block;
+    }
+
+    #closeSidebar {
+      display: none;
+    }
+  }
+}
+@media (max-width:480px) {
+}
+//Responsive ends

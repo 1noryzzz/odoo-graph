@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="T21_contract" model="ifs.contract.template">
+      <field name="name">应收账款转让保密协议</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">T21</field>
+      <field name="need_partner">two</field>
+      <field name="validity_period" eval="60"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_sup"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.25,"offsetY": 0.39}],"page": -1},
+        {"chaptes": [{"offsetX": 0.30,"offsetY": 0.54}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div class="t21_word_content">
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <div class="word_doc_title">应收账款转让保密协议</div>
+          <div class="word_doc_sub_title">
+            <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+          </div>
+          <div class="word_doc_sub_title" style="text-decoration:none;">与</div>
+          <div class="word_doc_sub_title">
+            <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+          </div>
+          <div class="word_doc_sub_title" style="margin-top:100px; text-decoration:none;">合同编号</div>
+          <div class="word_doc_sub_title">
+            <t t-out="object.code" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">
+            T1720220815001</t>
+          </div>
+          <div class="word_doc_content_mini" style="margin-top: 280px;">合同版本 - T21</div>
+          <div class="word_doc_inner_title" style="margin-top: 160px;">
+        甲方（卖方）：            <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+          </div>
+          <div class="word_doc_inner_text" style="margin-top: 20px;">
+            <table style="text-indent: 0.25em;">
+              <tbody>
+                <tr style="height:30px">
+                  <td width="130px">法定代表人：</td>
+                  <td width="190px">
+                    <t t-out="object.partner_one.legal_id.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">李波</t>
+                  </td>
+                  <td width="75px">电话：</td>
+                  <td width="190px">
+                    <t t-out="object.partner_one.phone" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">18888888888</t>
+                  </td>
+                  <td width="80px">E-mail：</td>
+                  <td width="190px">
+                    <t t-out="object.partner_one.email" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">lb@yzbfp.com</t>
+                  </td>
+                </tr>
+                <tr style="height:30px">
+                  <td>地址：</td>
+                  <td colspan="5">
+                    <t t-out="object.partner_one.business_address" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">京基100</t>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="word_doc_inner_title" style="margin-top: 20px;">
+        乙方（保理商）：            <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+          </div>
+          <div class="word_doc_inner_text" style="margin-top: 20px;">
+            <table style="text-indent: 0.25em;">
+              <tbody>
+                <tr style="height:30px">
+                  <td width="130px">法定代表人：</td>
+                  <td width="190px">
+                    <t t-out="object.partner_two.legal_id.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXX</t>
+                  </td>
+                  <td width="75px">电话：</td>
+                  <td width="190px">
+                    <t t-out="object.partner_two.phone" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">18888888888</t>
+                  </td>
+                  <td width="80px">E-mail：</td>
+                  <td width="190px">
+                    <t t-out="object.partner_two.email" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">cloud@mail.oabay.com</t>
+                  </td>
+                </tr>
+                <tr style="height:30px">
+                  <td>地址：</td>
+                  <td colspan="5">
+                    <t t-out="object.partner_two.business_address" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">京基100</t>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="word_inner_content">根据双方签署的《应收账款转让最高额度合同》（编号： <t t-out="params.get('t17_contract_code')" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">NA</t>
+            ）、甲方出具的《应收账款转让确认书》，以及甲方交易对方出具的《应付账款转让确认书》、《买方账款最高子额度合同》，本着自愿公平、诚实信用原则，双方就保密事宜达成如下共识，以资共同恪守：</p>
+            <div class="word_content_title">一、保密范围</div>
+            <p class="word_inner_content">
+            乙方知悉的甲方及其关联方、交易方不为公众所知悉、具有商业价值并采取保密措施的技术信息、客户信息、经营信息等，包括但不限于以任何媒介形式（如书面、口头、数据电文等形式）存载的图纸、产品设计、技术指标、测试数据、流程图、算法、源代码及应用文档、电子媒体、电子数据、实验数据、材料、零部件、客户名单、存货信息、货源情报、产销情况、产销策略等信息（无论此信息是否标记为机密或其他提示保密的标识）。
+            </p>
+            <p class="word_inner_content">
+            如披露的保密信息无法或难以用文件等有形方式表现时（如口头或视觉检视等），甲方应在信息披露日起30日内以书面方式通知对方确认该信息是否为商业秘密。乙方亦可请求甲方在30日内答复，以确认该信息的性质。</p>
+            <p class="word_inner_content">以上保密信息包括合作之前已为甲方所有并于合作期间披露的信息，以及合作过程中所产生之新的保密信息。</p>
+            <div class="word_content_title">二、保密义务</div>
+            <div class="word_inner_content">
+              <ol>
+                <li>乙方将以保护自身同样重要之类似信息的同等审慎态度保护本协议项下的保密信息，但该等审慎度不应低于合理的注意程度。</li>
+                <li>乙方只能将本协议项下的保密信息披露给有必要知悉该保密信息的雇员，乙方有义务要求该等雇员承担保密义务，并经常检查其雇员对保密义务的履行情况。</li>
+                <li>保密义务期限内非经甲方同意，乙方不得将本协议项下的保密信息披露给任何无关第三方，但是为了双方合作目的披露除外。</li>
+                <li>乙方传达给其关联方保密信息时，应要求关联方遵守与本协议同等保密义务的约束。</li>
+                <li>根据双方合意，各方可发布、公开有关本协议描述的保密信息。</li>
+                <li>保密期间各方对本协议项下保密信息负有严格保密的责任，采取适当的保密措施防止泄密，确保对方的技术、商业秘密不被侵害，合法权益不受损失。</li>
+                <li>
+                    各方只在本协议范围和与双方合作相关范围内使用保密信息。未经甲方许可，不得擅自允许无关第三方使用上述保密信息，非双方合作目的不得为复制或为他人复制上述信息，或向他人介绍、披露、出示、提供核心保密信息内容，不向与合作项目无关的第三方包括本公司其他无关员工透露保密信息。
+                </li>
+                <li>一方发现来自对方的有关本协议项下的保密信息被泄密时，发现方有义务立即通知被泄密方，并且采取措施防止该保密信息进一步被泄露。</li>
+              </ol>
+            </div>
+            <div class="word_content_title">三、保密期限</div>
+            <p class="word_inner_content">本各方保密期限自知悉或实质性接触甲方保密信息时起，至该保密信息被甲方主动公开为止。</p>
+            <div class="word_content_title">四、非保密信息</div>
+            <div class="word_inner_content">
+              本协议所约定之保密义务不适用于以下信息：
+              <ol>
+                <li>披露时已公开之信息。</li>
+                <li>非因乙方过错，而为第三人知悉且该第三人不负保密义务之信息。</li>
+                <li>披露时为保密信息，但披露后非因乙方过错而被公开之信息。</li>
+                <li>披露时已为乙方所知悉，且乙方不负保密义务的信息。</li>
+                <li>按照政府或主管当局或法院的命令或根据法律强制性规定被要求披露的，但乙方须立即书面通知被甲方，以此给予甲方介入的机会。</li>
+                <li>根据双方的事先合意，发布、公开的信息。</li>
+                <li>由乙方或其关联方从第三方合法获得的，且乙方并未由此而承担保密义务的信息。</li>
+                <li>由乙方独立开发的信息。</li>
+              </ol>
+            </div>
+            <div class="word_content_title">五、保密信息返还或销毁</div>
+            <p class="word_inner_content">
+            甲方有权在任何时候书面要求乙方销毁或返还包含有任何部分保密信息的所有文件和材料，包括但不限于甲方提供的纸质和/或电子形式提供的保密信息，复制品、样品、衍生品等。乙方应在收到甲方的此要求后十（10）个工作日内完成返还、清除或销毁工作，并向甲方反馈其已将甲方保密信息返还、清除或销毁。
+            </p>
+            <p class="word_inner_content">如乙方根据法律法规规定、监管部门要求或履约需要保留的信息资料中包含保密信息，仍然对该部分信息承担保密义务。</p>
+            <p class="word_inner_content">如保密信息采取纸质形式披露，乙方应销毁或返还其原件、复印件，并删除相应扫描件或其他形式包含该保密信息的文件。</p>
+            <p class="word_inner_content">如保密信息采取电子数据形式披露，乙方应完整、彻底地删除包含该电子数据的相应数据，并采取措施防止通过备份、数据恢复等方式恢复。</p>
+            <div class="word_content_title">六、违约责任</div>
+            <div class="word_inner_content">
+              <ol>
+                <li>任何一方未履行本协议项下的任何条款均被视为该方违约。</li>
+                <li>乙方或其关联方违反约定，甲方可要求泄密方停止或终止所有对于甲方保密信息的使用和公开，并要求依法赔偿给守约方因该等违约而造成的经济损失和合理开支。</li>
+              </ol>
+            </div>
+            <div class="word_content_title">七、争议解决 </div>
+            <p class="word_inner_content">
+            双方如发生任何与协议有关的争议、纠纷，应友好协商解决。协商不成的，双方同意交由深圳国际仲裁院依法裁决。
+            </p>
+            <div class="word_content_title">八、其他事项</div>
+            <div class="word_inner_content"></div>
+            <ol>
+              <li>甲方保证其有权进行本协议项下的披露，其提供的保密信息不侵犯任何第三方的商业秘密或知识产权。如涉及侵犯第三方知识产权的情况，接受方不对此侵权行为负责，且免于由此产生的索赔。</li>
+              <li>甲方不对本协议项下披露的保密信息作出商业适销性、适合于特定目的性等保证。</li>
+              <li>本协议任何修改，经双方友好协商达成一致方可。未修改的条款不受影响继续有效。</li>
+              <li>为了保证双方能更好履行保密协议内容，必要时甲方可要求到乙方现场实地考察以确认乙方有基础的保密管理和技术能力。</li>
+              <li>本协议作为双方商务合作协议不可分割的重要组成部分，如与其他约定内容发生冲突，以在后约定为准。</li>
+              <li>本协议自双方签署日起生效，一式二份，各持一份，具有同等法律效力。</li>
+            </ol>
+            <div class="word_doc_inner_title" style="margin-top:30px;">
+        甲方：              <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+        法定代表人/授权代表（签字）：              <img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:35px;">
+        乙方（盖章）：              <t t-out="object.partner_two.name">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+        法定代表人/授权代表（签字）：              <img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+        签署日期：              <t t-out="format_date(object.write_date)">2022/08/15</t>
+            </div>
+          </div>
+        </div>
+
+      </field>
+    </record>
+  </data>
+</odoo>

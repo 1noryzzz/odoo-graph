@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_entry_merchant_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.step</field>
+    <field name="inherit_id" ref="ifs_gar_entry_step_view_form"/>
+    <field name="mode">primary</field>
+    <field name="priority" eval="1000"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('o_galaxy_steps')]" position="inside">
+        <button string="风险告知" step="1" current_step="current_step" class="o_galaxy_step"/>
+        <button string="企业基本信息" step="2" current_step="current_step" class="o_galaxy_step"/>
+        <button string="法人信息" step="3" current_step="current_step" class="o_galaxy_step"/>
+        <button string="连带担保人信息" step="4" current_step="current_step" class="o_galaxy_step"/>
+        <button string="相关附件" step="5" current_step="current_step" class="o_galaxy_step"/>
+        <button string="等待审批" step="6" current_step="current_step" class="o_galaxy_step"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

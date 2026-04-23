@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="gar_s_footer" name="页尾">
+    <section class="o_cc o_cc2" data-vcss="001">
+      <div class="gar_footer_container" data-snippet="s_references">
+        <div class="gar_body_container">
+          <div class="gar_body_top">
+            <div class="gar_item_container">
+              <div class="gar_title">首页</div>
+              <a href="#">公司简介</a>
+              <a href="#">旗下企业</a>
+              <a href="#">商业模式</a>
+              <a href="#">APP下载</a>
+              <a href="#">新闻资讯</a>
+              <a href="#">合作银行</a>
+            </div>
+            <div class="gar_item_container">
+              <div class="gar_title">产品服务</div>
+              <a href="#">购花</a>
+              <a href="#">应收保</a>
+              <a href="#">购花解疑</a>
+            </div>
+            <div class="gar_item_container">
+              <div class="gar_title">核心优势</div>
+              <a href="#">信贷货币标记化</a>
+              <a href="#">全新的风控模式</a>
+              <a href="#">强大的系统支撑</a>
+              <a href="#">多场景应用</a>
+            </div>
+            <div class="gar_item_container">
+              <div class="gar_title">新闻资讯</div>
+              <a href="#">企业要闻</a>
+              <a href="#">行业动态</a>
+            </div>
+            <div class="gar_item_container">
+              <div class="gar_title">关于我们</div>
+              <a href="#">公司简介</a>
+              <a href="#">使命愿景</a>
+              <a href="#">经营理念</a>
+              <a href="#">团队介绍</a>
+              <a href="#">发展历程</a>
+            </div>
+            <div class="gar_img_item_container">
+              <img class="gar_qrcode_img" src="/ifs_prod_gar/static/src/snippets/s_footer/img/qrcode.png"/>
+              <div class="qrcode_description_text">公众号</div>
+            </div>
+          </div>
+          <div class="gar_separation"></div>
+          <div class="gar_body_bottom">
+            <div>
+              <span class="gar_description_text">客服电话</span>0755-25119601
+            </div>
+            <div>
+              <span class="gar_description_text">联系邮箱</span>fuwu@yzbfp.com
+            </div>
+            <div>
+              <span class="gar_description_text">公司地址</span>深圳市罗湖区深南东路5016号京基100大厦A座4601
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <record id="ifs_prod_gar.gar_s_footer_001_scss" model="ir.asset">
+    <field name="name">Footer 001 SCSS</field>
+    <field name="bundle">web.assets_frontend</field>
+    <field name="path">ifs_prod_gar/static/src/snippets/s_footer/scss/001.scss</field>
+    <field name="active" eval="True"/>
+  </record>
+
+</odoo>

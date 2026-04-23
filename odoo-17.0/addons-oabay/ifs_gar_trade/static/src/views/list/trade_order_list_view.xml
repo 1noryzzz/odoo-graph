@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <t t-name="ifs_gar_trade.ListView" t-inherit="web.ListView" t-inherit-mode="primary" owl="1">
+    <xpath expr="//button[hasclass('o_list_button_add')]" position="replace">
+      <button type="button" class="btn btn-primary o_list_button_invite" data-hotkey="c" t-on-click="onClickCreate" data-bounce-button="">
+        创建订单
+      </button>
+    </xpath>
+  </t>
+</templates>

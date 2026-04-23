@@ -1,0 +1,851 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* galaxy_common
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-16 11:10+0000\n"
+"PO-Revision-Date: 2023-01-16 11:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_base_external_dbsource__conn_string
+msgid ""
+"\n"
+"    Sample connection strings:\n"
+"            数据库类型 + 数据库驱动 :// 数据库用户名 : 数据库密码 @ IP地址 : 端口号 / 数据库\n"
+"    - MySQL: mysql+pymysql://user:%s@server:port/dbname\n"
+"    "
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/legacy/js/fields/field_utils_format.js:0
+#: code:addons/galaxy_common/static/src/legacy/js/fields/field_utils_format.js:0
+#: code:addons/galaxy_common/static/src/legacy/js/fields/field_utils_format.js:0
+#: code:addons/galaxy_common/static/src/legacy/js/fields/field_utils_format.js:0
+#, python-format
+msgid "'%s' is not a correct float"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_needaction
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/dynamic_properties/dynamic_properties_field.xml:0
+#, python-format
+msgid "Add a Property"
+msgstr "添加属性"
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__enabled
+msgid "Allowed"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__app_id
+msgid "AppId"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country__area_ids
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_state__area_ids
+msgid "Area Code"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_res_country_area__code
+msgid "Area Code Define In GB/T 2260"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__name
+msgid "Area Name"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_attachment_count
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__body
+msgid "Body"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__body_param
+msgid "Body Param"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__css_class
+msgid "CSS class"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#, python-format
+msgid "Cannot aggregate field %r."
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_res_company
+msgid "Companies"
+msgstr "公司"
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设置"
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__conn_string_full
+msgid "Conn String Full"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_res_country
+msgid "Country"
+msgstr "国家"
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_res_country_area
+msgid "Country Area"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_res_country_state
+msgid "Country state"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__create_uid
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__create_uid
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__create_date
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__create_date
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/external_pg_model.py:0
+#, python-format
+msgid ""
+"Database fetch misses ids (%(missing)s) and has extra ids (%(extra)s), may "
+"be caused by a type incoherence in a previous request"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#, python-format
+msgid ""
+"Database fetch misses ids ({}) and has extra ids ({}), may be caused by a "
+"type incoherence in a previous request"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_config_settings__db_list
+msgid "Db List"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__display_name
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__display_name
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/dynamic_properties/dynamic_properties_field.js:0
+#, python-format
+msgid "DynamicProperties"
+msgstr "动态属性"
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_base_external_dbsource
+msgid "External Database Sources"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/properties/property_definition.xml:0
+#, python-format
+msgid "Field Name"
+msgstr "字段键值"
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_follower_ids
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_partner_ids
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__hbase
+msgid "HBase"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__has_message
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__id
+#: model:ir.model.fields,field_description:galaxy_common.field_mysql_model_mixin__id
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__id
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__id
+msgid "ID"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_base_external_dbsource__connector
+msgid ""
+"If a connector is missing from the list, check the server log to confirm "
+"that the required components were detected."
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__message_needaction
+#: model:ir.model.fields,help:galaxy_common.field_sms_sms__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__message_has_error
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__message_has_sms_error
+#: model:ir.model.fields,help:galaxy_common.field_sms_sms__message_has_error
+#: model:ir.model.fields,help:galaxy_common.field_sms_sms__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#, python-format
+msgid "Invalid aggregation function %r."
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#, python-format
+msgid "Invalid field specification %r."
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__is_binded
+msgid "Is Binded"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_is_follower
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource____last_update
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider____last_update
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__write_uid
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__write_uid
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__write_date
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__write_date
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__body
+msgid "Link text in Login Dialog"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.res_config_settings_view_form_website
+msgid "Logo"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_main_attachment_id
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_has_error
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_ids
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__mssql
+msgid "Microsoft SQL Server"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__mongodb
+msgid "MongoDB"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__mysql
+msgid "MySQL"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/dynamic_properties/dynamic_properties_field.xml:0
+#, python-format
+msgid "New Property"
+msgstr "新属性"
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_needaction_counter
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_has_error_counter
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__message_needaction_counter
+#: model:ir.model.fields,help:galaxy_common.field_sms_sms__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__message_has_error_counter
+#: model:ir.model.fields,help:galaxy_common.field_sms_sms__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__oracle
+msgid "ORACLE"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "Odoo Warning"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_sms_sms
+msgid "Outgoing SMS"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#, python-format
+msgid "Output name %r is used twice."
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.view_dbsource_form
+msgid "Please check the tooltip for connection string examples"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/dynamic_properties/dynamic_properties_field.js:0
+#, python-format
+msgid "Please complete your properties before adding a new one"
+msgstr "在添加新的属性之前，请完成您的属性"
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__postgresql
+msgid "PostgreSQL"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/dynamic_properties/dynamic_properties_field.js:0
+#, python-format
+msgid "Property %s"
+msgstr "属性%s"
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/properties/property_definition.xml:0
+#, python-format
+msgid "Property Key"
+msgstr "属性Key"
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__name
+msgid "Provider Name"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_qr_login_provider
+msgid "Qr Login Provider"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__redirect_uri
+msgid "Redirect Uri"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__redis
+msgid "Redis"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__revision
+msgid "Revision"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__message_has_sms_error
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_sms_template_preview
+msgid "SMS Template Preview"
+msgstr "短信息模板预览"
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_sms_template
+msgid "SMS Templates"
+msgstr "短信息模板"
+
+#. module: galaxy_common
+#: model:ir.model.fields.selection,name:galaxy_common.selection__base_external_dbsource__connector__sqlite
+msgid "SQLite"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__scope
+msgid "Scope"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__secret
+msgid "Secret"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/views/fields/x2many/subview_x2many_field.js:0
+#, python-format
+msgid "Sub View"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_template_preview__template_body
+msgid "Template Body"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_template_preview__template_param
+msgid "Template Param"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.constraint,message:galaxy_common.constraint_res_country_area_area_code_uniq
+msgid "The code of the area must be unique by country !"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__website_message_ids
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,help:galaxy_common.field_qr_login_provider__website_message_ids
+#: model:ir.model.fields,help:galaxy_common.field_sms_sms__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__parent_area_id
+msgid "上级区域"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_qr_login_provider_mixin
+msgid "二维码配置插件"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.res_config_settings_view_form
+msgid "使用阿里云服务"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/js/user_menu.js:0
+#, python-format
+msgid "修改密码"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__code
+msgid "区域代码"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__area_type
+msgid "区域类型"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_country_area__country_id
+msgid "国家"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.actions.act_window,name:galaxy_common.action_dbsource
+#: model:ir.ui.menu,name:galaxy_common.menu_dbsource
+msgid "外部数据源"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/external_pg_model.py:0
+#: code:addons/galaxy_common/models/external_pg_model.py:0
+#: code:addons/galaxy_common/models/external_pg_model.py:0
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#: code:addons/galaxy_common/models/mysql_model.py:0
+#, python-format
+msgid "外部数据源未设置"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "客户端错误"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "客户端错误提示"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__password
+msgid "密码"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider_mixin__qr_login_id
+msgid "扫码登录配置"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.brand_promotion
+msgid "提供技术支持"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/external_dbsource.py:0
+#, python-format
+msgid "数据库连接成功"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.res_config_settings_view_form_website
+msgid "数据库配置"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__name
+msgid "数据源名称"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "服务端错误"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.view_dbsource_form
+msgid "测试连接"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_uuid_short_mixin
+msgid "生成简短的不重复编码"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_qr_login_provider__website_id
+msgid "登录网站"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.sms_template_preview_form
+msgid "短信内容"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__resource_ref
+msgid "短信内容引用模型"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_template__template_param
+#: model_terms:ir.ui.view,arch_db:galaxy_common.sms_template_preview_form
+msgid "短信参数"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_template__template_params_mapping
+msgid "短信参数映射表"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_sms__template_id
+#: model:ir.model.fields,field_description:galaxy_common.field_sms_template__template_body
+#: model_terms:ir.ui.view,arch_db:galaxy_common.sms_template_preview_form
+msgid "短信模板"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "网络连接错误"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "网络错误提示"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "警告信息"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_config_settings__set_default_db
+msgid "设置默认数据库"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/legacy/js/fields/field_utils_format.js:0
+#, python-format
+msgid "请输入0到100间的百分比"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__timeout
+msgid "超时时间"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-python
+#: code:addons/galaxy_common/models/external_dbsource.py:0
+#, python-format
+msgid ""
+"连接失败:\n"
+"具体信息如下:\n"
+"%s"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__conn_string
+msgid "连接字符串"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__pool_size
+msgid "连接池大小"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__max_overflow
+msgid "连接池最大溢出大小"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_base_external_dbsource__connector
+msgid "连接类型"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model,name:galaxy_common.model_mysql_model_mixin
+msgid "适配 Mysql"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.res_config_settings_view_form_website
+msgid "选择此域名对应的数据库"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/webclient/webclient.js:0
+#, python-format
+msgid "云腾智慧"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.brand_promotion
+msgid "云腾智慧"
+msgstr ""
+
+#. module: galaxy_common
+#. odoo-javascript
+#: code:addons/galaxy_common/static/src/core/errors/error_dialogs.js:0
+#, python-format
+msgid "错误提示"
+msgstr ""
+
+#. module: galaxy_common
+#: model:ir.model.fields,field_description:galaxy_common.field_res_config_settings__module_galaxy_aliyun
+msgid "阿里云服务"
+msgstr ""
+
+#. module: galaxy_common
+#: model_terms:ir.ui.view,arch_db:galaxy_common.res_config_settings_view_form_website
+msgid "默认数据库"
+msgstr ""

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="login" inherit_id="web.login" name="Galaxy Login">
+    <xpath expr="//form" position="before">
+      <div class="galaxy_login_title">欢迎使用云腾智慧管理系统</div>
+    </xpath>
+    <xpath expr="//div[hasclass('field-login')]" position="replace">
+      <input type="text" placeholder="用户名" name="login" t-att-value="login" id="login" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autofocus="autofocus" autocapitalize="off"/>
+    </xpath>
+    <xpath expr="//input[@name='password']/parent::div" position="replace">
+      <input type="password" placeholder="密码" name="password" id="password" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+    </xpath>
+    <xpath expr="//button[@type='submit']" position="attributes">
+      <attribute name="class" add="galaxy-btn-primary" separator=" "></attribute>
+    </xpath>
+  </template>
+</odoo>

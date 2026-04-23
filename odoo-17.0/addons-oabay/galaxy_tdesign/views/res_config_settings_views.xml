@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.galaxy.tdesign</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="88"/>
+    <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//setting[@id='cf-turnstile']" position="after">
+        <setting name="galaxy_aliyun" string="左侧菜单设置" help="主菜单栏的状态设置">
+            <field name="main_menu_style"/>
+        </setting>
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="galaxy_open_api_app_view_form_inherited_partner" model="ir.ui.view">
+    <field name="name">galaxy.open.api.app.view.form.inherited.partner</field>
+    <field name="model">galaxy.open.api.app</field>
+    <field name="inherit_id" ref="galaxy_open_api.galaxy_open_api_app_view_form"/>
+    <field name="arch" type="xml">
+      <field name="company_id" position="attributes">
+        <attribute name="readonly">1</attribute>
+        <attribute name="force_save">1</attribute>
+      </field>
+      <field name="user_id" position="attributes">
+        <attribute name="readonly">1</attribute>
+        <attribute name="force_save">1</attribute>
+      </field>
+      <field name="company_id" position="before">
+        <field name="owner_id" options="{'no_create': true, 'no_open': true}"/>
+      </field>
+    </field>
+  </record>
+</odoo>

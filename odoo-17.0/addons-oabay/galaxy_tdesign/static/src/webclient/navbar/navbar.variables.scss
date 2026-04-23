@@ -1,0 +1,26 @@
+// = Main Navbar Variables
+// ============================================================================
+// $o-navbar-height-xs: 46px !default;
+// $o-navbar-height-lg: 46px !default;
+// $o-navbar-height: $o-navbar-height-lg !default;
+
+$o-navbar-background: $o-white !default;
+
+$o-navbar-border-bottom: 1px solid darken($o-navbar-background, 10%) !default;
+
+$o-navbar-entry-color: $o-main-headings-color !default;
+$o-navbar-entry-color--hover: $o-main-link-color !default;
+// $o-navbar-entry-font-size: $o-font-size-base !default;
+// $o-navbar-entry-bg--hover: rgba($o-black, .08) !default;
+
+// $o-navbar-brand-font-size: $o-navbar-entry-font-size * 1.3 !default;
+
+// $o-navbar-badge-size: 11px !default;
+// $o-navbar-badge-size-adjust: 1px !default;
+// $o-navbar-badge-padding: 4px !default;
+// $o-navbar-badge-bg: $o-success !default;
+
+$o-sidebar-background-color: $o-navbar-background !default;
+$o-sidebar-bg--hover: rgba($o-black, .08) !default;
+$o-sidebar-border: $o-navbar-border-bottom !default;
+$o-sidebar-color: $o-white !default;

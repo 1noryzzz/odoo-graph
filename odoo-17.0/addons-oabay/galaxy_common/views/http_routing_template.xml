@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="400" inherit_id="http_routing.400">
+    <xpath expr="//div[@id='wrap']" position="inside">
+      <div class="oe_login_form">
+        <a href="/web/login" class="btn btn-primary btn-block">重新登录</a>
+      </div>
+    </xpath>
+  </template>
+</odoo>

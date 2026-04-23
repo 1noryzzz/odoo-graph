@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_trade_order_wizard_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.wizard.view.form.inherited</field>
+    <field name="model">ifs.gar.order.step</field>
+    <field name="inherit_id" ref="ifs_gar_trade.ifs_gar_trade_order_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <button step="2" position="after">
+        <button string="还款计划" step="3" current_step="current_step" class="o_galaxy_step"/>
+      </button>
+    </field>
+  </record>
+</odoo>

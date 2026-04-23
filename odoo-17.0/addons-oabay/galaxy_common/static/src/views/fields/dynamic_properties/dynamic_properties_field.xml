@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="galaxy_common.DynamicPropertiesField" t-inherit="web.PropertiesField" t-inherit-mode="primary">
+    <xpath expr="//div[hasclass('o_inner_group')]" position="attributes">
+      <attribute name="class" remove=""></attribute>
+      <attribute name="t-att-class">
+        {'o_inner_group o_group col-lg-4 o_property_group': renderedColumnsCount === 3, 'o_inner_group o_group col-lg-6 o_property_group': renderedColumnsCount !== 3}
+      </attribute>
+    </xpath>
+  </t>
+</templates>

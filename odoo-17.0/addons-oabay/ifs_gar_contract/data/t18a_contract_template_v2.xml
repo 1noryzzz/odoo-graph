@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="T18A_contract_v2" model="ifs.contract.template">
+      <field name="name">关于买方账款最高子额度合同账单日及确认机制的告知确认函</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">T18A</field>
+      <field name="need_partner">one</field>
+      <field name="tag_ids" eval="[(4, ref('ifs_contract.ifs_contract_tag_gjxy'))]"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.25,"offsetY": 0.60}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <div class="word_content main_content margin_left">
+            <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+            <div class="word_doc_title">关于买方账款最高子额度合同账单日及确认机制的告知确认函</div>
+            <div class="word_doc_inner_title" style="margin-top: 160px;">
+              致：            <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top: 20px;">
+              由：            亚洲保理（深圳）有限公司
+            </div>
+            <div class="word_doc_inner_title" style="margin-top: 20px;">
+              日期：            <t t-out="format_date(object.write_date)" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">2022/08/15</t>
+            </div>
+             <div class="word_doc_inner_title" style="margin-top: 20px;">
+              事由：关于最高子额度合同项下账单日与自动确认机制的确认
+             </div>
+             <div class="word_inner_content" style="margin-top: 20px; padding-left: 0em;text-indent:0">
+               尊敬的客户：
+               <p>
+                感谢贵司使用我司的数字白条服务。为提升服务效率、优化结算体验，现就《买方账款最高子额度合同》项下的账单生成周期及确认机制向贵司作出如下说明与约定。本函件将作为《买方账款最高子额度合同》的有效附件，经双方签署后，与主合同具有同等法律效力。请贵司仔细阅读本确认函的全部内容，并予以确认。
+               </p>
+             </div>
+              <div class="word_content_title">一、账单日与账单生成</div>
+              <p>我司系统将每月定期设定一个账单日。在该账单日，系统会自动将贵司在本结算周期内通过最高子额度合同形成的所有订单进行汇总合并，并生成一张统一的账单。</p>
+              <div class="word_content_title">二、《转让确认书》的生成与通知</div>
+              <p>自动生成：上述账单生成后，系统将基于该账单信息，自动创建一份对应的《应付账款转让确认书》。</p>
+              <p>主动通知：我司将于每月1号，通过短信/邮件（客户选择）形式向贵司预留的手机号码/邮箱地址发送通知。该通知将明确告知贵司当期账单及《应付账款转让确认书》已生成，并附上查看及确认操作的链接。</p>
+              <div class="word_content_title">三、主动确认与托管授权确认</div>
+              <p>主动确认：贵司收到短信通知后，可点击链接登录系统，核对账单及《应付账款转让确认书》内容。如确认无误，贵司可在线完成确认操作。</p>
+              <p>托管授权确认：此为重要条款。若贵司在收到通知后，未在约定的异议期内（自通知发出后的3个工作日内）提出书面异议也未主动进行确认操作，则视为贵司已默认同意该《转让确认书》的全部内容。系统将根据贵司签署的《数字证书托管协议》，代为履行托管职责，代为生成并签署该份《应付账款转让确认书》，该确认书贵司一经签署即对贵司产生法律约束力。</p>
+              <div class="word_content_title">四、信息维护与异议渠道</div>
+              <p>请贵司确保在我司预留的联系方式准确有效，以便及时接收通知。如对账单内容有任何疑问，或希望行使主动确认权，请在收到通知后及时通过指定渠道（如客服热线、专属客户经理）与我们联系。</p>
+              <p>本机制旨在为贵司提供便捷高效的服务。感谢贵司的理解与支持！</p>
+            <div class="word_doc_inner_title" style="margin-top:150px;">
+            <b>（客户）确认并同意：</b>
+            <p>我司已收到、阅读、理解并完全同意本确认函所述之全部内容。我司确认，本确认函构成双方签署的《最高子额度合同》的有效组成部分。</p>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:30px;">
+                  客户（盖章）：<t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+                  法定代表人/授权代表（签字）：<img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:35px;">
+                  签署日期：<t t-out="format_date(object.write_date)" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">2022/08/15</t>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+    
+  </data>
+</odoo>

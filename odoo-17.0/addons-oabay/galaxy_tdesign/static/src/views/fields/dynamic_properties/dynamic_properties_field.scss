@@ -1,0 +1,178 @@
+.o_form_view {
+    &.o_galaxy_form_view {
+        .o_form_sheet_bg {
+            .o_form_sheet {
+                .o_group {
+                    .o_inner_group {
+                        &.o_property_group {
+                            margin-top: 0;
+                        }
+
+                        .o_wrap_label {
+                            &.o_property_field {
+                                width: auto !important;
+                                min-height: 3rem;
+                                display: grid !important;
+                                align-items: center;
+                                margin-bottom: 0 !important;
+
+                                @media (min-width: 576px) {
+                                    grid-template-columns: 120px 1fr;
+                                    border-bottom: 1px solid $o-gray-200;
+                                }
+
+                                .o_field_property_label {
+                                    // white-space: nowrap;
+                                    // display: inline-block;
+                                    // overflow: hidden;
+                                    // text-overflow: ellipsis;
+                                    padding: 0 10px;
+                                }
+
+                                .o_property_field_value {
+                                    height: 100%;
+                                    background-color: $o-view-background-color;
+                                    align-items: center;
+                                    display: grid;
+                                    padding: 0 10px;
+                                }
+                            }
+                        }
+                    }
+
+                    .o_field_dynamic_properties {
+                        margin-bottom: 0;
+                        &.o_group_label_lg {
+                            .o_property_field {
+                                @media (min-width: 576px) {
+                                    grid-template-columns: 160px 1fr;
+                                }
+                            }
+                        }
+                    }
+
+                    &.o_group_label_lg,
+                    >.o_group_label_lg {
+                        .o_field_dynamic_properties  {
+                            .o_property_field {
+                                @media (min-width: 576px) {
+                                    grid-template-columns: 160px 1fr;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .o_galaxy_properties {
+                    margin-left: -17px;
+        
+                    .o_kanban_view.o_galaxy_kanban_properties {
+                        .o_kanban_renderer {
+                            --KanbanRecord-width: 100%;
+                            --KanbanRecord-padding-v: 0;
+                            --KanbanRecord-padding-h: #{$o-kanban-inside-hgutter * 2};
+                            --Kanban-gap: 0;
+                            // padding: 0px !important;
+                            margin: -2px -34px -5px 0;
+        
+                            .o_kanban_record_top {
+                                --gutter-x: 32px;
+                                --gutter-y: 0;
+                                background-color: $o-gray-200;
+                                font-size: 15px;
+                                padding: 0.6rem 10px;
+                                margin-bottom: 1px !important;
+                                margin-top: auto !important;
+                                margin-right: calc(-.5 * var(--gutter-x));
+                                margin-left: calc(-.5 * var(--gutter-x));
+        
+                                .o_kanban_record_title {
+                                    font-size: 15px;
+                                    font-weight: 700;
+                                }
+                            }
+                            
+                            &.o_kanban_ungrouped {
+                                .o_kanban_record {
+                                    margin: 0 0 -2px 0;
+        
+                                    .o_inner_group {
+                                        gap: 0;
+                                        padding: 0;
+                                        margin-bottom: 0;
+
+                                        .o_cell {
+                                            min-height: 3rem;
+                                            display: flex;
+                                            align-items: center;
+        
+                                            &:not(:has(.o_field_many2many)):not(:has(.o_field_one2many)) {
+                                                padding-left: 10px;
+                                                padding-right: 10px;
+                                            }
+        
+                                            .o_field_widget,
+                                            .o_form_label {
+                                                margin-bottom: 0;
+        
+                                                &:not(.o_field_html):not(.o_field_text) {
+                                                    white-space: nowrap;
+                                                    text-overflow: ellipsis;
+                                                    overflow: hidden;
+                                                }
+                                            }
+        
+                                            .o_field_html,
+                                            .o_field_text {
+                                                margin-top: 5px;
+                                                margin-bottom: 5px;
+        
+                                                span {
+                                                    word-break: break-word;
+                                                    white-space: normal;
+                                                }
+                                            }
+        
+                                            @media (min-width: 576px) {
+                                                border-bottom: 1px solid $o-gray-200;
+                                            }
+        
+                                            @media (min-width: 992px) {
+        
+                                                &:has(.o_two_line_cell),
+                                                &:has(.o_field_html),
+                                                &:has(.o_field_text) {
+                                                    min-height: 4rem;
+                                                }
+                                            }
+        
+                                            .oe_inline_container {
+                                                width: 100%;
+                                                display: flex;
+        
+                                                .oe_inline_full {
+                                                    flex-grow: 1;
+        
+                                                    input {
+                                                        width: 100% !important;
+                                                    }
+                                                }
+                                            }
+                                        }
+        
+                                        >.o_property_field:is(:last-child) {
+                                            // height:200px;
+                                            .o_cell {
+                                                border-bottom: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

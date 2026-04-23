@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="sms_template_form_aliyun_inherited">
+    <field name="name">sms.template.form.aliyun.inherited</field>
+    <field name="model">sms.template</field>
+    <field name="inherit_id" ref="sms.sms_template_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='model_id']" position="before">
+        <field name="code"/>
+        <field name="aliyun_code"/>
+      </xpath>
+      <xpath expr="//field[@name='model_id']" position="after">
+          <field name="sign_name"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

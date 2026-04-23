@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="X10_contract" model="ifs.contract.template">
+      <field name="name">额度调整申请书</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">X10</field>
+      <field name="need_partner">two</field>
+      <field name="need_faceid">False</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[
+        {},
+        {"chaptes": [{"offsetX": 0.45,"offsetY": 0.72}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+
+        <div class="word_content">
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_doc_title">额度调整申请书</div>
+          <div class="word_doc_content_mini word_doc_content_mini_right">文书编号：
+            <t t-out="object.code" />
+          </div>
+          <div class="word_doc_inner_text content_p">致：            <t t-out="object.partner_one.name">XXXX有限公司</t>
+            <p>我              <span class="text_underline">
+                <t t-out="object.partner_two.name">XXXX有限公司</t>
+              </span> 
+          单位因业务发展需要，现申请调整授信额度，具体情况如下：
+            </p>
+          </div>
+
+          <div class="word_doc_inner_text content_p margin-top50">
+            <div>一、调整前授信额度：              <t t-out="params.get('origin_quota')">xx</t>万元。
+            </div>
+            <div>二、调整后授信额度：              <t t-out="params.get('apply_quota')">xx</t>万元。
+            </div>
+            <div>三、调整原因：              <t t-out="params.get('apply_reason')">xxx</t>。
+            </div>
+            <div>四、调整依据：              <t t-out="params.get('apply_basis')">xx</t>。
+            </div>
+            <div>五、申请人：              <t t-out="object.partner_two.legal_name">xxx</t>。
+            </div>
+            <div>六、联系电话：              <t t-out="object.partner_two.phone">13333333333</t>
+            </div>
+            <div>七、申请日期：              <t t-out="format_date(object.write_date)">×年×月×日</t>。
+            </div>
+            <div>特别声明</div>
+            <p>本人知悉如额度获批通过，该文件会与最高子额度合同内所标明的额度进行相加合并，并愿意承担新额度项下的还款责任与其他标明的义务。</p>
+          </div>
+          <div class="word_doc_inner_text margin-top50 margin-left100">
+            <div>申请单位（盖章）：</div>
+            <div>申请人签字：
+              <img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" height="80px" style="vertical-align:top;" />
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

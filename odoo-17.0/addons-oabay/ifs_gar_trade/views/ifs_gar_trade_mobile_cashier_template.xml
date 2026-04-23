@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="ifs_gar_trade_mobile_cashier_template" name="收银台" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>收银台</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div id="paymentCode" style="display:none" t-esc="payment_code"></div>
+      <div id="merchantCode" style="display:none" t-esc="merchant_code"></div>
+      <div id="supplierCode" style="display:none" t-esc="supplier_code"></div>
+      <t t-set="original_info" t-value="json.dumps(original_info)"/>
+      <input type="hidden" id="original_info" name="original_info" t-att-value="original_info"/>
+      <form id="idcardForm" class="cashier_form" style="background-color: rgb(237, 237, 237);">
+        <div class="cashier_mask input_no_display" id="password_input">
+          <div class="password_text">
+            <img src="/ifs_gar_trade/static/img/close.png" name="close_img" class="close_img"/>
+            <div class="password_text_info">
+              请输入支付密码
+            </div>
+            <div class="underline_info"/>
+            <div class="pay_amount">
+              <div class="amount_mark">￥</div>
+              <t t-esc="amount"/>
+            </div>
+            <div class="password_input_wrap">
+              <div class="password_input_text">
+                <input type="text" id="password-input-1" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="input_box password-input" disabled="true" autocorrect="off" autocapitalize="none"/>
+                <input type="text" id="password-input-2" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="input_box password-input" disabled="true" autocorrect="off" autocapitalize="none"/>
+                <input type="text" id="password-input-3" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="input_box password-input" disabled="true" autocorrect="off" autocapitalize="none"/>
+                <input type="text" id="password-input-4" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="input_box password-input" disabled="true" autocorrect="off" autocapitalize="none"/>
+                <input type="text" id="password-input-5" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="input_box password-input" disabled="true" autocorrect="off" autocapitalize="none"/>
+                <input type="text" id="password-input-6" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="input_box password-input" disabled="true" autocorrect="off" autocapitalize="none"/>
+              </div>
+              <div id="error_text"></div>
+            </div>
+            <div style="margin: 18px 0;" class="underline_info"/>
+            <a id="forgetPwd" href="#">设置交易密码/忘记密码</a>
+          </div>
+        </div>
+        <div class="cashier_main_content">
+          <div class="pay_amount_text">
+            <div class="amount_title_text">
+              待支付金额
+            </div>
+            <div class="pay_amount">
+              <div class="amount_mark">￥</div>
+              <t t-esc="amount"/>
+            </div>
+          </div>
+          <div class="title_text">
+				    付款约定
+          </div>
+          <div t-attf-class="pay_way {{'pay_way_tips' if len(unable_list) > 0 else ''}}">
+            <div class="bfp_pay">
+              <div class="wrap">
+                <img src="/ifs_gar_trade/static/img/bfp.png" name="bfp_img" class="bfp_img"/>
+              </div>
+              <div class="bfp_pay_text">
+                <div class="bfp_pay_text_content">
+                  <div>
+                    本次交易通过好医生云医疗白条支付。请留意账单还款日，按时还款，避免逾期影响征信。
+                  </div>
+                  <!-- <t t-if="merchant_quota and merchant_available == '可用'">
+                    <div class="bfp_pay_text_content_info">
+                      <div>剩余：</div>
+                      <div>￥                        <t t-esc="merchant_quota"/>
+                      </div>
+                      <t t-if="not_enough">
+                        <div class="bfp_pay_text_content_info_warning">(可用余额不足)</div>
+                      </t>
+                    </div>
+                  </t>
+                  <t t-else="">
+                    <div class="bfp_pay_text_content_info">用白条支付享90天免息额度</div>
+                  </t> -->
+                </div>
+                <!-- <t t-if="merchant_quota and merchant_available == '可用'">
+                  <input type="radio" name="option" value="bfp_pay" id="bfp_pay" checked="True" class="circular-button"/>
+                </t> -->
+                <!-- <img src="/ifs_gar_trade/static/img/skip.png" name="apply_img" id="apply_img" class="quota_content_img"/> -->
+              </div>
+            </div>
+            <!-- <t t-if="not(merchant_quota and merchant_available == '可用')">
+              <div class="underline_info line"/>
+              <div class="quota_content" id="quota_content_null">
+                <div class="quota_content_text">
+                  <div>
+                    没有额度
+                  </div>
+                  <div class="quota_content_text_info label">
+                    去申请
+                  </div>
+                </div>
+                <img src="/ifs_gar_trade/static/img/skip.png" name="apply_img" id="apply_img" class="quota_content_img"/>
+              </div>
+            </t> -->
+          </div>
+          <!-- <div t-attf-class="pay_way agreement-block">
+            <div class="bfp_pay">
+              <div style="justify-content: center;" class="wrap">
+                <input type="checkbox" checked="checked" />
+              </div>
+              <div class="bfp_pay_text">
+                <div class="bfp_pay_text_content">
+                  <div>
+                    本人同意以下合同之约定
+                    <a href="#">《最高总额度合同》</a>
+                    <a href="#">《应付账款转让确认书》</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <t t-if="len(unable_list) > 0">
+            <div class="unable_pay_way">
+              <t t-foreach="unable_list" t-as="supplier">
+                <div>
+                  <t t-esc="supplier"/>
+                </div>
+              </t>
+              <div>收款金额已达每日上限，无法使用额度支付，请选择其他支付方式</div>
+            </div>
+          </t>
+          <div class="other_pay_way">
+            <div>
+				    更多支付方式
+            </div>
+            <div id="cashier_expand">
+              <img src="/ifs_gar_trade/static/img/expand.png" name="name"/>
+            </div>
+          </div>
+          <div class="wechat_pay">
+            <div class="wechat_pay_content">
+              <img src="/ifs_gar_trade/static/img/wechat.png" name="name"/>
+              <div class="wechat_pay_text">
+              微信支付
+              </div>
+            </div>
+            <img src="/ifs_gar_trade/static/img/skip.png" name="wechat_img" id="wechat_img" class="quota_content_img"/>
+          </div>
+        </div>
+        <div class="button_container">
+          <div class="cashier-footer">
+            <!-- <img class="logo" src="/ifs_gar_trade/static/img/bfpLogo.png"/> -->
+            <div class="label">鸥贝云为本次交易提供技术支持</div>
+          </div>
+          <!-- <button class="btn btn-primary btn-block galaxy-btn-primary cashier-btn" type="button" t-att-disabled="not(merchant_quota and merchant_available == '可用') or not_enough or len(unable_list) > 0">立即支付</button> -->
+          <button class="btn btn-primary btn-block galaxy-btn-primary cashier-btn" type="button">立即支付</button>
+        </div>
+      </form>
+    </xpath>
+  </template>
+
+  <template id="ifs_bfp_transition_cashier_test_template" name="收银台测试-前置信息补充" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>收银台测试-前置信息补充</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div class="test_container">
+        <div class="form-group">
+          <label for="access_token">Access token：</label>
+          <input type="text" id="access_token" name="access_token" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="merchant_code">商户编号：</label>
+          <input type="text" id="merchant_code" name="merchant_code"/>
+        </div>
+        <div class="form-group">
+          <label for="merchant_credit_no">社会统一信用代码：</label>
+          <input type="text" id="merchant_credit_no" name="merchant_credit_no"/>
+        </div>
+        <div class="form-group">
+          <label for="pay_order_code">支付订单号：</label>
+          <input type="text" id="pay_order_code" name="pay_order_code" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="amount">支付金额：</label>
+          <input type="text" id="amount" name="amount" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="longitude">经度：</label>
+          <input type="text" id="longitude" name="longitude" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="latitude">纬度：</label>
+          <input type="text" id="latitude" name="latitude" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="supplier_code1">供应商编号1：</label>
+          <input type="text" id="supplier_code1" name="supplier_code1" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="order_code1">交易订单号1：</label>
+          <input type="text" id="order_code1" name="order_code1" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="order_amount1">订单金额1：</label>
+          <input type="text" id="order_amount1" name="order_amount1" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="supplier_code2">供应商编号2：</label>
+          <input type="text" id="supplier_code2" name="supplier_code2" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="order_code2">交易订单号2：</label>
+          <input type="text" id="order_code2" name="order_code2" required="True"/>
+        </div>
+        <div class="form-group">
+          <label for="order_amount2">订单金额2：</label>
+          <input type="text" id="order_amount2" name="order_amount2" required="True"/>
+        </div>
+        <button id="skip_btn" type="button">跳转至收银台</button>
+      </div>
+    </xpath>
+  </template>
+
+</odoo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="D09_contract" model="ifs.contract.template">
+      <field name="name">应付账款结清证明</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">D09</field>
+      <field name="need_partner">two</field>
+      <field name="need_faceid">False</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[
+        {},
+        {"chaptes": [{"offsetX": 0.65,"offsetY": 0.60}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <t t-set="params" t-value="json.loads(object.params)"/>
+        <div class="word_content">
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_doc_title">应付账款结清证明</div>
+          <div class="word_doc_content_mini word_doc_content_mini_right">文书编号：
+            <t t-out="object.code" />
+          </div>
+          <div class="word_content_start">致：</div>
+
+          <div class="word_content_start">
+            <t t-out="params.get('partner_one_name')"></t>
+          </div>
+
+
+          <div class="word_inner_content">
+            <p>我方已收到              <t t-out="params.get('accounts')"></t>元应付账款转让对价款。贵方已履行完毕              <t t-out="params.get('t20_contract_date')">    年    月   日</t>双方签署的《应付账款转让确认书》（编号              <t t-out="params.get('t20_contract_code')">NA</t>          ）项下全部义务。
+            </p>
+
+            <p class="word_content_start">特此证明！</p>
+            <div class="word_doc_content_mini word_doc_content_mini_right">
+              <div style="margin-top:200px">应付账款转让方：                
+                <t t-if="params.get('partner_two_name')">
+                  <t t-out="params.get('partner_two_name')"></t>
+                </t>
+                <t t-else="params.get('partner_two_name')">
+                  <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable=""></t>
+                </t>
+
+
+              </div>
+              <div>
+                <t t-out="format_date(object.sign_date)">年 月 日</t>
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,667 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ifs_gar_entry
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-16 07:05+0000\n"
+"PO-Revision-Date: 2022-09-16 07:05+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_activation_view_form
+msgid "<strong>恭喜您进件审批已通过，请点击完成激活！</strong>"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_pending_view_form
+msgid "<strong>恭喜您进件成功！后台会即刻开始审核您的信息，请耐心等候！</strong>"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_finish_view_form
+msgid "<strong>恭喜您进件成功！后台确认信息后会为您开通</strong>"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_pending_view_form
+msgid "<strong>您进件的资料审核不通过，请参与下面的审批意见，重新进件。</strong>"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设置"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__create_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__create_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__create_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__create_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__create_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__create_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__create_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__create_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__currency_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__currency_id
+msgid "Currency"
+msgstr "币种"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__display_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__display_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__display_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__display_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__image_1920
+msgid "Image"
+msgstr "图像"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__image_1024
+msgid "Image 1024"
+msgstr "图像 1024"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__image_128
+msgid "Image 128"
+msgstr "图像128"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__image_256
+msgid "Image 256"
+msgstr "图像 256"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__image_512
+msgid "Image 512"
+msgstr "图像 512"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc____last_update
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing____last_update
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw____last_update
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve____last_update
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject____last_update
+msgid "Last Modified on"
+msgstr "最后修改时间"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__write_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__write_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__write_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__write_uid
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__write_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__write_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__write_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__write_date
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "下一步"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__basic
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_supplier__current_entry_step__basic
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_finish_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "企业基本信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__account
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_account_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_finish_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "企业账户信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__display_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__supplier_id
+msgid "供应方"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_cover_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "供应方名称"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_partner_supplier
+msgid "供应方基本信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__supplier_code
+msgid "供应方编号"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_cover_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "供应方编号："
+msgstr ""
+
+#. module: ifs_gar_entry
+#: code:addons/ifs_gar_entry/models/ifs_gar_invite_supplier.py:0
+#: code:addons/ifs_gar_entry/models/ifs_partner_supplier.py:0
+#: code:addons/ifs_gar_entry/models/ifs_partner_supplier.py:0
+#: model:ir.actions.server,name:ifs_gar_entry.ifs_gar_invite_supplier_entry_act
+#: model:ir.ui.menu,name:ifs_gar_entry.ifs_gar_supplier_entry_menu
+#, python-format
+msgid "供应方进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_merchant_factor_auditing
+msgid "保理方审核采购方进件资料"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__merchant_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__merchant_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__merchant_name
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__merchant_name
+msgid "公司名称"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_base_company_mixin
+msgid "公司基本信息注入"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__merchant_count
+msgid "关联采购方数"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_factor_auditing_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_factor_btw_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_supplier_approve_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_supplier_reject_view_form
+msgid "取消"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_activation_view_form
+msgid "合同签署"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_auditing_view_form
+msgid "填写审核意见"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__remark
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__remark
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__remark
+msgid "备注"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_docs_view_form
+msgid "完成进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__factor_suggest
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__factor_suggest
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__factor_suggest
+msgid "审批建议"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__approval_opinion
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__approval_opinion
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__approval_opinion
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_pending_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_view_form_inherited
+msgid "审批意见"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_supplier_activation_view_form
+msgid "开通"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__current_entry_step
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_supplier__current_entry_step
+msgid "当前进件步骤"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_approve_view_form
+msgid "您确认要拒绝此客户的额度申请吗？"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_auditing_view_form
+msgid "您确认要驳回吗？请在下一界面填写驳回的原因，提醒采购方补充材料"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_basic_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_cover_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_cover_view_form
+msgid "执照信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_approve_view_form
+msgid "批复额度"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__guarantor
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_guarantor_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+msgid "担保人信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_approve_view_form
+msgid "拒绝"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_supplier_reject_view_form
+msgid "拒绝授信"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_merchant_supplier_reject
+msgid "拒绝申请"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_supplier_approve_view_form
+msgid "授信"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__approved_quota
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__approved_quota
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__approved_quota
+msgid "授信额度"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_merchant_supplier_approve
+msgid "授信额度设置"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_factor_auditing_view_form
+msgid "提交给供应方"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__name
+msgid "文件名称"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_doc_view_kanban
+msgid "文件太大了"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_factor_auditing_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_factor_btw_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_supplier_approve_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_supplier_reject_view_form
+msgid "暂存"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_doc_view_form
+msgid "材料名称"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_doc_view_kanban
+msgid "正常大小"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.constraint,message:ifs_gar_entry.constraint_ifs_gar_invite_merchant_doc_same_invite_id_doc_uniq
+msgid "此资料已存在，请不要重复上传！"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__display_principal_name
+msgid "法人姓名"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: code:addons/ifs_gar_entry/models/ifs_base_company_mixin.py:0
+#, python-format
+msgid "法人姓名与身份证信息不一致！"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_activation_view_form
+msgid "激活账户"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__invite_state
+msgid "状态"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__docs
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_supplier__current_entry_step__docs
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_finish_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "相关资质"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_activation_view_form
+msgid "立即激活"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_finish_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "等待开通"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_contact_view_form
+msgid "紧急联系人"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_basic_view_form
+msgid "经营情况"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__contact
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_supplier__current_entry_step__contact
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_finish_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_view_form
+msgid "经营者信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_cover_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_cover_view_form
+msgid "继续进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_contact_view_form
+msgid "联系人信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__display_phone
+msgid "联系方式"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_doc_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_doc_view_kanban
+msgid "补充材料"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_auditing_view_form
+msgid "请仔细审核进件材料后，填写意见和上传附件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_approve_view_form
+msgid "请仔细审核进件材料后，点击确认设置额度"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_supplier_activation_view_form
+msgid "请再次确认供应方相关信息是否完整"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_doc_view_kanban
+msgid "请尽量优化图片尺寸"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_contact_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_contact_view_form
+msgid "负责人信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_contact_view_form
+msgid "财务信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_supplier__current_entry_step__account
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_account_view_form
+msgid "账户信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_supplier__current_entry_step__finish
+msgid "进件完成"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.ui.menu,name:ifs_gar_entry.ifs_gar_entry_menu
+msgid "进件操作"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__entry_date
+msgid "进件时间"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.res_config_settings_view_form
+msgid "进件流程"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__invite_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__invite_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__invite_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__invite_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__invite_id
+msgid "进件邀请"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_supplier
+msgid "邀请供应方进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,help:ifs_gar_entry.field_ifs_gar_invite_supplier__supplier_id
+msgid "邀请成功进件，成功加入后的供应方"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,help:ifs_gar_entry.field_ifs_gar_invite_merchant__merchant_id
+#: model:ir.model.fields,help:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__merchant_id
+#: model:ir.model.fields,help:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__merchant_id
+#: model:ir.model.fields,help:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__merchant_id
+#: model:ir.model.fields,help:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__merchant_id
+msgid "邀请成功进件，成功加入后的采购方"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_merchant
+msgid "邀请采购方进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_merchant_doc
+msgid "邀请采购方进件过程中的相关附件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_supplier__display_email
+msgid "邮箱"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__merchant_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__merchant_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__merchant_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_approve__merchant_id
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__merchant_id
+msgid "采购方"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_cover_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+msgid "采购方名称"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_partner_merchant
+msgid "采购方基本信息"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_cover_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form
+msgid "采购方编号："
+msgstr ""
+
+#. module: ifs_gar_entry
+#: code:addons/ifs_gar_entry/models/ifs_partner_merchant.py:0
+#: code:addons/ifs_gar_entry/models/ifs_partner_merchant.py:0
+#: model:ir.actions.server,name:ifs_gar_entry.ifs_gar_invite_merchant_entry_act
+#: model:ir.ui.menu,name:ifs_gar_entry.ifs_gar_merchant_entry_menu
+#, python-format
+msgid "采购方进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__invite_ids
+msgid "采购方进件id"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_doc__invite_id
+msgid "采购方邀请"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_pending_view_form
+msgid "重新进件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_docs_view_form
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_supplier_docs_view_form
+msgid "附件"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__doc_ids
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_auditing__doc_ids
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__doc_ids
+msgid "附件资料"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__pending
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form_activation
+msgid "额度审批"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields.selection,name:ifs_gar_entry.selection__ifs_partner_merchant__current_entry_step__activation
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_entry_merchant_view_form_activation
+msgid "额度激活"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_partner_merchant_auditing_view_form
+msgid "驳回"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant__reject_reason
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_factor_btw__reject_reason
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_gar_invite_merchant_supplier_reject__reject_reason
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_ifs_partner_merchant__reject_reason
+msgid "驳回原因"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.ifs_gar_invite_merchant_factor_btw_view_form
+msgid "驳回补充"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model,name:ifs_gar_entry.model_ifs_gar_invite_merchant_factor_btw
+msgid "驳回重新提交"
+msgstr ""
+
+#. module: ifs_gar_entry
+#: model:ir.model.fields,field_description:ifs_gar_entry.field_res_config_settings__verification_legalperson_name
+#: model_terms:ir.ui.view,arch_db:ifs_gar_entry.res_config_settings_view_form
+msgid "验证法人姓名"
+msgstr ""

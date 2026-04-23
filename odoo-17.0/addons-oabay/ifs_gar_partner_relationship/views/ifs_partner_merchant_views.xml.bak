@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_partner_merchant_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.form.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_form"/>
+    <field name="arch" type="xml">
+      <!-- <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+        <button name="view_merchants_factor" type="object" class="oe_stat_button" icon="fa-group" attrs="{'invisible': [('current_factoring_actor', '!=', 'factor')]}">
+          <div class="o_stat_info">
+            <span class="o_stat_text">合作采购方</span>
+            <field name="merchant_amount"/>
+          </div>
+        </button>
+      </xpath> -->
+      <xpath expr="//field[@name='business_date_to']" position="replace">
+        <field name="business_authority" />
+        <!--此处因为去掉了employee表，所以对应的这些many2many字段暂时去掉，等页面排版出来后再用api接口对应的字段展示-->
+        <!-- <field name="employee_president_ids" widget="many2many_tags"/>
+        <field name="employee_supervisor_ids" widget="many2many_tags"/> -->
+        <!-- <field name="business_scope" /> -->
+      </xpath>
+      <xpath expr="//field[@name='address']" position="after">
+        <field name="business_scope" />
+      </xpath>
+      <xpath expr="//group[hasclass('gp_base')]/group/field[@name='create_date']" position="replace">
+        <field name="business_date" />
+        <!-- <field name="employee_chairman_ids" widget="many2many_tags"/> -->
+        <field name="business_state" />
+      </xpath>
+      <xpath expr="//group[hasclass('gp_business_license')]" position="after">
+        <group string="1.2企业经营信息" col="2" class="gp_business_info ifs_group">
+          <group class="o_group_label_lg">
+            <field name="business_address" attrs="{'readonly': True}"/>
+            <field name="area_pay" attrs="{'readonly': True}"/>
+            <field name="employee_quantity" attrs="{'readonly': True}"/>
+            <field name="social_insurance_number" attrs="{'readonly': True}"/>
+            <field name="business_income" attrs="{'readonly': True}"/>
+            <field name="accounts_receivable" attrs="{'readonly': True}"/>
+            <field name="stock_value" attrs="{'readonly': True}"/>
+            <field name="intangible_capital" attrs="{'readonly': True}"/>
+          </group>
+          <group class="o_group_label_lg">
+            <field name="business_area" attrs="{'readonly': True}"/>
+            <field name="contract_expire_date" attrs="{'readonly': True}"/>
+            <field name="payrolls" attrs="{'readonly': True}"/>
+            <field name="social_insurance_pay" attrs="{'readonly': True}"/>
+            <field name="business_cost" attrs="{'readonly': True}"/>
+            <field name="accounts_payable" attrs="{'readonly': True}"/>
+            <field name="business_debt" attrs="{'readonly': True}"/>
+            <field name="taxpayer_type" attrs="{'readonly': True}"/>
+          </group>
+          <group string="主要客户名单（至少一个）" colspan="4">
+            <field name="main_customers_ids" nolabel="1" mode="tree" colspan="2">
+              <tree no_open="1" edit="0" create="0">
+                <field name="name"/>
+                <field name="product_scope"/>
+                <field name="transaction_amount" />
+                <field name="contact_partner_id" />
+                <field name="partner_id" invisible="1"/>
+                <field name="others_business_id" invisible="1"/>
+              </tree>
+            </field>
+          </group>
+          <group string="主要供应商名单（至少一个）" colspan="4">
+            <field name="main_supplier_ids" nolabel="1" mode="tree" colspan="2">
+              <tree no_open="1" edit="0" create="0">
+                <field name="name"/>
+                <field name="product_scope"/>
+                <field name="transaction_amount" />
+                <field name="contact_partner_id" />
+                <field name="partner_id" invisible="1"/>
+                <field name="others_business_id" invisible="1"/>
+              </tree>
+            </field>
+          </group>
+        </group>
+
+        <group string="1.3企业无形资产" col="2" class="gp_intangible_assets ifs_group">
+          <group colspan="1">
+            <field name="trademark_ids" propertiesField="json_datas" options="{'tag_names': ['tmName']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+            <field name="software_copyright_ids" propertiesField="json_datas" options="{'tag_names': ['fullname']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+            <field name="website_ids" string="企业域名" propertiesField="json_datas" options="{'tag_names': ['ym']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+            <field name="certificate_ids" propertiesField="json_datas" options="{'tag_names': ['certificateName']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+          </group>
+          <group colspan="1">
+            <field name="patent_ids" propertiesField="json_datas" options="{'tag_names': ['patentName']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+            <field name="copyright_ids" propertiesField="json_datas" options="{'tag_names': ['fullname']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+            <field name="website_ids" string="网址" propertiesField="json_datas" options="{'tag_names': ['webSite']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+            <field name="weibo_ids" propertiesField="json_datas" options="{'tag_names': ['name']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+          </group>
+          <group colspan="2">
+            <field name="wechat_ids" propertiesField="json_datas" options="{'tag_names': ['title']}" widget="many2many_tags_properties">
+              <tree>
+                <field name="json_datas"/>
+              </tree>
+            </field>
+          </group>
+        </group>
+
+        <group class="gp_business_assets ifs_group" colspan="4" string="1.4企业资产">
+          <group colspan="4">
+            <div>
+              <label for="company_vehicle_assets" string="是否有车辆"/>
+              <field name="company_vehicle_assets" widget="radio" class="oe_inline" options="{'horizontal': True}" attrs="{'readonly': True}"/>
+              <label for="company_vehicle_assets_value" string="车辆现有价值" attrs="{'invisible': [('company_vehicle_assets', '=', 'false')]}"/>
+              <field name="company_vehicle_assets_value" class="oe_inline" attrs="{'invisible': [('company_vehicle_assets', '=', 'false')], 'readonly': True}"/>
+            </div>
+          </group>
+          <group colspan="4">
+            <div>
+              <label for="company_housing_assets" string="是否有房产"/>
+              <field name="company_housing_assets" widget="radio" class="oe_inline" options="{'horizontal': True}" attrs="{'readonly': True}"/>
+              <label for="company_housing_assets_value" string="房产现有价值" attrs="{'invisible': [('company_housing_assets', '=', 'false')]}"/>
+              <field name="company_housing_assets_value" class="oe_inline" attrs="{'invisible': [('company_housing_assets', '=', 'false')], 'readonly': True}"/>
+            </div>
+          </group>
+          <group colspan="4">
+            <div>
+              <label for="company_equipment_assets" string="其他固定资产"/>
+              <field name="company_equipment_assets" widget="radio" class="oe_inline" options="{'horizontal': True}" attrs="{'readonly': True}"/>
+              <label for="company_equipment_assets_value" string="其他固定资产现有价值" attrs="{'invisible': [('company_equipment_assets', '=', 'false')]}"/>
+              <field name="company_equipment_assets_value" class="oe_inline" attrs="{'invisible': [('company_equipment_assets', '=', 'false')], 'readonly': True}"/>
+              <label for="company_equipment_assets_caption" string="其他固定资产说明" attrs="{'invisible': [('company_equipment_assets', '=', 'false')]}" class="partner_merchant_label"/>
+              <field name="company_equipment_assets_caption" class="oe_inline" attrs="{'invisible': [('company_equipment_assets', '=', 'false')], 'readonly': True}"/>
+            </div>
+          </group>
+        </group>
+      </xpath>
+      <!-- <xpath expr="//group[hasclass('field_view_deposit_license')]" position="after">
+        <group class="field_view_lease_contract">
+          <field name="lease_contract" widget='pdf_viewer' class="ifs_attachment" />
+        </group>
+      </xpath> -->
+      <xpath expr="//group[hasclass('gp_principal')]" position="replace"></xpath>
+      <xpath expr="//group[hasclass('gp_contact')]" position="replace"></xpath>
+      <xpath expr="//group[hasclass('gp_attachment')]" position="replace"></xpath>
+      <xpath expr="//page[@name='company_info']" position="after">
+        <field name="is_legal_person" invisible="1"/>
+        <page string="法人信息" name="contact_info" class="pg_contact">
+          <group string="4.1法人基本信息" col="2" class="gp_principal ifs_group">
+            <group>
+              <field name="principal_name" attrs="{'readonly': True}"/>
+              <field name="idcard_address" attrs="{'readonly': True}"/>
+              <field name="nation" attrs="{'readonly': True}"/>
+              <field name="idcard_expiry_date" attrs="{'readonly': True}"/>
+              <field name="is_married" attrs="{'readonly': True}"/>
+              <field name="email" attrs="{'readonly': True}"/>
+            </group>
+            <group>
+              <field name="card_no" attrs="{'readonly': True}"/>
+              <field name="authority" attrs="{'readonly': True}"/>
+              <field name="birthday" attrs="{'readonly': True}"/>
+              <field name="family_address" attrs="{'readonly': True}" />
+              <field name="phone" attrs="{'readonly': True}"/>
+              <field name="highest_education" attrs="{'readonly': True}"/>
+            </group>
+          </group>
+
+          <group string="4.2法人财产相关" colspan="4" class="gp_property ifs_group">
+            <group colspan="4">
+              <div>
+                <label for="is_has_housing_assets" string="是否有房产"/>
+                <field name="is_has_housing_assets" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="housing_assets" string="现有价值" attrs="{'invisible': [('is_has_housing_assets', '=', 'no')]}"/>
+                <field name="housing_assets" class="oe_inline" attrs="{'invisible': [('is_has_housing_assets', '=', 'no')], 'readonly': True}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_has_vehicle_assets" string="是否有汽车"/>
+                <field name="is_has_vehicle_assets" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="vehicle_assets" string="现有价值" attrs="{'invisible': [('is_has_vehicle_assets', '=', 'no')]}"/>
+                <field name="vehicle_assets" class="oe_inline" attrs="{'invisible': [('is_has_vehicle_assets', '=', 'no')], 'readonly': True}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_has_other_assets" string="其他固定财产"/>
+                <field name="is_has_other_assets" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="other_assets" string="现有价值" attrs="{'invisible': [('is_has_other_assets', '=', 'no')]}"/>
+                <field name="other_assets" class="oe_inline" attrs="{'invisible': [('is_has_other_assets', '=', 'no')], 'readonly': True}"/>
+                <label for="other_assets_remarks" string="说明" attrs="{'invisible': [('is_has_other_assets', '=', 'no')]}" class="partner_merchant_label"/>
+                <field name="other_assets_remarks" class="oe_inline" attrs="{'invisible': [('is_has_other_assets', '=', 'no')], 'readonly': True}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_has_loan" string="名下是否有借款"/>
+                <field name="is_has_loan" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="loan_amount" string="金额" attrs="{'invisible': [('is_has_loan', '=', 'no')]}"/>
+                <field name="loan_amount" class="oe_inline col-lg-7" attrs="{'invisible': [('is_has_loan', '=', 'no')]}"/>
+                <label for="loan_remarks" string="说明" attrs="{'invisible': [('is_has_loan', '=', 'no')]}" class="partner_merchant_label"/>
+                <field name="loan_remarks" class="oe_inline" attrs="{'invisible': [('is_has_loan', '=', 'no')]}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_has_guarantee" string="名下是否有担保"/>
+                <field name="is_has_guarantee" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="guarantee_amount" string="担保金额" attrs="{'invisible': [('is_has_guarantee', '=', 'no')]}"/>
+                <field name="guarantee_amount" class="oe_inline" attrs="{'invisible': [('is_has_guarantee', '=', 'no')]}"/>
+                <label for="guarantee_remarks" string="说明" attrs="{'invisible': [('is_has_guarantee', '=', 'no')]}" class="partner_merchant_label"/>
+                <field name="guarantee_remarks" class="oe_inline" attrs="{'invisible': [('is_has_guarantee', '=', 'no')]}"/>
+              </div>
+            </group>
+          </group>
+
+          <group string="4.3其他相关" col="3" class="gp_contact ifs_group">
+            <group>
+              <field name="contact_person_one_name" attrs="{'readonly': True}"/>
+              <field name="contact_person_two_name" attrs="{'readonly': True}"/>
+              <field name="financial_manager_name" attrs="{'readonly': True}" />
+            </group>
+            <group>
+              <field name="contact_person_one_relationship" attrs="{'readonly': True}"/>
+              <field name="contact_person_two_relationship" attrs="{'readonly': True}"/>
+              <field name="financial_manager_relationship" attrs="{'readonly': True}"/>
+            </group>
+            <group>
+              <field name="contact_person_one_phone" attrs="{'readonly': True}"/>
+              <field name="contact_person_two_phone" attrs="{'readonly': True}"/>
+              <field name="financial_manager_phone" attrs="{'readonly': True}"/>
+            </group>
+          </group>
+        </page>
+        <page string="担保人征信" name="guarantor_info" class="pg_guarantor" attrs="{'invisible': [('is_legal_person', '=', True)]}">
+          <group title="6.1担保人个人信息" string="6.1担保人个人信息" col="2" class="gp_guarantor ifs_group">
+            <group>
+              <field name="guarantor_name" attrs="{'readonly': True}"/>
+              <field name="guarantor_address" attrs="{'readonly': True}"/>
+              <field name="guarantor_nation" attrs="{'readonly': True}"/>
+              <field name="guarantor_idcard_expiry_date" attrs="{'readonly': True}"/>
+              <field name="is_guarantor_married" attrs="{'readonly': True}"/>
+              <field name="guarantor_email" attrs="{'readonly': True}"/>
+            </group>
+            <group>
+              <field name="guarantor_card_no" attrs="{'readonly': True}"/>
+              <field name="guarantor_idcard_authority" attrs="{'readonly': True}"/>
+              <field name="guarantor_birthday" attrs="{'readonly': True}"/>
+              <field name="guarantor_family_address" attrs="{'readonly': True}"/>
+              <field name="guarantor_phone" attrs="{'readonly': True}"/>
+              <field name="guarantor_highest_education" attrs="{'readonly': True}"/>
+            </group>
+          </group>
+          <group title="6.2担保人财产相关" string="6.2担保人财产相关" colspan="4" class="gp_account ifs_group">
+            <group colspan="4">
+              <div>
+                <label for="is_guarantor_has_housing_assets" string="是否有房产"/>
+                <field name="is_guarantor_has_housing_assets" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="guarantor_housing_assets" string="现有价值" attrs="{'invisible': [('is_guarantor_has_housing_assets', '=', 'no')]}"/>
+                <field name="guarantor_housing_assets" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_housing_assets', '=', 'no')]}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_guarantor_has_vehicle_assets" string="是否有汽车"/>
+                <field name="is_guarantor_has_vehicle_assets" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="guarantor_vehicle_assets" string="现有价值" attrs="{'invisible': [('is_guarantor_has_vehicle_assets', '=', 'no')]}"/>
+                <field name="guarantor_vehicle_assets" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_vehicle_assets', '=', 'no')]}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_guarantor_has_other_assets" string="其他固定财产"/>
+                <field name="is_guarantor_has_other_assets" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="guarantor_other_assets" string="现有价值" attrs="{'invisible': [('is_guarantor_has_other_assets', '=', 'no')]}"/>
+                <field name="guarantor_other_assets" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_other_assets', '=', 'no')]}"/>
+                <label for="guarantor_other_assets_remarks" string="说明" attrs="{'invisible': [('is_guarantor_has_other_assets', '=', 'no')]}" class="partner_merchant_label"/>
+                <field name="guarantor_other_assets_remarks" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_other_assets', '=', 'no')]}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_guarantor_has_loan" string="名下是否有借款"/>
+                <field name="is_guarantor_has_loan" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="guarantor_loan_amount" string="金额" attrs="{'invisible': [('is_guarantor_has_loan', '=', 'no')]}"/>
+                <field name="guarantor_loan_amount" class="oe_inline col-lg-7" attrs="{'invisible': [('is_guarantor_has_loan', '=', 'no')]}"/>
+                <label for="guarantor_loan_remarks" string="说明" attrs="{'invisible': [('is_guarantor_has_loan', '=', 'no')]}" class="partner_merchant_label"/>
+                <field name="guarantor_loan_remarks" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_loan', '=', 'no')]}"/>
+              </div>
+            </group>
+            <group colspan="4">
+              <div>
+                <label for="is_guarantor_has_guarantee" string="名下是否有担保"/>
+                <field name="is_guarantor_has_guarantee" widget="radio" class="oe_inline" attrs="{'readonly': True}" options="{'horizontal': true}"/>
+                <label for="guarantor_guarantee_amount" string="担保金额" attrs="{'invisible': [('is_guarantor_has_guarantee', '=', 'no')]}"/>
+                <field name="guarantor_guarantee_amount" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_guarantee', '=', 'no')]}"/>
+                <label for="guarantor_guarantee_remarks" string="说明" attrs="{'invisible': [('is_guarantor_has_guarantee', '=', 'no')]}" class="partner_merchant_label"/>
+                <field name="guarantor_guarantee_remarks" class="oe_inline" attrs="{'invisible': [('is_guarantor_has_guarantee', '=', 'no')]}"/>
+              </div>
+            </group>
+          </group>
+        </page>
+        <page string="相关附件" name="attachment_info" class="pg_attachment">
+          <group title="7.1企业相关资质" string="7.1企业相关资质" class="gp_attachment" col="3">
+            <group>
+              <field name="business_license" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '营业执照扫描上传（加盖公章）***********有限公司'}"/>
+            </group>
+            <group>
+              <field name="charter" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '企业章程扫描件上传（加盖公章）如多页请自行合成PDF'}"/>
+            </group>
+            <group>
+              <field name="half_year_balance_sheet" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '近半年的资产负债表 如多页请自行合成PDF'}"/>
+            </group>
+            <group>
+              <field name="half_year_cash_flow_sheet" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '近半年现金流量表(加盖公章）如多页请自行合成PDF'}"/>
+            </group>
+            <group>
+              <field name="half_year_assets_gains_losses_sheet" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '近半年资产损益表（加盖公章）如多页请自行合成PDF'}"/>
+            </group>
+            <group>
+              <field name="lease_contract" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '办公区租赁合同 如多页请自行合成PDF'}"/>
+            </group>
+            <group>
+              <field name="office_area_picture" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '办公区域照片'}"/>
+            </group>
+            <group>
+              <field name="reception_picture" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '法人在前台的合影照片'}"/>
+            </group>
+            <group>
+              <field name="enterprise_property_certificate" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '企业名下相关财产证明（如有请提供）'}"/>
+            </group>
+          </group>
+          <group title="7.2法人及担保人相关" string="7.2法人及担保人相关" class="gp_legal_person_guarantor" col="3">
+            <group>
+              <field name="idcard_front_image" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_front_image.png'}"/>
+            </group>
+            <group>
+              <field name="idcard_back_image" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_back_image.png'}" />
+            </group>
+            <group>
+              <field name="legal_person_property_certificate" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'description': '法人名下相关财产证明（如有请提供）'}"/>
+            </group>
+            <group>
+              <field name="guarantor_idcard_front_image" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_front_image.png'}"/>
+            </group>
+            <group>
+              <field name="guarantor_idcard_back_image" widget='image' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/idcard_back_image.png'}"/>
+            </group>
+            <group>
+              <field name="guarantor_property_certificate" widget='pdf_viewer' class="ifs_attachment" attrs="{'readonly': True}" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '担保人名下相关财产证明（如有请提供）'}"/>
+            </group>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_factor_business_license_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.partner.factor.business.license.wizard.view.form</field>
+    <field name="model">ifs.partner.factor.business.license.wizard</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_business_license_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('o_galaxy_steps')]" position="inside">
+        <button string="公司名称" step="1" current_step="current_step" class="o_galaxy_step"/>
+        <button string="确认信息" step="2" current_step="current_step" class="o_galaxy_step"/>
+        <button string="营业执照" step="3" current_step="current_step" class="o_galaxy_step"/>
+        <button string="银行账户" step="4" current_step="current_step" class="o_galaxy_step"/>
+      </xpath>
+      <button special="cancel" position="before">
+        <button name="nosave_pass" type="object" invisible="not has_next_step" 
+          string="跳过，下一步" class="btn-primary" data-hotkey="c" />
+      </button>
+    </field>
+  </record>
+</odoo>

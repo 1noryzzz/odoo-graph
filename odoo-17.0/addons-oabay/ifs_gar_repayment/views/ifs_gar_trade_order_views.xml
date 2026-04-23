@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_trade_order_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.view.tree.inherited</field>
+    <field name="inherit_id" ref="ifs_gar_trade.ifs_gar_trade_order_view_tree"/>
+    <field name="model">ifs.gar.trade.order</field>
+    <field name="arch" type="xml">
+      <tree position="attributes">
+        <attribute name="decoration-bf">state in ['confirmed', 'period_repaid']</attribute>
+      </tree>
+      <field name="repayment_date" position="attributes">
+        <attribute name="optional">hide</attribute>
+      </field>
+      <field name="repayment_date" position="after">
+        <field name="last_repayment_date"/>
+      </field>
+      <field name="withdrawal_amount" position="after">
+        <field name="last_pending_amount_visible" column_invisible="1"></field>
+        <!-- 字段last_pending_amount原属性invisible="not last_pending_amount_visible"需要根据last_pending_amount_visible的值来控制是否可见，
+          此处包含了'行的值控制列的可见性'的冲突，所以需要将invisible属性移除，否则会导致报错，后续需要根据17.0版本的情况进行处理 -->
+        <field name="last_pending_amount" groups="ifs_gar_repayment.group_ifs_gar_repayment_factor_manager,ifs_gar_repayment.group_ifs_gar_repayment_merchant_manager"/>
+      </field>
+      <field name="state" position="attributes">
+        <attribute name="decoration-primary">state in ['confirmed', 'period_repaid']</attribute>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_gar_trade_order_view_from_contract_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.view.from.contract.inherited</field>
+    <field name="model">ifs.gar.trade.order</field>
+    <field name="inherit_id" ref="ifs_gar_trade.ifs_gar_trade_order_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header/field[1]" position="attributes">
+        <attribute name="invisible">state in ['rejected', 'period_repaid']</attribute>
+      </xpath>
+      <header position="inside">
+        <field name="can_fuse" invisible="1"/>
+        <field name="can_accept_fuse" invisible="1"/>
+        <button name="circuit_breaker" string="发起熔断" type="object" class="btn btn-primary" invisible="not can_fuse"
+          groups="ifs_gar_repayment.group_ifs_gar_repayment_supplier_manager"/>
+        <button name="circuit_breaker" string="确认熔断" type="object" class="btn btn-primary" invisible="not can_accept_fuse"
+          groups="ifs_gar_repayment.group_ifs_gar_repayment_factor_manager"/>
+        <field name="state" widget="statusbar" statusbar_visible="draft,pending,confirmed,period_repaid" invisible="state != 'period_repaid'"/>
+      </header>
+      <page name="trade_info" position="before">
+        <page name="repayment_plan" string="还款计划" invisible="state not in ['confirmed', 'period_repaid', 'repaid', 'fuse']">
+          <field name="plan_ids" mode="tree">
+            <tree no_open="1" create="false" delete="0"
+              decoration-muted="state == 'settle'"
+              decoration-bf="state == 'overdue'">
+              <field name="currency_id" invisible="1"/>
+              <field name="can_repayment" invisible="1"/>
+              <field name="can_confirm" invisible="1"/>
+              <field name="pending_fee_visible" invisible="1"/>
+              <field name="pending_inner_fee_visible" invisible="1"/>
+              <field name="can_withdraw" invisible="1"/>
+              <field name="can_payment" invisible="1"/>
+              <field name="trade_state" invisible="1"/>
+              <field name="payment_period"/>
+              <field name="repayment_date"/>
+              <field name="days_left" invisible="state in ['repaid', 'settle']"/>
+              <field name="pending_amount" invisible="trade_state in ['repaid', 'settle']"/>
+              <field name="pending_interest" invisible="trade_state in ['repaid', 'settle']"/>
+              <field name="pending_fee" invisible="not pending_fee_visible or trade_state in ['repaid', 'settle']"/>
+              <field name="pending_inner_fee" invisible="not pending_inner_fee_visible" groups="ifs_gar_repayment.group_ifs_gar_repayment_factor_manager,ifs_gar_repayment.group_ifs_gar_repayment_supplier_manager"/>
+              <field name="payment_amount"></field>
+              <field name="state" widget="badge" 
+                decoration-danger="state == 'overdue'" 
+                decoration-info="state == 'repaid'"
+                decoration-success="state == 'settle'" />
+              <button name="action_repay" string="还款" type="object" class="btn btn-primary" invisible="not can_repayment"
+                groups="ifs_gar_repayment.group_ifs_gar_repayment_merchant_manager"/>
+              <button name="action_confirm" string="确认收款" type="object" class="btn btn-primary" invisible="not can_confirm"
+                groups="ifs_gar_repayment.group_ifs_gar_repayment_factor_manager"/>
+              <button name="start_withdraw" string="提款" type="object" class="btn btn-primary" invisible="not can_withdraw"
+                groups="ifs_gar_repayment.group_ifs_gar_repayment_supplier_manager"/>
+              <button name="action_withdraw_confirm" string="打款" type="object" class="btn btn-primary" invisible="not can_payment"
+                groups="ifs_gar_repayment.group_ifs_gar_repayment_factor_manager"/>
+            </tree>
+          </field>
+        </page>
+      </page>
+    </field>
+  </record>
+
+</odoo>

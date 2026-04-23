@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <record model="ir.config_parameter" id="default_bairong_app_code" forcecreate="False">
+      <field name="key">galaxy.bairong.app.code</field>
+      <field name="value">3030127</field>
+    </record>
+
+    <record model="ir.config_parameter" id="default_bairong_app_key" forcecreate="False">
+      <field name="key">galaxy.bairong.app.key</field>
+      <field name="value">4c78fe337901d623fd114ee7dd01ef291fc14c34967b7eefb4b171849f550fa3</field>
+    </record>
+
+    <record model="ir.config_parameter" id="default_bairong_default_domain" forcecreate="False">
+      <field name="key">galaxy.bairong.default.domain</field>
+      <field name="value">api2.100credit.cn,api5.100credit.cn</field>
+    </record>
+
+  </data>
+</odoo>

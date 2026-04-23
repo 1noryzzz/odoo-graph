@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="ifs_gar_entry.ifs_gar_entry_merchant_credit_template" name="ifs_gar_entry_merchant_credit_template">
+    <form id="creditForm">
+      <div class="main">
+        <div class="title">
+				  采购方征信报告
+        </div>
+        <div class="title">
+				  基本信息
+        </div>
+        <div>
+          <div class="gar_input">
+            <label>姓名</label>
+            <t t-esc="risk_credit_id.name"/>
+          </div>
+          <div class="gar_input">
+            <label>身份证号</label>
+            <t t-esc="risk_credit_id.idcard"/>
+          </div>
+          <div class="gar_input">
+            <label>手机号</label>
+            <t t-esc="risk_credit_id.mobile"/>
+          </div>
+          <div class="gar_input">
+            <label>贷前编号</label>
+            <t t-esc="risk_credit_id.strategy_id"/>
+          </div>
+          <div class="gar_input">
+            <label>验证流程编号</label>
+            <t t-esc="risk_credit_id.conf_id"/>
+          </div>
+        </div>
+        <div class="title">
+				  风险评测
+        </div>
+        <div>
+          <div class="gar_input">
+            <t t-foreach="entry_merchant.anti_fraud_rule_weight_ids" t-as="anti_fraud_rule" t-key="anti_fraud_rule.id">
+              <label>反欺诈规则</label>
+              <t t-esc="anti_fraud_rule.raw.get('weight')"/>
+            </t>
+          </div>
+          <div class="gar_input">
+            <t t-foreach="entry_merchant.verification_rule_weight_ids" t-as="verification_rule" t-key="verification_rule.id">
+              <label>验证规则</label>
+              <t t-esc="verification_rule.raw.get('final_weight')"/>
+            </t>
+          </div>
+          <div class="gar_input">
+            <t t-foreach="entry_merchant.anti_fraud_score_ids" t-as="anti_fraud_score" t-key="anti_fraud_score.id">
+              <label>反欺诈评分</label>
+              <t t-esc="anti_fraud_score.raw.get('scoreafrevoloan')"/>
+            </t>
+          </div>
+          <div class="gar_input">
+            <t t-foreach="entry_merchant.credit_score_ids" t-as="credit_score" t-key="credit_score.id">
+              <label>信用评分</label>
+              <t t-esc="credit_score.raw.get('scorerevoloan')"/>
+            </t>
+          </div>
+          <div class="gar_input">
+            <t t-foreach="entry_merchant.assessment_result_ids" t-as="assessment_result" t-key="assessment_result.id">
+              <label>评测结果</label>
+              <t t-esc="assessment_result.raw.get('final_decision')"/>
+            </t>
+          </div>
+        </div>
+        <div class="title">
+				  风险提示
+        </div>
+        <div class="gar_input">
+          <label>评测结果</label>
+          <t t-foreach="entry_merchant.risk_statement_ids" t-as="risk_statement" t-key="risk_statement.id">
+            <t t-esc="risk_statement.raw.get('name_rule')"/>
+          </t>
+        </div>
+        <div class="title">
+				  额度审批
+        </div>
+        <div>
+          <div class="gar_input">
+            <label>审批额度</label>
+            <input type="text" name="approval_quota"/>
+          </div>
+          <div class="gar_input">
+            <label>审批意见</label>
+            <input type="text" name="approval_opinion"/>
+          </div>
+        </div>
+        <div>
+          <a role="button" class="btn btn-primary" t-attf-data-model="ifs.gar.entry.merchant" t-attf-data-method="approval_entry_merchant">审批通过</a>
+        </div>
+        <div>
+          <a role="button" class="btn btn-primary" t-attf-data-model="ifs.gar.entry.merchant" t-attf-data-method="reject_entry_merchant">拒绝</a>
+        </div>
+      </div>
+    </form>
+  </template>
+</odoo>

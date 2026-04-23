@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_partner_res_bank_view_search" model="ir.ui.view">
+    <field name="name">ifs.partner.res.bank.view.search</field>
+    <field name="model">res.bank</field>
+    <field name="inherit_id" ref="base.res_bank_view_search" />
+    <field name="arch" type="xml">
+      <search position="inside">
+        <searchpanel>
+          <field name="dock_method" icon="fa-folder-open" enable_counters="1"/>
+        </searchpanel>
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_partner_res_bank_view_tree" model="ir.ui.view">
+    <field name="name">ifs.partner.res.bank.view.tree</field>
+    <field name="model">res.bank</field>
+    <field name="inherit_id" ref="base.view_res_bank_tree" />
+    <field name="arch" type="xml">
+      <field name="bic" position="after">
+        <field name="dock_method"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_partner_res_bank_view_form" model="ir.ui.view">
+    <field name="name">ifs.partner.res.bank.view.form</field>
+    <field name="model">res.bank</field>
+    <field name="inherit_id" ref="base.view_res_bank_form" />
+    <field name="arch" type="xml">
+      <form position="attributes">
+        <attribute name="class">o_galaxy_form_view</attribute>
+      </form>
+      <sheet position="replace">
+        <sheet>
+          <field name="active" invisible="1"/>
+          <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+          <group string="银行基本信息">
+            <group colspan="2">
+              <field name="name"/>
+            </group>
+            <group>
+              <field name="bic"/>
+              <field name="dock_method"/>
+            </group>
+            <group>
+              <field name="phone" class="o_force_ltr"/>
+              <field name="email" widget="email"/>
+            </group>
+            <group colspan="2">
+              <label for="street" string="Bank Address"/>
+              <div class="o_address_format">
+                <field name="street" placeholder="Street..." class="o_address_street"/>
+                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                <field name="city" placeholder="City" class="o_address_city"/>
+                <field name="state" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                <field name="country" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+              </div>
+            </group>
+          </group>
+        </sheet>
+      </sheet>
+    </field>
+  </record>
+
+</odoo>

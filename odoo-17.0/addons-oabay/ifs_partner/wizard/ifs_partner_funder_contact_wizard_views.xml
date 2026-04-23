@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_funder_contact_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.partner.funder.contact.wizard.view.form</field>
+    <field name="model">ifs.partner.funder.contact.wizard</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_contact_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <form position="attributes">
+        <attribute name="string">IFS Partner funder Wizard</attribute>
+      </form>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,29 @@
+.ifs-inform {
+    .o_inner_group {
+        grid-template-columns: unset;
+
+        .o_cell {
+            border-bottom: none !important;
+        }
+    }
+}
+
+.success-container {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+
+    .icon {
+        width: 91px;
+        height: 91px;
+    }
+
+    .desc {
+        margin-top: 39px;
+        color: #000000;
+        font-size: 15px;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+}

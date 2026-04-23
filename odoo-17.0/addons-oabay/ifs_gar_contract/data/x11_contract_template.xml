@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="X11_contract" model="ifs.contract.template">
+      <field name="name">额度调整确认书</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">X11</field>
+      <field name="need_partner">three</field>
+      <field name="need_faceid">False</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_sup"/>
+      <field name="sign_position_params">[
+        {},
+        {},
+        {"chaptes": [{"offsetX": 0.45,"offsetY": 0.72}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+
+        <div class="word_content">
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_doc_title">额度调整确认书</div>
+          <div class="word_doc_inner_text content_p">致：            <t t-out="object.partner_one.name">XXXX有限公司</t>
+            <p>因应              <span class="text_underline">
+                <t t-out="object.partner_two.name">XXXX有限公司</t>
+              </span> 
+          业务需要对其原采购额度做出如下调整：
+            </p>
+          </div>
+
+          <div class="word_doc_inner_text content_p margin-top50">
+            <div>一、调整前授信额度：              <t t-out="params.get('origin_quota')">xx</t>万元。
+            </div>
+            <div>二、调整后授信额度：              <t t-out="params.get('apply_quota')">xx</t>万元。
+            </div>
+            <div>三、确认人：              <t t-out="object.partner_three.legal_name">xxx</t>。
+            </div>
+            <div>四、联系电话：              <t t-out="object.partner_three.phone">13333333333</t>
+            </div>
+            <div>五、确认日期：              <t t-out="format_date(object.write_date)">×年×月×日</t>。
+            </div>
+            <div>特别声明</div>
+            <p>我司知悉确认采购方的额度调整申请，同意在我司应收账款转让最高额度项下对该采购方的额度进行重新调整，并愿意承担应收账款转让最高额度合同项下义务。</p>
+          </div>
+          <div class="word_doc_inner_text margin-top50 margin-left100">
+            <div>单位（盖章）：</div>
+            <div>确认人签字：
+              <img t-attf-src="data:image/png;base64,{{object.partner_three_signature}}" height="80px" style="vertical-align:top;" />
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

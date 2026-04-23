@@ -1,0 +1,15 @@
+
+.o_form_view {
+
+    .btn_contract {
+        width: 162px;
+        height: 210px !important;
+        background-image: url(/galaxy_tdesign/static/src/img/contract.png);
+        background-size: 162px 210px;
+        background-repeat: no-repeat;
+        background-color: #FFFFFF !important;
+        background-position: center;
+        border: 1px solid $o-gray-300;
+        border-radius: 10px !important;
+    }
+}

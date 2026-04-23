@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="multi_company_ifs_partner_factor_system" model="ir.rule">
+      <field name="name">平台管理方能操作所有的保理方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_factor"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="groups" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_funder_system" model="ir.rule">
+      <field name="name">平台管理方能操作所有的资金方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_funder"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="groups" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_franchisee_system" model="ir.rule">
+      <field name="name">平台管理方能操作所有的合伙人</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_franchisee"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="groups" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_merchant_system" model="ir.rule">
+      <field name="name">平台管理方能操作所有的采购方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_merchant"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="groups" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_supplier_system" model="ir.rule">
+      <field name="name">平台管理方能操作所有的供应方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_supplier"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="groups" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_lawfirm_system" model="ir.rule">
+      <field name="name">平台管理方能操作所有的律师事务所</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_lawfirm"/>
+      <field name="domain_force">[(1,'=',1)]</field>
+      <field name="groups" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
+
+    <record id="multi_company_ifs_partner_factor_factor" model="ir.rule">
+      <field name="name">保理方只能操作自己相关的保理方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_factor"/>
+      <field name="domain_force">[('ifs_company_id.company_id','in',company_ids)]</field>
+      <field name="groups" eval="[Command.link(ref('ifs_partner.group_ifs_partner_factor_user'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_funder_funder" model="ir.rule">
+      <field name="name">资金方只能操作自己相关的资金方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_funder"/>
+      <field name="domain_force">[('ifs_company_id.company_id','in',company_ids)]</field>
+      <field name="groups" eval="[Command.link(ref('ifs_partner.group_ifs_partner_funder_user'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_franchisee_franchisee" model="ir.rule">
+      <field name="name">合伙人只能操作自己相关的合伙人</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_franchisee"/>
+      <field name="domain_force">[('ifs_company_id.company_id','in',company_ids)]</field>
+      <field name="groups" eval="[Command.link(ref('ifs_partner.group_ifs_partner_franchisee_user'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_merchant_merchant" model="ir.rule">
+      <field name="name">采购方只能操作自己相关的采购方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_merchant"/>
+      <field name="domain_force">[('ifs_company_id.company_id','in',company_ids)]</field>
+      <field name="groups" eval="[Command.link(ref('ifs_partner.group_ifs_partner_merchant_user'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_supplier_supplier" model="ir.rule">
+      <field name="name">供应方只能操作自己相关的供应方</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_supplier"/>
+      <field name="domain_force">[('ifs_company_id.company_id','in',company_ids)]</field>
+      <field name="groups" eval="[Command.link(ref('ifs_partner.group_ifs_partner_supplier_user'))]" />
+    </record>
+    <record id="multi_company_ifs_partner_lawfirm_lawfirm" model="ir.rule">
+      <field name="name">律师事务所只能操作自己相关的律师事务所</field>
+      <field name="model_id" ref="ifs_partner.model_ifs_partner_lawfirm"/>
+      <field name="domain_force">[('ifs_company_id.company_id','in',company_ids)]</field>
+      <field name="groups" eval="[Command.link(ref('ifs_partner.group_ifs_partner_lawfirm_user'))]" />
+    </record>
+  </data>
+</odoo>

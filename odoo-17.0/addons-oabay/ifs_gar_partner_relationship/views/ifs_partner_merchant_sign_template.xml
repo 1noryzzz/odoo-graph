@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="merchant_sign" name="存留手写签名" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">galaxy_tdesign.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-call="galaxy_tdesign.signature_form">
+        <t t-set="call_url" t-value="'/partner/merchant/signature?token='+partner_merchant.token"/>
+        <t t-set="default_name" t-value="partner_merchant.sign_name"/>
+        <t t-set="signature_ratio" t-value="0.75" />
+      </t>
+    </xpath>
+  </template>
+
+  <template id="merchant_signed" name="签名完成" inherit_id="portal.portal_sidebar" primary="True">
+    <xpath expr="//t[@t-call='portal.portal_layout']" position="attributes">
+      <attribute name="t-call">galaxy_tdesign.portal_layout</attribute>
+    </xpath>
+    <xpath expr="//div" position="replace">
+      <t t-set="no_breadcrumbs" t-value="1"/>
+      <t t-set="o_portal_fullwidth_header">
+        <div>签名存留完成</div>
+      </t>
+      <div class="main">
+        <div>
+          <div id="collection">
+            <span>
+              <b>公司名称</b>
+            </span>
+            <div style="margin-bottom: 20px;">
+              <t t-esc="partner_merchant.ifs_company_id.name"/>
+            </div>
+            <span style="color:green;">
+              <b>签名成功！您可以关闭此界面了</b>
+            </span>
+          </div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_entry_franchisee_base_info_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.franchisee.base.info.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.franchisee.base.info.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_entry_franchisee_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="attributes">
+        <attribute name="class">o_galaxy_form_view</attribute>
+      </xpath>
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <field name="definition_id" invisible="1"/>
+        <div class="o_ifs_center_img" invisible="business_license">
+          <field name="business_license" widget="image" nolabel="1" colspan="2" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '营业执照扫描上传（加盖公章）***********有限公司'}}"/>
+        </div>
+
+        <group class="gp_base o_group_label_lg" string="工商登记信息" invisible="not business_license">
+          <group/>
+          <field name="json_datas" widget="dynamic_properties" nolabel="1" columns="2"/>
+          <group colspan="2" class="gp_key_persons" string="主要人员"/>
+          <field name="key_person_ids" nolabel="1" mode="kanban" class="o_galaxy_properties" readonly="1">
+            <kanban class="o_galaxy_kanban_properties">
+              <field name="definition_id"/>
+              <field name="json_datas"/>
+              <templates>
+                <t t-name="kanban-box">
+                  <div t-attf-class="oe_kanban_card">
+                    <field name="json_datas" widget="dynamic_properties" columns="3"/>
+                  </div>
+                </t>
+              </templates>
+            </kanban>
+          </field>
+        </group>
+
+        <group class="gp_bussiness o_group_label_lg" string="企业经营信息" invisible="not business_license">
+          <group>
+            <field name="business_address"/>
+            <field name="phone" />
+          </group>
+          <group>
+            <field name="business_date" />
+            <field name="email" />
+          </group>
+        </group>
+
+        <group class="gp_docs o_group_label_lg" string="企业证件信息" col="3" name="gp_docs" invisible="not business_license">
+          <group>
+            <field name="business_license" widget="image"/>
+          </group>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>

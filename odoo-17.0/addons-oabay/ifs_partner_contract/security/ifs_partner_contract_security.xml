@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!--保理方权限-->
+  <record id="group_ifs_partner_contract_factor_user" model="res.groups">
+    <field name="name">合同管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_factor"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_contract.group_ifs_contract_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_factor_sign" model="res.groups">
+    <field name="name">合同管理：签署</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_factor"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign')), Command.link(ref('group_ifs_partner_contract_factor_user'))]"/>
+    <field name="comment">普惠金融场景下，可签署合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_template_factor_manager" model="res.groups">
+    <field name="name">合同管理：模板管理</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_factor"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_template_manager')), Command.link(ref('group_ifs_partner_contract_factor_user'))]"/>
+    <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    <field name="comment">普惠金融场景下，维护合同模板的用户</field>
+  </record>
+
+  <!--资金方权限-->
+  <record id="group_ifs_partner_contract_funder_user" model="res.groups">
+    <field name="name">合同管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_funder"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_contract.group_ifs_contract_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_funder_sign" model="res.groups">
+    <field name="name">合同管理：签署</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_funder"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign')), Command.link(ref('group_ifs_partner_contract_funder_user'))]"/>
+    <field name="comment">普惠金融场景下，可签署合同的用户</field>
+  </record>
+  
+  <!--事业合伙人权限-->
+  <record id="group_ifs_partner_contract_franchisee_user" model="res.groups">
+    <field name="name">合同管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_franchisee"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_contract.group_ifs_contract_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_franchisee_sign" model="res.groups">
+    <field name="name">合同管理：签署</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_franchisee"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign')), Command.link(ref('group_ifs_partner_contract_franchisee_user'))]"/>
+    <field name="comment">普惠金融场景下，可签署合同的用户</field>
+  </record>
+
+  <!--律师事务所权限-->
+  <record id="group_ifs_partner_contract_lawfirm_user" model="res.groups">
+    <field name="name">合同管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_lawfirm"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_contract.group_ifs_contract_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_lawfirm_sign" model="res.groups">
+    <field name="name">合同管理：签署</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_lawfirm"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign')), Command.link(ref('group_ifs_partner_contract_lawfirm_user'))]"/>
+    <field name="comment">普惠金融场景下，可签署合同的用户</field>
+  </record>
+
+  <!--采购方权限-->
+  <record id="group_ifs_partner_contract_merchant_user" model="res.groups">
+    <field name="name">合同管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_merchant"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_contract.group_ifs_contract_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_merchant_sign" model="res.groups">
+    <field name="name">合同管理：签署</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_merchant"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign')), Command.link(ref('group_ifs_partner_contract_merchant_user'))]"/>
+    <field name="comment">普惠金融场景下，可签署合同的用户</field>
+  </record>
+
+  <!--供应方权限-->
+  <record id="group_ifs_partner_contract_supplier_user" model="res.groups">
+    <field name="name">合同管理：仅查看</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_supplier"/>
+    <field name="implied_ids" eval="[Command.set([ref('ifs_contract.group_ifs_contract_user')])]"/>
+    <field name="comment">普惠金融场景下，可查看合同的用户</field>
+  </record>
+  <record id="group_ifs_partner_contract_supplier_sign" model="res.groups">
+    <field name="name">合同管理：签署</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_supplier"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign')), Command.link(ref('group_ifs_partner_contract_supplier_user'))]"/>
+    <field name="comment">普惠金融场景下，可签署合同的用户</field>
+  </record>
+
+  <data noupdate="0">
+    <record id="ifs_partner.group_ifs_partner_factor_system" model="res.groups">
+      <field name="implied_ids" eval="[
+        Command.link(ref('group_ifs_partner_contract_factor_sign')),
+        Command.link(ref('group_ifs_partner_contract_template_factor_manager'))
+      ]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_funder_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_partner_contract_funder_sign'))]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_franchisee_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_partner_contract_franchisee_sign'))]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_lawfirm_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_partner_contract_lawfirm_sign'))]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_merchant_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_partner_contract_merchant_sign'))]"/>
+    </record>
+    <record id="ifs_partner.group_ifs_partner_supplier_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_partner_contract_supplier_sign'))]"/>
+    </record>
+  </data>
+
+</odoo>

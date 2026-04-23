@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="module_category_galaxy_qq_api" model="ir.module.category">
+    <field name="name">前端API基础分类</field>
+    <field name="visible" eval="0"/>
+    <field name="description">青钱闪付API基础分类</field>
+  </record>
+
+  <record id="group_galaxy_qq_api_user" model="res.groups">
+    <field name="name">前端API用户</field>
+    <field name="category_id" ref="galaxy_qq_api.module_category_galaxy_qq_api"/>
+    <field name="comment">青钱闪付API基本用户组</field>
+  </record>
+
+  <record id="group_galaxy_qq_api_manager" model="res.groups">
+    <field name="name">前端API管理</field>
+    <field name="category_id" ref="galaxy_qq_api.module_category_galaxy_qq_api"/>
+    <field name="implied_ids" eval="[Command.set([ref('galaxy_qq_api.group_galaxy_qq_api_user'), ref('wechat.group_wechat_setting')])]"/>
+    <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    <field name="comment">青钱闪付API管理组</field>
+  </record>
+
+  <record id="group_galaxy_qq_api_public_user_id" model="res.users">
+    <field name="name">青钱闪付API Public用户</field>
+    <field name="login">qq_api_public_user</field>
+    <field name="active" eval="True"/>
+    <field name="lang">zh_CN</field>
+    <field name="tz">Asia/Shanghai</field>
+    <field name="image_1920" type="base64" file="galaxy_qq_api/static/description/icon.png"/>
+    <field name="groups_id" eval="[Command.set([ref('galaxy_qq_api.group_galaxy_qq_api_user')])]"/>
+  </record>
+</odoo>

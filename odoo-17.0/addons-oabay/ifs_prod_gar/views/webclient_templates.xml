@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="login" inherit_id="galaxy_tdesign.login" name="Galaxy Login">
+    <xpath expr="//div[hasclass('galaxy_login_title')]" position="replace">
+      <div class="galaxy_login_title">登录/Login</div>
+    </xpath>
+  </template>
+</odoo>

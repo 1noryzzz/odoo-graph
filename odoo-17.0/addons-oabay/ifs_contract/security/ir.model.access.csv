@@ -1,0 +1,28 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ifs_contract_template_sys,ifs.contract.template sys,model_ifs_contract_template,base.group_system,1,1,1,1
+access_ifs_contract_template_template_manager,ifs.contract.template template_manager,model_ifs_contract_template,group_ifs_contract_template_manager,1,1,1,0
+access_ifs_contract_template_contract_user,ifs.contract.template contract_user,model_ifs_contract_template,group_ifs_contract_user,1,0,0,0
+
+access_ifs_contract_template_preview_sys,ifs.contract.template.preview sys,model_ifs_contract_template_preview,base.group_system,1,1,1,1
+access_ifs_contract_template_preview_template_manager,ifs.contract.template.preview template_manager,model_ifs_contract_template_preview,group_ifs_contract_template_manager,1,1,1,0
+
+access_ifs_contract_info_sys,ifs.contract.info sys,model_ifs_contract_info,base.group_system,1,1,1,1
+access_ifs_contract_info_contract_sign,ifs.contract.info contract_sign,model_ifs_contract_info,group_ifs_contract_sign,1,1,1,0
+access_ifs_contract_info_contract_user,ifs.contract.info contract_user,model_ifs_contract_info,group_ifs_contract_user,1,0,0,0
+
+access_ifs_contract_info_sign_token_sys,ifs.contract.info sys,model_ifs_contract_info_sign_token,base.group_system,1,1,1,1
+access_ifs_contract_info_sign_token_contract_sign,ifs.contract.info contract_sign,model_ifs_contract_info_sign_token,group_ifs_contract_sign,1,1,1,1
+
+access_ifs_contract_category_sys,ifs.contract.category sys,model_ifs_contract_category,base.group_system,1,1,1,1
+access_ifs_contract_category_contract_user,ifs.contract.category contract_user,model_ifs_contract_category,group_ifs_contract_user,1,0,0,0
+
+access_ifs_contract_tag_sys,ifs.contract.tag sys,model_ifs_contract_tag,base.group_system,1,1,1,1
+access_ifs_contract_tag_user,ifs.contract.tag user,model_ifs_contract_tag,base.group_user,1,0,0,0
+access_ifs_contract_tag_manager,ifs.contract.tag manager,model_ifs_contract_tag,group_ifs_contract_template_manager,1,1,1,0
+
+access_galaxy_external_api_auth_jzq_sys,galaxy.external.api.auth.jzq sys,model_galaxy_external_api_auth_jzq,base.group_system,1,1,1,1
+access_galaxy_external_api_auth_jzq_api_user,galaxy.external.api.auth.jzq api_user,model_galaxy_external_api_auth_jzq,galaxy_external_api.group_galaxy_external_api_user,1,0,0,0
+access_galaxy_external_api_auth_jzq_manager,galaxy.external.api.auth.jzq manager,model_galaxy_external_api_auth_jzq,galaxy_external_api.group_galaxy_external_api_manager,1,1,1,0
+
+access_galaxy_external_api_auth_guorenpcic,galaxy.external.api.auth.guorenpcic api_user,model_galaxy_external_api_auth_guorenpcic,base.group_user,1,1,1,0
+access_galaxy_external_api_disable_warnings,galaxy.external.api.disable.warnings api_user,model_galaxy_external_api_disable_warnings,base.group_user,1,1,1,0

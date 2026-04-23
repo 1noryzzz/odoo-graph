@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <record id="ifs_contract_template_category_act_window" model="ir.actions.act_window">
+      <field name="name">合同类别列表</field>
+      <field name="res_model">ifs.contract.category</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="target">current</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有外部接口，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <record id="ifs_contract_tag_act_window" model="ir.actions.act_window">
+      <field name="name">标签管理</field>
+      <field name="res_model">ifs.contract.tag</field>
+      <field name="view_mode">tree,form</field>
+      <field name="target">current</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有标签，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+
+    <record id="ifs_contract_template_category_view_search" model="ir.ui.view">
+      <field name="name">ifs.contract.category.view.search</field>
+      <field name="model">ifs.contract.category</field>
+      <field name="arch" type="xml">
+        <search string="">
+          <field name="code"/>
+          <field name="name"/>
+          <field name="remark"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="ifs_contract_tag_view_tree" model="ir.ui.view">
+      <field name="name">ifs.contract.tag.view.tree</field>
+      <field name="model">ifs.contract.tag</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="sequence" widget="handle"/>
+          <field name="name"/>
+          <field name="color" widget="color_picker"/>
+          <field name="create_date" optional="show"/>
+          <field name="create_uid" widget="many2one_avatar_user" optional="show"/>
+          <field name="write_date" optional="hide"/>
+          <field name="write_uid" widget="many2one_avatar_user" optional="hide"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="ifs_contract_template_category_view_tree" model="ir.ui.view">
+      <field name="name">ifs.contract.category.view.tree</field>
+      <field name="model">ifs.contract.category</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="sequence" widget="handle"/>
+          <field name="code"/>
+          <field name="name"/>
+          <field name="create_date" optional="show"/>
+          <field name="create_uid" widget="many2one_avatar_user" optional="show"/>
+          <field name="write_date" optional="hide"/>
+          <field name="write_uid" widget="many2one_avatar_user" optional="hide"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="ifs_contract_template_category_view_form" model="ir.ui.view">
+      <field name="name">ifs.contract.category.view.form</field>
+      <field name="model">ifs.contract.category</field>
+      <field name="arch" type="xml">
+        <form string="合同类别">
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button class="oe_stat_button" type="action" name="%(ifs_contract_template_category_act_window)d" icon="fa-code">
+                <div class="o_form_field o_stat_info">
+                    <span class="o_stat_text">类别代码</span>
+                    <span class="o_stat_value">
+                        <field name="code"/>
+                    </span>
+                </div>
+              </button>
+              <button class="oe_stat_button" type="action" name="%(ifs_contract_template_category_act_window)d" icon="fa-sliders">
+                <div class="o_form_field o_stat_info">
+                    <span class="o_stat_text">合同数量</span>
+                    <span class="o_stat_value">
+                        <field name="contract_count"/>
+                    </span>
+                </div>
+              </button>
+            </div>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="remark"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="接口列表" name="external_apis" autofocus="autofocus">
+                <field name="contract_template_ids" mode="tree">
+                  <tree create="false" delete="false" no_open="true">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="need_partner"/>
+                    <field name="need_faceid"/>
+                    <field name="validity_period_view"/>
+                    <field name="model_id"/>
+                    <field name="report_name" optional="hide"/>
+                    <field name="report_template" optional="hide"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="ifs_contract_tag_view_form" model="ir.ui.view">
+      <field name="name">ifs.contract.tag.view.form</field>
+      <field name="model">ifs.contract.tag</field>
+      <field name="arch" type="xml">
+        <form string="标签设置">
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <menuitem id="ifs_contract_template_category_menu" name="合同类别" action="ifs_contract_template_category_act_window" parent="ifs_contract_template_sys_settings_menu" sequence="1"/>
+    <menuitem id="ifs_contract_tag_menu" name="标签管理" action="ifs_contract_tag_act_window" parent="ifs_contract_template_sys_settings_menu" sequence="2"/>
+
+  </data>
+</odoo>

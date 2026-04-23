@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="assets_login_frontend" name="qr login assets">
+    <script type="text/javascript" src="/inair_common/static/src/js/qr_login.js"/>
+    <link rel="stylesheet" type="text/scss" href="/inair_common/static/src/scss/style.scss"/>
+  </template>
+
+  <template id="qr_providers" name="OAuth Qr Providers">
+    <t t-if="len(qr_providers) &gt; 1">
+      <em t-attf-class="d-block text-center text-muted small my-#{len(qr_providers) if len(qr_providers) &lt; 3 else 3}">- or -</em>
+      <div class="o_auth_oauth_providers list-group mt-1 mb-1 text-left">
+        <a t-foreach="qr_providers" t-as="p" class="list-group-item list-group-item-action py-2" t-att-href="'#%s' % p['action_name']" t-att-tag="p['action_name']">
+          <i t-att-class="p['css_class']" />
+          <t t-esc="p['body']" />
+        </a>
+      </div>
+    </t>
+  </template>
+
+  <template id="login_qr_code_layout" name="Login With QrCode">
+    <t t-if="len(qr_providers) &gt; 0">
+      <div class="oe_website_qrcode_login_container">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a t-attf-class="nav-link #{'active' if not default_qr_login else ''}" id="user-login-tab" data-toggle="tab" href="#user-login" role="tab" aria-controls="user-login" t-att-aria-selected="not default_qr_login">
+            Login with User
+            </a>
+          </li>
+          <li class="nav-item">
+            <a t-attf-class="nav-link #{'active' if default_qr_login else ''}" id="qr-login-tab" data-toggle="tab" href="#qr-login" role="tab" aria-controls="qr-login" t-att-aria-selected="default_qr_login">
+            Scan Qrcode
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div t-attf-class="tab-pane fade #{'show active' if not default_qr_login else ''}" id="user-login" role="tabpanel" aria-labelledby="user-login-tab">
+            <div class="oe_website_login_container" t-raw="0" />
+          </div>
+          <div t-attf-class="tab-pane fade #{'show active' if default_qr_login else ''}" id="qr-login" role="tabpanel" aria-labelledby="qr-login-tab">
+            <div class="oe_login_form oe_login_form_qrcode" id="qr_qrcode">
+              <script type="text/javascript">
+                <t t-translation="off">
+                window.addEventListener('load', function () {
+                  odoo.define('inair_common.qr_entry', function (require) {
+                    var rootWidget = require('root.widget');
+                    var qr_login = require('inair_common.qr.login');
+        
+                    var qr_login_widget = new qr_login.QrLogin(
+                        rootWidget, {}, {
+                          website_domain: '<t t-esc="website_domain"/>', 
+                          qr_area_id: 'qr_qrcode', 
+                          qr_providers: <t t-raw="json.dumps(qr_providers)"/>
+                        }
+                    );
+                    qr_login_widget.appendTo(document.body);
+                  });
+                });
+                </t>
+              </script>
+            </div>
+            <t t-call="inair_common.qr_providers"/>
+          </div>
+        </div>
+      </div>
+    </t>
+    <t t-else="">
+      <div class="oe_website_login_container" t-raw="0" />
+    </t>
+  </template>
+
+  <template id="qr_login_layout" name="Qr Login Main Layout">
+    <t t-call="website.layout">
+      <!-- <t t-set="no_header" t-value="true"/>
+        <t t-set="no_footer" t-value="true"/> -->
+      <t t-set="head">
+        <t t-call-assets="inair_common.assets_login_frontend" t-js="false"/>
+        <t t-call-assets="inair_common.assets_login_frontend" t-css="false" defer_load="True"/>
+      </t>
+      <t t-raw="0"/>
+    </t>
+  </template>
+
+  <template id="login_layout" inherit_id="web.login_layout" name="Website Login Layout With QrCode" priority="20">
+    <xpath expr="t" position="replace">
+      <t t-call="inair_common.qr_login_layout">
+        <t t-call="inair_common.login_qr_code_layout">
+          <t t-raw="0" />
+        </t>
+      </t>
+    </xpath>
+  </template>
+</odoo>

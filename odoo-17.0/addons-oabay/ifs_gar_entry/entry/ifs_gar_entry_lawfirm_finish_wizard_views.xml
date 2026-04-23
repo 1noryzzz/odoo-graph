@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_entry_lawfirm_finish_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.lawfirm.finish.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.lawfirm.finish.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_entry_lawfirm_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <field name="committed" invisible="1"/>
+        <div class="alert text-center o_form_header" role="status" invisible="committed">
+          <img class="icon" src="/ifs_gar_entry/static/img/attention.png" alt="告知"/>
+          <div class="desc">
+            <p>需要的信息您已经填写完成，请点击 “确认” 以提交！或返回上一步继续修改 </p>
+          </div>
+        </div>
+        <div class="alert alert-success text-center o_form_header success-container" role="status" invisible="not committed">
+          <img class="icon" src="/ifs_gar_entry/static/img/successful.png" alt="successful"/>
+          <div class="desc">
+            <p>您的申请信息，我们已收悉！ </p>
+            <p>我们会尽快处理您的申请，“鸥贝云”感谢您的支持！</p>
+            <p>祝您生意兴隆！</p>
+            <!-- <strong>恭喜您进件成功！后台确认信息后会为您开通</strong> -->
+          </div>
+        </div>
+      </xpath>
+      <button name="nosave_prev" position="attributes">
+        <attribute name="invisible">not has_prev_step or committed</attribute>
+      </button>
+      <xpath expr="//button[hasclass('o_has_next')]" position="attributes">
+        <attribute name="invisible">not has_next_step or committed</attribute>
+      </xpath>
+      <xpath expr="//button[hasclass('o_confirm')]" position="attributes">
+        <attribute name="invisible">has_next_step or committed</attribute>
+      </xpath>
+    </field>
+  </record>
+</odoo>

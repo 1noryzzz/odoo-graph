@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-inherit="web.views.ViewButton" t-inherit-mode="extension" owl="1">
+    <xpath expr="//span[@t-if='props.string']" position="before">
+      <span t-if="is_step">
+        <div t-attf-class="circle background_dark_blue {{className}}"></div>
+        <div class="galaxy_step_text_container">
+          <div class="galaxy_item_text"><t t-esc="props.string"/></div>
+        </div>
+      </span>
+    </xpath>
+    <xpath expr="//span[@t-if='props.string']" position="replace">
+      <span t-else="props.string" t-esc="props.string"/>
+    </xpath>
+  </t>
+</templates>

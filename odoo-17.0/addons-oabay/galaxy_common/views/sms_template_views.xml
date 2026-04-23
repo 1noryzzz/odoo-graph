@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="sms_template_form_inherited">
+    <field name="name">sms.template.form.inherited</field>
+    <field name="model">sms.template</field>
+    <field name="inherit_id" ref="sms.sms_template_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='content']/group/field[@name='body']" position="replace">
+        <field name="body" widget="sms_widget"/>
+        <field name="template_params_mapping"/>
+        <field name="template_body"/>
+        <field name="template_param"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

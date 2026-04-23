@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_galaxy_migrate_data_sys,galaxy.migrate.data sys,model_galaxy_migrate_data,base.group_system,1,1,1,1
+access_galaxy_migrate_data_api_sys,galaxy.migrate.data.api sys,model_galaxy_migrate_data_api,base.group_system,1,1,1,1
+access_galaxy_migrate_data_api_wizard_sys,galaxy.migrate.data.api.wizard sys,model_galaxy_migrate_data_api_wizard,base.group_system,1,1,1,1

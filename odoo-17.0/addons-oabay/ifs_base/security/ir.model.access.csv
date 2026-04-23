@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_company_ifs_manager,res_company ifs_manager,base.model_res_company,ifs_base.group_ifs_manager,1,1,1,0
+
+access_res_partner_bank_ifs_manager","res_partner_bank ifs_manager","base.model_res_partner_bank",ifs_base.group_ifs_manager,1,1,1,0
+
+access_ifs_base_company_sys,ifs.base.company system,model_ifs_base_company,base.group_system,1,1,1,1
+access_ifs_base_company_ifs_manager,ifs.base.company ifs_manager,model_ifs_base_company,ifs_base.group_ifs_manager,1,1,1,0
+access_ifs_base_company_ifs_user,ifs.base.company ifs_user,model_ifs_base_company,ifs_base.group_ifs_user,1,0,0,0
+
+access_ifs_base_company_doc_sys,ifs.base.company.doc system,model_ifs_base_company_doc,base.group_system,1,1,1,1
+access_ifs_base_company_doc_ifs_manager,ifs.base.company.doc ifs_manager,model_ifs_base_company_doc,ifs_base.group_ifs_manager,1,1,1,0
+access_ifs_base_company_doc_ifs_user,ifs.base.company.doc ifs_user,model_ifs_base_company_doc,ifs_base.group_ifs_user,1,0,0,0
+
+access_ifs_base_company_detail_sys,ifs.base.company.detail system,model_ifs_base_company_detail,base.group_system,1,1,1,1
+access_ifs_base_company_detail_ifs_manager,ifs.base.company.detail ifs_manager,model_ifs_base_company_detail,ifs_base.group_ifs_manager,1,1,1,0
+access_ifs_base_company_detail_ifs_user,ifs.base.company.detail ifs_user,model_ifs_base_company_detail,ifs_base.group_ifs_user,1,0,0,0

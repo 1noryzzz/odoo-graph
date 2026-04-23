@@ -1,0 +1,60 @@
+"id","parser_id","action_id","response_definition_id","sample_data","rollback"
+5,3,5,4,"{""name"": ""深圳市朗强科技有限公司"", ""fromTime"": 1083945600000, ""regStatus"": ""存续"", ""creditCode"": ""91440300761964672J"", ""regCapital"": ""200万人民币"", ""regLocation"": ""深圳市福田区上梅林广夏路3号金广夏文科园三楼、四楼西侧"", ""regInstitute"": ""福田局"", ""actualCapital"": ""200万人民币"", ""businessScope"": ""一般经营项目是：音视频产品、智能电子产品、计算机软硬件、集成电路、半导体、分立器件、电子产品及设备的技术开发和销售；国内贸易（不含专营、专控、专卖商品）；经营进出口业务。（法律、行政法规，国务院法定禁止的项目除外，限制的项目须取得许可后方可经营），许可经营项目是：音视频产品、智能电子产品、电子产品及设备的生产。"", ""legalPersonName"": ""高炳海""}",false
+6,3,6,5,"{""chairman"": false, ""president"": false, ""supervisor"": false}",false
+7,5,7,6,"{""name"": ""Lonex Holding Limited"", ""capital_amomon"": false, ""capital_percent"": false, ""capitalActl_amomon"": ""11.893万人民币"", ""capitalActl_percent"": false}",false
+11,7,11,9,"{""name"": ""张琼""}",false
+12,7,12,9,"{""name"": ""合肥力杰半导体科技有限公司""}",false
+13,7,16,9,"{""name"": false}",false
+14,9,17,10,"{""name"": false, ""percent"": false, ""regStatus"": false, ""creditCode"": false}",false
+15,11,18,11,"{""name"": ""龙迅半导体科技（合肥）有限公司深圳分公司"", ""regStatus"": ""注销""}",false
+16,14,19,12,"{""typeState"": false, ""equityAmount"": false, ""executedPerson"": false, ""executiveCourt"": false, ""executeNoticeNum"": false}",false
+17,16,20,13,"{""pname"": false, ""caseCode"": false, ""execMoney"": false, ""partyCardNum"": false, ""execCourtName"": false, ""caseCreateTime"": false}",false
+18,18,21,14,"{""duty"": false, ""iname"": false, ""gistid"": false, ""regdate"": false, ""areaname"": false, ""gistunit"": false, ""courtname"": false, ""performance"": false, ""publishdate"": false}",false
+20,21,23,15,"{""court"": false, ""title"": false, ""caseNo"": false, ""caseType"": false, ""judgeTime"": false, ""caseReason"": false, ""casePersons"": false}",false
+21,24,24,16,"{""taxpayerQualificationType"": ""一般纳税人""}",false
+22,26,25,17,"{""href"": false, ""name"": false}",false
+23,28,26,18,"{""title"": false, ""publicNum"": false}",false
+24,30,27,19,"{""certNo"": false, ""endDate"": false, ""startDate"": false, ""certificateName"": false}",false
+25,32,28,20,"{""ratio"": ""0.64%"", ""dataSource"": ""客户公告"", ""relationship"": false, ""supplier_name"": ""Taiwan IC Packaging Corporation"", ""supplier_graphId"": false, ""announcement_date"": 1603641600000}",false
+26,34,29,21,"{""ratio"": ""7.06%"", ""dataSource"": ""年报"", ""client_name"": ""深圳市朗强科技有限公司"", ""relationship"": false, ""client_graphId"": 677910184, ""announcement_date"": 1603641600000}",false
+27,37,31,24,"{""reason"": false, ""content"": false, ""decisionDate"": false, ""punishNumber"": false, ""departmentName"": false}",true
+28,39,32,25,"{""putDate"": false, ""putReason"": false, ""removeDate"": false, ""removeReason"": false, ""putDepartment"": false, ""removeDepartment"": false}",true
+29,41,33,26,"{""amount"": false, ""regNum"": false, ""status"": false, ""regDate"": false, ""people_name"": false, ""regDepartment"": false}",false
+31,43,35,27,"{""tmName"": false}",false
+32,46,36,28,"{""patentName"": false}",false
+33,48,37,29,"{""fullname"": ""LT86101驱动软件""}",false
+34,50,38,30,"{""fullname"": ""龙迅半导体Lontium LOGO标识""}",false
+35,52,39,31,"{""ym"": ""lontiumsemi.com"", ""name"": ""lontiumsemi.com"", ""webSite"": ""www.lontiumsemi.com""}",false
+37,54,41,36,"{""rule"": ""信息验证规则-法院信息详情个人高级版"", ""weight"": ""40"", ""name_rule"": ""该申请人在法院信息中含有作为被告的开庭公告""}",false
+38,54,42,37,"{""final_weight"": ""100""}",false
+39,54,43,38,"{""result"": ""未命中不良"", ""person_check_item"": ""身份证号、姓名、手机号""}",false
+40,54,44,39,"{""result"": ""一致"", ""person_check_item"": ""身份证号、姓名""}",false
+41,54,45,40,"{""result"": ""一致"", ""person_check_item"": ""身份证号、姓名""}",false
+42,54,46,41,"{""value"": ""[24,+)"", ""status"": ""正常"", ""operation"": ""联通"", ""tel_consumption_level"": ""-""}",false
+43,54,47,42,"{""bjbx"": ""-"", ""body"": ""追偿权纠纷 被告 归档 410..."", ""whfx"": ""-"", ""court"": ""四川省成都市锦江区人民法院"", ""pname"": ""陆军强"", ""caseNo"": ""（2020）川0104民初2503号"", ""dataType"": ""案件流程"", ""idcardNo"": ""-"", ""caseState"": ""归档"", ""execMoney"": ""-"", ""matchRatio"": 0.99, ""sortTimeString"": ""2020年03月19日""}",false
+44,53,48,43,"{""weight"": ""90""}",false
+45,53,49,44,"{""scoreafrevoloan"": ""51""}",false
+46,53,50,45,"{""scorerevoloan"": ""623""}",false
+47,53,51,46,"{""final_decision"": ""拒绝""}",false
+48,53,52,47,"{""rule"": ""反欺诈规则-法院裁判文书"", ""weight"": ""60"", ""name_rule"": ""查询人的相关案件未败诉但存在欺诈风险""}",false
+49,53,53,48,"{""phone_address"": ""河南开封市""}",false
+50,53,54,49,"{""cid"": ""4102221982****5597"", ""name"": ""陆军强"", ""time"": ""2021年02月02日"", ""money"": ""66086"", ""casenum"": ""（2021）川0104执1457号"", ""statute"": ""终结本次执行程序"", ""datatime"": ""2021年02月02日"", ""datatype"": ""最高法执行"", ""performance"": ""-""}",false
+51,53,55,50,"{""name"": ""陆军强"", ""time"": ""2021年02月02日"", ""court"": ""四川省成都市锦江区人民法院"", ""money"": ""-"", ""casenum"": ""（2021）川0104执1457号"", ""statute"": ""-"", ""datatype"": ""曝光台"", ""caseCause"": ""追偿权纠纷"", ""eventLevel"": ""-2"", ""matchRatio"": ""0.99"", ""performance"": ""-""}",false
+52,53,56,51,"{""body"": ""追偿权纠纷 原告:成都腾铭惠商..."", ""name"": ""陆军强"", ""court"": ""四川省成都市锦江区人民法院"", ""pname"": ""-"", ""caseNo"": ""（2020）川0104民初2503号"", ""partyFee"": ""-"", ""caseCause"": ""追偿权纠纷"", ""caseTypeS"": ""民事判决书"", ""courtRank"": ""4"", ""partyType"": ""-"", ""eventLevel"": ""-1"", ""foundation"": ""《中华人民共和国担保法》第三十一条，《中华人民共和国合同法》第六十条第一款、第一百零七条和第一百一十四条"", ""matchRatio"": ""0.99"", ""partyTitle"": ""-"", ""judgeResult"": ""一、万学博于本判决发生法律效力之日起十日内向成都腾铭惠商实业集团有限公司支付代偿款49529.56元、违约金9905.91元。二、陆军强对万学博的上述债务承担连带清偿责任。如果未按本判决指定的期间履行给付金钱义务，应当依照《中华人民共和国民事诉讼法》第二百五十三条规定，加倍支付迟延履行期间的债务利息。案件受理费1286元，减半收取计643元，由万学博、陆军强负担。如不服本判决，可以在判决书送达之日起十五日内，向本院递交上诉状，并按对方当事人的人数提出副本，上诉于四川省成都市中级人民法院。"", ""partyResult"": ""-"", ""partyPosition"": ""-"", ""sortTimeString"": ""2020年04月27日"", ""trialProcedure"": ""一审""}",false
+53,53,57,52,"{""age"": ""39"", ""iname"": ""陆军强"", ""regdate"": ""2021-02-02"", ""sexname"": ""男"", ""casecode"": ""（2021）川0104执1457号"", ""datatype"": ""限高被执行人"", ""courtname"": ""四川省成都市锦江区人民法院"", ""publishdate"": ""2021-03-23""}",false
+54,53,58,53,"{""name"": false, ""value"": false}",false
+55,53,59,54,"{""d7"": ""1/1"", ""m1"": ""1/1"", ""m3"": ""1/1"", ""m6"": ""1/1"", ""d15"": ""1/1"", ""m12"": ""1/1"", ""name"": ""非银""}",false
+56,53,60,55,"{""name"": ""非银汇总"", ""type"": ""非银汇总"", ""allnum_d7"": ""1/1"", ""allnum_m1"": ""1/1"", ""allnum_m3"": ""1/1"", ""allnum_m6"": ""1/1"", ""orgnum_d7"": ""1/1"", ""orgnum_m1"": ""1/1"", ""orgnum_m3"": ""1/1"", ""orgnum_m6"": ""1/1"", ""allnum_d15"": ""1/1"", ""allnum_m12"": ""1/1"", ""orgnum_d15"": ""1/1"", ""orgnum_m12"": ""1/1""}",false
+57,53,61,56,"{""name"": ""其他"", ""allnum_d7"": ""-/-"", ""allnum_m1"": ""-/-"", ""allnum_m3"": ""-/-"", ""allnum_m6"": ""-/-"", ""orgnum_d7"": ""-/-"", ""orgnum_m1"": ""-/-"", ""orgnum_m3"": ""-/-"", ""orgnum_m6"": ""-/-"", ""allnum_d15"": ""-/-"", ""allnum_m12"": ""-/-"", ""orgnum_d15"": ""-/-"", ""orgnum_m12"": ""-/-""}",false
+58,53,62,57,"{""name"": ""非银-夜间"", ""allnum_d7"": ""0/0"", ""allnum_m1"": ""0/0"", ""allnum_m3"": ""0/0"", ""allnum_m6"": ""0/0"", ""orgnum_d7"": ""0/0"", ""orgnum_m1"": ""0/0"", ""orgnum_m3"": ""0/0"", ""orgnum_m6"": ""0/0"", ""allnum_d15"": ""0/0"", ""allnum_m12"": ""0/0"", ""orgnum_d15"": ""0/0"", ""orgnum_m12"": ""0/0""}",false
+59,53,63,58,"{""name"": ""借贷情况"", ""allnum_d7"": ""-/-"", ""allnum_m1"": ""-/-"", ""allnum_m3"": ""-/-"", ""allnum_m6"": ""-/-"", ""orgnum_d7"": ""-/-"", ""orgnum_m1"": ""-/-"", ""orgnum_m3"": ""-/-"", ""orgnum_m6"": ""-/-"", ""allnum_d15"": ""-/-"", ""allnum_m12"": ""-/-"", ""orgnum_d15"": ""-/-"", ""orgnum_m12"": ""-/-""}",false
+60,53,64,59,"{""m1"": ""a/a"", ""m3"": ""a/a"", ""m6"": ""a/a"", ""m9"": ""a/a"", ""m12"": ""a/a"", ""name"": ""预测在非银机构应还款等级""}",false
+61,53,65,60,"{""m1"": ""1/1"", ""m2"": ""0/0"", ""m3"": ""0/0"", ""m4"": ""0/0"", ""m5"": ""0/0"", ""m6"": ""0/0"", ""m7"": ""0/0"", ""m8"": ""0/0"", ""m9"": ""0/0"", ""m10"": ""0/0"", ""m11"": ""0/0"", ""m12"": ""0/0"", ""name"": ""在非银机构新增申请次数""}",false
+62,53,66,61,"{""name"": ""ir_id_is_reabnormal"", ""result"": ""0""}",false
+63,53,67,61,"{""name"": ""ir_cell_x_id_cnt"", ""result"": ""1""}",false
+64,53,68,61,"{""name"": ""ir_allmatch_days"", ""result"": ""459""}",false
+65,53,69,62,"{""group_num"": ""-"", ""list_level"": ""-""}",false
+66,53,70,63,"{""nodebtscore"": ""31""}",false
+67,35,99,,"",false
+68,56,100,,"",false
+69,55,101,,"",false

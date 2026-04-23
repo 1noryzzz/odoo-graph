@@ -1,0 +1,32 @@
+.o_flat_searchview {
+    margin: 20px 0px;
+    padding: 0px 10px;
+    border-bottom: 0px;
+
+    .o_flat_searchview_items {
+        align-items: center;
+    }
+}
+
+.o_flat_searchview_menu {
+    display: flex;
+    width: 95%;
+    flex-wrap: wrap;
+
+    .o_flat_searchview_item {
+        margin: 0px 10px 10px 10px;
+        display: block;
+        width: 15%;
+        line-height: 25px;
+    }
+}
+
+.o_flat_searchview_date {
+    border: 1px solid rgb(103,103,116);
+    border-radius: 2px;
+}
+
+.o_flat_searchview_select {
+    border-radius: 2px;
+    height: 32px;
+}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="galaxy_external_api_act_window" model="ir.actions.act_window">
+      <field name="name">接口列表</field>
+      <field name="res_model">galaxy.external.api</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="target">current</field>
+      <field name="context">{ 'search_default_group_platform_id': True }</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有外部接口，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <record id="galaxy_external_api_monitor_act_window" model="ir.actions.act_window">
+      <field name="name">接口监控</field>
+      <field name="res_model">galaxy.external.api</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="target">current</field>
+      <field name="view_ids" eval="[Command.clear(),
+        Command.create({'view_mode': 'tree', 'view_id': ref('galaxy_external_api_view_tree_monitor')}),
+        Command.create({'view_mode': 'form', 'view_id': ref('galaxy_external_api_view_form_monitor')})]"/>
+      <field name="context">{ 'search_default_group_platform_id': True }</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有配置外部接口
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <record id="galaxy_external_api_category_act_window" model="ir.actions.act_window">
+      <field name="name">接口类别列表</field>
+      <field name="res_model">galaxy.external.api.category</field>
+      <field name="view_mode">tree,form</field>
+      <field name="target">current</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有外部接口分类，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <record id="galaxy_external_api_tag_act_window" model="ir.actions.act_window">
+      <field name="name">标签管理</field>
+      <field name="res_model">galaxy.external.api.tag</field>
+      <field name="view_mode">tree,form</field>
+      <field name="target">current</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有标签，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+    
+    <menuitem id="galaxy_external_api_root_menu" name="外部接口" 
+      groups="galaxy_external_api.group_galaxy_external_api_audit" 
+      web_icon="galaxy_external_api,static/img/galaxy_extapi.png" sequence="10"/>
+
+    <menuitem id="galaxy_external_api_monitor_menu" name="接口监控" 
+      action="galaxy_external_api_monitor_act_window" groups="group_galaxy_external_api_audit" 
+      parent="galaxy_external_api_root_menu" sequence="1"/>
+
+    <menuitem id="galaxy_external_api_setting_menu" name="接口管理" 
+      action="galaxy_external_api_act_window" groups="group_galaxy_external_api_manager" 
+      parent="galaxy_external_api_root_menu" sequence="2"/>
+
+    <menuitem id="galaxy_external_api_sys_settings_menu" name="设置" 
+      parent="galaxy_external_api_root_menu" sequence="9"/>
+
+    <menuitem id="galaxy_external_api_category_menu" name="接口类别" 
+      action="galaxy_external_api_category_act_window" groups="group_galaxy_external_api_manager" 
+      parent="galaxy_external_api_sys_settings_menu" sequence="1"/>
+
+    <menuitem id="galaxy_external_api_tag_menu" name="标签管理" 
+      action="galaxy_external_api_tag_act_window" groups="group_galaxy_external_api_manager" 
+      parent="galaxy_external_api_sys_settings_menu" sequence="2"/>
+  </data>
+</odoo>

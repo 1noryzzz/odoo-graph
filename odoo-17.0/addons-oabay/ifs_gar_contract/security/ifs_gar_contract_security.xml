@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!--保理方权限-->
+  <record id="group_ifs_gar_contract_factor_contract_edit" model="res.groups">
+    <field name="name">合同管理：编辑合同</field>
+    <field name="category_id" ref="ifs_partner.module_category_ifs_partner_factor"/>
+    <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign'))]"/>
+    <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    <field name="comment">普惠金融场景下，可编辑具体的某一份合同的用户</field>
+  </record>
+
+  <data noupdate="0">
+    <record id="ifs_partner.group_ifs_partner_factor_system" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('group_ifs_gar_contract_factor_contract_edit'))]"/>
+    </record>
+
+    <record id="ifs_gar_invite.group_ifs_gar_merchant_entry" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign'))]"/>
+    </record>
+
+    <record id="ifs_gar_invite.group_ifs_gar_supplier_entry" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign'))]"/>
+    </record>
+
+    <record id="ifs_gar_invite.group_ifs_gar_franchisee_entry" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign'))]"/>
+    </record>
+
+    <record id="ifs_gar_invite.group_ifs_gar_lawfirm_entry" model="res.groups">
+      <field name="implied_ids" eval="[Command.link(ref('ifs_contract.group_ifs_contract_sign'))]"/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="ifs_gar_trade_mobile_pay_result_template" name="支付结果展示" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>支付结果</title>
+      <script type="text/javascript" src="/galaxy_common/static/src/js/disable_back.js"/>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div class="main_result">
+        <div id="urlType" style="display:none" t-esc="url_type"></div>
+        <div id="afterPayment" style="display:none" t-esc="after_payment"></div>
+        <!-- <t t-if="is_success">
+          <img src="/ifs_gar_trade/static/img/success2.png" name="success_img" class="success_img success"/>
+        </t>
+        <t t-else="">
+          <img src="/ifs_gar_trade/static/img/fail.png" name="fail_img" class="fail_img"/>
+        </t>
+        <div class="pay_amount am-wrap">
+          <div class="amount_mark">￥</div>
+          <t t-esc="amount"/>
+        </div>
+        <div class="label" t-esc="msg"></div>
+        <div class="result_return_btn pay_return_btn btn-wrap">
+          <div id="isSuccess" style="display:none" t-esc="is_success"></div>
+          <div id="msg" style="display:none" t-esc="msg"></div>
+          <div id="afterPayment" style="display:none" t-esc="after_payment"></div>
+          <div id="urlType" style="display:none" t-esc="url_type"></div>
+          <t t-if="is_success">
+            <button class="btn btn-primary btn-sm transition_success_btn">查看订单</button>
+          </t>
+          <t t-else="">
+            <button class="btn btn-primary btn-sm transition_fail_btn">返回</button>
+          </t>
+        </div> -->
+      </div>
+    </xpath>
+  </template>
+
+</odoo>

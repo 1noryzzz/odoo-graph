@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="layout" name="Main layout" inherit_id="galaxy_tdesign.layout">
+    <xpath expr="//head" position="inside">
+      <t t-call-assets="ifs_hr.assets_for_login" t-css="false" defer_load="True"/>
+      <t t-call-assets="ifs_hr.assets_for_login" t-js="false"/>
+    </xpath>
+  </template>
+
+  <template id="login" inherit_id="web.login" name="InclusiveFinancing Login">
+    <input name="login" position="attributes">
+      <attribute name="t-attf-class">login-name form-control #{'form-control-sm' if form_small else ''}</attribute>
+    </input>
+    <xpath expr="//input[@name='password']" position="after">
+      <input type="hidden" name="otp_check" id="otp_check" t-attf-value="#{'0' if otp_default_invisible else '1'}"/>
+      <input type="password" placeholder="动态令牌" name="ot_password" id="ot_password" 
+         t-attf-class="ot-passwd form-control #{'form-control-sm' if form_small else ''} #{'ot_password_invisible' if otp_default_invisible else ''}" maxlength="8"/>
+    </xpath>
+  </template>
+</odoo>

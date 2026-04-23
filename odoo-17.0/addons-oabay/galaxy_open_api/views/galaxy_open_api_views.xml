@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="galaxy_open_api_app_view_search" model="ir.ui.view">
+    <field name="name">galaxy.open.api.app.view.search</field>
+    <field name="model">galaxy.open.api.app</field>
+    <field name="arch" type="xml">
+      <search string="开放平台应用查询">
+        <field name="name"/>
+        <field name="app_id"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="galaxy_open_api_app_view_tree" model="ir.ui.view">
+    <field name="name">galaxy.open.api.app.view.tree</field>
+    <field name="model">galaxy.open.api.app</field>
+    <field name="arch" type="xml">
+      <tree string="开放平台应用列表" sample="1">
+        <field name="name"/>
+        <field name="app_id"/>
+        <field name="app_secret" optional="hide"/>
+        <field name="key_ids" widget="many2many_tags"/>
+        <field name="description"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="galaxy_open_api_app_view_form" model="ir.ui.view">
+    <field name="name">galaxy.open.api.app.view.form</field>
+    <field name="model">galaxy.open.api.app</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <!-- <header></header> -->
+        <sheet>
+          <field name="active" invisible="1"/>
+          <widget name="web_ribbon" title="已归档" bg_color="bg-danger" invisible="active"/>
+          <div class="oe_button_box" name="button_box"></div>
+          <div class="oe_title">
+            <field name="image_1920" widget='image' class="oe_avatar" />
+            <span name="app_id">App Id：<field name="app_id" class="oe_inline" /></span>
+            <h1>
+              <field name="name" default_focus="1" placeholder="名称"/>
+            </h1>
+          </div>
+          <group string="基本信息">
+            <group>
+              <field name="app_secret"/>
+              <field name="user_id" widget="many2one_avatar_user" options="{'no_create': true, 'no_open': true}" domain="[('company_id', '=', company_id)]"/>
+            </group>
+            <group>
+              <field name="company_id" options="{'no_create': true, 'no_open': true}"/>
+            </group>
+            <group colspan="2" name="message_handler">
+              <label for="message_handler_url"/>
+              <div class="oe_inline_container">
+                <field name="request_method" class="oe_inline" style="width: 75px !important;"/>
+                <field name="message_handler_url" class="oe_inline oe_inline_full" />
+              </div>
+            </group>
+            <group colspan="2">
+              <field name="description"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Token列表" name="keys" class="pg_keys" autofocus="autofocus">
+              <field name="key_ids"/>
+            </page>
+            <page string="白名单" name="allow_list" class="pg_allow_list">
+              <group>
+                <group colspan="2" class="o_group_label_lg">
+                  <field name="enable_allow_list" widget="boolean_toggle"/>
+                  <field name="allow_list"/>
+                </group>
+              </group>
+            </page>
+            <page string="黑名单" name="deny_list" class="pg_deny_list">
+              <group>
+                <group colspan="2" class="o_group_label_lg">
+                  <field name="enable_deny_list" widget="boolean_toggle"/>
+                  <field name="deny_list"/>
+                </group>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

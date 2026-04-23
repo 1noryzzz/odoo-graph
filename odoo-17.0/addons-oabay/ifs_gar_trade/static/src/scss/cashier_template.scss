@@ -1,0 +1,435 @@
+.location_text {
+    .underline_info {
+        margin-top: 31px;
+    }
+}
+
+.password_text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 22px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 7px 3px rgba(1, 183, 179, 0.04);
+    border-radius: 12px;
+    margin: 160px 26px 0px 26px;
+    text-align: center;
+    padding: 17px 16px 24px 16px;
+
+    .close_img {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        left: 36px;
+        top: 172px;
+    }
+
+    .password_text_info {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333333;
+        line-height: 22px;
+        margin-bottom: 8px;
+    }
+
+    .password_input_text {
+        display: flex;
+        margin: 0px 9px;
+        justify-content: space-between;
+        margin-top: 30px;
+
+        input {
+            font-family: monospace;
+        }
+
+        .input_box {
+            width: 40px;
+            height: 40px;
+            background: #F1F1F1;
+            border-radius: 4px;
+            border: none;
+            text-align: center;
+            font-size: 20px;
+
+            &:focus {
+                outline-color: #333333;
+            }
+        }
+    }
+
+    .underline_info {
+        margin-bottom: 36px;
+    }
+
+    .error_text {
+        font-weight: 400;
+        color: #EC3D30;
+        margin-top: 16px;
+    }
+}
+
+.cashier_main_content {
+    padding: 14px 16px 38px 16px;
+    font-size: 14px;
+    color: #333333;
+    line-height: 20px;
+}
+
+.pay_amount_text {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 32px 0px;
+    margin-bottom: 16px
+}
+
+.amount_title_text {
+    text-align: center;
+    color: #999999;
+}
+
+.title_text {
+    line-height: 22px;
+    font-size: 16px;
+    padding-bottom: 14px;
+}
+
+.pay_amount {
+    display: flex;
+    margin-top: 2px;
+    font-size: 42px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+
+    .amount_mark {
+        font-size: 22px;
+        font-weight: bold;
+        line-height: 33px;
+        margin-top: 10px;
+    }
+}
+
+.pay_way {
+    background: #FFFFFF;
+    border-radius: 8px;
+
+    .bfp_pay {
+        display: flex;
+        padding: 14px;
+
+        .bfp_img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .bfp_pay_text {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 8px;
+        }
+
+        .bfp_pay_text_content {
+            display: block;
+
+            .bfp_pay_text_content_info {
+                display: flex;
+                align-items: center;
+                color: #999999;
+                font-size: 10px;
+                line-height: 14px;
+            }
+
+            .bfp_pay_text_content_info_warning {
+                color: #FE4D4F;
+                margin-left: 5px;
+            }
+        }
+
+        .wrap {
+            width: 26px;
+            display: flex;
+
+            input[type="checkbox"] {
+                align-self: flex-start;
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .quota_content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 14px 14px 42px;
+
+        .quota_content_text {
+            display: block;
+
+            .quota_content_text_info {
+                font-size: 10px;
+                color: #214E64;
+                line-height: 14px;
+                border: 1px solid #214E64;
+                border-radius: 3px;
+                opacity: 0.7;
+                background: #FFFFFF;
+                width: 38px;
+                height: 16px;
+                text-align: center;
+            }
+
+            .label {
+                color: #ff6633;
+                border-color: #ff6633;
+            }
+        }
+    }
+
+    .underline_info {
+        margin-left: 42px;
+    }
+
+    .line {
+        margin: 0 14px;
+    }
+}
+
+.agreement-block {
+    margin-top: 8px;
+
+    a {
+        color: rgb(62, 63, 203);
+        text-decoration: none;
+    }
+}
+
+.pay_way_tips {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    z-index: 10;
+}
+
+.unable_pay_way {
+    background: #214E64;
+    border-radius: 8px;
+    opacity: 0.7;
+    padding: 64px 12px 12px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 18px;
+}
+
+.quota_content_img {
+    width: 21px;
+    height: 20px;
+    margin-right: 4px;
+}
+
+.other_pay_way {
+    font-size: 12px;
+    color: #666666;
+    line-height: 17px;
+    display: flex;
+    margin-top: 20px;
+    padding-bottom: 14px;
+    justify-content: center;
+
+    visibility: hidden;
+
+    .cashier_expand {
+        transform: rotate(180deg);
+    }
+}
+
+.wechat_pay {
+    display: none;
+    background: #FFFFFF;
+    border-radius: 8px;
+    // display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 14px;
+
+    .wechat_pay_content {
+        display: flex;
+
+        .wechat_pay_text {
+            margin-left: 8px;
+        }
+    }
+}
+
+.underline_info {
+    border-bottom: 1px solid #F1F3F6;
+}
+
+.circular-button {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #ffffff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #ccc;
+    outline: none;
+
+    &:checked {
+        background-color: #214E64;
+    }
+}
+
+.button_container {
+    position: absolute;
+    bottom: 38px;
+    left: 16px;
+    right: 16px;
+
+    .cashier-btn {
+        background-color: #ff6633 !important;
+        border-color: #ff6633 !important;
+        height: 44px;
+        width: 100%;
+        border-radius: 22px;
+        color: #FFFFFF;
+        font-weight: bold;
+    }
+}
+
+.cashier-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+    margin-bottom: 24px;
+
+    .logo {
+        height: 25px;
+    }
+
+    .label {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        color: #999999;
+        font-size: 12px;
+    }
+
+    .label::before,
+    .label::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #999999;
+    }
+}
+
+.main_result {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    line-height: 22px;
+
+    .success_img {
+        margin: 76px 0px 18px 0px;
+    }
+
+    .success {
+        width: 207px;
+    }
+
+    .fail_img {
+        margin: 76px 0px 18px 0px;
+    }
+
+    .pay_amount {
+        margin-top: 44px;
+    }
+
+    .am-wrap {
+        margin-top: 14px;
+        font-size: 38px;
+
+        .amount_mark {
+            font-size: 22px;
+            font-weight: bold;
+        }
+    }
+
+    .result_return_btn {
+        position: absolute;
+        bottom: 48px;
+        left: 60px;
+        right: 60px;
+
+        .btn-primary {
+            width: 100%;
+            height: 48px;
+            border-radius: 8px;
+            border: 1px solid #DEDEDE;
+            background-color: #FFF;
+            color: #666666;
+            font-size: 16px;
+        }
+    }
+
+    .btn-wrap {
+        position: relative;
+        top: 48px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        .btn-primary {
+            width: 40%;
+            height: 44px;
+            border-radius: 22px;
+            border-color: #ff6633;
+            color: #ff6633;
+            background-color: transparent;
+            font-weight: bold;
+        }
+    }
+
+    .label {
+        color: #666666;
+        margin-top: 8px;
+    }
+}
+
+// 收银台测试-前置信息补充相关样式
+.test_container {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 5px;
+}
+
+button[type="submit"] {
+    padding: 5px 10px;
+    background-color: #ff6633;
+    color: white;
+    border: none;
+}

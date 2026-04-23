@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="C12_contract" model="ifs.contract.template">
+      <field name="name">应收账款回转通知书</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">C12</field>
+      <field name="need_partner">two</field>
+      <field name="need_faceid">False</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_notf"/>
+      <field name="sign_position_params">[
+        {},
+        {"chaptes": [{"offsetX": 0.33,"offsetY": 0.20}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div class="word_content word_content_font_line song_typeface">
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <div class="word_doc_title">应收账款回转通知书</div>
+          <div class="word_doc_sub_title">
+            <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+          </div>
+          <div class="word_doc_sub_title" style="text-decoration:none;">与</div>
+          <div class="word_doc_sub_title">
+            <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+          </div>
+          <div class="word_doc_sub_title" style="margin-top:100px; text-decoration:none;">合同编号</div>
+          <div class="word_doc_sub_title">
+            <t t-out="object.code" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">
+                T1720220815001</t>
+          </div>
+          <div class="word_doc_content_mini" style="margin-top: 280px;">合同版本 - C12</div>
+          <div style="margin-top: 160px;">
+            <span class="word_content_start">致（卖方）：</span>
+            <span class="content_start_decoration_line">
+              <t t-out="object.partner_one.name">__________________________</t>
+            </span>
+            <br/>
+            <span class="word_content_start">自（保理商）：              <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </span>
+            <br/>
+          </div>
+          <p>
+            根据贵我双方签署的《应收账款转让最高额度合同》（编号： NA ）、《应收账款转让确认书》（编号： NA ），现我方特通知贵方按约定回转本笔应收账款。具体内容如下：
+          </p>
+          <ol>
+            <li>
+                本次贵方回转的应收账款基本信息：              <br/>
+              <span class="word_content_start">基础交易合同及编号：</span>
+              <br/>
+              <span class="word_content_start">本次回转的应收账款余额：</span>
+              <br/>
+            </li>
+            <li>本次回转的应收账款余额权益包括：买方及其担保人按照基础交易合同（含补充协议、凭据等）应付账款的一切权利和补偿，包括现有的和未来的所有金钱债权
+                及其产生的所有收益、孳息、变现价款、衍生物、代位物，以及为实现上述权利及收益而采取相应担保、救济措施的权益。具体以贵方与买方之间约定为准。</li>
+            <li>贵方除了按双方《应收账款转让最高额度合同》约定支付保理服务年费和和已回款金额的0.6%收取的管理/催收服务费，以及实现债权费用（含律师费、诉讼/仲裁费、保全费等）之外，无需另行支付对价。</li>
+            <li>我方出具本《应收账款回转通知书》，贵方付清以上保理服务费用后：              <br/>
+                1)	贵方取回以上应收账款余额的一切权利和补偿。<br/>
+                2)	贵方可采取法律允许的一切措施要求买方按基础交易合同及补充协议支付余款，包括但不限于合法催收、起诉/仲裁、执行等，并自行承担或垫付为实现债权的费用。<br/>
+                3)	买方发生破产清算、资不抵债或其他类似的情况下，贵方作为债权人参加清算或其他类似程序的权利。<br/>
+                4)	贵方有权再次转让该笔账款余额，包括流通票据背书转让等。<br/>
+                5)	贵方自行决定买方延付或作出其他让步、放弃、宽限或妥协，或与其达成和解、调解。<br/>
+            </li>
+            <li>贵方对基础交易合同及其补充协议（如有）、履约凭据真实、合法、有效，及买方主张的反诉、索赔或抗辩自行负责。</li>
+            <li>我方没有将该账款余额擅自用于抵消或扣减，也没有擅自质押、留置、再行转让等情形。</li>
+            <li>我方或配合贵方向买方发送应收账款转让回转告知函或其他形式的告知，告知买方将本笔应收账款余款直接支付给贵方；配合贵方办理相应的债权转回、担保、证照、凭证等变更手续。费用由贵方承担。</li>
+            <li>本通知书经我方签署后生效，未经贵方同意不得变更或撤销。自贵方收到本通知书后，本笔保理业务即告终止，双方无需另行承担与之相关的任何义务及责任。</li>
+          </ol>
+          <div>
+            <div class="word_doc_inner_title" style="margin-top:150px;">通知方（保理商盖章）：
+              <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">法定代表人/授权代表（签字）：
+              <img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title">签署日期：      <t t-out="format_date(object.write_date)">________年____月____日</t>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+    
+  </data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_merchant_view_search_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.search.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_search" />
+    <field name="arch" type="xml">
+      <search position="inside">
+        <filter name="filter_my" string="我的" 
+          domain="['|', ('factor_ids.factor_id.company_id', 'in', context.get('allowed_company_ids')), ('supplier_ids.supplier_id.company_id', 'in', context.get('allowed_company_ids'))]"/>
+        <!-- <searchpanel groups="ifs_partner.group_ifs_partner_factor_user">
+          <field name="supplier_ids" string="供应方" icon="fa-building-o" enable_counters="1" 
+            filter_domain="['|', ('supplier_ids.supplier_id.name', 'ilike', self), ('supplier_ids.supplier_id.seq_code', 'ilike', self)]"/>
+        </searchpanel> -->
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_partner_merchant_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.tree.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_tree" />
+    <field name="arch" type="xml">
+      <field name="email" position="after">
+        <field name="supplier_names" optional="hide" />
+      </field>
+    </field>
+  </record>
+</odoo>

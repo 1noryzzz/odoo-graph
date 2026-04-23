@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="cmca_contract" model="ifs.contract.template">
+      <field name="name">CMCA数字证书订户协议</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">F43</field>
+      <field name="need_partner">one</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_glob"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.45,"offsetY": 0.28}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css"/>
+        <t t-if="object.partner_one._name == 'res.users'">
+          <t t-set="principal_name" t-value="object.partner_one.partner_id.name"/>
+          <t t-set="email" t-value="object.partner_one.partner_id.email"/>
+          <t t-set="phone" t-value="object.partner_one.partner_id.phone"/>
+          <t t-set="idcard_address" t-value="object.partner_one.partner_id.idcard.address"/>
+          <t t-set="card_no" t-value="object.partner_one.partner_id.idcard.card_no"/>
+        </t>
+        <t t-else="">
+          <t t-set="principal_name" t-value="object.partner_one.legal_name if object.partner_one.is_self_guarantee else object.partner_one.guarantor_name"/>
+          <t t-set="email" t-value="object.partner_one.root_employee_id.sudo().work_email"/>
+          <t t-set="phone" t-value="object.partner_one.root_employee_id.sudo().work_phone"/>
+          <t t-set="idcard_address" t-value="object.partner_one.legal_address if object.partner_one.is_self_guarantee else object.partner_one.guarantor_address"/>
+          <t t-set="card_no" t-value="object.partner_one.legal_id_number if object.partner_one.is_self_guarantee else object.partner_one.guarantor_idcard_no"/>
+        </t>
+        <div>
+          <div class="word_content">
+            <div class="word_doc_title_h2 ">CMCA数字证书订户协议</div>
+            <p class="word_inner_content " style="margin:0px 0 12px 0;box-sizing:border-box;">移动CA中心（简称CMCA）由卓望数码技术（深圳）有限公司建设并运营，是第三方、权威的电子认证服务机构，提供数字证书申请、审核、制作、发放及管理等服务。在申请、接受或使用CMCA签发的数字证书之前，您必须先阅读本《移动CA中心数字证书订户协议》(以下称"订户协议")。若您在申请表上签名（盖章）或提交数字证书在线申请，则视为确认同意本订户协议全部条款，若不同意本订户协议条款内容，请您勿申请、接受或使用CMCA数字证书。</p>
+            <div class="word_inner_content">
+              <ol style="margin:0px 0 12px 0;box-sizing:border-box;">
+                <li>
+                  CMCA依法制定CPS（移动CA中心业务规则），并公布于官方网站（www.cmca.net），明确数字证书的策略与业务流程、使用CMCA、证书各方的权利、义务以及责任范围；数字证书订户、依赖方应在使用证书前了解CPS内容。
+                </li>
+                <li>CMCA为本项目用户签发的证书分为企业证书和个人证书两种，分别用于标识企业、个人的网络身份，确保电子数据的保密性、完整性和不可抵赖性。证书申请者可根据自己的需求自行选择证书种类或向CMCA咨询后选择。</li>
+                <li>CMCA为本项目用户签发的企业证书，有效期为1年，有效期内可以无限次使用。</li>
+                <li>CMCA为本项目用户签发个人证书，有效期根据业务需要确定，如1天，有效期内仅可使用1次。</li>
+                <li>订户承诺在证书服务受理表中所填信息及提供的相关证明材料完全真实有效，不得提供虚假、伪造的材料和信息并愿意承担由此带来的法律责任。</li>
+                <li>证书申请者的申请一旦获得批准，无论是否已经接受证书，证书申请者自动成为CMCA证书订户。</li>
+                <li>
+                  CMCA签发的各类证书，仅用于表明证书订户在申请证书时所要标识的身份，以及验证其使用该证书内包含的公钥所对应的私钥制作的签名。证书订户必须确保其持有的证书用于申请时预定的目的。如果证书订户将该证书用于其他用途，CMCA将不承担任何由此产生的责任和义务。
+                </li>
+                <li>为了保证密钥和证书的安全，CMCA签发的数字证书设有有效期，证书只能在有效期内使用，如企业证书订户需要继续使用，需要在证书到期前办理更新延期。个人证书不支持更新，证书过期后，订户需重新申请。</li>
+                <li>
+                  证书订户有义务根据规定按时向CMCA交纳证书相关费用，除非CMCA以协议或通知的形式予以豁免，证书只有在缴费期限内才能使用，如逾期未缴费，CMCA有权冻结或吊销订户证书。具体收费标准根据各个项目情况制定，请咨询业务办理人员。
+                </li>
+                <li>证书订户必须保证私钥和相关保护口令或密码的安全，切勿随意泄露或交付他人使用。CMCA并不承担因订户的私钥保存出现问题而带来的所有责任。</li>
+                <li>
+                  订户如知悉私钥和证书已经失密或者可能失密时等安全性问题，应当及时告知CMCA及相关各方，并终止使用该数字证书。如果证书订户明知安全性出现问题而未及时告知CMCA，并因此导致CMCA、其他订户、证书依赖方或者其它相关方造成损失的，该订户必须承担相应的赔偿责任。
+                </li>
+                <li>根据《中华人民共和国电子签名法》和其他法律法规的规定，CMCA承担第三方电子认证服务机构相关责任和义务，履行CPS规定的赔偿责任，承诺个人用户最高赔偿为人民币20,000元，对企业用户最高赔偿为人民币50,000元。
+                </li>
+                <li>本订户协议如有修订，CMCA在官方网站上公布，请订户注意下载或使用最新版本的申请表和订户协议。</li>
+                <li>本订户协议不适用于CMCA签发的测试证书，使用测试证书所导致的后果，CMCA不承担任何责任。</li>
+                <li>本协议最终解释权属于CMCA。</li>
+              </ol>
+            </div>
+
+            <div style="border: 1px solid black;">
+              <table class="table_info" cellpadding="0" cellspacing="0">
+                <tbody>
+                  <tr class="th_line_height">
+                    <td width="8%"></td>
+                    <td width="7%"></td>
+                    <td width="16%"></td>
+                    <td width="1%"></td>
+                    <td width="8%"></td>
+                    <td width="6%"></td>
+                    <td width="2%"></td>
+                    <td width="15%"></td>
+                    <td width="2%"></td>
+                    <td></td>
+                  </tr>
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">申请人信息 </span>
+                    </td>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="2">申请人姓名</td>
+                    <td colspan="5">
+                      <t t-out="principal_name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXX</t>
+                    </td>
+                    <td colspan="2">申请人E-mail</td>
+                    <td colspan="1">
+                      <t t-out="email" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">test@163.com</t>
+                    </td>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="2">联系电话</td>
+                    <td colspan="5">
+                      <t t-out="phone" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">188888888</t>
+                    </td>
+                    <td colspan="2">通信地址</td>
+                    <td colspan="1">
+                      <t t-out="idcard_address" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">中国</t>
+                    </td>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="1">证件类型</td>
+                    <td colspan="3">■身份证 □其他 </td>
+                    <td colspan="1">证件号码</td>
+                    <td colspan="5">
+                      <t t-out="card_no" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">431000000000</t>
+                    </td>
+                  </tr>
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">证书类型 </span>
+                    </td>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="3">■ 证书申请</td>
+                    <td colspan="5">□ 证书更新</td>
+                    <td colspan="2">□ 信息替换</td>
+                  </tr>
+
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">存放介质 </span>
+                    </td>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="3">□ USBKey</td>
+                    <td colspan="5">■ 文件证书</td>
+                    <td colspan="2">□ 其他 </td>
+
+                  </tr>
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">证书有效期</span>
+                    </td>
+                  </tr>
+                  <tr>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="3">£ 1天</td>
+                    <td colspan="5">£ 1年</td>
+                    <td colspan="2">■ 2年</td>
+                  </tr>
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">鉴证资料</span>
+                    </td>
+                  </tr>
+                  <tr>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="6">■ 移动CA中心个人数字证书申请表(原件)</td>
+                    <td colspan="4">■ 申请人身份证复印件</td>
+                  </tr>
+                  <tr class="tr_height">
+                    <td colspan="10">其它：</td>
+                  </tr>
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">注意事项</span>
+                    </td>
+                  </tr>
+                  <tr height="100px">
+                    <td colspan="10">
+                      <div>
+                        1.此表由证书申请人填写完成。<br/>
+                        2.此申请表在据此签发的数字证书有效期内有效。<br/>
+                        <br/>
+                        <span style="font-weight: bolder;">注：中国境内公民有效身份证件默认为身份证。</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="tr_title_height">
+                    <td colspan="10">
+                      <span style="font-weight: bolder;">用户声明</span>
+                    </td>
+                  </tr>
+                  <tr height="165px">
+                    <td colspan="10">
+                      <p style="font-weight: bolder;"> 本人在此声明：</p>
+                      <p class="word_inner_content">
+                        本人保证提交给移动CA中心数字认证中心的所有信息及鉴证资料均真实有效，接受据此颁发的证书，保证遵守《移动CA中心数字证书订户协议》中所明确的责任，并承担因提供虚假信息和资料而导致的一切后果和法律责任。
+                      </p>
+                      <div style="margin-left:30%;font-weight: bolder;">
+                        <div style="float: left;">申请人签字：</div>
+                        <div style="width:300px;height:100px;float: left;">
+                          <img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" height="80px" style="vertical-align:top;" />
+                        </div>
+                        <div style="float: left;">日 期：                      <span style="text-decoration-line: underline;">
+                          <t t-out="format_date(object.write_date)">______________________</t>
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+
+  </data>
+</odoo>

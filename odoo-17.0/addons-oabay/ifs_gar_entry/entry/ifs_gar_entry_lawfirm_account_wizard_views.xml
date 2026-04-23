@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_entry_lawfirm_account_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.lawfirm.account.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.lawfirm.account.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_entry_lawfirm_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="attributes">
+        <attribute name="class">o_galaxy_form_view</attribute>
+      </xpath>
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <div class="o_ifs_center_img">
+          <field name="deposit_license" widget="image" nolabel="1" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '开户许可证'}"/>
+        </div>
+        <group class="gp_account o_group_label_lg" string="企业账户信息" name="gp_account">
+          <group>
+            <field name="bank_id" open_target="new"/>
+          </group>
+          <group>
+            <field name="acc_number"/>
+          </group>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>

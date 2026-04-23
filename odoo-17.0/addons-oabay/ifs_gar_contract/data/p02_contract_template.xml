@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="P02_contract" model="ifs.contract.template">
+      <field name="name">亚洲保理市场补贴政策告知函</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">P02</field>
+      <field name="need_partner">one</field>
+      <field name="need_faceid">False</field>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_notf"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.65,"offsetY": 0.60}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <div class="header">
+
+            <div class="row">
+              <div style="margin-top:20px;margin-left:30px">
+                <img t-attf-src="/ifs_gar_contract/static/description/yzsb_icon.png" style="max-height:40px;"/>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="word_content main_content word_content_start_font">
+
+            <div class="word_doc_title">亚洲保理市场补贴政策告知函</div>
+            致事业合伙人          
+            <span style="text-decoration-line: underline;">
+              <t t-out="object.partner_one.name"/>
+            </span>：
+            <p>为了有效促进亚洲保理（深圳）有限公司（后简称：亚洲保理）【亚洲保理】业务阶段性市场的快速拓展，亚洲保理现决定在与贵公司签署的《亚洲保理【亚洲保理】事业合伙人合作协议》（后称：合伙协议）约定收益分配基础上，给予贵公司如下方案的市场拓展激励补贴：</p>
+            <ul style="list-style:none;">
+              <li>1)	客户首年基础服务费：补贴5%</li>
+              <li>2)	客户首年账款回款服务费：补贴20%</li>
+            </ul>
+            <p>以上补贴政策，有效期从贵公司签署的合伙协议生效日起，至              <t t-out="params.get('contract_deadline')"/>
+              止。</p>
+            <div style="margin-top:100px;float:right;">
+              <div>亚洲保理（深圳）有限公司</div>
+              <div>
+                <t t-out="format_date(object.write_date)">年 月 日</t>
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+
+  </data>
+</odoo>

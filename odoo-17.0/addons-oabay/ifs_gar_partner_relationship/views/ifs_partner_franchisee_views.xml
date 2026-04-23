@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_franchisee_view_search_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.franchisee.view.search.inherited</field>
+    <field name="model">ifs.partner.franchisee</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_franchisee_view_search" />
+    <field name="arch" type="xml">
+      <search position="inside">
+        <filter name="filter_my" string="我的" domain="[('factor_ids.factor_id.company_id', 'in', context.get('allowed_company_ids'))]"/>
+      </search>
+    </field>
+  </record>
+</odoo>

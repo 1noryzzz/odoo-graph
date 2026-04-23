@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_partner_factor_supplier_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.factor.supplier.view.tree</field>
+    <field name="model">ifs.gar.partner.factor.supplier</field>
+    <field name="arch" type="xml">
+      <tree sample="1">
+        <field name="factor_id" optional="hide"/>
+        <field name="supplier_id"/>
+        <field name="product_scope"/>
+        <field name="fee_solution_id" optional="show"/>
+        <field name="total_quota" optional="show"/>
+        <field name="create_date" string="创建时间" optional="show"/>
+      </tree>
+    </field>
+  </record>
+</odoo>

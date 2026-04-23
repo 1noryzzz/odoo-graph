@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_entry_merchant_guarantor_contract_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.guarantor.contract.wizard.view.form</field>
+    <field name="model">ifs.gar.entry.merchant.guarantor.contract.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_entry.ifs_gar_entry_merchant_wizard_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="before">
+        <div class="entry_column_item_inform_a">
+            <img src="/ifs_gar_entry/static/img/attention.png" alt="告知"/>告知</div>
+        <hr/>
+        <div style="margin-top:20px;">
+          尊敬的客户：<br/>
+          以下合同为《担保人征信查询授权书》，该合同必须由担保人<field name="guarantor_name" style="color:red"/>签名<br/>
+        </div>
+        <field name="guarantor_contract_info_id" invisible="1"/>
+        <field name="guarantor_contract_name" invisible="1"/>
+        <field name="guarantor_contract_state" invisible="1"/>
+        <field name="contract_state" invisible="1"/>
+        <div string="企业法人签署" class="gp_contract galaxy_entry_group o_ifs_center_img">
+          <div invisible="guarantor_contract_state != 'signed'" class="o_ifs_contract">
+            <field nolabel="1" name="guarantor_contract_pdf" widget="pdf_viewer" options="{'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'guarantor_contract_preview','size': ['300', '190']}"/>
+            <div class="o_ifs_contract_text">担保人征信查询授权书</div>
+          </div>
+
+          <div class="field_guarantor_contract_info_id o_ifs_contract" invisible="guarantor_contract_state == 'signed'">
+            <span class="o_form_label oe_inline">
+              <button name="preview_contract" context="{'contract_id':guarantor_contract_info_id,'contract_name':guarantor_contract_name}" type="object" class="btn btn-secondary btn_contract"/>
+            </span>
+            <div class="o_ifs_contract_text">担保人征信查询授权书</div>
+          </div>
+        </div>
+      </xpath>
+
+      <xpath expr="//group[hasclass('o_ifs_gar_step_controller')]" position="replace">
+        <group class="o_ifs_gar_step_controller" col="3">
+          <group colspan="3"></group>
+          <group></group>
+          <group>
+            <button name="nosave_prev" type="object" class="btn btn-secondary btn-next" invisible="not has_prev_step">上一步</button>
+            <button name="sign_contract" type="object" class="btn btn-primary btn-next o_has_next" invisible="guarantor_contract_state in ['committed', 'signed']">开始签约</button>
+            <button name="action_next" type="object" class="btn btn-primary btn-next o_has_next" invisible="guarantor_contract_state not in ['committed', 'signed']">确认，下一步</button>
+          </group>
+          <group></group>
+        </group>
+      </xpath>
+
+    </field>
+  </record>
+
+
+</odoo>

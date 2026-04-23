@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_mixin_view_search" model="ir.ui.view">
+    <field name="name">ifs.partner.mixin.view.search</field>
+    <field name="model">ifs.partner.factor</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_search" />
+    <field name="arch" type="xml">
+      <search position="inside">
+        <filter name="filter_normal_state" string="状态：正常" domain="[('state', '=', 'normal')]"/>
+        <filter name="filter_paused_state" string="状态：暂时停用" domain="[('state', '=', 'paused')]"/>
+        <group expand="1" string="Group By">
+          <filter name="group_state" context="{'group_by': 'state'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <!-- 当前公司信息界面 -->
+  <record id="ifs_base_company_view_form_my" model="ir.ui.view">
+    <field name="name">ifs.base.company.view.form.my</field>
+    <field name="model">ifs.base.company</field>
+    <field name="mode">primary</field>
+    <field name="priority" eval="1"/>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_form"/>
+    <field name="arch" type="xml">
+      <form position="inside">
+        <field name="ifs_partner_factor_ids" invisible="1" groups="ifs_partner.group_ifs_partner_factor_user"/>
+        <field name="ifs_partner_franchisee_ids" invisible="1" groups="ifs_partner.group_ifs_partner_franchisee_user"/>
+        <field name="ifs_partner_funder_ids" invisible="1" groups="ifs_partner.group_ifs_partner_funder_user"/>
+        <field name="ifs_partner_lawfirm_ids" invisible="1" groups="ifs_partner.group_ifs_partner_lawfirm_user"/>
+        <field name="ifs_partner_merchant_ids" invisible="1" groups="ifs_partner.group_ifs_partner_merchant_user"/>
+        <field name="ifs_partner_supplier_ids" invisible="1" groups="ifs_partner.group_ifs_partner_supplier_user"/>
+        <field name="ifs_partner_insurance_ids" invisible="1" groups="ifs_partner.group_ifs_partner_insurance_user"/>
+        <field name="ifs_partner_insurant_ids" invisible="1" groups="ifs_partner.group_ifs_partner_insurant_user"/>
+        <field name="ifs_partner_insured_ids" invisible="1" groups="ifs_partner.group_ifs_partner_insured_user"/>
+        <field name="ifs_partner_channelsp_ids" invisible="1" groups="ifs_partner.group_ifs_partner_channelsp_user"/>
+      </form>
+      <sheet position="before">
+        <div class="alert alert-warning" role="alert" invisible="not ifs_partner_factor_ids" 
+          groups="ifs_partner.group_ifs_partner_factor_user">
+          请注意，更新营业执照或银行账户信息，需要由平台方审核后才能生效。
+        </div>
+      </sheet>
+      <header position="inside">
+        <button name="action_create_business_license" type="object" string="更新营业执照" 
+        class="btn-primary" groups="ifs_partner.group_ifs_partner_factor_system,ifs_partner.group_ifs_partner_insurance_system"/>
+        <button name="action_update_account" type="object" string="更新银行账户" 
+        class="btn-primary" groups="ifs_partner.group_ifs_partner_factor_system,ifs_partner.group_ifs_partner_insurance_system"/>
+      </header>
+      <span name="ifs_base_company_code" position="replace">
+        <span>公司编号：          <field name="seq_code" class="oe_inline o_partner_seq" />
+        </span>
+        <span invisible="not factor_code" groups="ifs_partner.group_ifs_partner_factor_user">保理方编号：          <field name="factor_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not supplier_code" groups="ifs_partner.group_ifs_partner_supplier_user">供应方编号：          <field name="supplier_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not merchant_code" groups="ifs_partner.group_ifs_partner_merchant_user">采购方编号：          <field name="merchant_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not franchisee_code" groups="ifs_partner.group_ifs_partner_franchisee_user">合伙人编号：          <field name="franchisee_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not lawfirm_code" groups="ifs_partner.group_ifs_partner_lawfirm_user">律师事务所编号：          <field name="lawfirm_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not funder_code" groups="ifs_partner.group_ifs_partner_funder_user">资金方编号：          <field name="funder_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not insurance_code" groups="ifs_partner.group_ifs_partner_insurance_user">保险公司编号：          <field name="insurance_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not insurant_code" groups="ifs_partner.group_ifs_partner_insurant_user">投保人编号：          <field name="insurant_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not insured_code" groups="ifs_partner.group_ifs_partner_insured_user">被保人编号：          <field name="insured_code" class="oe_inline o_partner_seq"/>
+        </span>
+        <span invisible="not channelsp_code" groups="ifs_partner.group_ifs_partner_channelsp_user">服务商编号：          <field name="channelsp_code" class="oe_inline o_partner_seq"/>
+        </span>
+      </span>
+    </field>
+  </record>
+</odoo>

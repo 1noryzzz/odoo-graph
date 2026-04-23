@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <menuitem id="ifs_contract_template_menu" name="合同模板" sequence="1" 
+    groups="group_ifs_contract_template_manager" web_icon="ifs_contract,static/img/ifs_contract.png" />
+
+  <menuitem id="ifs_contract_template_sys_settings_menu" name="设置" sequence="5" 
+    groups="group_ifs_contract_template_manager" parent="ifs_contract_template_menu"/>
+</odoo>

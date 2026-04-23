@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_contract_template_view_search_inherited" model="ir.ui.view">
+    <field name="name">ifs.contract.template.view.search.inherited</field>
+    <field name="model">ifs.contract.template</field>
+    <field name="inherit_id" ref="ifs_contract.ifs_contract_template_view_search" />
+    <field name="arch" type="xml">
+      <field name="model_id" position="after">
+        <field name="factor_id"/>
+        <field name="supplier_id"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_contract_template_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.contract.template.view.tree.inherited</field>
+    <field name="model">ifs.contract.template</field>
+    <field name="inherit_id" ref="ifs_contract.ifs_contract_template_view_tree" />
+    <field name="arch" type="xml">
+      <field name="name" position="after">
+        <field name="factor_id" optional="hide"/>
+        <field name="supplier_id" optional="show"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_contract_template_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.contract.template.view.form.inherited</field>
+    <field name="model">ifs.contract.template</field>
+    <field name="inherit_id" ref="ifs_contract.ifs_contract_template_view_form"/>
+    <field name="arch" type="xml">
+      <sheet position="before">
+        <header>
+          <button name="template_selector_supplier" type="object" string="以此为模板创建" 
+            class="btn-primary" groups="ifs_partner.group_ifs_partner_factor_system" invisible="not id"/>
+        </header>
+      </sheet>
+      <field name="model_id" position="replace"/>
+      <field name="category_id" position="after">
+        <field name="factor_id"/>
+      </field>
+      <group class="gp_info" position="inside">
+        <group groups="base.group_system">
+          <field name="model_id" required="1" open_target="new" options="{'no_create': True}"/>
+        </group>
+        <group>
+          <field name="supplier_id" options="{'no_open': True, 'no_create': True}"/>
+        </group>
+      </group>
+    </field>
+  </record>
+
+</odoo>

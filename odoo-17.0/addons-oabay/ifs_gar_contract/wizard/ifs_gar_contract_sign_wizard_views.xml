@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_contract_sign_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.contract.sign.wizard.view.form</field>
+    <field name="model">ifs.gar.contract.sign.wizard</field>
+    <field name="arch" type="xml">
+      <form class="oe_form_configuration o_base_settings" js_class="ifs_contract_sign">
+        <sheet>
+          <field name="sign_token_id" invisible="1" />
+          <field name="sign_url" invisible="1" />
+          <group col="1">
+            <group>
+              <field name="contract_info_ids" mode="tree">
+                <tree>
+                  <field name="code"/>
+                  <field name="name"/>
+                </tree>
+              </field>
+            </group>
+            <group class="sign_qrcode">
+              <field name="sign_qrcode" widget="image" />
+            </group>
+          </group>
+        </sheet>
+        <footer>
+          <button string="关闭" class="btn-secondary" special="cancel" data-hotkey="z"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+
+  <!-- <record id="supplier_trade_order_sign_wizard_view_form" model="ir.ui.view">
+    <field name="name">trade.order.supplier.sign.wizard.view.form</field>
+    <field name="model">trade.order.supplier.sign.wizard</field>
+    <field name="arch" type="xml">
+      <form class="oe_form_configuration o_base_settings" js_class="ifs_contract_sign">
+        <sheet>
+          <field name="currency_id" invisible="1"/>
+          <field name="sign_token_id" invisible="1" />
+          <field name="sign_url" invisible="1" />
+          <field name="trade_order_id" invisible="1" />
+          <div class="contract_title">应收宝供应链请款通知书</div>
+          <div class="contract_title_suffix">
+            <div>
+              发起日期              <field name="trade_order_create_date" class="clause-1" widget="date"/>
+            </div>
+            <div>
+              编号              <field name="trade_order_code" class="clause-1"/>
+            </div>
+          </div>
+          <div class="doc_title">总览</div>
+          <div class="doc_table_box">
+            <div class="title">付款企业</div>
+            <div class="value"><field name="merchant_name"/></div>
+            <div class="title">收款企业</div>
+            <div class="value"><field name="supplier_name"/></div>
+            <div class="title">基础合同编号</div>
+            <div class="value"><field name="order_code"/></div>
+            <div class="title">基础合同签订时间</div>
+            <div class="value"><field name="trade_date" widget="date"/></div>
+            <div class="title">请款金额</div>
+            <div class="value_auto">
+              <field name="withdrawal_amount"/>
+              <span style="font-weight:normal;">   </span>
+              <field name="withdrawal_amount_uppercase"/>
+            </div>
+            <div class="title">账期</div>
+            <div class="value"><field name="payment_days"/>天</div>
+            <div class="title">费用承担到期日</div>
+            <div class="value"><field name="trade_date" widget="date"/></div>
+          </div>
+          <div class="doc_title">供应货物/服务明细</div>
+          <div>
+          <field name="item_ids" nolabel="1" mode="tree">
+            <tree editable="bottom" edit="1" no_open="1">
+              <field name="sequence" widget="handle" />
+              <field name="description" string="商品名称" />
+              <field name="model" />
+              <field name="quantity" />
+              <field name="price" />
+              <field name="amount" />
+              <field name="currency_id" groups="base.group_multi_currency"/>
+            </tree>
+          </field>
+          </div>
+          <div class="doc_title">重要事项说明</div>
+          <div class="word_inner_content">
+              a/请务必保证基础合同编号的真实性，后期产生纠纷，我司需要贵司提供基础合同编号项下的合同影印本<br/>
+              b/该请款单发起后需要买方确认，如买方未确认的情况下，请勿勾选货物与服务<br/>
+              c/建议订单发出前先与买方确认供货的金额、数量等关键因素，以免造成不必须要流程繁琐<br/>
+              d/当买方曲儿后情尽快组织商品或服务的交割<br/>
+          </div>
+          <div class="doc_title">操作</div>
+          <div class="sign_container">
+            <div>
+              <div style="color:red;margin-top:40px">未签署确认</div>
+              <div>如确认上述无误，烦请拥权人                <br/>
+            扫描右边的二维码进行签约并提交</div>
+            </div>
+            <div class="qrcode">
+            <field name="sign_qrcode" widget="image" />
+            </div>
+
+          </div>
+          
+        </sheet>
+        <footer>
+          <button string="关闭" class="btn-secondary" special="cancel" data-hotkey="z"/>
+        </footer>
+      </form>
+    </field>
+  </record> -->
+</odoo>

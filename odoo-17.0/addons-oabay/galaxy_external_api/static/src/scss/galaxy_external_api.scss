@@ -1,0 +1,12 @@
+
+.oe_inline_container {
+    &>.o_request_method {
+        width: 75px !important;
+    }
+}
+
+.o_request_auth {
+    select {
+        min-width: 6rem;
+    }
+}

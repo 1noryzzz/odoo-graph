@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="ifs_gar_trade_mobile_inform_template" name="重要须知" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>重要须知</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div id="merchantCode" style="display:none" t-esc="merchant_code"></div>
+      <div id="token" style="display:none" t-esc="token"></div>
+      <div id="inform" class="cashier inform">
+        <div class="main-container">
+          <div class="info-box">
+            <div class="header">
+              <img class="icon" src="/ifs_gar_trade/static/img/icon_warning.png"/>
+              <div class="title">温馨提示</div>
+            </div>
+            <div class="content-block">
+              <div class="title">尊敬的<t t-esc="name"/>商户:</div>
+              <div class="label">您正在修改密码，<span id="nextText" hidden="hidden">继续操作则点击下一步</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-wrap plr16">
+          <button id="informShareBtn" class="agree_btn share-contract-btn" type="button">
+            <img class="btn-icon" src="/ifs_gar_trade/static/img/icon_share.png" />分享链接</button>
+          <button id="informNextBtn" class="agree_btn" type="button" hidden="hidden">下一步</button>
+        </div>
+      </div>
+
+      <div class="cashier_mask qr-mask" id="qrMask">
+        <div class="qr-container">
+          <img id="qrcodeImg" src="" />
+          <div class="label">请截图保存后用微信扫一扫</div>
+        </div>
+        <div class="icon-close-container">
+          <img class="close_img icon-close" src="/ifs_gar_trade/static/img/qr_code_close.png" />
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_trade_mobile_set_payment_password_template" name="设置支付密码" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>设置支付密码</title>
+      <script type="text/javascript" src="/galaxy_common/static/src/js/disable_back.js"/>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <form class="cashier_form cashier">
+        <div id="trade_chpwd_tips" class="input_no_display">
+          <div class="validate_text">
+            <!-- <img src="/ifs_gar_trade/static/img/fail.png" name="fail_img" class="fail_img"/> -->
+            <div class="validate_text_info">
+              两次输入的密码不一致
+            </div>
+          </div>
+        </div>
+        <div class="main plr16">
+          <div class="m-item border-bottom">
+            <label class="label">新密码</label>
+            <input type="password" name="newPassword" maxlength="6" placeholder="请输入新的六位密码" />
+          </div>
+          <div class="m-item">
+            <label class="label">确认密码</label>
+            <input type="password" name="newPasswordConfirm" maxlength="6" placeholder="请再次输入新的密码" />
+          </div>
+        </div>
+
+        <div class="desc-text plr16">支付密码用于付款验证，为了您的账户安全，请勿使用与银行卡相同的密码。</div>
+
+        <div class="btn-wrap plr16">
+          <button id="chpwdConfirmBtn" class="btn btn-primary btn-block galaxy-btn-primary yjl-btn" type="button">确认</button>
+        </div>
+      </form>
+    </xpath>
+  </template>
+
+  <template id="err_page" name="错误提示页" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>错误提示</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div class="ar-main">
+        <div class="tips-wrap">
+          <img class="tips-icon" src="/ifs_gar_trade/static/img/icon_error@2x.png"/>
+          <div class="tips-text" t-esc="alert_msg"></div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="chpwd_result_msg_page" name="修改密码提示页" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>修改密码提示</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div class="ar-main">
+        <div class="tips-wrap">
+          <img class="tips-icon" t-attf-src="{{'/ifs_gar_trade/static/img/icon_right@2x.png' if is_success else '/ifs_gar_trade/static/img/icon_warning@2x.png'}}"/>
+          <div class="tips-text" t-esc="alert_msg"></div>
+        </div>
+      </div>
+    </xpath>
+  </template>
+
+  <template id="payment_match_face_error_msg_page" name="人脸验证错误提示页" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>人脸验证</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div class="ar-main">
+        <div class="tips-wrap">
+          <img class="tips-icon" src="/ifs_gar_trade/static/img/icon_warning@2x.png"/>
+          <div class="tips-text" t-esc="alert_msg"></div>
+        </div>
+        <a class="btn btn-primary galaxy-btn-primary" t-attf-href="/openapi/payment/ocr/matchFace?token={{token}}">重新认证</a>
+      </div>
+      <!-- <div class="return_last_page">
+        <img class="tips-icon" src="/ifs_gar_trade/static/img/return.png"/>
+        <a t-attf-href="/openapi/payment/inform?token={{token}}">返回上一页</a>
+      </div> -->
+    </xpath>
+  </template>
+
+  <template id="ifs_gar_trade_mobile_sms_verify_template" name="短信验证码验证" inherit_id="galaxy_tdesign.frontend_layout" primary="True">
+    <xpath expr="//title" position="replace">
+      <title>短信验证</title>
+    </xpath>
+    <xpath expr="//body" position="replace">
+      <div id="token" style="display:none" t-esc="token"></div>
+      <div id="maskedMobile" style="display:none" t-esc="masked_mobile"></div>
+      <div class="cashier">
+        <div id="sms_verify_error_tips" class="input_no_display">
+          <div class="validate_text">
+            <div class="validate_text_info">验证码错误，请重新输入</div>
+          </div>
+        </div>
+        <div class="main plr16">
+          <div class="m-item border-bottom">
+            <label class="label">手机号</label>
+            <span class="label" t-esc="masked_mobile"></span>
+          </div>
+          <div class="m-item">
+            <label class="label">验证码</label>
+            <input id="smsCode" type="number" name="smsCode" maxlength="6" placeholder="请输入短信验证码" />
+          </div>
+        </div>
+        <div class="desc-text plr16">验证码已发送至您的手机，有效期3分钟。</div>
+        <div class="btn-wrap plr16">
+          <button id="smsVerifyBtn" class="btn btn-primary btn-block galaxy-btn-primary yjl-btn" type="button">验证</button>
+        </div>
+        <div class="btn-wrap plr16" style="margin-top:8px;">
+          <button id="resendSmsBtn" class="btn btn-default btn-block" type="button">重新发送</button>
+        </div>
+      </div>
+      <script type="text/javascript">
+        //<![CDATA[
+        (function () {
+          var token = document.getElementById('token').textContent.trim();
+          var maskedMobile = document.getElementById('maskedMobile').textContent.trim();
+
+          document.getElementById('smsVerifyBtn').addEventListener('click', function () {
+            var code = document.getElementById('smsCode').value.trim();
+            if (!code) {
+              document.getElementById('sms_verify_error_tips').classList.remove('input_no_display');
+              return;
+            }
+            fetch('/openapi/merchant/chpwd/verify_sms?token=' + encodeURIComponent(token) + '&code=' + encodeURIComponent(code))
+              .then(function (res) { return res.json(); })
+              .then(function (data) {
+                if (data.success) {
+                  window.location.href = '/openapi/merchant/chpwd?token=' + encodeURIComponent(token) + '&sms_verified=1';
+                } else {
+                  document.getElementById('sms_verify_error_tips').classList.remove('input_no_display');
+                  document.getElementById('smsCode').value = '';
+                }
+              });
+          });
+
+          document.getElementById('resendSmsBtn').addEventListener('click', function () {
+            fetch('/openapi/merchant/chpwd/send_sms?token=' + encodeURIComponent(token))
+              .then(function (res) { return res.json(); })
+              .then(function (data) {
+                if (data.success) {
+                  alert('验证码已重新发送');
+                } else {
+                  alert(data.msg || '发送失败，请稍后再试');
+                }
+              });
+          });
+        })();
+        //]]>
+      </script>
+    </xpath>
+  </template>
+
+</odoo>

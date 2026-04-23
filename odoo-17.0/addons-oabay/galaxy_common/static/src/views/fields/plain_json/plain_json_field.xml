@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="galaxy_common.PlainJSONField" owl="1">
+        <t t-if="props.readonly">
+            <pre>
+                <code class="language-json hljs" t-ref="code"><t t-out="formattedValue"/></code>
+            </pre>
+        </t>
+        <t t-else="" t-call="web.TextField" />
+    </t>
+
+</templates>

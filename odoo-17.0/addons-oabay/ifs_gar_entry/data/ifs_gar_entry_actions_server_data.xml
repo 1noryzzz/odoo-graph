@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="ifs_gar_invite_supplier_entry_act" model="ir.actions.server">
+      <field name="name">供应方进件</field>
+      <field name="model_id" ref="ifs_gar_entry.model_ifs_gar_invite_supplier"/>
+      <field name="state">code</field>
+      <field name="code">
+action = model.search([('ifs_company_id.company_id', '=', env.company.id)]).start_entry()
+      </field>
+    </record>
+    <record id="ifs_gar_invite_merchant_entry_act" model="ir.actions.server">
+      <field name="name">采购方进件</field>
+      <field name="model_id" ref="ifs_gar_entry.model_ifs_gar_invite_merchant"/>
+      <field name="state">code</field>
+      <field name="code">
+action = model.search([('ifs_company_id.company_id', '=', env.company.id)]).start_entry()
+      </field>
+    </record>
+    <record id="ifs_gar_invite_franchisee_entry_act" model="ir.actions.server">
+      <field name="name">事业合伙人进件</field>
+      <field name="model_id" ref="ifs_gar_entry.model_ifs_gar_invite_franchisee"/>
+      <field name="state">code</field>
+      <field name="code">
+action = model.search([('ifs_company_id.company_id', '=', env.company.id)]).start_entry()
+      </field>
+    </record>
+    <record id="ifs_gar_invite_lawfirm_entry_act" model="ir.actions.server">
+      <field name="name">律师事务所进件</field>
+      <field name="model_id" ref="ifs_gar_entry.model_ifs_gar_invite_lawfirm"/>
+      <field name="state">code</field>
+      <field name="code">
+action = model.search([('ifs_company_id.company_id', '=', env.company.id)]).start_entry()
+      </field>
+    </record>
+  </data>
+</odoo>

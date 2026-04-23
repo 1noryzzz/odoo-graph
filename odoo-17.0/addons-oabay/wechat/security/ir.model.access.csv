@@ -1,0 +1,49 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+qr_login_provider_config,qr.login.provider,model_qr_login_provider,wechat.group_wechat_setting,1,1,1,1
+wechat_menu_sys,wechat.menu system,model_wechat_menu,base.group_system,1,1,1,1
+wechat_menu_item_sys,wechat.menu.item system,model_wechat_menu_item,base.group_system,1,1,1,1
+wechat_menu_item_click_sys,wechat.menu.item.click system,model_wechat_menu_item_click,base.group_system,1,1,1,1
+wechat_menu_item_view_sys,wechat.menu.item.view system,model_wechat_menu_item_view,base.group_system,1,1,1,1
+wechat_menu_item_article_sys,wechat.menu.item.article system,model_wechat_menu_item_article,base.group_system,1,1,1,1
+wechat_menu_item_media_sys,wechat.menu.item.media system,model_wechat_menu_item_media,base.group_system,1,1,1,1
+wechat_menu_item_miniprogram_sys,wechat.menu.item.miniprogram system,model_wechat_menu_item_miniprogram,base.group_system,1,1,1,1
+wechat_menu_item_scancode_sys,wechat.menu.item.scancode system,model_wechat_menu_item_scancode,base.group_system,1,1,1,1
+wechat_offiaccount_config_all,wechat.offiaccount.config,model_wechat_offiaccount_config,,1,0,0,0
+wechat_offiaccount_config_setting,wechat.offiaccount.config,model_wechat_offiaccount_config,wechat.group_wechat_setting,1,1,1,1
+wechat_offiaccount_config_menu_all,wechat.offiaccount.config.menu,model_wechat_offiaccount_config_menu,,1,0,0,0
+wechat_offiaccount_config_menu_setting,wechat.offiaccount.config.menu setting,model_wechat_offiaccount_config_menu,wechat.group_wechat_setting,1,1,1,1
+wechat_offiaccount_user_all,wechat.offiaccount.user,model_wechat_offiaccount_user,,1,0,0,0
+wechat_offiaccount_user_push,"wechat.offiaccount.user push",model_wechat_offiaccount_user,wechat.group_wechat_push,1,1,1,1
+wechat_offiaccount_user_setting,wechat.offiaccount.user,model_wechat_offiaccount_user,wechat.group_wechat_setting,1,1,1,1
+wechat_offiaccount_taglist_all,wechat.offiaccount.taglist,model_wechat_offiaccount_taglist,,1,0,0,0
+wechat_offiaccount_taglist_push,"wechat.offiaccount.taglist push",model_wechat_offiaccount_taglist,wechat.group_wechat_push,1,1,1,1
+wechat_offiaccount_taglist_setting,wechat.offiaccount.taglist,model_wechat_offiaccount_taglist,wechat.group_wechat_setting,1,1,1,1
+wechat_offiaccount_group_all,wechat.offiaccount.group,model_wechat_offiaccount_group,,1,0,0,0
+wechat_offiaccount_group_push,"wechat.offiaccount.group push",model_wechat_offiaccount_group,wechat.group_wechat_push,1,1,1,1
+wechat_offiaccount_group_setting,wechat.offiaccount.group,model_wechat_offiaccount_group,wechat.group_wechat_setting,1,1,1,1
+wechat_weapp_session_wizard_all,wechat.weapp.session.wizard,model_wechat_weapp_session_wizard,,1,0,0,0
+wechat_weapp_config_all,wechat.weapp.config,model_wechat_weapp_config,,1,0,0,0
+wechat_weapp_config_setting,wechat.weapp.config,model_wechat_weapp_config,wechat.group_wechat_setting,1,1,1,1
+wechat_weapp_user_all,wechat.weapp.user,model_wechat_weapp_user,,1,0,0,0
+wechat_weapp_user_sync,wechat.weapp.user,model_wechat_weapp_user,wechat.group_wechat_setting,1,1,1,1
+wechat_work_config_all,wechat.work.config,model_wechat_work_config,,1,0,0,0
+wechat_work_config_setting,wechat.work.config,model_wechat_work_config,wechat.group_wechat_setting,1,1,1,1
+wechat_work_agent_config_all,wechat.work.agent.config,model_wechat_work_agent_config,,1,0,0,0
+wechat_work_agent_config_setting,wechat.work.agent.config,model_wechat_work_agent_config,wechat.group_wechat_setting,1,1,1,1
+wechat_work_inner_chat_group_all,wechat.work.inner.chat.group,model_wechat_work_inner_chat_group,,1,0,0,0
+wechat_work_inner_chat_group_setting,wechat.work.inner.chat.group,model_wechat_work_inner_chat_group,wechat.group_wechat_setting,1,1,1,1
+wechat_work_external_user_all,wechat.work.external.user,model_wechat_work_external_user,,1,0,0,0
+wechat_work_external_user_push,wechat.work.external.user,model_wechat_work_external_user,wechat.group_wechat_work_push,1,1,1,0
+wechat_work_external_user_sync,wechat.work.external.user,model_wechat_work_external_user,wechat.group_wechat_setting,1,1,1,1
+wechat_work_external_user_follow_all,wechat.work.external.user.follow,model_wechat_work_external_user_follow,,1,0,0,0
+wechat_work_external_user_follow_push,wechat.work.external.user.follow,model_wechat_work_external_user_follow,wechat.group_wechat_work_push,1,1,1,0
+wechat_work_external_user_follow_sync,wechat.work.external.user.follow,model_wechat_work_external_user_follow,wechat.group_wechat_setting,1,1,1,1
+wechat_work_user_all,wechat.work.user,model_wechat_work_user,,1,0,0,0
+wechat_work_user_push,wechat.work.user,model_wechat_work_user,wechat.group_wechat_work_push,1,1,1,0
+wechat_work_user_sync,wechat.work.user,model_wechat_work_user,wechat.group_wechat_setting,1,1,1,1
+access_res_users_wechat_push_service,"res_users group_wechat_push",base.model_res_users,wechat.group_wechat_push,1,1,1,0
+access_res_partner_wechat_push_service,"res_partner group_wechat_push",base.model_res_partner,wechat.group_wechat_push,1,1,1,0
+access_res_groups_wechat_push_service,"res_groups group_wechat_push",base.model_res_groups,wechat.group_wechat_push,1,1,0,0
+access_res_users_wework_push_service,"res_users group_wechat_work_push",base.model_res_users,wechat.group_wechat_work_push,1,1,1,0
+access_res_partner_wework_push_service,"res_partner group_wechat_work_push",base.model_res_partner,wechat.group_wechat_work_push,1,1,1,0
+access_res_groups_wework_push_service,"res_groups group_wechat_work_push",base.model_res_groups,wechat.group_wechat_work_push,1,1,0,0

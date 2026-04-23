@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="galaxy_open_api_app_act_window" model="ir.actions.act_window">
+      <field name="name">应用列表</field>
+      <field name="res_model">galaxy.open.api.app</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="target">current</field>
+      <!-- <field name="context">{ 'search_default_group_platform_id': True }</field> -->
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有开放平台应用，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <record id="galaxy_open_api_log_act_window" model="ir.actions.act_window">
+      <field name="name">请求日志</field>
+      <field name="res_model">galaxy.open.api.log</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="target">current</field>
+      <!-- <field name="context">{ 'search_default_group_platform_id': True }</field> -->
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          暂时还没有开放平台应用，请点击左上角“创建”
+        </p>
+        <p>
+          <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+        </p>
+      </field>
+    </record>
+
+    <menuitem id="galaxy_open_api_root_menu" name="开放平台" 
+      groups="group_galaxy_open_api_manager" 
+      web_icon="galaxy_open_api,static/img/galaxy_open_api.png" sequence="99"/>
+
+    <menuitem id="galaxy_open_api_app_menu" name="应用列表" 
+      action="galaxy_open_api_app_act_window" groups="group_galaxy_open_api_manager" 
+      parent="galaxy_open_api_root_menu" sequence="1"/>
+    <menuitem id="galaxy_open_api_log_menu" name="请求日志" 
+      action="galaxy_open_api_log_act_window" groups="group_galaxy_open_api_manager" 
+      parent="galaxy_open_api_root_menu" sequence="2"/>
+  </data>
+</odoo>

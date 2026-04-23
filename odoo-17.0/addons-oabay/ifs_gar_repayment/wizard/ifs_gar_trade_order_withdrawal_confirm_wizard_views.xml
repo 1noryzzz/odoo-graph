@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_trade_order_withdrawal_confirm_wizard_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.trade.order.withdrawal.confirm.wizard.view.from.inherited</field>
+    <field name="model">ifs.gar.trade.order.withdrawal.confirm.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_trade.ifs_gar_trade_order_withdrawal_confirm_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('dv_title')]" position="replace"/>
+      <xpath expr="//div[hasclass('dv_items')]" position="replace">
+        <notebook>
+          <page string="还款计划">
+            <group/>
+            <field name="payment_mode" invisible="1"/>
+            <field name="plan_ids" mode="tree">
+              <tree no_open="1">
+                <field name="currency_id" invisible="1"/>
+                <field name="trade_order_id" invisible="1"/>
+                <field name="payment_period" readonly="1"/>
+                <field name="repayment_date"/>
+                <field name="days_left"/>
+                <field name="period_amount" sum="本金合计"/>
+                <field name="fee" sum="预估手续费合计"/>
+              </tree>
+            </field>
+          </page>
+          <page string="供应货物/服务明细">
+            <group/>
+            <field name="item_ids" nolabel="1" mode="tree">
+              <tree editable="bottom" edit="1" no_open="1">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="model" />
+                <field name="quantity" />
+                <field name="price" />
+                <field name="amount" />
+                <field name="currency_id" invisible="1"/>
+              </tree>
+            </field>
+          </page>
+        </notebook>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

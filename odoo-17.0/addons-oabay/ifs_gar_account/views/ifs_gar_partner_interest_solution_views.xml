@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_partner_interest_solution_view_search" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.interest.solution.view.search</field>
+    <field name="model">ifs.gar.partner.interest.solution</field>
+    <field name="arch" type="xml">
+      <search string="计息方案查询">
+        <field name="name"/>
+        <field name="seq_code" string="方案编号"/>
+        <field name="factor_id"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_interest_solution_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.interest.solution.view.tree</field>
+    <field name="model">ifs.gar.partner.interest.solution</field>
+    <field name="arch" type="xml">
+      <tree string="计息方案列表" sample="1">
+        <field name="seq_code" string="方案编号"/>
+        <field name="name"/>
+        <field name="factor_id"/>
+        <field name="damages_rate"/>
+        <field name="penalty_daily_rate"/>
+        <field name="is_compound_interest"/>
+        <field name="factor_supplier_ids" widget="many2many_tags" optional="hide"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_interest_solution_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.interest.solution.view.form</field>
+    <field name="model">ifs.gar.partner.interest.solution</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <sheet>
+          <div class="oe_title" style="width: 100%;">
+            计息方案编号：<field name="seq_code" required="0" invisible="not seq_code"/>
+            <h1><field name="name" default_focus="1" placeholder="计息方案名称"/></h1>
+          </div>
+          <group string="计息规则" class="o_group_label_lg">
+            <group>
+              <field name="factor_id"/>
+              <field name="damages_rate" string="违约金率（总账单金额%）"
+                help="违约金=总账单金额×此比例，如 0.05 表示 5%"/>
+            </group>
+            <group>
+              <field name="penalty_daily_rate" string="滞纳金日息"
+                help="滞纳金按日计息，如 0.0005 表示日息 0.05%"/>
+              <field name="is_compound_interest" string="是否复利"
+                help="是否复利计息，如 True 表示复利计息"/>
+            </group>
+          </group>
+          <group string="适用供应方" class="o_group_label_lg">
+            <group colspan="2">
+              <field name="factor_supplier_ids" widget="many2many_tags"
+                domain="[('factor_id', '=', factor_id)]"
+                options="{'no_create': True}"
+                context="{'default_factor_id': factor_id}"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_interest_solution_act_window" model="ir.actions.act_window">
+    <field name="name">计息方案</field>
+    <field name="res_model">ifs.gar.partner.interest.solution</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        暂无计息方案，点击创建
+      </p>
+      <p>
+        计息方案用于设置选定供应方下子账户的违约金（总账单金额百分比）和滞纳金（日息）。
+      </p>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="Z10_contract" model="ifs.contract.template">
+      <field name="name">餐饮行业集采合同</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">Z10</field>
+      <field name="need_partner">two</field>
+      <field name="need_faceid">False</field>
+      <field name="tag_ids" eval="[(4, ref('ifs_contract.ifs_contract_tag_gjxy'))]"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[
+        {"chaptes": [{"offsetX": 0.33,"offsetY": 0.70}],"page": -1},
+        {"chaptes": [{"offsetX": 0.33,"offsetY": 0.85}],"page": -1}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+          <t t-set="params" t-value="json.loads(object.params)"/>
+
+          <div class="z-main">
+            <div class="title bold">餐饮行业商品采购合同</div>
+            <div class="right-text bold">合同编号：              <span style="min-width: 80px;" class="text-underline" t-esc="object.code"></span>
+            </div>
+            <div class="z-header bold">
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">甲方（采购方）：</div>
+                  <div class="text" t-esc="params.get('partner_one_name')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">乙方（供应方）：</div>
+                  <div class="text" t-esc="params.get('partner_two_name')"></div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">地址：</div>
+                  <div class="text" t-esc="params.get('partner_one_address')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">地址：</div>
+                  <div class="text" t-esc="params.get('partner_two_address')"></div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">法定代表人：</div>
+                  <div class="text" t-esc="params.get('partner_one_corp_name')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">法定代表人：</div>
+                  <div class="text" t-esc="params.get('partner_two_corp_name')"></div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">联系电话：</div>
+                  <div class="text" t-esc="params.get('partner_one_phone')"></div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">联系电话：</div>
+                  <div class="text" t-esc="params.get('partner_two_phone')"></div>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <div>
+                <p>
+                  <span class="bold">鉴于</span>甲方希望从乙方处进行集中采购，并委托乙方进行配送。同时，考虑到应收账款管
+						理、融资等事宜由保理方参与，但保理方非本合同直接当事方。甲乙双方在平等自愿、诚实
+						信用的基础上，根据相关法律法规，经双方充分协商，达成如下协议：
+                </p>
+              </div>
+              <div>
+                <div class="sub-title">一、商品价格</div>
+                <div>
+                  <p>
+                    <span class="bold">1、结算价包含内容：</span>乙方提供给甲方的商品，结算价包括成本、包装、运费、保险、
+							税金等交货前的所有费用，以及因质量问题引起的售后、运输等费用。
+                  </p>
+                  <p>
+                    <span class="bold">2、价格调整：</span>合同有效期内，如乙方所提供之商品要求调整价格，应事先书面通知甲
+							方，并经甲方书面确认后方可按照调整后的价格结算。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">二、商品订购</div>
+                <div>
+                  <p>
+                    <span class="bold">1、订单形式：</span>甲方将通过订单的形式（含采购单、平台、微信、QQ 或邮件等形式确认
+							的订单）向乙方或乙方指定的供应商采购产品，订单包含商品名称、规格、包装、数量、单
+							价、金额、交货时间、交货地点等。
+                  </p>
+                  <p>
+                    <span class="bold">2、订单效力：</span>订单一经双方确认即具有法律效力，未经双方协商一致，任何一方不得
+							擅自变更或解除。
+                  </p>
+                  <p>
+                    <span class="bold">3、证明文件：</span>乙方应向甲方提供甲方认可的相关证明文件，包括但不限于营业执照、
+							开户行许可证、质检报告、卫生许可证、品牌授权书、商标注册证及商品生产、流通及销售
+							的许可证件等，上述证明文件均需加盖公章。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">三、包装及标识</div>
+                <div>
+                  <p>
+                    <span class="bold">1、包装要求：</span>商品包装必须清洁、整齐、完好、适宜销售，不得有任何外包装损坏或
+							潮湿、变色等影响商品正常销售的问题。
+                  </p>
+                  <p>
+                    <span class="bold">2、标识要求：</span>商品应标明名称、产地、生产者或销售者名称等内容，且包装和标签标
+							识符合国家法律法规和产品执行标准。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">四、交付与验收</div>
+                <div>
+                  <p>
+                    <span class="bold">1、交货：</span>乙方应按照采购订单的要求，及时、准确地提供商品，并负责将商品配送至
+							甲方指定地址。
+                  </p>
+                  <p>
+                    <span class="bold">2、商品运输：</span>乙方承担运输费、装卸费、保险费等，对于有保鲜要求的商品，应按照
+							商品本身、法律法规以及甲方的要求做保鲜运输。
+                  </p>
+                  <p>
+                    <span class="bold">3、初步验收：</span>甲方可根据商品实际情况选择是否验收，对商品进行初步验收，包括种
+							类、规格、产地、数量、包装、标签、质量等级、重量、保险、生产日期、批次和保质期等。
+							初步验收合格只代表对商品的数量和质量的认可，并不代表甲方对商品的品质、包装、质量等的最终确
+							认或认可。如在销售过程中发现有质量问题或其他瑕疵的，甲方有权要求乙方予以免费更换。
+                  </p>
+                  <p>
+                    <span class="bold">4、验收处理：</span>对于不符合合同约定的商品，甲方有权拒收或要求乙方更换/补足。对于
+							生鲜易损耗产品，甲方可根据实际验收比例扣损。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">五、结算</div>
+                <div>
+                  <p>
+                    <span class="bold">1、货款结算：</span>甲方按乙方供货价结算货款，由保理方代甲方支付给乙方货款。
+                  </p>
+                  <p>
+                    <span class="bold">2、结算方式：</span>甲方在完成货物验收流程，并核对确认无误货款总额后，将登录亚洲保理
+							信用科技管理后台，正式发起并签署《应付账款转让确认书》。此确认书一经签署，即标志着
+							甲方郑重声明，就该笔交易所涉货物，不存在任何其他争议或纠纷，确保交易的清晰与无瑕。
+                  </p>
+                  <p>
+                    <span class="bold">3、保理方合同：</span>乙方与保理机构共同签署了《应收账款转让最高额度合同》，而甲方
+							则与同一保理机构签订了《买方账款转让最高额子额度合同》。在此过程中，作为交易的买
+							卖双方，甲方与乙方均对各自合同项下所赋予的权利与应承担的义务有着明确且充分的认识
+							与理解。
+                  </p>
+                  <p>
+                    <span class="bold">4、发票开具与付款流程如下：</span>当还款到期时，甲方需向保理公司履行还款义务。随后，
+							保理公司会正式通知乙方，依据相关交易细节向甲方开具相应的发票。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">六、保密及知识产权</div>
+                <div>
+                  <p>
+                    <span class="bold">1、保密责任：</span>双方对合作过程中获取的对方商业经营信息承担保密责任。
+                  </p>
+                  <p>
+                    <span class="bold">2、知识产权：</span>乙方保证其提供的商品、商品图片、宣传文案、商标、品牌等为其合法
+							所有，且不侵犯任何第三方的合法权益。
+                  </p>
+                  <p>
+                    <span class="bold">3、授权使用：</span>乙方同意授权甲方使用其提供的商品信息用于日常经营或市场宣传。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">七、不可抗力</div>
+                <div>
+                  <p>
+                    <span class="bold">1、不可抗力定义：</span>指双方在缔结合同时不能预见、且其发生及后果不能克服和不能避
+							免的客观情况。
+                  </p>
+                  <p>
+                    <span class="bold">2、通知与证明：</span>一方因不可抗力不能履行合同的，应及时通知对方，并在合理的期限
+							内提供证明。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">八、合同的变更、解除和终止</div>
+                <div>
+                  <p>
+                    <span class="bold">1、合同变更：</span>任何一方提出变更本合同，应提前以书面形式通知对方，双方在协商一
+							致的基础上达成书面协议方可变更。
+                  </p>
+                  <p>
+                    <span class="bold">2、合同解除：</span>除本合同另有约定外，任何一方非因对方违约提出解除本合同，应提前
+							三十日以书面形式通知对方，双方确认同意并签署书面协议后方能解除。
+                  </p>
+                  <p>
+                    <span class="bold">3、立即解除：</span>乙方有下列情形之一的，甲方有权立即解除合同，由此产生的损失由乙
+							方承担：提供商品与约定不符、商品质量不符合标准或存在安全隐患、严重违反本合同其他
+							情形等。
+                  </p>
+                  <p>
+                    <span class="bold">4、对账与结算：</span>合同解除或终止后，双方仍应按照本合同约定的程序进行对账和结算。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">九、违约责任</div>
+                <div>
+                  <p>
+                    <span class="bold">1、违约责任：</span>任何一方不履行或不全面履行或迟延履行本合同项下义务，均构成违约，
+							应承担违约责任，并赔偿守约方因此遭受的全部损失。
+                  </p>
+                  <p>
+                    <span class="bold">2、逾期交货：</span>乙方逾期交货的，根据逾期时间支付赔偿金，逾期超过 5 小时的甲方有
+							权拒收。
+                  </p>
+                  <p>
+                    <span class="bold">3、质量不符：</span>乙方交付货物不符合产品质量标准及本合同约定要求的，需向甲方承担
+							订单总金额三倍的违约赔偿。
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">十、争议解决</div>
+                <div>
+                  <p>双方因执行本合同发生争议时，应友好协商解决；协商不成时，任何一方均可向乙方所
+							在地人民法院提起诉讼。</p>
+                </div>
+              </div>
+
+              <div>
+                <div class="sub-title">十一、其他</div>
+                <div>
+                  <p>
+                    <span class="bold">1、附件效力：</span>本合同附件为本合同不可分割的一部分，与本合同正文具有同等法律效
+							力。
+                  </p>
+                  <p>
+                    <span class="bold">2、合同生效：</span>本合同自双方签字盖章之日起生效，有效期至                    <span style="min-width: 40px;" class="text-underline" t-esc="object.expire_date.year"></span>年                    <span style="min-width: 40px;" class="text-underline" t-esc="object.expire_date.month"></span>月                    <span style="min-width: 40px;" class="text-underline" t-esc="object.expire_date.day"></span>日止。
+                  </p>
+                  <p>
+                    <span class="bold">3、合同份数：</span>本合同一式                    <span style="min-width: 35px;" class="text-underline">二</span>份，甲乙双方各执                    <span style="min-width: 35px;" class="text-underline">一</span>份，具有同等法律效力。
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="z-footer">
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label bold">甲方（盖章）：</div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label bold">乙方（盖章）：</div>
+                </div>
+              </div>
+              <div style="margin-top: 48px;" class="z-row">
+                <div class="z-col">
+                  <div class="label">法定代表人（签字）：</div>
+                  <div class="text">
+                    <img t-attf-src="data:image/png;base64,{{object.partner_one_signature}}" alt="甲方法定代表人（签字）" />
+                  </div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">法定代表人（签字）：</div>
+                  <div class="text">
+                    <img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" alt="乙方法定代表人（签字）" />
+                  </div>
+                </div>
+              </div>
+              <div class="z-row">
+                <div class="z-col">
+                  <div class="label">日期：</div>
+                  <div class="text">
+                    <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.year"></span>年                    <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.month"></span>月                    <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.day"></span>日
+                  </div>
+                </div>
+
+                <div class="z-col">
+                  <div class="label">日期：</div>
+                  <div class="text">
+                    <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.year"></span>年                    <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.month"></span>月                    <span style="min-width: 40px;" class="text-underline" t-esc="object.create_date.day"></span>日
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+  </data>
+</odoo>

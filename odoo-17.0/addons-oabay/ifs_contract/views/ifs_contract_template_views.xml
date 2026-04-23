@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="ifs_contract_template_view_search" model="ir.ui.view">
+      <field name="name">ifs.contract.template.view.search</field>
+      <field name="model">ifs.contract.template</field>
+      <field name="arch" type="xml">
+        <search string="Templates">
+          <field name="name" filter_domain="['|', ('name','ilike',self), ('report_name','ilike',self)]" string="Templates"/>
+          <field name="code"/>
+          <field name="lang"/>
+          <field name="validity_period_view"/>
+          <field name="model_id"/>
+          <searchpanel>
+            <field name="category_id" icon="fa-folder-open" enable_counters="1"/>
+          </searchpanel>
+          <group expand="0" string="Group by...">
+            <filter name="group_by_category_id" context="{'group_by': 'category_id'}"/>
+            <filter string="Model" name="model" domain="[]" context="{'group_by':'model_id'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ifs_contract_template_view_form">
+      <field name="name">ifs.contract.template.view.form</field>
+      <field name="model">ifs.contract.template</field>
+      <field name="arch" type="xml">
+        <form string="Templates" class="o_galaxy_form_view">
+          <sheet>
+            <field name="model" invisible="1"/>
+            <div class="oe_button_box" name="button_box">
+              <field name="ref_ir_act_window" invisible="1"/>
+              <button class="oe_stat_button" groups="base.group_system" name="create_action" type="object" invisible="ref_ir_act_window" icon="fa-plus" help="Display an option on related documents to open a composition wizard with this template">
+                <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_text">Add</span>
+                  <span class="o_stat_text">Context Action</span>
+                </div>
+              </button>
+              <button name="unlink_action" type="object" groups="base.group_system" class="oe_stat_button" icon="fa-minus" invisible="not ref_ir_act_window" help="Remove the contextual action to use this template on related documents" widget="statinfo">
+                <div class="o_field_widget o_stat_info">
+                  <span class="o_stat_text">Remove</span>
+                  <span class="o_stat_text">Context Action</span>
+                </div>
+              </button>
+              <button class="oe_stat_button" name="%(ifs_contract.contract_template_preview_action)d" icon="fa-search-plus" string="Preview" type="action" target="new"/>
+            </div>
+            <div class="oe_title">
+              <!-- <label for="name"/> -->
+              <h1>
+                <field name="name" required="1" placeholder="例如：征信授权书"/>
+              </h1>
+            </div>
+            <group string="基本信息" class="gp_info">
+              <group>
+                <field name="code"/>
+                <label for="validity_period"/>
+                <div class="oe_inline" name="edit_validity_period" style="display: inline;">
+                  <field name="validity_period_sel" class="oe_inline"/><field name="validity_period" style="width: 30%" invisible="validity_period_sel"/>
+                  <span class="o_form_label" invisible="validity_period_sel">个月</span>
+                </div>
+                <field name="model_id" required="1" open_target="new" options="{'no_create': True}" groups="base.group_system"/>
+                <field name="need_sms_verify"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color','no_create': True}"/>
+              </group>
+              <group>
+                <field name="need_partner"/>
+                <field name="need_faceid"/>
+                <field name="category_id" options="{'no_create': True}" open_target="new"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Content" name="content">
+                <field name="body_html" widget="html" class="oe-bordered-editor" options="{'style-inline': true, 'codeview': true }"/>
+              </page>
+              <page string="Advanced Settings" name="advanced_settings" groups="base.group_system">
+                <group>
+                  <field name="lang" placeholder="{{ object.partner_id.lang }}"/>
+                  <field name="report_template" domain="[('model','=',model)]"/>
+                  <field name="report_name" invisible="not report_template"/>
+                </group>
+              </page>
+              <!-- <page string="Dynamic Placeholder Generator" name="dynamic_placeholder_generator" groups="base.group_system">
+                <group>
+                  <field name="model_object_field" domain="[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','!=','many2many')]"/>
+                  <field name="sub_object" readonly="1"/>
+                  <field name="sub_model_object_field" domain="[('model_id','=',sub_object),('ttype','!=','one2many'),('ttype','!=','many2many')]" attrs="{'readonly':[('sub_object','=',False)],'required':[('sub_object','!=',False)]}"/>
+                  <field name="null_value"/>
+                  <field name="copyvalue"/>
+                </group>
+              </page> -->
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="ifs_contract_template_view_tree">
+      <field name="name">ifs.contract.template.view.tree</field>
+      <field name="model">ifs.contract.template</field>
+      <field name="arch" type="xml">
+        <tree string="Templates" expand="1" create="0">
+          <field name="code"/>
+          <field name="name"/>
+          <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+          <field name="need_partner" optional="show"/>
+          <field name="validity_period_view" optional="show"/>
+          <field name="need_sms_verify" widget="toggle_button"/>
+          <field name="need_faceid" widget="toggle_button"/>
+          <field name="model_id" groups="base.group_system"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="ifs_contract_template_act_window">
+      <field name="name">合同模板</field>
+      <field name="res_model">ifs.contract.template</field>
+      <field name="view_mode">form,tree</field>
+      <field name="view_id" ref="ifs_contract_template_view_tree" />
+      <field name="search_view_id" ref="ifs_contract_template_view_search"/>
+      <field name="context">{'search_default_group_by_category_id': True}</field>
+    </record>
+
+    <menuitem id="ifs_contract_template_management_menu" name="合同模板管理" 
+      groups="group_ifs_contract_template_manager" sequence="1" 
+      action="ifs_contract_template_act_window" parent="ifs_contract_template_menu"/>
+  </data>
+</odoo>

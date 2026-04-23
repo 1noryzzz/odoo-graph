@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="webclient_galaxy" inherit_id="web.layout">
+    <xpath expr="//head/meta[last()]" position="after">
+      <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+      <meta http-equiv="Pragma" content="no-cache" />
+      <meta http-equiv="Expires" content="0" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+      <meta name="theme-color" content="#875A7B"/>
+      <meta name="mobile-web-app-capable" content="yes"/>
+      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+      <meta name="msapplication-navbutton-color" content="#875A7B"/>
+      <meta name="msapplication-TileColor" content="#875A7B"/>
+    </xpath>
+    <xpath expr="//head/title" position="replace">
+      <title t-esc="title or '云腾智慧'"/>
+    </xpath>
+    <xpath expr="//head/link" position="replace">
+      <link type="image/x-icon" rel="shortcut icon" t-att-href="x_icon or '/galaxy_common/static/src/img/favicon.ico'"/>
+    </xpath>
+  </template>
+
+  <template id="brand_promotion_message" name="Brand Promotion">
+    <t t-set="yz_logo">
+      <!-- <a target="_blank" t-attf-href="http://www.odoo.com?utm_source=db&amp;utm_medium=#{_utm_medium}" class="badge badge-light">
+        <img alt="Odoo" src="/web/static/img/odoo_logo_tiny.png" style="height: 1em; vertical-align: baseline;"/>
+      </a> -->
+    </t>
+    <t t-set="final_message">%s</t>
+    <t t-out="final_message % (_message or '')"/>
+  </template>
+
+  <template id="login_with_domain_db_selector" inherit_id="web.login">
+    <xpath expr="//div[@t-if='databases and len(databases) &gt; 1']" position="attributes">
+      <attribute name="t-if">not default_db_from_domain and databases and len(databases) &gt; 1</attribute>
+    </xpath>
+  </template>
+</odoo>

@@ -1,0 +1,315 @@
+body {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+body.bg-100 {
+  background-color: #000000 !important;
+}
+
+@media (min-width: 768px) {
+  .oe_login_form {
+    margin: 25px auto !important;
+
+    #login {
+      border: solid 1px #ccc;
+      background: url('/galaxy_tdesign/static/src/img/username.png') no-repeat 0 center;
+      background-size: 50px 23px;
+      text-indent: 50px;
+    }
+
+    #password {
+      border: solid 1px #ccc;
+      background: url('/galaxy_tdesign/static/src/img/password.png') no-repeat 0 center;
+      background-size: 50px 23px;
+      text-indent: 50px;
+    }
+  }
+
+  .galaxy_login_title {
+    font-size: 17px;
+    font-weight: 600;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #C9CCD2;
+  }
+
+  .galaxy_login_container {
+    width: 100%;
+    height: 100%;
+    background: url(/galaxy_tdesign/static/src/img/galaxy_bg.png);
+    background-size: cover;
+  }
+
+  .galaxy_login_center {
+    width: 320px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .galaxy_login_inner {
+    position: absolute;
+    width: 320px;
+    height: 350px;
+    -webkit-box-shadow: 0 0.75rem 2.5rem rgba(0, 82, 217, .15) !important;
+    box-shadow: 0 0.75rem 2.5rem rgba(0, 82, 217, .15) !important;
+    margin: auto;
+    padding: 30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  header#top {
+    z-index: -1;
+  }
+
+  header {
+    nav.navbar {
+      margin-top: 95px;
+      box-shadow: none !important;
+    }
+
+    .navbar-brand {
+      max-width: unset;
+      margin-right: 0 !important;
+    }
+
+    .navbar-brand.logo img {
+      max-height: unset;
+      margin: auto;
+    }
+  }
+
+  div #top_menu_container {
+    width: unset;
+    text-align: center;
+  }
+
+  .oe_login_form {
+    margin: 25px !important;
+    max-width: unset;
+
+    #login {
+      border: solid 1px #ccc;
+      background: url('/galaxy_tdesign/static/src/img/mobile_user.png') no-repeat 0 center;
+      background-size: 40px 23px;
+      text-indent: 40px;
+      background-color: #F6F7F9;
+    }
+
+    #password {
+      border: solid 1px #ccc;
+      background: url('/galaxy_tdesign/static/src/img/mobile_password.png') no-repeat 0 center;
+      background-size: 40px 23px;
+      text-indent: 40px;
+      background-color: #F6F7F9;
+    }
+  }
+
+  .galaxy_login_container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .galaxy_login_center {
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .galaxy_login_inner {
+    position: absolute;
+    height: 350px;
+    margin: auto;
+    padding-top: 80px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .galaxy_login_title {
+    display: none;
+  }
+
+  .oe_login_buttons {
+    .justify-content-between {
+      display: none !important;
+    }
+  }
+}
+
+.full-screen-container {
+  max-width: 100%;
+}
+
+// .navbar {
+//     background: #fff !important;
+// }
+
+.galaxy_login_left {
+  float: left;
+  width: 49%;
+  position: relative;
+  top: 15%;
+  margin-left: 100px;
+}
+
+.galaxy_login_right {
+  float: right;
+  width: 300px;
+  margin-right: 210px;
+  position: relative;
+  top: 25%;
+}
+
+@media (max-width: 476px) {
+  .galaxy_login_right {
+    margin-right: 80px !important;
+  }
+}
+
+.galaxy_img_inner {
+  position: absolute;
+  width: 320px;
+}
+
+.galaxy_reset_password_title {
+  font-size: 14px;
+  font-weight: 550;
+  border-bottom: 2px solid #00367A;
+  text-align: right;
+  margin-bottom: 20px;
+
+  img {
+    width: 13px;
+    margin-right: 5px;
+  }
+}
+
+.galaxy_reset_password_form {
+  width: 420px;
+  height: 450px;
+  max-width: 350px;
+  line-height: 50px;
+  margin-top: auto;
+}
+
+.galaxy-btn-check {
+  background-color: #EEEEEE;
+  border-color: #EEEEEE;
+  color: #6E6E6E;
+
+  img {
+    width: 20px;
+  }
+}
+
+.galaxy-input-group {
+  padding: 0;
+}
+
+.galaxy_reset_password_inner {
+  position: absolute;
+  width: 420px;
+  height: 470px;
+  -webkit-box-shadow: 0 0.75rem 2.5rem rgba(0, 82, 217, .15) !important;
+  box-shadow: 0 0.75rem 2.5rem rgba(0, 82, 217, .15) !important;
+  margin: auto;
+  padding: 15px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.galaxy-btn-primary {
+  background-color: #00367A;
+  border-radius: 4px;
+}
+
+.galaxy_login_copyright {
+  position: absolute;
+  bottom: 30px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  opacity: .4;
+}
+
+.line_span {
+  display: block;
+}
+
+.card.o_database_list {
+  align-items: center;
+  max-width: 450px !important
+}
+
+.card.o_database_list .card-body {
+  background-color: #fff !important;
+  border-radius: 5px !important;
+  -webkit-box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, .03) !important;
+  box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, .03) !important;
+  width: 450px;
+}
+
+.alert-info {
+  color: #306391;
+  background-color: #dcedfc;
+  border-color: #cbe4fb;
+}
+
+.oe_login_form button.btn-link {
+  &:not(.btn-check) {
+    color: #495057;
+    font-weight: 500;
+    font-size: 14px !important;
+  }
+}
+
+.oe_login_form button.btn-link:hover {
+  &:not(.btn-check) {
+    color: #171a1c;
+  }
+}
+
+//input starts
+.oe_login_form input {
+  &:not(.btn-check) {
+    display: block;
+    width: 100%;
+    height: 40px !important;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    box-shadow: none !important;
+    margin-bottom: 10px !important;
+  }
+}

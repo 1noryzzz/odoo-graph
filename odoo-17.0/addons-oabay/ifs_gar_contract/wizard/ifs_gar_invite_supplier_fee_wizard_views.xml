@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_invite_supplier_fee_wizard_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.gar.invite.supplier.fee.wizard.view.form.inherited</field>
+    <field name="model">ifs.gar.invite.supplier.fee.wizard</field>
+    <field name="inherit_id" ref="ifs_gar_account.ifs_gar_invite_supplier_fee_wizard_view_form"/>
+    <field name="arch" type="xml">
+      <button step="4" position="attributes">
+        <attribute name="step">5</attribute>
+      </button>
+      <button step="3" position="after">
+        <button string="合同预览" step="4" current_step="current_step" class="o_galaxy_step"/>
+      </button>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_entry_supplier_view_form_review" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.supplier.view.form.review</field>
+    <field name="model">ifs.gar.entry.supplier</field>
+    <field name="inherit_id" ref="ifs_gar_entry.ifs_gar_entry_supplier_view_form" />
+    <field name="arch" type="xml">
+      <form position="attributes">
+        <attribute name="string">进件审批</attribute>
+      </form>
+      <header position="inside">
+        <field name="can_confirm" invisible="1"/>
+        <button name="action_approve" type="object" string="通过" class="btn-primary" data-hotkey="c" 
+          groups="ifs_gar_review.group_ifs_gar_factor_review_supplier" invisible="not can_confirm" confirm="即操作将开通当前供应方，您确认？"/>
+        <button name="action_reject" type="object" string="驳回" class="btn-primary" data-hotkey="c" 
+          groups="ifs_gar_review.group_ifs_gar_factor_review_supplier" invisible="not can_confirm"/>
+        <field name="state" widget="statusbar"/>
+      </header>
+    </field>
+  </record>
+
+</odoo>

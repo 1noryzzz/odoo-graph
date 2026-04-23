@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="ifs_gar_partner_fee_solution_view_search" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.solution.view.search</field>
+    <field name="model">ifs.gar.partner.fee.solution</field>
+    <field name="arch" type="xml">
+      <search string="收费方案查询">
+        <field name="name" />
+        <field name="factor_id" />
+        <field name="description" />
+        <field name="contract_content" />
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_solution_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.solution.view.tree</field>
+    <field name="model">ifs.gar.partner.fee.solution</field>
+    <field name="arch" type="xml">
+      <tree string="收费方案列表" sample="1" js_class="solution_list">
+        <field name="name"/>
+        <field name="description" />
+        <field name="company_id" groups="base.group_multi_company" column_invisible="1"/>
+        <field name="factor_id" groups="base.group_multi_company"/>
+        <field name="contract_content" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_solution_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.solution.view.form</field>
+    <field name="model">ifs.gar.partner.fee.solution</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <field name="last_ver_solution_id" invisible="1"/>
+        <!-- <field name="factor_supplier_ids" invisible="1"/> -->
+        <sheet>
+          <div class="oe_title" style="width: 100%;">
+            收费方案编号：            <field name="seq_code" required="0" invisible="not seq_code" />
+            <h1>
+              <field name="name" default_focus="1" placeholder="收费方案名称"/>
+            </h1>
+          </div>
+          <notebook>
+            <page string="计费规则" name="fee_rule" class="pg_rule">
+              <group string="计费规则详情" name="计费规则详情" col="1" class="o_group_label_lg">
+                <group>
+                  <field name="description" />
+                </group>
+                <group>
+                  <field name="contract_content"/>
+                </group>
+                <group>
+                  <field name="rule_ids" mode="tree"/>
+                </group>
+              </group>
+            </page>
+
+            <page name="fee_supplier" string="相关供应方">
+              <field name="supplier_ids" nolabel="1" mode="tree">
+                <tree no_open="1" editable="bottom">
+                  <field name="seq_code" string="供应方编号"/>
+                  <field name="company_code"/>
+                  <field name="name" />
+                  <field name="company_registry" string="社会统一信用代码"/>
+                  <field name="principal_id"/>
+                  <field name="legal_name"/>
+                  <field name="phone" />
+                  <field name="email" />
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_solution_ver_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.solution.ver.view.tree</field>
+    <field name="model">ifs.gar.partner.fee.solution.ver</field>
+    <field name="arch" type="xml">
+      <tree string="收费方案列表" sample="1" js_class="solution_list" create="0">
+        <field name="name"/>
+        <field name="description" />
+        <field name="company_id" groups="base.group_multi_company" column_invisible="1"/>
+        <field name="factor_id" groups="base.group_multi_company"/>
+        <field name="contract_content" />
+        <field name="version"></field>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_solution_ver_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.solution.ver.view.form</field>
+    <field name="model">ifs.gar.partner.fee.solution.ver</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <sheet>
+          <div class="oe_title" style="width: 100%;">
+            <span>收费方案编号：              <field name="seq_code" required="0" invisible="not seq_code" class="oe_inline o_partner_seq"/>
+            </span>
+            <span>版本编号：              <field name="version" class="oe_inline o_partner_seq"/>
+            </span>
+            <h1>
+              <field name="name" default_focus="1" placeholder="收费方案名称"/>
+            </h1>
+          </div>
+          <notebook>
+            <page string="计费规则" name="fee_rule" class="pg_rule">
+              <group string="计费规则详情" name="计费规则详情" col="1" class="o_group_label_lg">
+                <group>
+                  <field name="description" />
+                </group>
+                <group>
+                  <field name="contract_content"/>
+                </group>
+                <group>
+                  <field name="rule_ids" mode="tree"/>
+                </group>
+              </group>
+            </page>
+
+            <page name="fee_supplier" string="相关供应方">
+              <!-- <field name="factor_supplier_ids" invisible="1"></field> -->
+              <field name="supplier_ids" nolabel="1" mode="tree">
+                <tree no_open="1" editable="bottom">
+                  <field name="seq_code" string="供应方编号"/>
+                  <field name="company_code"/>
+                  <field name="name" />
+                  <field name="company_registry" string="社会统一信用代码"/>
+                  <field name="principal_id"/>
+                  <field name="legal_name"/>
+                  <field name="phone" />
+                  <field name="email" />
+                </tree>
+              </field>
+            </page>
+
+            <page name="ver_soltion" string="所有版本收费方案">
+              <group/>
+              <field name="ver_solution_ids" mode="tree" nolabel="1" edit="0"/>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_type_view_search" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.type.view.search</field>
+    <field name="model">ifs.gar.partner.fee.type</field>
+    <field name="arch" type="xml">
+      <search string="计费项目查询">
+        <field name="name" />
+        <field name="code" />
+        <field name="color" />
+        <field name="remark" />
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_type_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.type.view.tree</field>
+    <field name="model">ifs.gar.partner.fee.type</field>
+    <field name="arch" type="xml">
+      <tree string="计费项目列表" sample="1">
+        <field name="name"/>
+        <field name="code" />
+        <field name="color" widget="color_picker"/>
+        <field name="remark" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_type_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.type.view.form</field>
+    <field name="model">ifs.gar.partner.fee.type</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <sheet>
+          <group string="计费项目" name="计费项目" col="2">
+            <group>
+              <field name="name" />
+              <field name="color" widget="color_picker"/>
+            </group>
+            <group>
+              <field name="code" />
+              <field name="remark"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_rule_view_tree" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.rule.view.tree</field>
+    <field name="model">ifs.gar.partner.fee.rule</field>
+    <field name="arch" type="xml">
+      <tree string="计费规则列表" sample="1">
+        <field name="fee_type" />
+        <field name="fee_mode"/>
+        <field name="formula" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_rule_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.partner.fee.rule.view.form</field>
+    <field name="model">ifs.gar.partner.fee.rule</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view">
+        <sheet>
+          <field name="ver_solution_id" invisible="1"/>
+          <group string="计费规则" name="gp_rule" col="1">
+            <group>
+              <field name="fee_type" options="{'no_create': True, 'no_open': True}"/>
+              <field name="fee_mode"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_solution_act_window" model="ir.actions.act_window">
+    <field name="name">收费方案</field>
+    <field name="res_model">ifs.gar.partner.fee.solution</field>
+    <field name="view_mode">tree,form</field>
+    <field name="target">current</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+         暂时还没有记录，请点击左上角“创建”
+      </p>
+      <p>
+        <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+      </p>
+    </field>
+  </record>
+
+  <record id="ifs_gar_partner_fee_type_act_window" model="ir.actions.act_window">
+    <field name="name">计费项目</field>
+    <field name="res_model">ifs.gar.partner.fee.type</field>
+    <field name="view_mode">tree,form</field>
+    <field name="target">current</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+         暂时还没有记录，请点击左上角“创建”
+      </p>
+      <p>
+        <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+      </p>
+    </field>
+  </record>
+
+</odoo>

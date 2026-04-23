@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_entry_merchant_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.entry.merchant.view.form</field>
+    <field name="model">ifs.gar.entry.merchant</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="ifs_base.ifs_base_company_view_form" />
+    <field name="arch" type="xml">
+      <form position="attributes">
+        <attribute name="string">进件邀约</attribute>
+        <attribute name="js_class">ifs_partner_form</attribute>
+      </form>
+      <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+        <button class="oe_stat_button" icon="fa-list" name="view_entrys" type="object">
+          <div class="o_form_field o_stat_info">
+            <span class="o_stat_text">进件记录</span>
+          </div>
+        </button>
+      </xpath>
+      <field name="company_id" position="after">
+        <field name="ifs_company_id" invisible="1"/>
+        <field name="business_info_definition_id" invisible="1"/>
+        <field name="legal_info_definition_id" invisible="1"/>
+        <field name="legal_other_info_definition_id" invisible="1"/>
+        <field name="guarantor_info_definition_id" invisible="1"/>
+        <field name="is_self_guarantee" invisible="1"/>
+      </field>
+      <span name="ifs_base_company_code" position="replace">
+        <span invisible="not seq_code" name="ifs_base_company_code">进件采购方编号：          <field name="seq_code" class="oe_inline" />
+        </span>
+      </span>
+      <field name="name" position="attributes">
+        <attribute name="placeholder">采购方名称</attribute>
+      </field>
+
+      <xpath expr="//group[hasclass('gp_bussiness')]" position="inside">
+        <field name="business_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+      </xpath>
+
+      <xpath expr="//group[hasclass('gp_docs')]" position="replace">
+        <group class="gp_docs o_group_label_lg" string="企业证件信息" name="gp_docs">
+          <group colspan="2" class="o_ifs_flex_container">
+            <div class="o_ifs_center_img">
+              <div class="o_ifs_img">
+                <field name="business_license_preview" widget="image" readonly="1" nolabel="1"/>
+                <div class="o_ifs_img_text">营业执照</div>
+              </div>
+            </div>
+          </group>
+        </group>
+      </xpath>
+
+      <xpath expr="//group[hasclass('gp_bussiness')]" position="after">
+        <group class="gp_business_assets o_group_label_lg" col="4" string="企业名下固定资产（增信部分）" invisible="not business_license_preview">
+          <group>
+            <field name="is_has_company_vehicle_assets" widget="radio" options="{'horizontal': True}" />
+          </group>
+          <group colspan="3">
+            <field name="company_vehicle_assets_value" invisible="not is_has_company_vehicle_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_company_housing_assets" widget="radio" options="{'horizontal': True}" />
+          </group>
+          <group colspan="3">
+            <field name="company_housing_assets_value" invisible="not is_has_company_housing_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_company_other_assets" widget="radio" options="{'horizontal': True}" />
+          </group>
+          <group>
+            <field name="company_other_assets_value" invisible="not is_has_company_other_assets"/>
+          </group>
+          <group colspan="2">
+            <field name="company_other_assets_caption" invisible="not is_has_company_other_assets"/>
+          </group>
+        </group>
+      </xpath>
+
+      <xpath expr="//group[hasclass('gp_account')]" position="replace"/>
+
+      <xpath expr="//group[hasclass('gp_legal')]" position="replace">
+        <group class="gp_legal" string="法人信息" invisible="legal_front_image and legal_back_image">
+          <group>
+            <field name="legal_id" readonly="1"/>
+            <field name="legal_phone"/>
+          </group>
+          <group>
+            <field name="legal_email"/>
+          </group>
+        </group>
+        <group string="法人信息" invisible="not legal_front_image or not legal_back_image">
+          <group>
+            <field name="legal_name" readonly="1" />
+            <field name="legal_email"/>
+            <field name="legal_id_number" readonly="1" />
+            <field name="legal_birthday" readonly="1" />
+            <field name="legal_start_date" readonly="1" />
+          </group>
+          <group>
+            <field name="legal_phone"/>
+            <field name="legal_nationality" readonly="1" />
+            <field name="legal_gender" readonly="1" />
+            <field name="legal_authority" readonly="1" />
+            <field name="legal_end_date" readonly="1" />
+          </group>
+          <group colspan="2">
+            <field name="legal_address" readonly="1" />
+          </group>
+          <field name="legal_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+          <group>
+            <field name="legal_front_image" widget="image"/>
+          </group>
+          <group>
+            <field name="legal_back_image" widget="image"/>
+          </group>
+        </group>
+
+        <group string="法人财产相关" col="4">
+          <group>
+            <field name="is_has_legal_housing_assets" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group colspan="3">
+            <field name="legal_housing_assets" invisible="not is_has_legal_housing_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_legal_vehicle_assets" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group colspan="3">
+            <field name="legal_vehicle_assets" invisible="not is_has_legal_vehicle_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_legal_other_assets" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group>
+            <field name="legal_other_assets" invisible="not is_has_legal_other_assets"/>
+          </group>
+          <group colspan="2">
+            <field name="legal_other_assets_remarks" invisible="not is_has_legal_other_assets"/>
+          </group>
+
+          <group>
+            <field name="is_has_legal_loan" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group>
+            <field name="legal_loan_amount" invisible="not is_has_legal_loan"/>
+          </group>
+          <group colspan="2">
+            <field name="legal_loan_remarks" invisible="not is_has_legal_loan"/>
+          </group>
+
+          <group>
+            <field name="is_has_legal_guarantee" widget="radio" options="{'horizontal': true}"/>
+          </group>
+          <group>
+            <field name="legal_guarantee_amount" invisible="not is_has_legal_guarantee"/>
+          </group>
+          <group colspan="2">
+            <field name="legal_guarantee_remarks" invisible="not is_has_legal_guarantee"/>
+          </group>
+        </group>
+
+        <group string="其他相关" col="4" class="gp_contact">
+          <group/>
+          <field name="legal_other_info" widget="dynamic_properties" nolabel="1" columns="3"/>
+        </group>
+
+        <group string="法人相关附件上传" class="gp_attachment" col="4">
+          <group>
+            <field name="legal_handle_image" widget='image' class="ifs_attachment" nolabel="1" colspan="2" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '法人手持身份证照片'}"/>
+          </group>
+          <group>
+            <field name="legal_person_property_certificate" widget='pdf_viewer' class="ifs_attachment" nolabel="1" colspan="2" 
+              options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '法人名下相关财产证明（如有请提供）', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png', 'previewImage': 'legal_person_property_certificate_preview'}"/>
+          </group>
+        </group>
+      </xpath>
+
+      <xpath expr="//page[hasclass('pg_contact')]" position="before">
+        <page string="特许经营" name="franchise_info" class="pg_franchise" invisible="not practice_license">
+          <group class="gp_franchise" string="医疗机构执业许可证信息">
+            <group/>
+            <field name="practice_definition_id" invisible="1"/>
+            <field name="practice_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+          </group>
+          <group class="o_group_label_lg" string="医疗机构执业许可证" name="gp_franchise">
+            <group colspan="2" class="o_ifs_flex_container">
+              <div class="o_ifs_center_img">
+                <div class="o_ifs_img">
+                  <field name="practice_license" widget="image" readonly="1" nolabel="1"/>
+                  <div class="o_ifs_img_text">医疗机构执业许可证</div>
+                </div>
+              </div>
+            </group>
+          </group>
+        </page>
+      </xpath>
+
+        <xpath expr="//page[hasclass('pg_contact')]" position="after">
+          <page string="企业担保人" class="pg_guarantor" invisible="is_self_guarantee">
+            <group string="担保人基本信息">
+              <group>
+                <field name="guarantor_name"/>
+                <field name="guarantor_idcard_no"/>
+                <field name="guarantor_birthday"/>
+                <field name="guarantor_start_date"/>
+              </group>
+              <group>
+                <field name="guarantor_nationality"/>
+                <field name="guarantor_gender"/>
+                <field name="guarantor_authority"/>
+                <field name="guarantor_end_date"/>
+              </group>
+              <group colspan="2">
+                <field name="guarantor_address"/>
+              </group>
+              <field name="guarantor_info" widget="dynamic_properties" nolabel="1" columns="2"/>
+              <group>
+                <field name="guarantor_front_image" widget="image" />
+              </group>
+              <group>
+                <field name="guarantor_back_image" widget="image" />
+              </group>
+            </group>
+
+            <group string="担保人财产相关" col="4">
+              <group>
+                <field name="is_has_guarantor_housing_assets" widget="radio" options="{'horizontal': true}"/>
+              </group>
+              <group colspan="3">
+                <field name="guarantor_housing_assets" invisible="not is_has_guarantor_housing_assets"/>
+              </group>
+
+              <group>
+                <field name="is_has_guarantor_vehicle_assets" widget="radio" options="{'horizontal': true}"/>
+              </group>
+              <group colspan="3">
+                <field name="guarantor_vehicle_assets" invisible="not is_has_guarantor_vehicle_assets"/>
+              </group>
+
+              <group>
+                <field name="is_has_guarantor_other_assets" widget="radio" options="{'horizontal': true}" invisible="not is_has_guarantor_housing_assets"/>
+              </group>
+              <group>
+                <field name="guarantor_other_assets" invisible="not is_has_guarantor_other_assets"/>
+              </group>
+              <group colspan="2">
+                <field name="guarantor_other_assets_remarks" invisible="not is_has_guarantor_other_assets"/>
+              </group>
+
+              <group>
+                <field name="is_has_guarantor_loan" widget="radio" options="{'horizontal': true}" invisible="not is_has_guarantor_housing_assets"/>
+              </group>
+              <group>
+                <field name="guarantor_loan_amount" invisible="not is_has_guarantor_loan"/>
+              </group>
+              <group colspan="2">
+                <field name="guarantor_loan_remarks" invisible="not is_has_guarantor_loan"/>
+              </group>
+
+              <group>
+                <field name="is_has_guarantor_guarantee" widget="radio" options="{'horizontal': true}"/>
+              </group>
+              <group>
+                <field name="guarantor_guarantee_amount" invisible="not is_has_guarantor_guarantee"/>
+              </group>
+              <group colspan="2">
+                <field name="guarantor_guarantee_remarks" invisible="not is_has_guarantor_guarantee"/>
+              </group>
+            </group>
+          </page>
+        </xpath>
+
+        <xpath expr="//page[hasclass('pg_guarantor')]" position="after">
+          <page string="其他附件" class="pg_doc">
+            <div class="o_ifs_center_img">
+              <div class="o_ifs_img">
+                <field name="reception_picture" widget='image' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '法人在前台的合影照片'}" nolabel="1"/>
+                <div class="o_ifs_img_text">前台照</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="office_area_picture" widget='image' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '办公区域照片'}" nolabel="1"/>
+                <div class="o_ifs_img_text">公司办公区</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="charter" widget='pdf_viewer' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '企业章程扫描件上传（加盖公章）如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'charter_preview','size': ['300', '190']}" nolabel="1"/>
+                <div class="o_ifs_img_text">企业章程扫描件上传（加盖公章）</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="half_year_balance_sheet" widget='pdf_viewer' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '近半年的资产负债表 如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'half_year_balance_sheet_preview','size': ['300', '190']}" nolabel="1"/>
+                <div class="o_ifs_img_text">近半年的资产负债表</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="half_year_cash_flow_sheet" widget='pdf_viewer' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '近半年现金流量表（加盖公章）如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'half_year_cash_flow_sheet_preview','size': ['300', '190']}" nolabel="1"/>
+                <div class="o_ifs_img_text">近半年现金流量表</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="half_year_assets_gains_losses_sheet" widget='pdf_viewer' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '近半年资产损益表（加盖公章）如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'half_year_assets_gains_losses_sheet_preview','size': ['300', '190']}" nolabel="1"/>
+                <div class="o_ifs_img_text">近半年资产损益表</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="lease_contract" widget='pdf_viewer' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '办公区租赁合同 如多页请自行合成PDF', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'lease_contract_preview','size': ['300', '190']}" nolabel="1"/>
+                <div class="o_ifs_img_text">办公区租赁合同</div>
+              </div>
+              <div class="o_ifs_img">
+                <field name="enterprise_property_certificate" widget='pdf_viewer' options="{'placeholder':'/web/static/img/placeholder.png', 'description': '企业名下相关财产证明（如有请提供）', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png','previewImage': 'enterprise_property_certificate_preview','size': ['300', '190']}" nolabel="1"/>
+                <div class="o_ifs_img_text">企业相关财产证明</div>
+              </div>
+            </div>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="ifs_gar_entry_merchant_view_tree" model="ir.ui.view">
+      <field name="name">ifs.gar.entry.merchant.view.tree</field>
+      <field name="model">ifs.gar.entry.merchant</field>
+      <field name="mode">primary</field>
+      <field name="inherit_id" ref="ifs_base.ifs_base_company_view_tree" />
+      <field name="arch" type="xml">
+        <tree position="attributes">
+          <attribute name="string">采购方进件列表</attribute>
+        </tree>
+        <field name="company_code" position="before">
+          <field name="seq_code" string="进件编号"/>
+        </field>
+        <field name="email" position="after">
+          <field name="state" string="状态" widget="badge" 
+            decoration-danger="state in ['rejected', 'btw']" 
+            decoration-muted="state == 'committed'" 
+            decoration-info="state == 'approval'"
+            decoration-success="state == 'signed'"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="ifs_gar_entry_merchant_view_search" model="ir.ui.view">
+      <field name="name">ifs.gar.entry.merchant.view.search</field>
+      <field name="model">ifs.gar.entry.merchant</field>
+      <field name="mode">primary</field>
+      <field name="inherit_id" ref="ifs_base.ifs_base_company_view_search" />
+      <field name="arch" type="xml">
+        <search position="attributes">
+          <attribute name="string">采购方进件查询</attribute>
+        </search>
+        <search position="inside">
+          <field name="seq_code" string="进件编号"/>
+        </search>
+      </field>
+    </record>
+  </odoo>

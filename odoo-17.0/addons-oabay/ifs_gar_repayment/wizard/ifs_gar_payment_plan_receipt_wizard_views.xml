@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_gar_payment_plan_receipt_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.gar.payment.plan.receipt.wizard.view.form</field>
+    <field name="model">ifs.gar.payment.plan.receipt.wizard</field>
+    <field name="arch" type="xml">
+      <form string="" class="o_galaxy_form_view">
+        <field name="payment_plan_id" invisible="1" force_save="1"/>
+        <field name="currency_id" invisible="1"/>
+        <sheet>
+          <group string="银行账户信息">
+            <group>
+              <field name="account_name"/>
+              <field name="account_no"/>
+            </group>
+            <group>
+              <field name="deposit_bank"/>
+            </group>
+          </group>
+          <group>
+            <group colspan="2" class="o_two_line_cell">
+              <label for="payment_amount"/>
+              <div class="oe_inline" style="display: inline;">
+                <field name="payment_amount" class="oe_inline oe_monetary_lg"/>
+                <span class="oe_monetary_uppercase">（大写）：<field name="payment_amount_uppercase" class="oe_inline"/></span>
+              </div>
+            </group>
+          </group>
+          <!-- <group string="财务联系人">
+            <group>
+              <field name="finance_name"/>
+            </group>
+            <group>
+              <field name="finance_phone"/>
+            </group>
+          </group> -->
+          <div class="o_ifs_center_img">
+            <field name="payment_receipt" widget="image" nolabel="1" options="{'placeholder':'/galaxy_tdesign/static/src/img/plus.png', 'description': '转账凭据'}"/>
+          </div>
+        </sheet>
+        <footer>
+          <button name="action_confirm" type="object" string="提交凭据" class="btn-primary" data-hotkey="c"/>
+          <button string="取消" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

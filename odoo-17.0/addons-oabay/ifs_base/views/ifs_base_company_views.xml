@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_base_company_view_search" model="ir.ui.view">
+    <field name="name">ifs.base.company.view.search</field>
+    <field name="model">ifs.base.company</field>
+    <field name="arch" type="xml">
+      <search string="合作伙伴查询">
+        <field name="name" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('company_code', 'ilike', self), ('vat', 'ilike', self), ('abbr', 'ilike', self)]"/>
+        <field name="company_registry" string="统一社会信用代码"/>
+        <field name="legal_name"/>
+        <field name="phone"/>
+        <field name="email"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="ifs_base_company_view_tree" model="ir.ui.view">
+    <field name="name">ifs.base.company.view.tree</field>
+    <field name="model">ifs.base.company</field>
+    <field name="arch" type="xml">
+      <tree string="合作伙伴列表" sample="1">
+        <field name="partner_id" column_invisible="1"></field>
+        <field name="company_code" optional="hide"/>
+        <field name="name"/>
+        <field name="company_registry" string="统一社会信用代码"/>
+        <field name="principal_name" optional="hide"/>
+        <field name="legal_name"/>
+        <field name="phone"/>
+        <field name="email"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ifs_base_company_view_form" model="ir.ui.view">
+    <field name="name">ifs.base.company.view.form</field>
+    <field name="model">ifs.base.company</field>
+    <field name="arch" type="xml">
+      <form class="o_galaxy_form_view" create="false" edit="false">
+        <field name="definition_id" invisible="1"/>
+        <field name="company_id" invisible="1"></field>
+        <header>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box"></div>
+          <div class="oe_title">
+            <field name="logo" widget='image' class="oe_avatar" />
+            <span name="ifs_base_company_code"></span>
+            <h1>
+              <field name="name" default_focus="1" placeholder="名称"/>
+            </h1>
+          </div>
+          <notebook invisible="not company_id">
+            <page string="企业信息" name="company_info" class="pg_base" autofocus="autofocus">
+              <group class="gp_base o_group_label_lg" string="工商登记信息">
+                <group/>
+                <field name="json_datas" widget="dynamic_properties" nolabel="1" columns="2"/>
+                <group colspan="2" class="gp_key_persons" string="主要人员"/>
+                <field name="key_person_ids" nolabel="1" mode="kanban" class="o_galaxy_properties" readonly="1">
+                  <kanban class="o_galaxy_kanban_properties">
+                    <field name="definition_id"/>
+                    <field name="json_datas"/>
+                    <templates>
+                      <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card">
+                          <field name="json_datas" widget="dynamic_properties" columns="3"/>
+                        </div>
+                      </t>
+                    </templates>
+                  </kanban>
+                </field>
+              </group>
+              
+              <group class="gp_bussiness o_group_label_lg" string="企业经营信息">
+                <group>
+                  <field name="business_address" readonly="1"/>
+                  <field name="phone" readonly="1"/>
+                </group>
+                <group>
+                  <field name="business_date"/>
+                  <field name="email" readonly="1"/>
+                </group>
+              </group>
+
+              <group class="gp_account o_group_label_lg" string="企业账户信息" name="gp_account">
+                <group>
+                  <field name="account_name"/>
+                  <field name="deposit_bank"/>
+                </group>
+                <group>
+                  <field name="account_no"/>
+                </group>
+              </group>
+
+              <group class="gp_docs o_group_label_lg" string="企业证件信息" name="gp_docs">
+                <group colspan="2" class="o_ifs_flex_container">
+                  <div class="o_ifs_center_img">
+                    <div class="o_ifs_img">
+                      <field name="business_license" widget="image" readonly="1" nolabel="1"/>
+                      <div class="o_ifs_img_text">营业执照</div>
+                    </div>
+                  </div>
+                  <!-- <div class="o_ifs_center_img">
+                    <div class="o_ifs_img">
+                      <field name="charter" widget="pdf_viewer" readonly="1" nolabel="1"
+                        options="{'placeholder':'/web/static/img/placeholder.png', 'description': '公司章程', 'previewPlaceholder': 'galaxy_attachment_preview/static/img/placeholder.png'}"/>
+                      <div class="o_ifs_img_text">公司章程</div>
+                    </div>
+                  </div> -->
+                  <div class="o_ifs_center_img">
+                    <div class="o_ifs_img">
+                      <field name="deposit_license" widget="image" readonly="1" nolabel="1"/>
+                      <div class="o_ifs_img_text">开户许可证</div>
+                    </div>
+                  </div>
+                </group>
+              </group>
+            </page>
+            <page string="企业联系人" name="contact_info" class="pg_contact">
+              <group class="gp_legal" string="法人信息">
+                <group>
+                  <field name="legal_name"/>
+                  <field name="legal_phone"/>
+                </group>
+                <group>
+                  <field name="legal_email"/>
+                </group>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+</odoo>

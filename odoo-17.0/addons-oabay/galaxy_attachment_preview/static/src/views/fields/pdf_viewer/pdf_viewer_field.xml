@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-inherit="web.PdfViewerField" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[@t-name='web.PdfViewerField']" position="replace">
+      <t t-name="web.ImageField" owl="1">
+        <div class="d-inline-block position-relative opacity-trigger-hover galaxy-item-body" t-attf-style="{{props.width ? 'width: ' + props.width + 'px; padding-bottom: unset; ' : ''}}{{props.height ? 'height: ' + props.height + 'px; ' : ''}}">
+          <t t-if="!props.readonly">
+              <t t-if="props.record.data[props.name] and state.isValid">
+                <div t-attf-class="position-absolute d-flex justify-content-between w-100 bottom-0 opacity-0 opacity-100-hover {{isMobile ? 'o_mobile_controls' : ''}}" aria-atomic="true" t-att-style="sizeStyle">
+                  <FileUploader acceptedFileExtensions="'.pdf'" onUploaded.bind="onFileUploaded">
+                  <t t-set-slot="toggler">
+                    <button class="o_select_file_button btn btn-light border-0 rounded-circle m-1 p-1" data-tooltip="Edit" aria-label="Edit">
+                      <i class="fa fa-pencil fa-fw"/>
+                    </button>
+                  </t>
+                  <button class="o_clear_file_button btn btn-light border-0 rounded-circle m-1 p-1" data-tooltip="Clear" aria-label="Clear" t-on-click="onFileRemove">
+                    <i class="fa fa-trash-o fa-fw"/>
+                  </button>
+                  </FileUploader>
+
+                </div>
+                <img 
+                  class="img w-100" 
+                  alt="Binary file" 
+                  t-on-click.prevent="onOpenPreview"
+                  t-att-src="previewImg" 
+                  t-att-name="props.name" 
+                  t-att-height="props.height" 
+                  t-att-width="props.width" 
+                  t-att-style="sizeStyle" 
+                  t-on-error.stop="onLoadFailed" 
+                  t-att-data-tooltip-template="hasTooltip and tooltipAttributes.template" 
+                  t-att-data-tooltip-info="hasTooltip and tooltipAttributes.info" 
+                  t-att-data-tooltip-delay="hasTooltip and props.zoomDelay"  
+                  t-att-class="additinalClassName" />
+              </t>
+              <t t-else="">
+                <FileUploader acceptedFileExtensions="'.pdf'" onUploaded.bind="onFileUploaded">
+                <t t-set-slot="toggler">
+                  <img 
+                    class="img w-100" 
+                    alt="Binary file" 
+                    t-att-src="placeholder" 
+                    t-att-name="props.name" 
+                    t-att-height="props.height" 
+                    t-att-width="props.width" 
+                    t-att-style="sizeStyle" 
+                    t-on-error.stop="onLoadFailed" 
+                    t-att-data-tooltip-template="hasTooltip and tooltipAttributes.template" 
+                    t-att-data-tooltip-info="hasTooltip and tooltipAttributes.info" 
+                    t-att-data-tooltip-delay="hasTooltip and props.zoomDelay" 
+                    t-att-class="additinalClassName" />
+                  <div class="galaxy-desc-text">
+                    <t t-esc="description"/>
+                  </div>
+                </t>
+                </FileUploader>
+              </t>
+            
+          </t>
+          <t t-else="">
+            <img 
+              class="img w-100" 
+              alt="Binary file" 
+              t-att-src="previewImg" 
+              t-att-name="props.name" 
+              t-att-height="props.height" 
+              t-att-width="props.width" 
+              t-att-style="sizeStyle" 
+              t-on-error.stop="onLoadFailed" 
+              t-att-data-tooltip-template="hasTooltip and tooltipAttributes.template" 
+              t-att-data-tooltip-info="hasTooltip and tooltipAttributes.info" 
+              t-att-data-tooltip-delay="hasTooltip and props.zoomDelay"
+              t-on-click.prevent="onOpenPreview" 
+              t-att-class="additinalClassName" />
+          </t>
+        </div>
+      </t>
+    </xpath>
+  </t>
+</templates>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="galaxy_external_api_request_view_search" model="ir.ui.view">
+      <field name="name">galaxy.external.api.request.view.search</field>
+      <field name="model">galaxy.external.api.request</field>
+      <field name="arch" type="xml">
+        <search string="接口请求记录查询">
+          <field name="api_id"/>
+          <field name="base_uri"/>
+          <field name="status_code"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="galaxy_external_api_request_view_tree" model="ir.ui.view">
+      <field name="name">galaxy.external.api.request.view.tree</field>
+      <field name="model">galaxy.external.api.request</field>
+      <field name="arch" type="xml">
+        <tree string="接口请求记录" create="0">
+          <field name="create_date" string="请求时间"/>
+          <field name="create_uid" string="操作人" widget="many2one_avatar_user"/>
+          <field name="base_uri"/>
+          <field name="status_code"/>
+          <field name="response_raw" optional="show"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="galaxy_external_api_request_view_form" model="ir.ui.view">
+      <field name="name">galaxy.external.api.request.view.form</field>
+      <field name="model">galaxy.external.api.request</field>
+      <field name="arch" type="xml">
+        <form string="接口请求记录" class="o_galaxy_form_view" create="0" edit="0">
+          <sheet>
+            <group string="基本信息">
+              <group>
+                <field name="api_id"/>
+                <field name="status_code"/>
+              </group>
+              <group>
+                <field name="create_date" string="请求时间"/>
+                <field name="create_uid" string="操作人" widget="many2one_avatar_user"/>
+              </group>
+              <group colspan="2">
+                <field name="base_uri"/>
+              </group>
+            </group>
+            <group string="请求参数">
+              <group colspan="2">
+                <field name="request_header" widget="json"/>
+                <field name="request_params" widget="json"/>
+                <field name="request_body" widget="json"/>
+                <field name="request_files" widget="json"/>
+                <field name="request_rargs" widget="json"/>
+              </group>
+            </group>
+            <group string="结果集">
+              <group/>
+              <field name="response_ids" nolabel="1" mode="kanban" class="o_galaxy_properties">
+                <kanban class="o_galaxy_kanban_properties">
+                  <field name="code"/>
+                  <field name="action_parser_id"/>
+                  <field name="definition_id"/>
+                  <field name="json_datas"/>
+                  <templates>
+                    <t t-name="kanban-box">
+                      <div t-attf-class="oe_kanban_card">
+                        <div class="o_kanban_record_top">
+                          <div class="o_kanban_record_headings">
+                            <strong class="o_kanban_record_title"><span><t t-esc="record.action_parser_id.value"/></span></strong>
+                          </div>
+                          <span class="float-end text-end"><small>结果标识：</small><t t-esc="record.code.value"/></span>
+                        </div>
+                        <field name="json_datas" widget="dynamic_properties" columns="2"/>
+                      </div>
+                    </t>
+                  </templates>
+                </kanban>
+              </field>
+            </group>
+            <notebook>
+              <page string="结果集">
+                <group>
+                  <group colspan="2">
+                    <field name="parser_id"/>
+                    <field name="response_ids" propertiesField="json_datas" options="{'tag_names': ['config_str', 'name', 'num', 'x', 'y']}" widget="many2many_tags_properties">
+                      <tree>
+                        <field name="json_datas"/>
+                      </tree>
+                    </field>
+                  </group>
+                </group>
+                <group>
+                  <group/>
+                  <field name="response_ids" nolabel="1" mode="kanban" class="o_galaxy_properties">
+                    <kanban class="o_galaxy_kanban_properties">
+                      <field name="code"/>
+                      <field name="action_parser_id"/>
+                      <field name="definition_id"/>
+                      <field name="json_datas"/>
+                      <templates>
+                        <t t-name="kanban-box">
+                          <div t-attf-class="oe_kanban_card">
+                            <div class="o_kanban_record_top">
+                              <div class="o_kanban_record_headings">
+                                <strong class="o_kanban_record_title"><span><t t-esc="record.action_parser_id.value"/></span></strong>
+                              </div>
+                              <span class="float-end text-end"><small>结果标识：</small><t t-esc="record.code.value"/></span>
+                            </div>
+                            <field name="json_datas" widget="dynamic_properties" columns="2"/>
+                          </div>
+                        </t>
+                      </templates>
+                    </kanban>
+                  </field>
+                </group>
+              </page>
+              <page string="响应源数据">
+                <field name="response_raw" widget="json.text"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

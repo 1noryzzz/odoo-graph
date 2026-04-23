@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_partner_merchant_view_tree_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.tree.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_tree" />
+    <field name="arch" type="xml">
+      <field name="state" position="before">
+        <field name="expire_date"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="ifs_partner_merchant_view_form_inherited" model="ir.ui.view">
+    <field name="name">ifs.partner.merchant.view.form.inherited</field>
+    <field name="model">ifs.partner.merchant</field>
+    <field name="inherit_id" ref="ifs_partner.ifs_partner_merchant_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+        <button class="oe_stat_button" icon="fa-book" name="view_contract_info" type="object">
+          <div class="o_form_field o_stat_info">
+            <span class="o_stat_text">合同查看</span>
+          </div>
+        </button>
+      </xpath>
+    </field>
+  </record>
+</odoo>

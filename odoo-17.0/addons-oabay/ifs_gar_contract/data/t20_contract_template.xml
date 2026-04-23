@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="T20_contract" model="ifs.contract.template">
+      <field name="name">应付账款转让确认书</field>
+      <field name="model_id" ref="ifs_gar_contract.model_ifs_contract_info"/>
+      <field name="code">T20</field>
+      <field name="need_partner">three</field>
+      <field name="tag_ids" eval="[(4, ref('ifs_contract.ifs_contract_tag_gjxy'))]"/>
+      <field name="category_id" ref="ifs_contract.ifs_contract_category_mer"/>
+      <field name="sign_position_params">[
+        {},
+        {"chaptes": [{"offsetX": 0.25,"offsetY": 0.35}],"page": -1},
+        {}
+      ]</field>
+      <field name="body_html" type="html">
+        <div>
+          <t t-set="params" t-value="json.loads(object.params)"/>
+          <div class="word_content main_content main_content_ol_font">
+            <link rel="stylesheet" href="/ifs_gar_contract/static/src/css/contract.css" />
+            <div class="word_doc_title">应付账款转让确认书</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">XXXX有限公司</t>
+            </div>
+            <div class="word_doc_sub_title" style="text-decoration:none;">与</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_sub_title" style="margin-top:100px; text-decoration:none;">合同编号</div>
+            <div class="word_doc_sub_title">
+              <t t-out="object.code" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">
+                T1720220815001</t>
+            </div>
+            <div class="word_doc_content_mini" style="margin-top: 280px;">合同版本 - T20</div>
+            <div class="word_content_start word_content_start_font" style="margin-top:160px">致（保理商）：
+              <t t-out="object.partner_one.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_content_start word_content_start_font">自（买方）：              <span>
+                <t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">__________________________</t>
+              </span>
+            </div>
+            <p>
+            根据贵我双方签署的《买方账款转让最高子额度合同》（编号：              <t t-out="params.get('t18_contract_code')">NA</t> ）、卖方出具的《应收账款转让确认书》，现我方确认如下账款转让事宜：
+            </p>
+            <ol>
+              <li>本次卖方转让的应收账款基本信息：
+                <div class="word_content_start word_content_start_font">
+                    卖方名称：                  <t t-out="object.partner_three.name"></t> 联系人及电话：                  <t t-out="object.partner_three.phone"></t>
+                  <br />
+                    基础交易合同及编号：                  <t t-out="params.get('order_code')"></t>
+                  <br />
+                    交易产品名称/服务项目：                  <t t-out="params.get('product_scope')"></t>
+                  <br />
+                    买方账款剩余可转让最高子额度（贵机构可自主调整或提用）：                  <t t-out="params.get('available_quota')"></t>
+                  <br />
+                    本次转让账款金额：                  <t t-out="params.get('withdrawal_amount')"></t>
+                  <br />
+                    本次转让账款付款到期日：                  <t t-out="params.get('repayment_date')"></t>
+                  <br />
+                </div>
+              </li>
+              <li>我方确认：本次转让的卖方应收账款及其从属的一切从权利和权益，已通过卖方出具《应收账款转让确认书》形式转让给贵机构。</li>
+              <li>本次转让的应收账款权益（基础交易合同项下的任何义务或责任仍由卖方承担）包括：卖方对我方及担保人享有的基础交易合同（含补充协议、凭据等）项下应收账款的一切权利和补偿，包括现有的和未来的所有金钱债权及其产生的所有收益、孳息、变现价款、衍生物、代位物，以及为实现上述权利及收益而采取相应担保、救济措施的权益。
+              </li>
+              <li>我方确认：卖方出具《应收账款转让确认书》后：                <br />
+                1) 贵机构从卖方取得以上应收账款的一切权利和补偿。<br />
+                2)
+                贵机构可采取法律允许的一切措施要求我方付款，包括但不限于根据卖方《应收账款转让确认书》、我方《应付账款转让同意书》、《买方账款最高子额度合同》等进行催收、起诉/仲裁、执行等，要求我方偿还本金并支付赔偿金、违约金、滞纳金等权利。我方将予以接受并按贵机构要求采取措施。              <br />
+                3) 我方发生破产清算、资不抵债或其他类似的情况下，贵机构作为债权人参加清算或其他类似程序的权利。<br />
+                4) 贵机构可再次转让该笔账款，包括流通票据背书转让等。<br />
+
+              </li>
+              <li>我方确认：本次转让的账款满足以下全部条件：            <br />
+                    1) 基础交易合同及其补充协议（如有）、履约凭据真实、合法且有效，没有禁止或限制账款转让、无条件退货及其他任何不利于贵机构行使该账款项下权利的条款。<br />
+                    2) 该笔账款产生于真实善意的正常业务，货物销售、服务提供均合法有效，我方已确认付款金额、付款日、付款条件、付款方式等付款义务。<br />
+                    3) 我方付款义务不存在未经贵机构知晓并同意的抵消、佣金、折扣或其他扣减。<br />
+                    4) 未发生且将不会发生任何涉及或不利于该笔账款清偿的违约、争议、退货或索赔。<br />
+                    5) 该笔账款我方无权用于与卖方抵消或扣减，也无权主张反诉、索赔或抗辩。<br />
+                    6) 对于已形成的该笔账款，卖方已履行了合同项下的主要义务和其他已到期的义务；对于将要形成的该笔账款，目前不存在卖方不能按合同完整履行各项义务的情形。<br />
+              </li>
+              <li>我方将积极配合贵机构工作，提供基础交易合同、沟通记录、履约凭据、债权转让登记及相关手续，我方不会直接付款/冲抵给卖方，维护贵机构权益。
+              </li>
+              <li>贵机构有权向我方发送债权转让通知书或其他形式的告知，要求我方出具通知回执、同意书等，或配合办理相应的债权转让、担保、证照、凭证等变更手续。</li>
+              <li>我方部分付款时清偿顺序：实现债权费用、违约金、滞纳金、保理服务费、手续费、我方账款本金及其他应付款项。</li>
+              <li>本确认书经我方签署后生效，直至我方付清本笔账款及其他相应款项。未经贵机构同意不得变更或撤销。</li>
+            </ol>
+            <div class="word_doc_inner_title" style="margin-top:35px;">
+                        签署人（买方盖章）：<t t-out="object.partner_two.name" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">亚洲保理（深圳）有限公司</t>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:20px;">
+                        法定代表人/授权代表（签字）：<img t-attf-src="data:image/png;base64,{{object.partner_two_signature}}" height="80px" style="vertical-align:top;"/>
+            </div>
+            <div class="word_doc_inner_title" style="margin-top:35px;">
+                        签署日期：<t t-out="format_date(object.write_date)" contenteditable="false" data-oe-t-inline="true" oe-keep-contenteditable="">2022/08/15</t>
+            </div>
+          </div>
+        </div>
+      </field>
+    </record>
+    
+  </data>
+</odoo>

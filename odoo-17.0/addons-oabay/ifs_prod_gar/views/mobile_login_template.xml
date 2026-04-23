@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="mobile_layout" name="Main Mobile layout" inherit_id="galaxy_tdesign.layout" primary="True">
+    <xpath expr="//header" position="replace">
+    </xpath>
+    <xpath expr="//footer" position="replace">
+    </xpath>
+  </template>
+
+  <template id="mobile_login_layout" name="Website Mobile Login Layout" inherit_id="galaxy_tdesign.login_layout" primary="True">
+    <xpath expr="//t[@t-call='galaxy_tdesign.layout']" position="attributes">
+      <attribute name="t-call">ifs_prod_gar.mobile_layout</attribute>
+    </xpath>
+    <xpath expr="//div[hasclass('galaxy_login_container')]" position="replace">
+      <div class="mobile_login_background">
+        <div class="mobile_login_top_background">
+          <img class="mobile_login_logo_icon" src="/ifs_prod_gar/static/src/img/logo.png" />
+          <img class="mobile_login_top_img" src="/ifs_prod_gar/static/src/img/background_img.png" />
+        </div>
+        <div class="oe_website_login_container mobile_login_main" t-out="0"/>
+        <div class="mobile_login_footer">
+          <div>
+            <input id="is_read" type="checkbox" />
+                    登录即代表已阅读并同意            <a href="#">《用户协议》</a>
+            <a href="#">《隐私政策》</a>
+          </div>
+
+          <div style="margin-top: 15px; font-size: 12px; color: darkgray;">
+            <span>如有疑问请拨打客服电话：</span>
+            <a href="#">400056373483</a>
+          </div>
+        </div>
+      </div>
+    </xpath>
+    <xpath expr="//div[hasclass('galaxy_login_copyright')]" position="replace">
+    </xpath>
+  </template>
+
+  <template id="mobile_login" name="鸥贝云用户登录" inherit_id="galaxy_tdesign.login" primary="True">
+    <xpath expr="//t[@t-call='web.login_layout']" position="attributes">
+      <attribute name="t-call">ifs_prod_gar.mobile_login_layout</attribute>
+    </xpath>
+    <xpath expr="//div[hasclass('galaxy_login_title')]" position="replace">
+      <div class="galaxy_login_title span_login_title">登录</div>
+    </xpath>
+    <xpath expr="//form[hasclass('oe_login_form')]" position="attributes">
+      <attribute name="class">oe_login_form mobile_login_form</attribute>
+    </xpath>
+    <xpath expr="//input[@id='login']" position="replace">
+      <div class="mobile_login_input_div">
+        <img src="/ifs_prod_gar/static/src/img/mobile_icon.png" class="mobile_login_input_icon" />
+        <input type="hidden" name="is_mobile" value="1" />
+        <input type="text" name="login" class="mobile_login_input login-name" placeholder="请输入手机号" />
+      </div>
+    </xpath>
+    <xpath expr="//input[@id='password']" position="replace">
+      <div class="mobile_login_input_div">
+        <img src="/ifs_prod_gar/static/src/img/password_icon.png" class="mobile_login_input_icon" />
+        <input type="password" name="password" class="mobile_login_input" placeholder="请输入密码" />
+      </div>
+    </xpath>
+    <xpath expr="//input[@id='ot_password']" position="replace">
+      <div id="ot_password" class="mobile_login_input_div" style="display:none;">
+        <img src="/ifs_prod_gar/static/src/img/password_icon.png" class="mobile_login_input_icon" />
+        <input type="password" name="ot_password" class="mobile_login_input" placeholder="令牌密码" />
+      </div>
+    </xpath>
+    <xpath expr="//button[hasclass('btn-primary')]" position="replace">
+      <div style="padding: 36px 50px 10px 50px">
+        <input type="submit" value="登录" class="mobile_login_btn" />
+      </div>
+    </xpath>
+    <!-- <xpath expr="//div[hasclass('field-password')]" position="replace">
+      <input type="password" placeholder="密码" name="password" id="password" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+    </xpath> -->
+  </template>
+
+</odoo>

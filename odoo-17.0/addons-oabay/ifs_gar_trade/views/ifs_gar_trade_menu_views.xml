@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+  <record id="ifs_gar_trade_order_config_act" model="ir.actions.act_window">
+    <field name="name">交易订单配置</field>
+    <field name="res_model">ifs.gar.trade.order.config</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+          点击左上角的“创建”邀请，让我们开始吧！
+      </p>
+      <p>
+        <a href="https://www.lifewiz.cn" target="_blank">云腾智慧</a>
+      </p>
+    </field>
+  </record>
+    
+  <menuitem id="ifs_gar_trade_order_menu_root" name="订单管理" 
+    web_icon="ifs_gar_trade,static/img/ifs_gar_trade.png" sequence="9" />
+
+  <menuitem id="ifs_gar_payment_order_menu" name="支付订单" action="ifs_gar_trade.ifs_gar_payment_order_act_window"
+    groups="ifs_gar_trade.group_ifs_gar_trade_order_factor_user,ifs_gar_trade.group_ifs_gar_trade_order_merchant_user,ifs_gar_trade.group_ifs_gar_trade_order_supplier_user"
+    sequence="1" parent="ifs_gar_trade.ifs_gar_trade_order_menu_root"/>
+
+  <menuitem id="ifs_gar_trade_order_menu" name="订单管理" action="ifs_gar_trade.ifs_gar_trade_order_act_window" 
+    groups="ifs_gar_trade.group_ifs_gar_trade_order_factor_user,ifs_gar_trade.group_ifs_gar_trade_order_merchant_user,ifs_gar_trade.group_ifs_gar_trade_order_supplier_user" 
+    sequence="2" parent="ifs_gar_trade.ifs_gar_trade_order_menu_root"/>
+
+  <menuitem id="ifs_gar_trade_order_config_menu" name="订单配置" 
+    action="ifs_gar_trade_order_config_act" groups="ifs_gar_trade.group_ifs_gar_trade_order_factor_user" 
+    parent="ifs_gar_trade.ifs_gar_trade_order_menu_root" sequence="10"/>
+    
+</odoo>

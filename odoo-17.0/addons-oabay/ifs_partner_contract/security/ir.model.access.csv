@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ifs_contract_template_supplier_selector_wizard_factor_system,ifs.contract.template.supplier.selector.wizard factor_system,model_ifs_contract_template_supplier_selector_wizard,ifs_partner.group_ifs_partner_factor_system,1,1,1,0

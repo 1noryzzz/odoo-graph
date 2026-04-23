@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <menuitem id="hr_root_menu" name="员工管理" groups="ifs_hr.group_ifs_hr_user_ro"
+    web_icon="ifs_hr,static/img/ifs_hr.png" sequence="6"/>
+</odoo>

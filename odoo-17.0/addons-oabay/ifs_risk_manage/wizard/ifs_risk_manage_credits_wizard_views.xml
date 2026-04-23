@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="ifs_risk_manage_credits_wizard_view_form" model="ir.ui.view">
+    <field name="name">ifs.risk.manage.credits.wizard.view.form</field>
+    <field name="model">ifs.risk.manage.credits.wizard</field>
+    <field name="arch" type="xml">
+      <form string="个人征信向导">
+        <sheet>
+          <field name="company_id" invisible="1"></field>
+          <group col="1">
+            <group col="2">
+              <field name="ifs_company_id"/>
+              <field name="employee_id"/>
+            </group>
+            <group invisible="not employee_id">
+              <field name="employee_name"/>
+              <field name="idcard"/>
+              <field name="mobile"/>
+            </group>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_confirm" type="object" invisible="not employee_id" string="确认" class="btn-primary" data-hotkey="c" />
+          <button string="稍后再填" class="btn-default" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

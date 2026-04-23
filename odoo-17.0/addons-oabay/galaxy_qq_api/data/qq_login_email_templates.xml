@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="qq_user_signin_mail" model="mail.template">
+      <field name="name">Welcome - Complete Your Registration</field>
+      <!-- <field name="model_id" ref="base.model_res_users"/> -->
+      <field name="model_id" ref="galaxy_qq_api.model_galaxy_qq_user_keys"/>
+      <field name="subject">{{ object.qq_user_id.app_id.name }} 用户注册</field>
+      <field name="lang">{{ object.lang }}</field>
+      <field name="body_html" type="html">
+
+        <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+          <tbody>
+            <tr>
+              <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                  <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                      <td style="min-width: 590px;">
+                        <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                      致                          <br />
+                          <t t-out="object.nickname" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable="">
+                            XXX
+                          </t>，您好
+                          <br />
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="text-align:center;">
+                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;" contenteditable="false"/>
+                      </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                      <td>Welcome</td>
+                    </tr>
+                    <tr>
+                      <td>Complete your registration by clicking below to verify your email:</td>
+                    </tr>
+                    <tr>
+                      <td style="height:48px;">
+                        <a t-att-href="object.get_verification_url()" style="background-color: #875A7B; color: white; border: none; padding: 8px 16px; border-radius: 4px; text-decoration: none; cursor: pointer;">Verify Email</a>
+                      </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    <tr>
+                      <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <img style="width: 45%;margin-left:-15px;" src="/galaxy_tdesign/static/src/img/logo.svg" alt="logo"/>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="middle" align="left">
+                            深圳市云腾智慧科技有限公司
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="middle" align="left" style="opacity: 0.7;">
+                            +86 13823062888 | service@lifewiz.cn | https://www.lifewiz.cn
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <!-- POWERED BY -->
+            <tr>
+              <td align="center" style="min-width: 590px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; font-size: 13px;">
+                    由                        <a target="_blank" href="https://www.lifewiz.cn" style="color: #875A7B;">云腾智慧</a>提供技术支持
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </field>
+    </record>
+
+    <record id="qq_user_login_mail" model="mail.template">
+      <field name="name">Welcome Back</field>
+      <!-- <field name="model_id" ref="base.model_res_users"/> -->
+      <field name="model_id" ref="galaxy_qq_api.model_galaxy_qq_user_keys"/>
+      <field name="subject">{{ object.qq_user_id.app_id.name }} 用户登录</field>
+      <field name="body_html" type="html">
+
+        <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+          <tbody>
+            <tr>
+              <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                  <tbody>
+                    <!-- HEADER -->
+                    <tr>
+                      <td style="min-width: 590px;">
+                        <p style="margin:0px 0 12px 0;box-sizing:border-box;">
+                      致                          <br />
+                          <t t-out="object.nickname" data-oe-t-inline="true" contenteditable="false" oe-keep-contenteditable="">
+                            XXX
+                          </t>，您好
+                          <br />
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="text-align:center;">
+                        <hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;" contenteditable="false"/>
+                      </td>
+                    </tr>
+                    <!-- CONTENT -->
+                    <tr>
+                      <td>Welcome Back</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <button style="background-color: #875A7B; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                          <a t-att-href="object.get_verification_url()" style="color: white; text-decoration: none;">Verify Email</a>
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    <tr>
+                      <td align="center" style="min-width: 590px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <img style="width: 45%;margin-left:-15px;" src="/ifs_gar_invite/static/src/img/logo.png" alt="logo"/>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="middle" align="left">
+                            深圳市云腾智慧科技有限公司
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="middle" align="left" style="opacity: 0.7;">
+                            +86 13823062888 | service@lifewiz.cn | https://www.lifewiz.cn
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <!-- POWERED BY -->
+            <tr>
+              <td align="center" style="min-width: 590px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center; font-size: 13px;">
+                    由                        <a target="_blank" href="https://www.lifewiz.cn" style="color: #875A7B;">云腾智慧</a>提供技术支持
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </field>
+    </record>
+  </data>
+</odoo>

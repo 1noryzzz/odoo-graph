@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="ifs_gar_entry_merchant_config_factor_id" model="ifs.gar.entry.merchant.config">
+      <field name="factor_id">1</field>
+    </record>
+  </data>
+</odoo>
+

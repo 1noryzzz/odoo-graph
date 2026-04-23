@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="layout" name="Main layout" inherit_id="website.layout" primary="True">
+    <xpath expr="//head" position="inside">
+      <t t-if="galaxy_login_page" t-call-assets="galaxy_tdesign.assets_login_frontend" t-js="false"/>
+    </xpath>
+  </template>
+
+  <template id="login_layout" inherit_id="website.login_layout" name="Website Login Layout" priority="18">
+    <xpath expr="//t[@t-call='website.layout']" position="replace">
+      <t t-call="galaxy_tdesign.layout">
+        <t t-set="galaxy_login_page" t-value="True"/>
+        <t t-set="no_footer" t-value="true"/>
+        <div class="galaxy_login_container">
+          <div class="galaxy_login_center">
+            <div class="oe_website_login_container galaxy_login_inner" t-out="0"/>
+          </div>
+        </div>
+        <div class="galaxy_login_copyright">
+          <span class="line_span">深圳市云腾智慧科技有限公司版权所有</span>
+          <span class="line_span">Copyright ©2017-2025 Lifewiz CO.LTD, All Rights Reserved</span>
+        </div>
+      </t>
+    </xpath>
+  </template>
+</odoo>

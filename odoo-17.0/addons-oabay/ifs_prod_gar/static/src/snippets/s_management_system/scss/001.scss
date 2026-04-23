@@ -1,0 +1,84 @@
+.gar_management_system_container {
+    background-image: url('/ifs_prod_gar/static/src/snippets/s_management_system/img/5004.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+
+    .gar_masking {
+        background-color: rgba(0, 32, 96, 0.7);
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        .gar_body_container {
+            padding: 80px;
+    
+            .gar_body_container_top {
+                max-width: 60%;
+    
+                .gar_primary_title {
+                    text-transform: uppercase;
+                    font-size: 50px;
+                }
+    
+                .gar_line {
+                    width: 50px;
+                    border-bottom: 2px solid #FFFFFF;
+                }
+    
+                .gar_sub_title {
+                    margin: 10px 0;
+                    font-size: 30px;
+                }
+            }
+    
+            .gar_body_container_bottom {
+                margin-top: 50px;
+                display: flex;
+
+                .gar_table, .gar_line {
+                    border: 2px solid rgba(255,255,255, 0.8);
+                }
+
+                .gar_table, .gar_line {
+                    border-right: none;
+                    border-bottom: none;
+                }
+    
+                .gar_table {
+                    border-left: none;
+                    display: flex;
+
+                    .gar_line {
+                        height: 50px;
+                        border-top: none;
+                    }
+    
+                    .gar_column {
+                        .gar_item_title {
+                            font-size: 25px;
+                        }
+                    }
+                }
+    
+                .gar_arrow {
+                    width: 0;
+                    height: 0;
+                    border: 7px solid;
+                    border-color: transparent transparent transparent #FFFFFF;
+                    position: relative;
+                    top: -6px;
+                }
+            }
+    
+            .gar_body, .gar_item_description {
+                opacity: 0.8;
+                max-width: 70%;
+            }
+        }
+    }
+}
