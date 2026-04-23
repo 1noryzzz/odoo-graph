@@ -1,5 +1,15 @@
 .venv/
-# odoo-17.0/
 *.pyc
 __pycache__/
+*.egg-info/
+build/
+dist/
+
+# Local dump output (older location and new cache)
 /registry-probe/out/
+
+# pytest cache
+.pytest_cache/
+
+# environment / tooling
+.python-version
