@@ -1,0 +1,147 @@
+# odoo-graph
+
+> Odoo 模块 / 模型 / 字段 / 方法 依赖关系分析工具 — 通过 `env.registry` 运行时逆向导出。
+
+解决的问题：Odoo 多模块叠加扩展后，开发时难以回答这类问题：
+
+- `res.partner.name` 改一下，会触发哪些 compute 重算？
+- `ifs.partner.merchant` 的某个字段，到底是哪个模块定义的、被哪些模块改过？
+- `res.users.write` 这个 override 链有多深？跨了哪些模块？
+
+`odoo-graph` 通过 `odoo-bin shell` 启动 Odoo 后读 `env.registry`，把所有元数据 dump 成 JSONL，加载到 NetworkX 图里，然后提供 CLI 查询。
+
+---
+
+## 安装
+
+```bash
+git clone <repo>
+cd odoo-relationship-analysis
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+你还需要：
+- Odoo 17 源码（本仓库 `odoo-17.0/`）
+- 一个 Postgres
+- 一个已经初始化过的 Odoo 数据库（`odoo-bin -d mydb --init base --stop-after-init`）
+
+---
+
+## 快速开始
+
+### 1) Dump 一次 registry
+
+```bash
+PGPASSWORD=odoo odoo-graph dump \
+  -d odoo_demo \
+  --odoo-path ./odoo-17.0 \
+  --addons-path ./odoo-17.0/addons-oabay \
+  --db-user odoo --db-password odoo
+```
+
+输出默认缓存到 `~/.cache/odoo-graph/<db>/`。包含 `nodes.jsonl` / `edges.jsonl` / `edges_resolved.jsonl` / `summary.json` / `meta.json`。
+
+### 2) 查询（不再需要启动 Odoo）
+
+```bash
+# 字段血缘（上游+下游）
+odoo-graph field res.partner.name --db odoo_demo
+
+# 模型全景（继承图 + 按模块分组的字段清单）
+odoo-graph model res.partner --db odoo_demo
+
+# 模块归属（定义了哪些模型/字段、扩展了哪些）
+odoo-graph module mail --db odoo_demo
+
+# 影响分析（BFS 下游，默认 depth=3）
+odoo-graph impact res.partner.name --db odoo_demo --max-depth 2
+
+# Override 链（跨模块的方法 MRO）
+odoo-graph overrides res.users.write --db odoo_demo
+```
+
+### 3) 输出格式
+
+- `-f human`（默认，文本 tree）
+- `-f json`（管道到 jq 等工具）
+- `-f graphviz`（预留钩子，暂未实现；见 `odoo_graph/formatters.py`）
+
+---
+
+## 架构
+
+```
+┌─────────────────┐           ┌──────────────────┐            ┌───────────────────┐
+│  odoo-bin shell │  (stdin)  │  _probe_script   │  (JSONL)   │   NetworkX graph  │
+│  env.registry   │ ────────▶ │  dump.py driver  │ ─────────▶ │   graph.py        │
+└─────────────────┘           │  resolve.py      │            │   queries + CLI   │
+                              └──────────────────┘            └───────────────────┘
+                                         │
+                                         ▼
+                          ~/.cache/odoo-graph/<db>/*.jsonl
+```
+
+- **Runtime probe** 是数据源。Odoo 在 `registry.setup_models()` 后已把 `_inherit` / `_inherits` / mixin 合并到位。
+- **Dump** 一次 30s（大头是 Odoo 启动），产出的 JSONL 可以缓存复用。
+- **Graph** 用 NetworkX MultiDiGraph（~100k 节点 / ~30k 边在 100MB 内存以内）。
+- **查询** 全在本地 JSONL 上做，不再碰 DB。
+
+---
+
+## 目录结构
+
+```
+odoo_graph/
+├── __init__.py
+├── __main__.py          python -m odoo_graph
+├── _probe_script.py     runs INSIDE odoo-bin shell
+├── dump.py              host-side subprocess driver + env wiring
+├── resolve.py           depends string paths -> Field→Field edges
+├── graph.py             NetworkX wrapper + query helpers
+├── formatters.py        human / json / graphviz dispatch
+├── cli.py               argparse entry
+└── tests/
+    ├── fixtures.py               synthetic graph for unit tests
+    ├── test_resolve.py
+    ├── test_graph.py
+    ├── test_formatters.py
+    ├── test_cli.py
+    └── snapshot_asserts.py       CI post-dump assertions
+```
+
+---
+
+## 运行测试
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
+CI 在每次 push / PR 上跑：
+
+1. 单元测试（快，不需要 Odoo）
+2. E2E smoke：装一个 minimal Odoo DB（`base + mail`）→ dump → 断言 summary 满足下限
+3. 5 个 CLI 命令都跑一遍，JSON 输出正确
+
+---
+
+## 已知限制 (Phase 1)
+
+- `dump` 需要 Odoo 能在本机启动（Postgres + 依赖包）
+- `overrides` 的 depth 按"MRO 中同名 callable 即算一次"，不保证签名一致；Phase 2 会加 `inspect.signature` + `super()` 调用检查
+- XML view 字段引用、方法体内的字段读写 — Phase 3/4 再加 AST 补
+
+详见 [`registry-probe/PLAN.md`](registry-probe/PLAN.md)。
+
+---
+
+## Phase 路线
+
+- ✅ **Phase 1** (本 PR) — CLI 工具化 + 5 个核心查询 + CI
+- ⏳ **Phase 2** — override 判定升级（同签名 + super 调用检查）
+- ⏳ **Phase 3** — AST 补 compute/inverse 方法体的字段读写
+- ⏳ **Phase 4** — XML view 字段引用解析
+- ⏳ **Phase 5** — 可视化（graphviz 落地）+ `impact-for-diff` CR 助手

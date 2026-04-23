@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odoo-graph"
+version = "0.1.0"
+description = "Odoo runtime registry reverse-dump + dependency graph analyzer"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "1noryzzz" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Build Tools",
+]
+dependencies = [
+    "networkx>=3.0",
+]
+
+[project.optional-dependencies]
+graphviz = ["graphviz>=0.20"]
+dev = [
+    "pytest>=7",
+    "pytest-cov>=4",
+]
+
+[project.scripts]
+odoo-graph = "odoo_graph.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["odoo_graph*"]
+exclude = ["odoo_graph.tests*"]
+
+[tool.setuptools.package-data]
+"odoo_graph" = ["_probe_script.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["odoo_graph/tests"]
+addopts = "-ra"
