@@ -69,3 +69,56 @@ def test_find_path_from_model_to_field(tmp_path):
     assert payload["paths"]
     assert payload["paths"][0]["nodes"][0] == "model::res.partner"
     assert payload["paths"][0]["nodes"][-1] == "field::res.partner.display_name"
+
+def test_find_path_field_to_field_prefers_shortest(tmp_path):
+    g = _loaded(tmp_path)
+    res = g.find_path(
+        start_model="res.partner",
+        start_field="display_name",
+        target_model="res.partner",
+        target_field="name",
+        max_depth=3,
+    )
+    assert res["summary"]["found_paths"] == 1
+    p = res["paths"][0]
+    assert p["depth"] == 1
+    assert p["hops"][0]["edge_kind"] == "FIELD_DEPENDS_ON_FIELD"
+    assert p["hops"][0]["path"] in {"name", "parent_id.name"}
+
+
+def test_find_path_model_scope_start_and_edge_chain(tmp_path):
+    g = _loaded(tmp_path)
+    res = g.find_path(
+        start_model="child.record",
+        target_model="res.partner",
+        target_field="name",
+        max_depth=4,
+    )
+    assert res["summary"]["found_paths"] == 1
+    edge_kinds = [h["edge_kind"] for h in res["paths"][0]["hops"]]
+    assert edge_kinds == ["MODEL_DELEGATES_TO_MODEL", "MODEL_HAS_FIELD"]
+
+
+def test_find_path_respects_edge_kind_whitelist(tmp_path):
+    g = _loaded(tmp_path)
+    res = g.find_path(
+        start_model="child.record",
+        target_model="res.partner",
+        target_field="name",
+        max_depth=4,
+        edge_kinds=["FIELD_DEPENDS_ON_FIELD"],
+    )
+    assert res["summary"]["found_paths"] == 0
+
+
+def test_find_path_reports_truncated_when_max_paths_reached(tmp_path):
+    g = _loaded(tmp_path)
+    res = g.find_path(
+        start_model="res.partner",
+        target_model="res.partner",
+        target_field="name",
+        max_depth=4,
+        max_paths=1,
+    )
+    assert res["summary"]["found_paths"] == 1
+    assert res["truncated"] is True
