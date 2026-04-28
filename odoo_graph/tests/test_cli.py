@@ -55,6 +55,69 @@ def test_cli_unknown_target_exits_non_zero(capsys, tmp_path):
     assert "Field not found" in err
 
 
+def test_cli_field_works_with_dotted_model_name(capsys, tmp_path):
+    """Real-world: ifs.gar.partner.supplier.merchant has 4 dots in the name.
+    The splitter must match the longest model prefix, not just rpartition.
+    """
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "field",
+        "ifs.gar.partner.supplier.merchant.t18_contract_info_id",
+        "--out-dir", out, "-f", "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["field"]["model"] == "ifs.gar.partner.supplier.merchant"
+    assert payload["field"]["name"] == "t18_contract_info_id"
+
+
+def test_cli_typo_dropped_dot_gives_helpful_suggestion(capsys, tmp_path):
+    """Reproduces the user-reported case: 'merchant' and 't18...' run together
+    because a dot was dropped. We should recognise the closest model and
+    suggest fix candidates instead of the cryptic 'Field not found'.
+    """
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "field",
+        # Exactly the input the user pasted, minus the missing '.' between
+        # 'merchant' and 't18_contract_info_id'.
+        "ifs.gar.partner.supplier.merchantt18_contract_info_id",
+        "--out-dir", out,
+    ])
+    assert rc == 1
+    err = capsys.readouterr().err
+    # We can't recognise a model prefix here (the merged token breaks the chain).
+    # So we should at least suggest models close to the typo.
+    assert "did you mean" in err or "no model matches" in err
+    # And we shouldn't pretend the model is real.
+    assert "ifs.gar.partner.supplier.merchant" in err
+
+
+def test_cli_field_typo_after_real_model_suggests_fields(capsys, tmp_path):
+    """When the model is correct but the field has a typo, suggestions should
+    list close field names on that model.
+    """
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "field",
+        "ifs.gar.partner.supplier.merchant.t18_contract_info",  # missing _id
+        "--out-dir", out,
+    ])
+    assert rc == 1
+    err = capsys.readouterr().err
+    assert "recognised model: ifs.gar.partner.supplier.merchant" in err
+    assert "t18_contract_info_id" in err  # the real field name
+
+
+def test_cli_unknown_model_suggests_close_models(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main(["model", "res.parner", "--out-dir", out])  # typo: parner
+    assert rc == 1
+    err = capsys.readouterr().err
+    assert "did you mean" in err
+    assert "res.partner" in err
+
+
 def test_cli_requires_out_dir_or_db(capsys):
     with pytest.raises(SystemExit) as exc_info:
         main(["field", "res.partner.name"])

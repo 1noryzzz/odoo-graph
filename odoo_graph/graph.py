@@ -3,11 +3,16 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, Iterator, List, Optional
 
 import networkx as nx
+
+from .logging import get_logger
+
+log = get_logger(__name__)
 
 
 EDGE_KINDS_FIELD_DEPENDS = "FIELD_DEPENDS_ON_FIELD"
@@ -65,6 +70,8 @@ class OdooGraph:
 
     # -- loading ------------------------------------------------------------
     def _load(self) -> None:
+        log.debug("loading dump from %s", self.layout.out_dir)
+        t0 = time.monotonic()
         for n in _iter_jsonl(self.layout.nodes):
             self.g.add_node(n["id"], **n)
         for e in _iter_jsonl(self.layout.edges):
@@ -78,6 +85,17 @@ class OdooGraph:
             for e in _iter_jsonl(self.layout.edges_resolved):
                 attrs = {k: v for k, v in e.items() if k not in ("src", "dst")}
                 self.g.add_edge(e["src"], e["dst"], **attrs)
+        else:
+            log.warning(
+                "edges_resolved.jsonl not found at %s; Field->Field queries "
+                "will be empty. Re-run `odoo-graph dump` to regenerate.",
+                self.layout.edges_resolved,
+            )
+        log.info(
+            "graph loaded: %d nodes / %d edges in %.2fs",
+            self.g.number_of_nodes(), self.g.number_of_edges(),
+            time.monotonic() - t0,
+        )
 
     # -- lookups ------------------------------------------------------------
     def field_id(self, model: str, name: str) -> str:
