@@ -70,6 +70,9 @@ odoo-graph module mail --db odoo_demo
 # 影响分析（BFS 下游，默认 depth=3）
 odoo-graph impact res.partner.name --db odoo_demo --max-depth 2
 
+# 路径寻路（从业务起点到目标字段）
+odoo-graph path child.record res.partner.name --db odoo_demo
+
 # Override 链（跨模块的方法 MRO）
 odoo-graph overrides res.users.write --db odoo_demo
 ```

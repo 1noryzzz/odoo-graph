@@ -259,6 +259,57 @@ def cmd_impact(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_path(args: argparse.Namespace) -> int:
+    g = _load(args)
+    start_model: Optional[str] = None
+    start_field: Optional[str] = None
+
+    if g.node(g.model_id(args.start)) is not None:
+        start_model = args.start
+    else:
+        sm, sf = _split_model_field(g, args.start)
+        if sm and sf:
+            start_model, start_field = sm, sf
+        else:
+            log.error("path start must be 'model' or 'model.field' (got %r)", args.start)
+            return 2
+
+    target_model, target_field = _split_model_field(g, args.target)
+    if not target_model or not target_field:
+        log.error("path target must be 'model.field' (got %r)", args.target)
+        return 2
+
+    allow_kinds = None
+    if args.allow_kinds:
+        allow_kinds = [k.strip() for k in args.allow_kinds.split(",") if k.strip()]
+
+    try:
+        payload = g.find_path(
+            start_model=start_model,
+            start_field=start_field,
+            target_model=target_model,
+            target_field=target_field,
+            max_depth=args.max_depth,
+            max_paths=args.max_paths,
+            edge_kinds=allow_kinds,
+        )
+    except KeyError as exc:
+        log.error("%s", exc)
+        log.info("\nstart suggestion:\n%s", _suggest_field(g, args.start))
+        log.info("\ntarget suggestion:\n%s", _suggest_field(g, args.target))
+        return 1
+    except ValueError as exc:
+        log.error("%s", exc)
+        return 2
+
+    log.info(
+        "path %s -> %s.%s: %d path(s)",
+        args.start, target_model, target_field, payload["summary"]["found_paths"],
+    )
+    emit(payload, kind="path", fmt=args.format)
+    return 0
+
+
 def cmd_overrides(args: argparse.Namespace) -> int:
     g = _load(args)
     # Methods follow the same model.method shape; reuse the splitter (it works
@@ -362,6 +413,20 @@ def build_parser() -> argparse.ArgumentParser:
     pi.add_argument("--max-depth", type=int, default=3)
     _add_common_query_args(pi)
     pi.set_defaults(func=cmd_impact)
+
+    # path
+    pp = sub.add_parser("path", help="Find path(s) from a start model/field to a target field.")
+    pp.add_argument("start", help="Start point: model or model.field")
+    pp.add_argument("target", help="Target field: model.field")
+    pp.add_argument("--max-depth", type=int, default=6)
+    pp.add_argument("--max-paths", type=int, default=3)
+    pp.add_argument(
+        "--allow-kinds",
+        default=None,
+        help="Comma-separated edge kinds whitelist.",
+    )
+    _add_common_query_args(pp)
+    pp.set_defaults(func=cmd_path)
 
     # overrides
     po = sub.add_parser("overrides", help="Override chain of a method.")

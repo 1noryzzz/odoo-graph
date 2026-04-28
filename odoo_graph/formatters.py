@@ -35,6 +35,8 @@ def _render_human(payload: Dict[str, Any], kind: str) -> str:
         return _h_module(payload)
     if kind == "impact":
         return _h_impact(payload)
+    if kind == "path":
+        return _h_path(payload)
     if kind == "overrides":
         return _h_overrides(payload)
     if kind == "dump":
@@ -144,6 +146,35 @@ def _h_overrides(p: Dict[str, Any]) -> str:
         lines.append(f"{arrow}[{i}] class={c['class']}  addon={c.get('addon')}  module={c.get('module')}")
     if chain:
         lines.append("  └─ (base)")
+    return "\n".join(lines)
+
+
+def _h_path(p: Dict[str, Any]) -> str:
+    s = p["summary"]
+    start = s["start_model"] if not s.get("start_field") else f"{s['start_model']}.{s['start_field']}"
+    target = f"{s['target_model']}.{s['target_field']}"
+    lines = [_box(f"Path  {start}  ->  {target}  (max_depth={s['max_depth']})")]
+    lines.append(f"  found paths : {s['found_paths']} / max_paths={s['max_paths']}")
+    lines.append(f"  truncated   : {p.get('truncated')}")
+    lines.append(f"  edge kinds  : {', '.join(s.get('edge_kinds') or [])}")
+
+    for idx, path in enumerate(p.get("paths", []), start=1):
+        lines.append("")
+        lines.append(f"  [{idx}] depth={path.get('depth')}")
+        hops = path.get("hops") or []
+        if not hops:
+            lines.append("      (start already equals target)")
+            continue
+        for hop in hops:
+            detail = f"kind={hop.get('edge_kind')}"
+            if hop.get("path"):
+                detail += f", via='{hop.get('path')}'"
+            lines.append(
+                f"      {hop.get('src', '').replace('field::', '').replace('model::', '')}"
+                f" -> {hop.get('dst', '').replace('field::', '').replace('model::', '')}"
+                f"  ({detail})"
+            )
+
     return "\n".join(lines)
 
 

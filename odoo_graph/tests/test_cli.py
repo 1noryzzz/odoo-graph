@@ -47,6 +47,37 @@ def test_cli_overrides(capsys, tmp_path):
     assert payload["override_depth"] == 3
 
 
+def test_cli_path_from_model_json(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "child.record",
+        "res.partner.name",
+        "--out-dir", out,
+        "-f", "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["summary"]["found_paths"] == 1
+    hops = payload["paths"][0]["hops"]
+    assert [h["edge_kind"] for h in hops] == ["MODEL_DELEGATES_TO_MODEL", "MODEL_HAS_FIELD"]
+
+
+def test_cli_path_allow_kinds_can_block_route(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "child.record",
+        "res.partner.name",
+        "--allow-kinds", "FIELD_DEPENDS_ON_FIELD",
+        "--out-dir", out,
+        "-f", "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["summary"]["found_paths"] == 0
+
+
 def test_cli_unknown_target_exits_non_zero(capsys, tmp_path):
     out = _bootstrap(tmp_path)
     rc = main(["field", "res.partner.not_a_field", "--out-dir", out])

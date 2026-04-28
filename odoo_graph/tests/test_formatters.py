@@ -32,3 +32,19 @@ def test_json_format_is_valid_json(tmp_path):
 def test_graphviz_is_hooked_but_raises(tmp_path):
     with pytest.raises(NotImplementedError):
         render({"x": 1}, kind="field", fmt="graphviz")
+
+
+def test_human_path_output_contains_hops(tmp_path):
+    build_fixture(tmp_path)
+    resolve_paths(str(tmp_path))
+    g = load_graph(str(tmp_path))
+    payload = g.find_path(
+        start_model="child.record",
+        target_model="res.partner",
+        target_field="name",
+        max_depth=4,
+    )
+    out = render(payload, kind="path", fmt="human")
+    assert "Path  child.record  ->  res.partner.name" in out
+    assert "MODEL_DELEGATES_TO_MODEL" in out
+    assert "child.record -> res.partner" in out
