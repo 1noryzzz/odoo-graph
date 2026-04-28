@@ -39,6 +39,8 @@ def _render_human(payload: Dict[str, Any], kind: str) -> str:
         return _h_overrides(payload)
     if kind == "dump":
         return _h_dump(payload)
+    if kind == "path":
+        return _h_path(payload)
     return _json.dumps(payload, ensure_ascii=False, indent=2, default=str)
 
 
@@ -156,6 +158,36 @@ def _h_dump(p: Dict[str, Any]) -> str:
     lines.append(f"  fields>=2 modules : {s['fields_multi_module']}")
     lines.append(f"  overrides : {s['methods_with_overrides']} methods, {s['edges_method_overrides']} edges")
     lines.append(f"  depends paths: {s['edges_depends_field']}  -> resolved {r['resolved']} (unresolved {r['unresolved']})")
+    return "\n".join(lines)
+
+
+def _h_path(p: Dict[str, Any]) -> str:
+    start = f"{p['start']['model']}.{p['start']['name']}"
+    target = f"{p['target']['model']}.{p['target']['name']}"
+    lines = [_box(f"Path  {start} -> {target}")]
+    lines.append(
+        f"  matched paths     : {len(p['paths'])}"
+        f"{' (truncated)' if p.get('truncated') else ''}"
+    )
+    lines.append(f"  max_depth         : {p.get('max_depth')}")
+    lines.append(f"  searched_edges    : {p.get('searched_edges')}")
+    if not p["paths"]:
+        lines.append("  (no path)")
+        return "\n".join(lines)
+    for i, one in enumerate(p["paths"], start=1):
+        lines.append(f"  [{i}] hops={one['length']}")
+        for hop in one["hops"]:
+            src = hop["src"].replace("field::", "")
+            dst = hop["dst"].replace("field::", "")
+            edge_kind = hop.get("edge_kind")
+            if edge_kind == "FIELD_DEPENDS_ON_FIELD":
+                lines.append(
+                    f"      {src} -> {dst} ({edge_kind}, via '{hop.get('path')}')"
+                )
+            else:
+                lines.append(
+                    f"      {src} -> {dst} ({edge_kind}, path='{hop.get('path')}')"
+                )
     return "\n".join(lines)
 
 

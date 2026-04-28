@@ -70,6 +70,9 @@ odoo-graph module mail --db odoo_demo
 # 影响分析（BFS 下游，默认 depth=3）
 odoo-graph impact res.partner.name --db odoo_demo --max-depth 2
 
+# 字段到字段的最短依赖路径（可限制深度/返回条数）
+odoo-graph path res.partner.display_name res.partner.name --db odoo_demo --max-depth 3
+
 # Override 链（跨模块的方法 MRO）
 odoo-graph overrides res.users.write --db odoo_demo
 ```
@@ -162,11 +165,12 @@ CI 在每次 push / PR 上跑：
 
 ---
 
-## 已知限制 (Phase 1)
+## 已知限制 (Phase 1 / 1.5)
 
 - `dump` 需要 Odoo 能在本机启动（Postgres + 依赖包）
 - `overrides` 的 depth 按"MRO 中同名 callable 即算一次"，不保证签名一致；Phase 2 会加 `inspect.signature` + `super()` 调用检查
 - XML view 字段引用、方法体内的字段读写 — Phase 3/4 再加 AST 补
+- ✅ Phase 1.5 已覆盖：字段间最短路径查询（`odoo-graph path`）。
 
 详见 [`registry-probe/PLAN.md`](registry-probe/PLAN.md)。
 
@@ -175,6 +179,7 @@ CI 在每次 push / PR 上跑：
 ## Phase 路线
 
 - ✅ **Phase 1** (本 PR) — CLI 工具化 + 5 个核心查询 + CI
+- ✅ **Phase 1.5** — 字段间最短路径查询（`path`）
 - ⏳ **Phase 2** — override 判定升级（同签名 + super 调用检查）
 - ⏳ **Phase 3** — AST 补 compute/inverse 方法体的字段读写
 - ⏳ **Phase 4** — XML view 字段引用解析

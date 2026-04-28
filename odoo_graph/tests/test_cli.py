@@ -47,6 +47,60 @@ def test_cli_overrides(capsys, tmp_path):
     assert payload["override_depth"] == 3
 
 
+def test_cli_path_json_shortest(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "res.partner.display_name",
+        "res.partner.name",
+        "--out-dir",
+        out,
+        "-f",
+        "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["start"]["id"] == "field::res.partner.display_name"
+    assert payload["target"]["id"] == "field::res.partner.name"
+    assert len(payload["paths"]) == 2
+    assert all(p["length"] == 1 for p in payload["paths"])
+
+
+def test_cli_path_empty_when_unreachable(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "res.partner.name",
+        "res.partner.display_name",
+        "--out-dir",
+        out,
+        "-f",
+        "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["paths"] == []
+
+
+def test_cli_path_max_depth(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "res.partner.display_name",
+        "res.partner.name",
+        "--out-dir",
+        out,
+        "--max-depth",
+        "0",
+        "-f",
+        "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["max_depth"] == 0
+    assert payload["paths"] == []
+
+
 def test_cli_unknown_target_exits_non_zero(capsys, tmp_path):
     out = _bootstrap(tmp_path)
     rc = main(["field", "res.partner.not_a_field", "--out-dir", out])

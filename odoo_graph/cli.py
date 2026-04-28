@@ -287,6 +287,42 @@ def cmd_overrides(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_path(args: argparse.Namespace) -> int:
+    g = _load(args)
+    start_model, start_name = _split_model_field(g, args.start)
+    target_model, target_name = _split_model_field(g, args.target)
+    if not start_model or not start_name:
+        log.error("path start must be 'model.field' (got %r)", args.start)
+        return 2
+    if not target_model or not target_name:
+        log.error("path target must be 'model.field' (got %r)", args.target)
+        return 2
+    try:
+        payload = g.find_field_paths(
+            start_model,
+            start_name,
+            target_model,
+            target_name,
+            max_depth=args.max_depth,
+            max_paths=args.max_paths,
+        )
+    except KeyError as exc:
+        log.error("%s", exc)
+        return 1
+    log.info(
+        "path %s.%s -> %s.%s: %d path(s), depth<=%d, searched_edges=%d",
+        start_model,
+        start_name,
+        target_model,
+        target_name,
+        len(payload["paths"]),
+        args.max_depth,
+        payload["searched_edges"],
+    )
+    emit(payload, kind="path", fmt=args.format)
+    return 0
+
+
 # ---------- parser ---------------------------------------------------------
 
 def build_parser() -> argparse.ArgumentParser:
@@ -368,6 +404,15 @@ def build_parser() -> argparse.ArgumentParser:
     po.add_argument("target", help="model.method, e.g. res.users.write")
     _add_common_query_args(po)
     po.set_defaults(func=cmd_overrides)
+
+    # path
+    pp = sub.add_parser("path", help="Shortest depends paths between two fields.")
+    pp.add_argument("start", help="start model.field")
+    pp.add_argument("target", help="target model.field")
+    pp.add_argument("--max-depth", type=int, default=4)
+    pp.add_argument("--max-paths", type=int, default=20)
+    _add_common_query_args(pp)
+    pp.set_defaults(func=cmd_path)
 
     return p
 

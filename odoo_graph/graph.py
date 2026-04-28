@@ -180,6 +180,74 @@ class OdooGraph:
                 frontier.append((src, depth + 1, new_path))
         return impacted
 
+    def find_field_paths(
+        self,
+        start_model: str,
+        start_name: str,
+        target_model: str,
+        target_name: str,
+        max_depth: int = 4,
+        max_paths: int = 20,
+    ) -> Dict[str, Any]:
+        """Find shortest Field->Field depends paths from start to target.
+
+        Paths follow ``FIELD_DEPENDS_ON_FIELD`` edge direction:
+        computed_field -> dependency_field.
+        """
+        start = self.field_id(start_model, start_name)
+        target = self.field_id(target_model, target_name)
+        if start not in self.g:
+            raise KeyError(f"Field not found: {start_model}.{start_name}")
+        if target not in self.g:
+            raise KeyError(f"Field not found: {target_model}.{target_name}")
+
+        queue: List[tuple[str, List[dict]]] = [(start, [])]
+        shortest_depth: Optional[int] = None
+        found: List[List[dict]] = []
+        searched_edges = 0
+        best_depth: Dict[str, int] = {start: 0}
+
+        while queue:
+            nid, hops = queue.pop(0)
+            depth = len(hops)
+            if shortest_depth is not None and depth >= shortest_depth:
+                continue
+            if depth >= max_depth:
+                continue
+            for dst, data in self.edges_out(nid, kind=EDGE_KINDS_FIELD_DEPENDS):
+                searched_edges += 1
+                next_depth = depth + 1
+                prev_depth = best_depth.get(dst)
+                if prev_depth is not None and prev_depth < next_depth:
+                    continue
+                hop = {
+                    "src": nid,
+                    "dst": dst,
+                    "edge_kind": data.get("kind"),
+                    "path": data.get("path"),
+                }
+                new_hops = hops + [hop]
+                if dst == target:
+                    shortest_depth = len(new_hops)
+                    found.append(new_hops)
+                    continue
+                best_depth[dst] = next_depth
+                queue.append((dst, new_hops))
+
+        found.sort(key=lambda p: (len(p), tuple((h["src"], h["dst"], h.get("path")) for h in p)))
+        truncated = len(found) > max_paths
+        if truncated:
+            found = found[:max_paths]
+
+        return {
+            "start": {"id": start, "model": start_model, "name": start_name},
+            "target": {"id": target, "model": target_model, "name": target_name},
+            "paths": [{"hops": p, "length": len(p)} for p in found],
+            "max_depth": max_depth,
+            "searched_edges": searched_edges,
+            "truncated": truncated,
+        }
+
     def model_summary(self, model: str) -> Dict[str, Any]:
         mid = self.model_id(model)
         md = self.node(mid)

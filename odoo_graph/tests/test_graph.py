@@ -56,3 +56,36 @@ def test_overrides_returns_chain(tmp_path):
     assert md["override_depth"] == 3
     addons = [c["addon"] for c in md["defined_in_classes"]]
     assert addons == ["ext", "base", None]
+
+
+def test_path_hits_shortest_paths(tmp_path):
+    g = _loaded(tmp_path)
+    payload = g.find_field_paths(
+        "res.partner", "display_name",
+        "res.partner", "name",
+        max_depth=2,
+    )
+    assert payload["start"]["id"] == "field::res.partner.display_name"
+    assert payload["target"]["id"] == "field::res.partner.name"
+    assert len(payload["paths"]) == 2
+    assert all(p["length"] == 1 for p in payload["paths"])
+
+
+def test_path_returns_empty_when_unreachable(tmp_path):
+    g = _loaded(tmp_path)
+    payload = g.find_field_paths(
+        "res.partner", "name",
+        "res.partner", "display_name",
+        max_depth=3,
+    )
+    assert payload["paths"] == []
+
+
+def test_path_respects_max_depth_truncation(tmp_path):
+    g = _loaded(tmp_path)
+    payload = g.find_field_paths(
+        "res.partner", "display_name",
+        "res.partner", "name",
+        max_depth=0,
+    )
+    assert payload["paths"] == []

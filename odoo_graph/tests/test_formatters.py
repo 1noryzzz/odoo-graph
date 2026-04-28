@@ -32,3 +32,13 @@ def test_json_format_is_valid_json(tmp_path):
 def test_graphviz_is_hooked_but_raises(tmp_path):
     with pytest.raises(NotImplementedError):
         render({"x": 1}, kind="field", fmt="graphviz")
+
+
+def test_human_path_output_shows_via_for_depends_edges(tmp_path):
+    build_fixture(tmp_path)
+    resolve_paths(str(tmp_path))
+    g = load_graph(str(tmp_path))
+    payload = g.find_field_paths("res.partner", "display_name", "res.partner", "name")
+    out = render(payload, kind="path", fmt="human")
+    assert "matched paths" in out
+    assert "via 'name'" in out or "via 'parent_id.name'" in out
