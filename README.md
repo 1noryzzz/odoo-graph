@@ -80,6 +80,28 @@ odoo-graph overrides res.users.write --db odoo_demo
 - `-f json`（管道到 jq 等工具）
 - `-f graphviz`（预留钩子，暂未实现；见 `odoo_graph/formatters.py`）
 
+### 4) 日志
+
+所有 log 都打到 **stderr**，stdout 保持干净（`-f json | jq` 不会被污染）。
+
+```bash
+odoo-graph field model.f --out-dir ...                 # 默认 INFO，告诉你查了啥、几条边
+odoo-graph -v field model.f --out-dir ...              # DEBUG，看 graph 加载耗时、参数解析
+odoo-graph -q field model.f --out-dir ... -f json      # 只打 ERROR，适合脚本里调用
+odoo-graph --log-level WARNING field model.f ...       # 显式指定级别
+ODOO_GRAPH_LOG=DEBUG odoo-graph field model.f ...      # 环境变量同效
+```
+
+**典型 INFO 输出（默认）：**
+
+```
+09:26:17 [INFO ] odoo_graph.graph: graph loaded: 149503 nodes / 67749 edges in 1.65s
+09:26:17 [INFO ] odoo_graph.cli: field ifs.gar.partner.supplier.merchant.t18_contract_info_id: 0 upstream / 1 downstream
+... 命令的实际输出 ...
+```
+
+**`-v` 时还会有：** `argv` 拆分、`out_dir` 解析路径、子命令参数、subprocess 命令行、Odoo stderr 尾部 60 行（dump 失败时排查必备）、未解析的 depends 路径前 10 条。
+
 ---
 
 ## 架构

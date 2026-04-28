@@ -7,14 +7,20 @@ and wires subprocess + environment.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import shlex
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
+from .logging import get_logger
 from .resolve import resolve_paths
+
+log = get_logger(__name__)
+_DEBUG = logging.DEBUG
 
 _PROBE_SCRIPT = Path(__file__).with_name("_probe_script.py")
 
@@ -69,12 +75,14 @@ def dump(
     odoo_root = _abs_str(odoo_path)
     if not os.path.isfile(os.path.join(odoo_root, "odoo-bin")):
         raise DumpError(f"odoo-bin not found under {odoo_root}")
+    log.debug("odoo_path=%s database=%s", odoo_root, database)
 
     if out_dir is None:
         out = _default_cache_dir(database)
     else:
         out = Path(out_dir).expanduser().resolve()
     out.mkdir(parents=True, exist_ok=True)
+    log.debug("out_dir=%s", out)
 
     addons_list: List[str] = []
     default_addons = Path(odoo_root) / "addons"
@@ -85,6 +93,7 @@ def dump(
             absp = _abs_str(p)
             if absp not in addons_list:
                 addons_list.append(absp)
+    log.debug("addons_path=%s", addons_list)
 
     py = python_exe or sys.executable
     cmd = [
@@ -119,13 +128,28 @@ def dump(
 
     script = _PROBE_SCRIPT.read_text(encoding="utf-8")
 
-    print(f"[odoo-graph] $ {' '.join(shlex.quote(c) for c in cmd)}", file=sys.stderr)
+    pretty_cmd = " ".join(shlex.quote(c) for c in cmd)
+    log.info("running odoo-bin shell to dump registry (db=%s)", database)
+    log.debug("$ %s", pretty_cmd)
+
+    t0 = time.monotonic()
     proc = subprocess.run(
         cmd, input=script, text=True, env=env,
         capture_output=True,
     )
+    elapsed = time.monotonic() - t0
+    log.debug("odoo-bin exited rc=%d in %.1fs", proc.returncode, elapsed)
+
+    # When DEBUG, surface the probe's own log lines so users can correlate
+    # what the running Odoo printed (module loading, registry setup, ...).
+    if proc.stderr:
+        if log.isEnabledFor(_DEBUG):
+            for line in proc.stderr.splitlines()[-60:]:
+                log.debug("odoo-bin: %s", line)
+
     if proc.returncode != 0:
         tail = "\n".join(proc.stderr.splitlines()[-30:])
+        log.error("odoo-bin shell exited %d", proc.returncode)
         raise DumpError(
             f"odoo-bin shell exited {proc.returncode}\n--- stderr tail ---\n{tail}"
         )
@@ -133,8 +157,14 @@ def dump(
     summary_path = out / "summary.json"
     if not summary_path.exists():
         tail = "\n".join(proc.stderr.splitlines()[-30:])
+        log.error("probe did not produce summary.json (out=%s)", out)
         raise DumpError(f"probe did not write summary.json\n--- stderr tail ---\n{tail}")
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    log.info(
+        "registry dumped in %.1fs: %d models / %d fields / %d override edges",
+        elapsed, summary.get("models", 0), summary.get("fields", 0),
+        summary.get("edges_method_overrides", 0),
+    )
 
     resolve_counts = resolve_paths(str(out))
 

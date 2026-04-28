@@ -13,6 +13,9 @@ from .config import ConfigValues, load_config, merge
 from .dump import DumpError, _default_cache_dir, dump as dump_registry
 from .formatters import FORMATS, emit
 from .graph import OdooGraph, load_graph
+from .logging import get_logger, setup_logging
+
+log = get_logger(__name__)
 
 
 def _add_common_query_args(p: argparse.ArgumentParser) -> None:
@@ -33,15 +36,18 @@ def _add_common_query_args(p: argparse.ArgumentParser) -> None:
 
 def _resolve_out_dir(args: argparse.Namespace) -> str:
     if args.out_dir:
+        log.debug("resolved out_dir from --out-dir: %s", args.out_dir)
         return args.out_dir
     env = os.environ.get("ODOO_GRAPH_OUT_DIR")
     if env:
+        log.debug("resolved out_dir from $ODOO_GRAPH_OUT_DIR: %s", env)
         return env
     if args.db:
-        return str(_default_cache_dir(args.db))
-    print(
-        "[odoo-graph] need --out-dir, --db, or $ODOO_GRAPH_DB to locate the dump",
-        file=sys.stderr,
+        d = str(_default_cache_dir(args.db))
+        log.debug("resolved out_dir from --db default cache: %s", d)
+        return d
+    log.error(
+        "need --out-dir, --db, or $ODOO_GRAPH_DB to locate the dump"
     )
     sys.exit(2)
 
@@ -130,22 +136,28 @@ def cmd_dump(args: argparse.Namespace) -> int:
         try:
             conf_vals = load_config(args.config)
         except FileNotFoundError as exc:
-            print(f"[odoo-graph] {exc}", file=sys.stderr)
+            log.error("%s", exc)
             return 1
-        print(
-            f"[odoo-graph] loaded config: {conf_vals.source_path}",
-            file=sys.stderr,
+        log.info("loaded config: %s", conf_vals.source_path)
+        log.debug(
+            "config values: db_host=%s db_port=%s db_user=%s db_name=%s "
+            "addons_path=%s",
+            conf_vals.db_host, conf_vals.db_port, conf_vals.db_user,
+            conf_vals.db_name, conf_vals.addons_path,
         )
 
     effective = merge(cli_vals, conf_vals)
     database = effective.db_name
     if not database:
-        print(
-            "[odoo-graph] database name required: pass -d or set db_name in the "
-            "config file",
-            file=sys.stderr,
+        log.error(
+            "database name required: pass -d or set db_name in the config file",
         )
         return 2
+    log.debug(
+        "effective: db=%s host=%s port=%s user=%s addons=%d dirs",
+        effective.db_name, effective.db_host, effective.db_port,
+        effective.db_user, len(effective.addons_path),
+    )
 
     try:
         result = dump_registry(
@@ -160,7 +172,7 @@ def cmd_dump(args: argparse.Namespace) -> int:
             out_dir=args.out_dir,
         )
     except DumpError as exc:
-        print(f"[odoo-graph] dump failed: {exc}", file=sys.stderr)
+        log.error("dump failed: %s", exc)
         return 1
     emit(result, kind="dump", fmt=args.format)
     return 0
@@ -170,14 +182,19 @@ def cmd_field(args: argparse.Namespace) -> int:
     g = _load(args)
     model, name = _split_model_field(g, args.target)
     if not model or not name:
-        print("[odoo-graph] field target must be 'model.field'", file=sys.stderr)
+        log.error("field target must be 'model.field' (got %r)", args.target)
         return 2
+    log.debug("field query: model=%s name=%s", model, name)
     try:
         payload = g.field_lineage(model, name)
     except KeyError as exc:
-        print(f"[odoo-graph] {exc}", file=sys.stderr)
-        print(_suggest_field(g, args.target), file=sys.stderr)
+        log.error("%s", exc)
+        log.info("\n%s", _suggest_field(g, args.target))
         return 1
+    log.info(
+        "field %s.%s: %d upstream / %d downstream",
+        model, name, len(payload["upstream"]), len(payload["downstream"]),
+    )
     emit(payload, kind="field", fmt=args.format)
     return 0
 
@@ -187,10 +204,15 @@ def cmd_model(args: argparse.Namespace) -> int:
     try:
         payload = g.model_summary(args.target)
     except KeyError as exc:
-        print(f"[odoo-graph] {exc}", file=sys.stderr)
+        log.error("%s", exc)
         candidates = [n["name"] for n in g.nodes_of_kind("Model")]
-        print(_suggest("model", candidates, args.target), file=sys.stderr)
+        log.info("\n%s", _suggest("model", candidates, args.target))
         return 1
+    log.info(
+        "model %s: extended by %d module(s), %d field group(s)",
+        args.target, len(payload["extended_by_modules"]),
+        len(payload["fields_by_module"]),
+    )
     emit(payload, kind="model", fmt=args.format)
     return 0
 
@@ -200,10 +222,15 @@ def cmd_module(args: argparse.Namespace) -> int:
     try:
         payload = g.module_summary(args.target)
     except KeyError as exc:
-        print(f"[odoo-graph] {exc}", file=sys.stderr)
+        log.error("%s", exc)
         candidates = [n["name"] for n in g.nodes_of_kind("Module")]
-        print(_suggest("module", candidates, args.target), file=sys.stderr)
+        log.info("\n%s", _suggest("module", candidates, args.target))
         return 1
+    log.info(
+        "module %s: %d original models, %d extended models",
+        args.target, len(payload["original_models"]),
+        len(payload["extended_models"]),
+    )
     emit(payload, kind="module", fmt=args.format)
     return 0
 
@@ -212,14 +239,18 @@ def cmd_impact(args: argparse.Namespace) -> int:
     g = _load(args)
     model, name = _split_model_field(g, args.target)
     if not model or not name:
-        print("[odoo-graph] impact target must be 'model.field'", file=sys.stderr)
+        log.error("impact target must be 'model.field' (got %r)", args.target)
         return 2
     try:
         hits = g.impact(model, name, max_depth=args.max_depth)
     except KeyError as exc:
-        print(f"[odoo-graph] {exc}", file=sys.stderr)
-        print(_suggest_field(g, args.target), file=sys.stderr)
+        log.error("%s", exc)
+        log.info("\n%s", _suggest_field(g, args.target))
         return 1
+    log.info(
+        "impact %s.%s (depth<=%d): %d affected fields",
+        model, name, args.max_depth, len(hits),
+    )
     emit(
         {"target": {"model": model, "name": name},
          "max_depth": args.max_depth, "impacted": hits},
@@ -234,20 +265,24 @@ def cmd_overrides(args: argparse.Namespace) -> int:
     # the same way — first prefix that matches a real model wins).
     model, method = _split_model_field(g, args.target)
     if not model or not method:
-        print("[odoo-graph] overrides target must be 'model.method'", file=sys.stderr)
+        log.error("overrides target must be 'model.method' (got %r)", args.target)
         return 2
     try:
         payload = g.overrides_of(model, method)
     except KeyError as exc:
-        print(f"[odoo-graph] {exc}", file=sys.stderr)
+        log.error("%s", exc)
         # Suggest method names defined on this model, if we identified one.
         if g.node(g.model_id(model)) is not None:
             method_names = sorted({
                 n["name"] for n in g.nodes_of_kind("Method")
                 if n["model"] == model
             })
-            print(_suggest("method", method_names, method), file=sys.stderr)
+            log.info("\n%s", _suggest("method", method_names, method))
         return 1
+    log.info(
+        "overrides %s.%s: depth=%d",
+        model, method, payload.get("override_depth", 0),
+    )
     emit(payload, kind="overrides", fmt=args.format)
     return 0
 
@@ -257,6 +292,19 @@ def cmd_overrides(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="odoo-graph")
     p.add_argument("--version", action="version", version=f"odoo-graph {__version__}")
+    p.add_argument(
+        "-v", "--verbose", action="count", default=0,
+        help="Increase log verbosity (-v=DEBUG). Overrides --log-level.",
+    )
+    p.add_argument(
+        "--log-level", default=None,
+        choices=["DEBUG", "INFO", "WARNING", "ERROR"],
+        help="Set log level (default: INFO; or $ODOO_GRAPH_LOG).",
+    )
+    p.add_argument(
+        "-q", "--quiet", action="store_true",
+        help="Only print errors. Equivalent to --log-level ERROR.",
+    )
     sub = p.add_subparsers(dest="cmd", required=True)
 
     # dump
@@ -327,6 +375,14 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    # CLI flag precedence: --quiet > -v > --log-level > $ODOO_GRAPH_LOG > INFO
+    level: Optional[str] = None
+    if getattr(args, "quiet", False):
+        level = "ERROR"
+    elif getattr(args, "log_level", None):
+        level = args.log_level
+    setup_logging(level=level, verbosity=getattr(args, "verbose", 0))
+    log.debug("argv=%r", argv if argv is not None else sys.argv[1:])
     return int(args.func(args) or 0)
 
 
