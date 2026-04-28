@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from . import __version__
 from .config import ConfigValues, load_config, merge
@@ -47,6 +48,69 @@ def _resolve_out_dir(args: argparse.Namespace) -> str:
 
 def _load(args: argparse.Namespace) -> OdooGraph:
     return load_graph(_resolve_out_dir(args))
+
+
+def _split_model_field(g: OdooGraph, target: str) -> Tuple[str, str]:
+    """Split 'model.field' robustly even when the model name contains dots.
+
+    Strategy: walk every '.' position from the right; the first split where
+    the left side matches a real model node wins. If none match, we still
+    fall back to rpartition() so the downstream "field not found" handler
+    can suggest similar names.
+    """
+    parts = target.split(".")
+    if len(parts) < 2:
+        return ("", target)
+    for i in range(len(parts) - 1, 0, -1):
+        candidate_model = ".".join(parts[:i])
+        if g.node(g.model_id(candidate_model)) is not None:
+            return (candidate_model, ".".join(parts[i:]))
+    # No real model matched — return rpartition split as best guess.
+    model, _, name = target.rpartition(".")
+    return (model, name)
+
+
+def _suggest(label: str, candidates: list, want: str, n: int = 5) -> str:
+    matches = difflib.get_close_matches(want, candidates, n=n, cutoff=0.5)
+    if not matches:
+        return f"  no close {label} matches found"
+    bullet = "\n".join(f"    - {m}" for m in matches)
+    return f"  did you mean one of:\n{bullet}"
+
+
+def _suggest_field(g: OdooGraph, target: str) -> str:
+    """When a 'model.field' lookup fails, try to suggest a fix.
+
+    Two failure modes:
+      1) Wrong model split (e.g. dropped a dot): suggest models close to the
+         best-guess model substring.
+      2) Right model, wrong field name: suggest fields on that model.
+    """
+    parts = target.split(".")
+    # Try each split position; for each, score "model exists" + "fields close"
+    best_model: Optional[str] = None
+    for i in range(len(parts) - 1, 0, -1):
+        m = ".".join(parts[:i])
+        if g.node(g.model_id(m)) is not None:
+            best_model = m
+            break
+    out = []
+    if best_model:
+        wanted_field = target[len(best_model) + 1:]
+        field_names = [
+            n["name"]
+            for n in g.nodes_of_kind("Field") if n["model"] == best_model
+        ]
+        out.append(f"  recognised model: {best_model}")
+        out.append(f"  looking for field: {wanted_field!r}")
+        out.append(_suggest("field", field_names, wanted_field))
+    else:
+        # No prefix matched any model. Suggest models close to the longest prefix.
+        candidates = [n["name"] for n in g.nodes_of_kind("Model")]
+        guess = ".".join(parts[:-1]) if len(parts) > 1 else target
+        out.append(f"  no model matches a prefix of {target!r}")
+        out.append(_suggest("model", candidates, guess))
+    return "\n".join(out)
 
 
 # ---------- subcommands ----------------------------------------------------
@@ -104,14 +168,15 @@ def cmd_dump(args: argparse.Namespace) -> int:
 
 def cmd_field(args: argparse.Namespace) -> int:
     g = _load(args)
-    model, _, name = args.target.rpartition(".")
-    if not model:
+    model, name = _split_model_field(g, args.target)
+    if not model or not name:
         print("[odoo-graph] field target must be 'model.field'", file=sys.stderr)
         return 2
     try:
         payload = g.field_lineage(model, name)
     except KeyError as exc:
         print(f"[odoo-graph] {exc}", file=sys.stderr)
+        print(_suggest_field(g, args.target), file=sys.stderr)
         return 1
     emit(payload, kind="field", fmt=args.format)
     return 0
@@ -123,6 +188,8 @@ def cmd_model(args: argparse.Namespace) -> int:
         payload = g.model_summary(args.target)
     except KeyError as exc:
         print(f"[odoo-graph] {exc}", file=sys.stderr)
+        candidates = [n["name"] for n in g.nodes_of_kind("Model")]
+        print(_suggest("model", candidates, args.target), file=sys.stderr)
         return 1
     emit(payload, kind="model", fmt=args.format)
     return 0
@@ -134,6 +201,8 @@ def cmd_module(args: argparse.Namespace) -> int:
         payload = g.module_summary(args.target)
     except KeyError as exc:
         print(f"[odoo-graph] {exc}", file=sys.stderr)
+        candidates = [n["name"] for n in g.nodes_of_kind("Module")]
+        print(_suggest("module", candidates, args.target), file=sys.stderr)
         return 1
     emit(payload, kind="module", fmt=args.format)
     return 0
@@ -141,14 +210,15 @@ def cmd_module(args: argparse.Namespace) -> int:
 
 def cmd_impact(args: argparse.Namespace) -> int:
     g = _load(args)
-    model, _, name = args.target.rpartition(".")
-    if not model:
+    model, name = _split_model_field(g, args.target)
+    if not model or not name:
         print("[odoo-graph] impact target must be 'model.field'", file=sys.stderr)
         return 2
     try:
         hits = g.impact(model, name, max_depth=args.max_depth)
     except KeyError as exc:
         print(f"[odoo-graph] {exc}", file=sys.stderr)
+        print(_suggest_field(g, args.target), file=sys.stderr)
         return 1
     emit(
         {"target": {"model": model, "name": name},
@@ -160,14 +230,23 @@ def cmd_impact(args: argparse.Namespace) -> int:
 
 def cmd_overrides(args: argparse.Namespace) -> int:
     g = _load(args)
-    model, _, method = args.target.rpartition(".")
-    if not model:
+    # Methods follow the same model.method shape; reuse the splitter (it works
+    # the same way — first prefix that matches a real model wins).
+    model, method = _split_model_field(g, args.target)
+    if not model or not method:
         print("[odoo-graph] overrides target must be 'model.method'", file=sys.stderr)
         return 2
     try:
         payload = g.overrides_of(model, method)
     except KeyError as exc:
         print(f"[odoo-graph] {exc}", file=sys.stderr)
+        # Suggest method names defined on this model, if we identified one.
+        if g.node(g.model_id(model)) is not None:
+            method_names = sorted({
+                n["name"] for n in g.nodes_of_kind("Method")
+                if n["model"] == model
+            })
+            print(_suggest("method", method_names, method), file=sys.stderr)
         return 1
     emit(payload, kind="overrides", fmt=args.format)
     return 0

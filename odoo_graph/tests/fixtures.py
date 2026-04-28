@@ -81,6 +81,21 @@ def build_fixture(out_dir: str | os.PathLike) -> str:
              {"class": "Partner", "module": "odoo.addons.base.models", "addon": "base"},
              {"class": "BaseModel", "module": "odoo.models", "addon": None},
          ]},
+
+        # Dotted-name model (mirrors real names like ifs.gar.partner.supplier.merchant).
+        # Used by tests for the smart model.field splitter and "did you mean" suggestions.
+        {"kind": "Model", "id": "model::ifs.gar.partner.supplier.merchant",
+         "name": "ifs.gar.partner.supplier.merchant", "description": "Merchant",
+         "abstract": False, "transient": False,
+         "original_module": "ifs_gar_contract",
+         "contributing_modules": ["ifs_gar_contract"],
+         "inherit": [], "inherits": {}},
+        {"kind": "Field", "id": "field::ifs.gar.partner.supplier.merchant.t18_contract_info_id",
+         "model": "ifs.gar.partner.supplier.merchant", "name": "t18_contract_info_id",
+         "type": "many2one", "store": True, "readonly": False, "required": False,
+         "compute": None, "related": None, "inverse": None,
+         "comodel_name": "ifs.contract.info", "module": "ifs_gar_contract",
+         "modules": ["ifs_gar_contract"], "inherited": False},
     ]
 
     edges = [
@@ -119,6 +134,10 @@ def build_fixture(out_dir: str | os.PathLike) -> str:
          "dst": "model::res.partner", "via_field": "partner_id"},
         {"kind": "MODEL_HAS_FIELD", "src": "model::child.record", "dst": "field::child.record.partner_id"},
         {"kind": "MODEL_HAS_FIELD", "src": "model::child.record", "dst": "field::child.record.name"},
+
+        {"kind": "MODEL_HAS_FIELD",
+         "src": "model::ifs.gar.partner.supplier.merchant",
+         "dst": "field::ifs.gar.partner.supplier.merchant.t18_contract_info_id"},
     ]
 
     _write_jsonl(out / "nodes.jsonl", nodes)
