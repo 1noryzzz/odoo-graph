@@ -4,9 +4,10 @@ from __future__ import annotations
 import json
 import os
 import time
+from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, Iterator, List, Optional
+from typing import Any, Deque, Dict, Iterable, Iterator, List, Optional, Set, Tuple
 
 import networkx as nx
 
@@ -179,6 +180,123 @@ class OdooGraph:
                 })
                 frontier.append((src, depth + 1, new_path))
         return impacted
+
+    def find_path(
+        self,
+        start_model: str,
+        target_model: str,
+        target_field: str,
+        *,
+        start_field: Optional[str] = None,
+        max_depth: int = 6,
+        edge_kinds: Optional[Iterable[str]] = None,
+        max_paths: int = 3,
+    ) -> Dict[str, Any]:
+        """Find explainable shortest paths (BFS) toward a target field.
+
+        When ``start_field`` is omitted, this starts from all fields owned by
+        ``start_model`` (MODEL_HAS_FIELD outgoing edges).
+        """
+        if max_depth < 0:
+            raise ValueError("max_depth must be >= 0")
+        if max_paths <= 0:
+            raise ValueError("max_paths must be >= 1")
+
+        default_edge_kinds = [
+            EDGE_KINDS_FIELD_DEPENDS,
+            EDGE_KINDS_RELATES,
+            EDGE_KINDS_HAS_FIELD,
+            EDGE_KINDS_DELEGATES,
+            EDGE_KINDS_INHERITS,
+        ]
+        allowed_kinds = set(edge_kinds or default_edge_kinds)
+        target_id = self.field_id(target_model, target_field)
+        if target_id not in self.g:
+            raise KeyError(f"Field not found: {target_model}.{target_field}")
+
+        start_ids: List[str] = []
+        if start_field:
+            sid = self.field_id(start_model, start_field)
+            if sid not in self.g:
+                raise KeyError(f"Field not found: {start_model}.{start_field}")
+            start_ids = [sid]
+        else:
+            smid = self.model_id(start_model)
+            if smid not in self.g:
+                raise KeyError(f"Model not found: {start_model}")
+            start_ids = [smid]
+            start_ids.extend(
+                dst for dst, _ in self.edges_out(smid, kind=EDGE_KINDS_HAS_FIELD)
+                if dst in self.g
+            )
+
+        kind_priority = {
+            EDGE_KINDS_FIELD_DEPENDS: 0,
+            EDGE_KINDS_RELATES: 1,
+            EDGE_KINDS_HAS_FIELD: 2,
+            EDGE_KINDS_DELEGATES: 3,
+            EDGE_KINDS_INHERITS: 9,  # low priority
+        }
+
+        queue: Deque[Tuple[str, int, List[dict]]] = deque()
+        visited: Set[str] = set()
+        paths: List[Dict[str, Any]] = []
+
+        for sid in start_ids:
+            queue.append((sid, 0, []))
+            visited.add(sid)
+
+        while queue and len(paths) < max_paths:
+            nid, depth, hops = queue.popleft()
+            if nid == target_id:
+                paths.append(
+                    {
+                        "start": hops[0]["src"] if hops else nid,
+                        "target": target_id,
+                        "depth": depth,
+                        "hops": hops,
+                    }
+                )
+                continue
+            if depth >= max_depth:
+                continue
+
+            neighbors = []
+            for _, dst, data in self.g.out_edges(nid, data=True):
+                kind = data.get("kind")
+                if kind not in allowed_kinds:
+                    continue
+                neighbors.append((dst, data))
+
+            neighbors.sort(key=lambda x: kind_priority.get(x[1].get("kind"), 5))
+
+            for dst, data in neighbors:
+                if dst in visited:
+                    continue
+                visited.add(dst)
+                hop = {
+                    "src": nid,
+                    "dst": dst,
+                    "edge_kind": data.get("kind"),
+                    "path": data.get("path"),
+                }
+                queue.append((dst, depth + 1, hops + [hop]))
+
+        truncated = bool(queue) and len(paths) >= max_paths
+        return {
+            "paths": paths,
+            "truncated": truncated,
+            "summary": {
+                "start_model": start_model,
+                "start_field": start_field,
+                "target_model": target_model,
+                "target_field": target_field,
+                "max_depth": max_depth,
+                "edge_kinds": sorted(allowed_kinds),
+                "max_paths": max_paths,
+                "found_paths": len(paths),
+            },
+        }
 
     def model_summary(self, model: str) -> Dict[str, Any]:
         mid = self.model_id(model)
