@@ -56,3 +56,16 @@ def test_overrides_returns_chain(tmp_path):
     assert md["override_depth"] == 3
     addons = [c["addon"] for c in md["defined_in_classes"]]
     assert addons == ["ext", "base", None]
+
+
+def test_find_path_from_model_to_field(tmp_path):
+    g = _loaded(tmp_path)
+    payload = g.find_path(
+        "model::res.partner",
+        "field::res.partner.display_name",
+        max_depth=2,
+        max_paths=2,
+    )
+    assert payload["paths"]
+    assert payload["paths"][0]["nodes"][0] == "model::res.partner"
+    assert payload["paths"][0]["nodes"][-1] == "field::res.partner.display_name"

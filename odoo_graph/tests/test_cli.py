@@ -47,6 +47,35 @@ def test_cli_overrides(capsys, tmp_path):
     assert payload["override_depth"] == 3
 
 
+def test_cli_path_from_model_to_field(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "res.partner",
+        "res.partner.display_name",
+        "--out-dir", out,
+        "-f", "json",
+    ])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["paths"]
+    assert payload["target"] == "field::res.partner.display_name"
+
+
+def test_cli_path_bad_start_model_gets_suggestion(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main([
+        "path",
+        "res.parner",
+        "res.partner.display_name",
+        "--out-dir", out,
+    ])
+    assert rc == 1
+    err = capsys.readouterr().err
+    assert "did you mean" in err
+    assert "res.partner" in err
+
+
 def test_cli_unknown_target_exits_non_zero(capsys, tmp_path):
     out = _bootstrap(tmp_path)
     rc = main(["field", "res.partner.not_a_field", "--out-dir", out])

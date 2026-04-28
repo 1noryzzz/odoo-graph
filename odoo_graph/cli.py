@@ -287,6 +287,59 @@ def cmd_overrides(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_path(args: argparse.Namespace) -> int:
+    g = _load(args)
+
+    # Start may be "model" or "model.field".
+    if g.node(g.model_id(args.start)) is not None:
+        start_nid = g.model_id(args.start)
+    else:
+        start_model, start_name = _split_model_field(g, args.start)
+        if start_model and start_name:
+            start_nid = g.field_id(start_model, start_name)
+            if g.node(start_nid) is None:
+                if g.node(g.model_id(start_model)) is not None:
+                    log.error("Field not found: %s.%s", start_model, start_name)
+                    log.info("\n%s", _suggest_field(g, args.start))
+                    return 1
+                log.error("Model not found: %s", args.start)
+                candidates = [n["name"] for n in g.nodes_of_kind("Model")]
+                log.info("\n%s", _suggest("model", candidates, args.start))
+                return 1
+        else:
+            log.error("Model not found: %s", args.start)
+            candidates = [n["name"] for n in g.nodes_of_kind("Model")]
+            log.info("\n%s", _suggest("model", candidates, args.start))
+            return 1
+
+    target_model, target_name = _split_model_field(g, args.target)
+    if not target_model or not target_name:
+        log.error("path target must be 'model.field' (got %r)", args.target)
+        return 2
+    target_nid = g.field_id(target_model, target_name)
+    if g.node(target_nid) is None:
+        log.error("Field not found: %s.%s", target_model, target_name)
+        log.info("\n%s", _suggest_field(g, args.target))
+        return 1
+
+    allow_kinds = None
+    if args.allow_kinds:
+        allow_kinds = [k.strip() for k in args.allow_kinds.split(",") if k.strip()]
+    payload = g.find_path(
+        start_nid,
+        target_nid,
+        max_depth=args.max_depth,
+        max_paths=args.max_paths,
+        allow_kinds=allow_kinds,
+    )
+    log.info(
+        "path %s -> %s: %d path(s) (depth<=%d)",
+        args.start, args.target, len(payload["paths"]), args.max_depth,
+    )
+    emit(payload, kind="path", fmt=args.format)
+    return 0
+
+
 # ---------- parser ---------------------------------------------------------
 
 def build_parser() -> argparse.ArgumentParser:
@@ -368,6 +421,29 @@ def build_parser() -> argparse.ArgumentParser:
     po.add_argument("target", help="model.method, e.g. res.users.write")
     _add_common_query_args(po)
     po.set_defaults(func=cmd_overrides)
+
+    # path
+    pp = sub.add_parser(
+        "path",
+        help="Find directed paths from a model/field start to a target field.",
+    )
+    pp.add_argument(
+        "start",
+        help="Start from model or model.field, e.g. ifs.gar.partner.supplier.merchant",
+    )
+    pp.add_argument(
+        "target",
+        help="Target field model.field, e.g. ifs.gar.sub.loan.account.t18_contract_info_id",
+    )
+    pp.add_argument("--max-depth", type=int, default=6)
+    pp.add_argument("--max-paths", type=int, default=3)
+    pp.add_argument(
+        "--allow-kinds",
+        default=None,
+        help="Comma-separated edge kinds for debugging, e.g. MODEL_HAS_FIELD,FIELD_DEPENDS_ON_FIELD",
+    )
+    _add_common_query_args(pp)
+    pp.set_defaults(func=cmd_path)
 
     return p
 

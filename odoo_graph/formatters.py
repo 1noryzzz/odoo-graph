@@ -39,6 +39,8 @@ def _render_human(payload: Dict[str, Any], kind: str) -> str:
         return _h_overrides(payload)
     if kind == "dump":
         return _h_dump(payload)
+    if kind == "path":
+        return _h_path(payload)
     return _json.dumps(payload, ensure_ascii=False, indent=2, default=str)
 
 
@@ -156,6 +158,26 @@ def _h_dump(p: Dict[str, Any]) -> str:
     lines.append(f"  fields>=2 modules : {s['fields_multi_module']}")
     lines.append(f"  overrides : {s['methods_with_overrides']} methods, {s['edges_method_overrides']} edges")
     lines.append(f"  depends paths: {s['edges_depends_field']}  -> resolved {r['resolved']} (unresolved {r['unresolved']})")
+    return "\n".join(lines)
+
+
+def _h_path(p: Dict[str, Any]) -> str:
+    lines = [_box(f"Path  {p['start']}  ->  {p['target']}")]
+    lines.append(
+        f"  found={len(p['paths'])} max_depth={p['max_depth']} "
+        f"max_paths={p['max_paths']}"
+    )
+    lines.append(f"  allow_kinds={p['allow_kinds']}")
+    for i, path in enumerate(p["paths"], start=1):
+        lines.append(f"  [{i}] depth={path['depth']}")
+        if not path["edges"]:
+            lines.append(f"      {path['nodes'][0]}")
+            continue
+        for edge in path["edges"]:
+            suffix = f" path={edge['path']!r}" if edge.get("path") else ""
+            lines.append(
+                f"      {edge['src']} -[{edge['kind']}]-> {edge['dst']}{suffix}"
+            )
     return "\n".join(lines)
 
 

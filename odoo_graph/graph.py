@@ -6,7 +6,8 @@ import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, Iterator, List, Optional
+from collections import deque
+from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence
 
 import networkx as nx
 
@@ -26,6 +27,13 @@ EDGE_KINDS_DEFINES_FIELD = "MODULE_DEFINES_FIELD"
 EDGE_KINDS_COMPUTED_BY = "FIELD_COMPUTED_BY"
 EDGE_KINDS_INVERSE_BY = "FIELD_INVERSE_BY"
 EDGE_KINDS_OVERRIDES = "METHOD_OVERRIDES_METHOD"
+EDGE_KINDS_PATH_DEFAULT = (
+    EDGE_KINDS_FIELD_DEPENDS,
+    EDGE_KINDS_HAS_FIELD,
+    EDGE_KINDS_RELATES,
+    EDGE_KINDS_DELEGATES,
+    EDGE_KINDS_INHERITS,
+)
 
 
 def _iter_jsonl(path: Path) -> Iterator[dict]:
@@ -244,6 +252,59 @@ class OdooGraph:
         if not md:
             raise KeyError(f"Method not found: {model}.{method}")
         return md  # full chain stored as node attribute
+
+    def find_path(
+        self,
+        start_nid: str,
+        target_nid: str,
+        *,
+        max_depth: int = 6,
+        max_paths: int = 3,
+        allow_kinds: Optional[Sequence[str]] = None,
+    ) -> Dict[str, Any]:
+        """Find up to ``max_paths`` shortest directed paths from start to target."""
+        if start_nid not in self.g:
+            raise KeyError(f"Start node not found: {start_nid}")
+        if target_nid not in self.g:
+            raise KeyError(f"Target node not found: {target_nid}")
+
+        allowed = tuple(allow_kinds) if allow_kinds else EDGE_KINDS_PATH_DEFAULT
+        q = deque([(start_nid, [start_nid], [])])
+        seen_depth = {start_nid: 0}
+        results: List[Dict[str, Any]] = []
+
+        while q and len(results) < max_paths:
+            nid, nodes_path, edges_path = q.popleft()
+            depth = len(edges_path)
+            if nid == target_nid:
+                results.append({"nodes": nodes_path, "edges": edges_path, "depth": depth})
+                continue
+            if depth >= max_depth:
+                continue
+            for _, dst, data in self.g.out_edges(nid, data=True):
+                kind = data.get("kind")
+                if kind not in allowed:
+                    continue
+                next_depth = depth + 1
+                known = seen_depth.get(dst)
+                if known is not None and known < next_depth:
+                    continue
+                seen_depth[dst] = next_depth
+                q.append(
+                    (
+                        dst,
+                        nodes_path + [dst],
+                        edges_path + [{"src": nid, "dst": dst, "kind": kind, "path": data.get("path")}],
+                    )
+                )
+        return {
+            "start": start_nid,
+            "target": target_nid,
+            "max_depth": max_depth,
+            "max_paths": max_paths,
+            "allow_kinds": list(allowed),
+            "paths": results,
+        }
 
 
 def load_graph(out_dir: str) -> OdooGraph:
