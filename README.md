@@ -31,7 +31,9 @@ pip install -e .
 
 ## 快速开始
 
-### 1) Dump 一次 registry
+### 1) Dump 一次 registry（仅在需要刷新缓存时）
+
+默认优先复用已有缓存 `~/.cache/odoo-graph/<db>/`；只有在首次分析、模块升级后或你明确需要刷新时再执行 dump。若本机已有正在运行的 Odoo 服务，建议先确认再 dump，避免潜在端口/进程冲突导致失败。
 
 **推荐方式：复用你现成的 `odoo.conf`**
 
@@ -56,6 +58,8 @@ PGPASSWORD=odoo odoo-graph dump \
 输出默认缓存到 `~/.cache/odoo-graph/<db>/`。包含 `nodes.jsonl` / `edges.jsonl` / `edges_resolved.jsonl` / `summary.json` / `meta.json`。
 
 ### 2) 查询（不再需要启动 Odoo）
+
+若你本机有多个 DB 的缓存目录，可先查看 `~/.cache/odoo-graph/` 下的子目录并明确 `--db`，避免误用到其他库的 dump。
 
 ```bash
 # 字段血缘（上游+下游）
