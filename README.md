@@ -178,6 +178,7 @@ CI 在每次 push / PR 上跑：
 ## Phase 路线
 
 - ✅ **Phase 1** (本 PR) — CLI 工具化 + 5 个核心查询 + CI
+- ✅ **Phase 1.5** (PR 7# 10#) — CLI 增加 path 参数，支持"起点-终点"的路径查询
 - ⏳ **Phase 2** — override 判定升级（同签名 + super 调用检查）
 - ⏳ **Phase 3** — AST 补 compute/inverse 方法体的字段读写
 - ⏳ **Phase 4** — XML view 字段引用解析
