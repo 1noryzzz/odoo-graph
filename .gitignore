@@ -6,7 +6,7 @@ build/
 dist/
 
 # Local dump output (older location and new cache)
-/registry-probe/out/
+# /registry-probe/out/
 
 # pytest cache
 .pytest_cache/
