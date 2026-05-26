@@ -51,14 +51,27 @@ def _box(title: str) -> str:
 
 def _h_field(p: Dict[str, Any]) -> str:
     fd = p["field"]
+    analysis = p.get("analysis") or {}
     lines = [_box(f"Field  {fd['model']}.{fd['name']}  [{fd['type']}]")]
     lines.append(f"  origin-module : {fd.get('module')}")
     lines.append(f"  all modules   : {fd.get('modules')}")
+    if analysis:
+        lines.append(f"  kind          : {analysis.get('kind')}")
+        lines.append(f"  declared here : {analysis.get('declared_on_model')}")
+        lines.append(f"  storage       : {analysis.get('storage')}")
+        if analysis.get("source_field"):
+            lines.append(f"  source field  : {str(analysis['source_field']).replace('field::', '')}")
+        lines.append(f"  writable      : {analysis.get('writable')} ({analysis.get('writable_reason')})")
     extras = []
     if fd.get("compute"):
         extras.append(f"compute={fd['compute']}")
     if fd.get("related"):
-        extras.append("related=" + ".".join(fd["related"]))
+        related = analysis.get("related_path") or fd["related"]
+        if isinstance(related, list):
+            related_s = ".".join(str(x) for x in related)
+        else:
+            related_s = str(related)
+        extras.append("related=" + related_s)
     if fd.get("inverse"):
         extras.append(f"inverse={fd['inverse']}")
     if fd.get("inherited"):
@@ -68,6 +81,23 @@ def _h_field(p: Dict[str, Any]) -> str:
     lines.append(f"  flags         : {', '.join(extras) if extras else '(plain)'}")
     if fd.get("comodel_name"):
         lines.append(f"  comodel       : {fd['comodel_name']}")
+    if analysis.get("delegation_chain"):
+        lines.append("")
+        lines.append("  delegation chain:")
+        for hop in analysis["delegation_chain"]:
+            lines.append(
+                f"    {hop['from_model']}.{hop['field']}"
+                f" --{hop['via_field']} ({hop['source']}, path: {hop['path']})--> "
+                f"{hop['source_field']}"
+            )
+    if analysis.get("shadowing"):
+        shadow = analysis["shadowing"]
+        lines.append("")
+        lines.append(f"  shadowing risk: {shadow.get('risk')} - {shadow.get('reason')}")
+        for candidate in shadow.get("candidates") or []:
+            lines.append(
+                f"    candidate: {candidate['field']} via {candidate['via_path']}"
+            )
     lines.append("")
     lines.append(f"  upstream (this field depends on):  {len(p['upstream'])} edge(s)")
     for u in p["upstream"]:
@@ -89,6 +119,16 @@ def _h_model(p: Dict[str, Any]) -> str:
     lines.append(f"  _inherit          : {md.get('inherit') or []}")
     lines.append(f"  _inherits         : {md.get('inherits') or {}}")
     lines.append(f"  abstract/transient: {md.get('abstract')} / {md.get('transient')}")
+    if p.get("delegation_chain"):
+        lines.append("")
+        lines.append("  Delegation chain:")
+        for chain in p["delegation_chain"]:
+            rendered = " -> ".join(
+                f"{hop['from_model']} --{hop['via_field']} ({hop['source']})--> {hop['to_model']}"
+                for hop in chain
+            )
+            path = chain[-1].get("path")
+            lines.append(f"    {rendered}   path={path}")
     lines.append("")
     lines.append("  Fields by module:")
     for mod, flist in sorted(p["fields_by_module"].items(), key=lambda kv: -len(kv[1])):

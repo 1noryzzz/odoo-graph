@@ -6,6 +6,7 @@
 
 - `res.partner.name` 改一下，会触发哪些 compute 重算？
 - `ifs.partner.merchant` 的某个字段，到底是哪个模块定义的、被哪些模块改过？
+- `_inherits` 委托继承代理出来的字段，真实来源在哪里、能不能通过当前模型 `write()`？
 - `res.users.write` 这个 override 链有多深？跨了哪些模块？
 
 `odoo-graph` 通过 `odoo-bin shell` 启动 Odoo 后读 `env.registry`，把所有元数据 dump 成 JSONL，加载到 NetworkX 图里，然后提供 CLI 查询。
@@ -65,6 +66,9 @@ PGPASSWORD=odoo odoo-graph dump \
 # 字段血缘（上游+下游）
 odoo-graph field res.partner.name --db odoo_demo
 
+# 字段诊断（来源、委托链、可写原因、同名覆盖风险）
+odoo-graph field ifs.gar.entry.supplier.vat --db odoo_demo
+
 # 模型全景（继承图 + 按模块分组的字段清单）
 odoo-graph model res.partner --db odoo_demo
 
@@ -111,6 +115,51 @@ ODOO_GRAPH_LOG=DEBUG odoo-graph field model.f ...      # 环境变量同效
 
 ---
 
+## 字段诊断：`_inherits` 委托继承
+
+Odoo 的 `_inherits` 会把父模型字段代理到子模型上。这个字段可能出现在 `env['child.model']._fields` 里，也可以通过 `child.write({'field': value})` 更新，但它未必存在于子模型自己的 SQL 表中。`field` 查询会额外输出诊断信息，避免只看数据库表结构时误判。
+
+```bash
+odoo-graph field ifs.gar.entry.supplier.vat --db 17-oabay-ceshi
+```
+
+典型输出要点：
+
+```text
+kind          : delegated_related
+declared here : False
+storage       : non-stored
+source field  : res.partner.vat
+writable      : True (writable: delegated_related field has inverse _inverse_related)
+flags         : compute=_compute_related, related=invite_id.vat, inverse=_inverse_related
+
+delegation chain:
+  ifs.gar.entry.supplier.vat --invite_id (_inherits, path: invite_id.vat)--> ifs.gar.invite.supplier.vat
+  ifs.gar.invite.supplier.vat --ifs_company_id (_inherits, path: ifs_company_id.vat)--> ifs.base.company.vat
+  ifs.base.company.vat --company_id (_inherits, path: company_id.vat)--> res.company.vat
+
+shadowing risk: watch - field is resolved through same-name delegated parent field(s)
+```
+
+关键字段含义：
+
+- `kind`: 字段形态。常见值包括 `local`、`related`、`computed`、`delegated`、`delegated_related`。
+- `declared here`: 是否是当前模型直接声明的字段。`False` 时不要直接假设子模型 SQL 表有同名列。
+- `source field`: 沿 depends/related 链追踪到的最终有效来源字段。
+- `writable`: 是否可通过 ORM 写入，以及可写/不可写原因；例如 `inverse=_inverse_related` 会让 related 委托字段可写。
+- `delegation chain`: `_inherits` 的逐跳委托链，包含当前模型、委托外键、父模型和路径。
+- `shadowing risk`: 同名字段覆盖风险。若当前模型本地定义了同名字段，委托父字段可能被遮蔽；若当前字段来自委托链，则会列出同名父字段候选。
+
+如果只想确认模型级委托结构，可以先跑：
+
+```bash
+odoo-graph model ifs.gar.entry.supplier --db 17-oabay-ceshi
+```
+
+`model` 输出会展开完整 `Delegation chain`，适合先确认 `_inherits` 是否是链式委托。
+
+---
+
 ## 架构
 
 ```
@@ -127,7 +176,7 @@ ODOO_GRAPH_LOG=DEBUG odoo-graph field model.f ...      # 环境变量同效
 - **Runtime probe** 是数据源。Odoo 在 `registry.setup_models()` 后已把 `_inherit` / `_inherits` / mixin 合并到位。
 - **Dump** 一次 30s（大头是 Odoo 启动），产出的 JSONL 可以缓存复用。
 - **Graph** 用 NetworkX MultiDiGraph（~100k 节点 / ~30k 边在 100MB 内存以内）。
-- **查询** 全在本地 JSONL 上做，不再碰 DB。
+- **查询** 全在本地 JSONL 上做，不再碰 DB；字段诊断会在图上追踪 related/depends 和 `_inherits` 委托链。
 
 ---
 
@@ -183,6 +232,7 @@ CI 在每次 push / PR 上跑：
 
 - ✅ **Phase 1** (本 PR) — CLI 工具化 + 5 个核心查询 + CI
 - ✅ **Phase 1.5** (PR 7# 10#) — CLI 增加 path 参数，支持"起点-终点"的路径查询
+- ✅ **Phase 1.6** — 字段诊断增强：区分 local/related/computed/delegated 字段，展示 `_inherits` 委托链、可写原因和同名覆盖风险
 - ⏳ **Phase 2** — override 判定升级（同签名 + super 调用检查）
 - ⏳ **Phase 3** — AST 补 compute/inverse 方法体的字段读写
 - ⏳ **Phase 4** — XML view 字段引用解析

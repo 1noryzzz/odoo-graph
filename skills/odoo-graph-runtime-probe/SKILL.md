@@ -9,10 +9,11 @@ description: 指导 AI 在 Odoo 开发中何时使用 odoo-graph 运行时探针
 当用户的问题属于“运行时真实合并结果”而不是“源码静态猜测”时，优先使用 `odoo-graph`：
 
 1. **字段影响分析**：修改某字段后会触发哪些 compute / depends 链。
-2. **字段来源追踪**：字段由哪个模块定义、被哪些模块扩展。
+2. **字段来源追踪**：字段由哪个模块定义、被哪些模块扩展，最终有效来源字段是什么。
 3. **模型继承结构**：`_inherit / _inherits / mixin` 合并后实际结构。
 4. **方法 override 链**：同名方法在多模块中的 MRO 顺序。
 5. **起点到终点的路径证明**：想证明某业务对象是否能影响目标字段（`path` 命令）。
+6. **委托继承字段诊断**：字段在当前模型 `_fields` 可见、可通过 `write()` 更新，但可能真实来自 `_inherits` 父模型且不在当前模型 SQL 表中。
 
 > 判断原则：如果问题明确涉及“模块叠加后最终行为”，就应使用本工具。
 
@@ -53,15 +54,21 @@ odoo-graph dump -c odoo.conf -d <db> --odoo-path ./odoo-17.0
 ```bash
 odoo-graph field <model.field> --db <db>
 ```
-**何时用**：看某字段上下游依赖。  
-**输出**：该字段的 upstream/downstream 关系与统计。
+**何时用**：看某字段上下游依赖、字段来源、委托链、可写性原因。  
+**输出**：该字段的 upstream/downstream 关系与统计；human/json 中包含 `analysis`：
+- `kind`: `local / related / computed / delegated / delegated_related`
+- `declared_on_model`: 是否当前模型直接声明
+- `source_field`: 沿 depends/related 链追踪到的最终有效来源字段
+- `writable` + `writable_reason`: 是否可通过 ORM 写入及原因
+- `delegation_chain`: `_inherits` 逐跳链路，含 `via_field`、`path`、`source_field`
+- `shadowing`: 同名 delegated parent field 的覆盖/遮蔽风险
 
 ### 2) model
 ```bash
 odoo-graph model <model> --db <db>
 ```
-**何时用**：看模型继承图、字段集合、按模块归属。  
-**输出**：模型结构摘要与字段分组。
+**何时用**：看模型继承图、字段集合、按模块归属，尤其是 `_inherits` 链式委托结构。  
+**输出**：模型结构摘要、字段分组，以及完整 `delegation_chain`。
 
 ### 3) module
 ```bash
@@ -109,12 +116,31 @@ odoo-graph overrides <model.method> --db <db>
    - 先 `field` 看局部；
    - 再 `impact` 看半径；
    - 最后 `path` 给可解释链路证据。
-5. **数据库参数规则**：
+5. **遇到 `_inherits` / 代理字段 / SQL 表字段缺失争议时**：
+   - 不要只用数据库表结构或源码静态 grep 下结论。
+   - 先跑 `odoo-graph field <model.field> --db <db>`，读取 `analysis.kind`、`source_field`、`writable_reason`、`delegation_chain`。
+   - 再跑 `odoo-graph model <model> --db <db>`，确认完整模型级 `Delegation chain`。
+   - 如需证明最终字段来源，再跑 `odoo-graph path <model.field> <source.model.field> --db <db>`。
+   - 回答时明确区分“当前模型 registry 可见字段”和“当前模型 SQL 表物理列”。
+6. **数据库参数规则**：
    - 若用户未提供 `--db` 且上下文无法唯一确定 DB，先询问再执行查询。
    - 优先给出缓存中可选 DB 列表，让用户选择。
    - 若用户提到的 DB 在缓存中存在，可直接分析并告知“正在使用缓存”。
    - 若用户不选缓存或要求最新数据，可提供“先 dump 新缓存再分析”的选项。
    - 不要擅自在多数据库环境下猜测 DB 名称。
+
+## `_inherits` 字段诊断回答模板
+当 `field` 输出显示 `kind=delegated` 或 `kind=delegated_related` 时，回答应覆盖：
+
+1. 字段是否当前模型直接声明：看 `declared_on_model`。
+2. 最终有效来源字段：看 `source_field`。
+3. 是否可写及原因：看 `writable` / `writable_reason`，尤其关注 `inverse=_inverse_related`。
+4. 完整委托链：引用 `delegation_chain` 中每一跳 `from_model --via_field--> to_model`。
+5. 同名覆盖风险：引用 `shadowing.risk` 和 candidates。
+
+示例结论：
+
+> `ifs.gar.entry.supplier.vat` 不是当前模型直接声明的本地字段；它是 `delegated_related`，最终来源是 `res.partner.vat`。当前模型可通过 ORM 写入，原因是该 related 委托字段带 `inverse=_inverse_related`。委托链是 `ifs.gar.entry.supplier --invite_id--> ifs.gar.invite.supplier --ifs_company_id--> ifs.base.company --company_id--> res.company`。因此不能仅凭 `ifs_gar_entry_supplier` 表里没有 `vat` 列判断 `write({'vat': ...})` 不可用。
 
 ## 推荐回答模板
 1. 我会先列出缓存中可用 DB（若你未指定）。
@@ -127,3 +153,4 @@ odoo-graph overrides <model.method> --db <db>
 - `dump` 失败：优先检查 `-c`、`-d`、`--odoo-path`、DB 凭据。
 - 查询报找不到 DB 缓存：先确认 DB 名称是否正确，再执行 `odoo-graph dump ...`。
 - `path` 无路径：检查起点/终点标识是否准确，或链路被深度/解析能力限制。
+- `field` 没有显示委托链但怀疑是 `_inherits`：先跑 `model <model>` 确认是否存在 `_inherits`；若 dump 过旧或缺 `MODEL_DELEGATES_TO_MODEL` 边，需要重新 dump。

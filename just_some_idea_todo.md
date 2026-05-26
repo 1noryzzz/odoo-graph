@@ -1,3 +1,86 @@
+# `_inherits` 委托字段诊断改进记录
+
+## 背景
+
+一次排查中出现了误判：链式 `_inherits` 委托继承时，字段虽然不在子模型自己的 SQL 表里，但已经进入子模型 registry 的 `_fields`，并且可能因为 `inverse=_inverse_related` 可以通过子模型 `write()` 更新。只看 `information_schema.columns` 或源码静态字段声明会误判。
+
+典型例子：
+
+```text
+ifs.gar.entry.supplier.vat
+ -> ifs.gar.invite.supplier.vat
+ -> ifs.base.company.vat
+ -> res.company.vat
+ -> res.partner.vat
+```
+
+## 已实现改进
+
+`odoo-graph field <model.field>` 现在会在原有 upstream/downstream 外增加字段诊断：
+
+- `kind`: 区分 `local / related / computed / delegated / delegated_related`
+- `declared_on_model`: 是否当前模型直接声明
+- `source_field`: 沿 depends/related 链追踪到的最终有效来源字段
+- `writable` / `writable_reason`: 是否可通过 ORM 写入，以及原因
+- `delegation_chain`: `_inherits` 的逐跳委托链，包含路径和 source
+- `shadowing`: 同名字段覆盖/遮蔽风险
+
+`odoo-graph model <model>` 现在会展开完整模型级 `Delegation chain`，用于确认链式 `_inherits` 结构。
+
+## 用最新 dump cache 验证
+
+验证 cache：
+
+```bash
+registry-probe/local_out
+```
+
+执行：
+
+```bash
+.venv/bin/python -B -m odoo_graph field ifs.gar.entry.supplier.vat --out-dir registry-probe/local_out -f human
+```
+
+关键输出：
+
+```text
+kind          : delegated_related
+declared here : False
+storage       : non-stored
+source field  : res.partner.vat
+writable      : True (writable: delegated_related field has inverse _inverse_related)
+flags         : compute=_compute_related, related=invite_id.vat, inverse=_inverse_related
+
+delegation chain:
+  ifs.gar.entry.supplier.vat --invite_id (_inherits, path: invite_id.vat)--> ifs.gar.invite.supplier.vat
+  ifs.gar.invite.supplier.vat --ifs_company_id (_inherits, path: ifs_company_id.vat)--> ifs.base.company.vat
+  ifs.base.company.vat --company_id (_inherits, path: company_id.vat)--> res.company.vat
+
+shadowing risk: watch - field is resolved through same-name delegated parent field(s)
+```
+
+结论：
+
+- `ifs.gar.entry.supplier.vat` 不是当前模型直接声明的本地字段。
+- 它是 `delegated_related`，当前模型 SQL 表里没有同名列并不代表 ORM 不可写。
+- 最终有效来源字段是 `res.partner.vat`。
+- 当前字段可写，原因是 delegated related 字段带 `inverse=_inverse_related`。
+- 输出可以直接展示 `_inherits` 委托链和同名覆盖风险，避免后续分析再次只从 SQL 表结构误判。
+
+## 测试
+
+```bash
+.venv/bin/python -m pytest odoo_graph/tests/ -q -p no:cacheprovider
+```
+
+结果：
+
+```text
+57 passed
+```
+
+## 原始分析记录
+
 关于inverse=_inverse_related的计算字段：
 
   odoo-graph field ifs.gar.entry.merchant.need_fetch --db 17-oabay-ceshi

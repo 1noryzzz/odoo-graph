@@ -148,7 +148,211 @@ class OdooGraph:
                 "src": src, "path": data.get("path"),
                 "steps": data.get("steps"),
             })
-        return {"field": fd, "upstream": upstream, "downstream": downstream}
+        analysis = self._field_analysis(fd, upstream)
+        return {
+            "field": fd,
+            "analysis": analysis,
+            "upstream": upstream,
+            "downstream": downstream,
+        }
+
+    def _field_analysis(self, fd: Dict[str, Any], upstream: List[dict]) -> Dict[str, Any]:
+        related_path = self._related_path(fd)
+        delegation_chain = self._field_delegation_chain(
+            fd["model"],
+            fd["name"],
+        )
+        has_delegation = bool(delegation_chain)
+
+        if has_delegation and fd.get("compute") == "_compute_related":
+            kind = "delegated_related"
+        elif has_delegation or fd.get("inherited"):
+            kind = "delegated"
+        elif fd.get("related"):
+            kind = "related"
+        elif fd.get("compute"):
+            kind = "computed"
+        else:
+            kind = "local"
+
+        source_field = self._effective_source_field(fd["model"], fd["name"])
+        if not source_field and delegation_chain:
+            source_field = delegation_chain[-1].get("source_field")
+
+        return {
+            "kind": kind,
+            "declared_on_model": kind == "local",
+            "storage": "stored" if fd.get("store") else "non-stored",
+            "related_path": related_path,
+            "source_field": source_field,
+            "writable": not bool(fd.get("readonly")),
+            "writable_reason": self._writable_reason(fd, kind),
+            "delegation_chain": delegation_chain,
+            "shadowing": self._shadowing_risk(fd, delegation_chain),
+        }
+
+    def _effective_source_field(
+        self,
+        model: str,
+        name: str,
+        seen: Optional[Set[str]] = None,
+    ) -> Optional[str]:
+        fid = self.field_id(model, name)
+        if seen is None:
+            seen = set()
+        if fid in seen:
+            return fid.replace("field::", "")
+        seen.add(fid)
+
+        next_fields = []
+        for dst, _ in self.edges_out(fid, kind=EDGE_KINDS_FIELD_DEPENDS):
+            parsed = self._parse_field_id(dst)
+            if parsed:
+                next_fields.append(parsed)
+        if not next_fields:
+            return None
+        next_model, next_name = next_fields[0]
+        deeper = self._effective_source_field(next_model, next_name, seen)
+        return deeper or f"{next_model}.{next_name}"
+
+    def _related_path(self, fd: Dict[str, Any]) -> List[str]:
+        related = fd.get("related")
+        if not related:
+            return []
+        if isinstance(related, str):
+            return [p for p in related.split(".") if p]
+        if isinstance(related, list):
+            # Older dumps may serialize a related string as a list of chars.
+            if all(isinstance(p, str) and len(p) == 1 for p in related):
+                return [p for p in "".join(related).split(".") if p]
+            return [str(p) for p in related if p]
+        return []
+
+    def _writable_reason(self, fd: Dict[str, Any], kind: str) -> str:
+        if fd.get("readonly"):
+            return "not writable: field is readonly"
+        if fd.get("inverse"):
+            return f"writable: {kind} field has inverse {fd['inverse']}"
+        if fd.get("related"):
+            return "writable: related field is not readonly"
+        if fd.get("compute"):
+            return "writable: computed field is not readonly"
+        if fd.get("store"):
+            return "writable: stored field is not readonly"
+        return "writable: field is not readonly"
+
+    def _delegate_edges_by_field(self, model: str) -> Dict[str, Tuple[str, dict]]:
+        out: Dict[str, Tuple[str, dict]] = {}
+        for dst, data in self.edges_out(self.model_id(model), kind=EDGE_KINDS_DELEGATES):
+            via = data.get("via_field")
+            if via:
+                out[str(via)] = (dst.replace("model::", ""), data)
+        return out
+
+    def _parse_field_id(self, fid: str) -> Optional[Tuple[str, str]]:
+        if not fid.startswith("field::"):
+            return None
+        raw = fid.replace("field::", "", 1)
+        model, _, name = raw.rpartition(".")
+        if not model or not name:
+            return None
+        return model, name
+
+    def _field_delegation_chain(
+        self,
+        model: str,
+        name: str,
+        seen: Optional[Set[str]] = None,
+    ) -> List[dict]:
+        fid = self.field_id(model, name)
+        if seen is None:
+            seen = set()
+        if fid in seen:
+            return []
+        seen.add(fid)
+
+        delegates = self._delegate_edges_by_field(model)
+        for dst, data in self.edges_out(fid, kind=EDGE_KINDS_FIELD_DEPENDS):
+            path = str(data.get("path") or "")
+            first = path.split(".", 1)[0]
+            if first not in delegates:
+                continue
+            target_model, _ = delegates[first]
+            parsed = self._parse_field_id(dst)
+            if not parsed:
+                continue
+            source_model, source_name = parsed
+            hop = {
+                "from_model": model,
+                "field": name,
+                "to_model": target_model,
+                "via_field": first,
+                "path": path,
+                "source": "_inherits",
+                "source_field": f"{source_model}.{source_name}",
+            }
+            return [hop] + self._field_delegation_chain(
+                source_model,
+                source_name,
+                seen,
+            )
+        fd = self.node(fid)
+        if fd:
+            related_path = self._related_path(fd)
+            if len(related_path) >= 2 and related_path[0] in delegates:
+                target_model, _ = delegates[related_path[0]]
+                source_name = related_path[-1]
+                source_field = self.field_id(target_model, source_name)
+                if self.node(source_field) is not None:
+                    hop = {
+                        "from_model": model,
+                        "field": name,
+                        "to_model": target_model,
+                        "via_field": related_path[0],
+                        "path": ".".join(related_path),
+                        "source": "_inherits",
+                        "source_field": f"{target_model}.{source_name}",
+                    }
+                    return [hop] + self._field_delegation_chain(
+                        target_model,
+                        source_name,
+                        seen,
+                    )
+        return []
+
+    def _shadowing_risk(
+        self,
+        fd: Dict[str, Any],
+        delegation_chain: List[dict],
+    ) -> Dict[str, Any]:
+        model = fd["model"]
+        name = fd["name"]
+        candidates = []
+        for chain in self._delegation_chains(model):
+            if self.node(self.field_id(chain[-1]["to_model"], name)) is not None:
+                candidates.append({
+                    "model": chain[-1]["to_model"],
+                    "field": f"{chain[-1]['to_model']}.{name}",
+                    "via_path": ".".join(h["via_field"] for h in chain),
+                })
+
+        if not candidates:
+            return {
+                "risk": "none",
+                "reason": "no same-name field found on delegated parents",
+                "candidates": [],
+            }
+        if not delegation_chain and not fd.get("inherited"):
+            return {
+                "risk": "high",
+                "reason": "local field has the same name as delegated parent field(s)",
+                "candidates": candidates,
+            }
+        return {
+            "risk": "watch",
+            "reason": "field is resolved through same-name delegated parent field(s)",
+            "candidates": candidates,
+        }
 
     def impact(
         self,
@@ -321,9 +525,38 @@ class OdooGraph:
             "model": md,
             "inherits": inherits,
             "delegates": delegates,
+            "delegation_chain": self._delegation_chains(model),
             "extended_by_modules": extended_by_modules,
             "fields_by_module": fields_by_module,
         }
+
+    def _delegation_chains(self, model: str) -> List[List[dict]]:
+        chains: List[List[dict]] = []
+
+        def walk(current: str, prefix: List[dict], seen: Set[str]) -> None:
+            for dst, data in self.edges_out(
+                self.model_id(current),
+                kind=EDGE_KINDS_DELEGATES,
+            ):
+                to_model = dst.replace("model::", "")
+                if to_model in seen:
+                    continue
+                hop = {
+                    "from_model": current,
+                    "to_model": to_model,
+                    "via_field": data.get("via_field"),
+                    "source": "_inherits",
+                    "path": ".".join(
+                        [h["via_field"] for h in prefix if h.get("via_field")]
+                        + ([data.get("via_field")] if data.get("via_field") else [])
+                    ),
+                }
+                chain = prefix + [hop]
+                chains.append(chain)
+                walk(to_model, chain, seen | {to_model})
+
+        walk(model, [], {model})
+        return chains
 
     def module_summary(self, module: str) -> Dict[str, Any]:
         mid = self.module_id(module)

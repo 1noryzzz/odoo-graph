@@ -19,6 +19,18 @@ def test_human_field_output_contains_key_lines(tmp_path):
     assert "parent_id.name" in out
 
 
+def test_human_field_output_contains_delegation_diagnostics(tmp_path):
+    build_fixture(tmp_path)
+    resolve_paths(str(tmp_path))
+    g = load_graph(str(tmp_path))
+    payload = g.field_lineage("child.record", "name")
+    out = render(payload, kind="field", fmt="human")
+    assert "kind          : delegated" in out
+    assert "source field  : res.partner.name" in out
+    assert "delegation chain" in out
+    assert "shadowing risk" in out
+
+
 def test_json_format_is_valid_json(tmp_path):
     build_fixture(tmp_path)
     resolve_paths(str(tmp_path))
