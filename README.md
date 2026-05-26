@@ -217,8 +217,8 @@ pytest
 CI 在每次 push / PR 上跑：
 
 1. 单元测试（快，不需要 Odoo）
-2. E2E smoke：装一个 minimal Odoo DB（`base + mail`）→ dump → 断言 summary 满足下限
-3. 5 个 CLI 命令都跑一遍，JSON 输出正确
+2. Fixture smoke：读取仓库内 `registry-probe/local_out`，不启动 Odoo / Postgres
+3. 多个 CLI 查询都跑一遍，验证 JSON 输出、委托字段诊断、影响分析和 override 链
 
 ---
 
