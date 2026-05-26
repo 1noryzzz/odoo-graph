@@ -119,6 +119,8 @@ ODOO_GRAPH_LOG=DEBUG odoo-graph field model.f ...      # 环境变量同效
 
 Odoo 的 `_inherits` 会把父模型字段代理到子模型上。这个字段可能出现在 `env['child.model']._fields` 里，也可以通过 `child.write({'field': value})` 更新，但它未必存在于子模型自己的 SQL 表中。`field` 查询会额外输出诊断信息，避免只看数据库表结构时误判。
 
+完整改进记录见 [`docs/changes/1.6-delegated-field-diagnostics.md`](docs/changes/1.6-delegated-field-diagnostics.md)。
+
 ```bash
 odoo-graph field ifs.gar.entry.supplier.vat --db 17-oabay-ceshi
 ```
@@ -199,6 +201,8 @@ odoo_graph/
     ├── test_formatters.py
     ├── test_cli.py
     └── snapshot_asserts.py       CI post-dump assertions
+docs/
+└── changes/                      version-scoped technical change notes
 ```
 
 ---
@@ -232,7 +236,7 @@ CI 在每次 push / PR 上跑：
 
 - ✅ **Phase 1** (本 PR) — CLI 工具化 + 5 个核心查询 + CI
 - ✅ **Phase 1.5** (PR 7# 10#) — CLI 增加 path 参数，支持"起点-终点"的路径查询
-- ✅ **Phase 1.6** — 字段诊断增强：区分 local/related/computed/delegated 字段，展示 `_inherits` 委托链、可写原因和同名覆盖风险
+- ✅ **Phase 1.6** — 字段诊断增强：区分 local/related/computed/delegated 字段，展示 `_inherits` 委托链、可写原因和同名覆盖风险（见 [`docs/changes/1.6-delegated-field-diagnostics.md`](docs/changes/1.6-delegated-field-diagnostics.md)）
 - ⏳ **Phase 2** — override 判定升级（同签名 + super 调用检查）
 - ⏳ **Phase 3** — AST 补 compute/inverse 方法体的字段读写
 - ⏳ **Phase 4** — XML view 字段引用解析
