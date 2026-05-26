@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-  <data noupdate="1">
-    <record id="ifs_gar_trade_order_config_factor_id" model="ifs.gar.trade.order.config">
-      <field name="factor_id" search="[]"/>
-    </record>
-  </data>
-</odoo>
-

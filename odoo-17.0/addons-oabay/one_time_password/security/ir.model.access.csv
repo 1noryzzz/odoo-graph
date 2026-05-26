@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_otp_authentication_sys,otp.authentication sys,model_otp_authentication,base.group_system,1,1,1,0
-access_otp_authentication_user,otp.authentication user,model_otp_authentication,base.group_user,1,1,0,0
-access_otp_authentication_log_sys,otp.authentication.log sys,model_otp_authentication_log,base.group_system,1,0,1,0
-access_otp_authentication_log_user,otp.authentication.log user,model_otp_authentication_log,base.group_user,0,0,1,0
-access_otp_check_sys,otp.check sys,model_otp_check,base.group_system,1,1,1,1
-access_otp_sync_sys,otp.sync sys,model_otp_sync,base.group_system,1,1,1,1

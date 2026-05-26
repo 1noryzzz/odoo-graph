@@ -1,1 +1,0 @@
-find . -maxdepth 2 -name .git -type d -execdir git pull \;

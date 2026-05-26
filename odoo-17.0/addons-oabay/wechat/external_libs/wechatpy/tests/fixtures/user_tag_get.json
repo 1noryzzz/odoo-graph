@@ -1,5 +1,0 @@
-{
-    "count":2,
-    "data": {"openid": ["OPENID1", "OPENID2"]},
-    "next_openid":"OPENID2"
-}
