@@ -2,8 +2,13 @@ name: release-assets
 
 on:
   release:
-    types: [published,edited]
-    workflow_dispatch:
+    types: [published, edited]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Release tag to build assets for, for example v1.6.0"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -15,6 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,7 +31,7 @@ jobs:
       - name: Validate release tag matches package version
         run: |
           PACKAGE_VERSION="$(python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
-          RELEASE_TAG="${{ github.event.release.tag_name }}"
+          RELEASE_TAG="${{ github.event.release.tag_name || inputs.tag_name }}"
           EXPECTED_TAG="v${PACKAGE_VERSION}"
           if [ "$RELEASE_TAG" != "$EXPECTED_TAG" ]; then
             echo "Release tag ${RELEASE_TAG} does not match pyproject.toml version ${PACKAGE_VERSION}."
@@ -45,6 +52,7 @@ jobs:
       - name: Upload assets to release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.release.tag_name || inputs.tag_name }}
           files: |
             dist/*.whl
             dist/*.tar.gz
