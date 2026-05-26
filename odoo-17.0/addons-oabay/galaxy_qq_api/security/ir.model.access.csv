@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_galaxy_qq_app_user,galaxy.qq.app user,galaxy_qq_api.model_galaxy_qq_app,galaxy_qq_api.group_galaxy_qq_api_user,1,0,0,0
-access_galaxy_qq_app_manager,galaxy.qq.app manager,galaxy_qq_api.model_galaxy_qq_app,galaxy_qq_api.group_galaxy_qq_api_manager,1,1,1,1
-access_galaxy_qq_app_ver_user,galaxy.qq.app.ver user,galaxy_qq_api.model_galaxy_qq_app_ver,galaxy_qq_api.group_galaxy_qq_api_user,1,0,0,0
-access_galaxy_qq_app_ver_manager,galaxy.qq.app.ver manager,galaxy_qq_api.model_galaxy_qq_app_ver,galaxy_qq_api.group_galaxy_qq_api_manager,1,1,1,1
-access_galaxy_qq_users_user,galaxy.qq.users user,galaxy_qq_api.model_galaxy_qq_users,galaxy_qq_api.group_galaxy_qq_api_user,1,1,0,0
-access_galaxy_qq_user_keys_user,galaxy.qq.user.keys user,galaxy_qq_api.model_galaxy_qq_user_keys,galaxy_qq_api.group_galaxy_qq_api_user,1,1,1,0

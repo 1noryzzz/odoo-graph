@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-  <data noupdate="1">
-    <!-- <record id="supplier_inviter_wechat_tag" model="wechat.offiaccount.taglist">
-      <field name="name">供应商/邀请采购方进件</field>
-      <field name="offiaccount_id" ref="ifs_prod_gar.ifs_gar_wechat"/>
-    </record> -->
-  </data>
-</odoo>

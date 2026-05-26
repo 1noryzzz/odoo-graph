@@ -1,8 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_galaxy_open_api_app_user,galaxy.open.api.app user,galaxy_open_api.model_galaxy_open_api_app,galaxy_open_api.group_galaxy_open_api_user,1,0,0,0
-access_galaxy_open_api_app_manager,galaxy.open.api.app manager,galaxy_open_api.model_galaxy_open_api_app,galaxy_open_api.group_galaxy_open_api_manager,1,1,1,1
-access_galaxy_open_api_app_keys_user,galaxy.open.api.app.keys user,galaxy_open_api.model_galaxy_open_api_app_keys,galaxy_open_api.group_galaxy_open_api_user,1,1,1,0
-access_galaxy_open_api_app_keys_manager,galaxy.open.api.app.keys manager,galaxy_open_api.model_galaxy_open_api_app_keys,galaxy_open_api.group_galaxy_open_api_manager,1,1,1,1
-
-access_galaxy_open_api_log_user,galaxy.open.api.log user,galaxy_open_api.model_galaxy_open_api_log,galaxy_open_api.group_galaxy_open_api_user,1,0,0,0
-access_galaxy_open_api_log_manager,galaxy.open.api.log manager,galaxy_open_api.model_galaxy_open_api_log,galaxy_open_api.group_galaxy_open_api_manager,1,1,1,1

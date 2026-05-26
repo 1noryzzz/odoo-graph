@@ -1,0 +1,19 @@
+{
+  "models": 536,
+  "abstract_models": 100,
+  "transient_models": 161,
+  "fields": 14132,
+  "fields_multi_module": 4317,
+  "fields_computed": 8453,
+  "fields_related": 6217,
+  "fields_inverse": 5125,
+  "methods_with_overrides": 4944,
+  "edges_depends_field": 8582,
+  "edges_has_field": 14132,
+  "edges_relates_to": 4137,
+  "edges_inherits_model": 428,
+  "edges_delegates_to_model": 42,
+  "edges_module_defines_model": 687,
+  "edges_module_depends": 272,
+  "edges_method_overrides": 5373
+}

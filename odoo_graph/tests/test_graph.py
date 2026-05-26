@@ -24,6 +24,18 @@ def test_field_lineage_upstream_and_downstream(tmp_path):
     assert len(l2["downstream"]) == 2
 
 
+def test_field_lineage_reports_delegated_field_analysis(tmp_path):
+    g = _loaded(tmp_path)
+    l = g.field_lineage("child.record", "name")
+    analysis = l["analysis"]
+    assert analysis["kind"] == "delegated"
+    assert analysis["delegation_chain"][0]["via_field"] == "partner_id"
+    assert analysis["delegation_chain"][0]["source_field"] == "res.partner.name"
+    assert analysis["writable"] is True
+    assert "inverse" not in analysis["writable_reason"]
+    assert analysis["shadowing"]["risk"] == "watch"
+
+
 def test_impact_bfs_finds_downstream(tmp_path):
     g = _loaded(tmp_path)
     hits = g.impact("res.partner", "name", max_depth=2)
@@ -39,6 +51,14 @@ def test_model_summary_groups_fields_by_module(tmp_path):
     assert s["extended_by_modules"] == ["base", "ext"]
     assert "base" in s["fields_by_module"]
     assert "ext" in s["fields_by_module"]
+
+
+def test_model_summary_reports_delegation_chain(tmp_path):
+    g = _loaded(tmp_path)
+    s = g.model_summary("child.record")
+    assert s["delegation_chain"][0][0]["from_model"] == "child.record"
+    assert s["delegation_chain"][0][0]["to_model"] == "res.partner"
+    assert s["delegation_chain"][0][0]["via_field"] == "partner_id"
 
 
 def test_module_summary_separates_original_vs_extended(tmp_path):

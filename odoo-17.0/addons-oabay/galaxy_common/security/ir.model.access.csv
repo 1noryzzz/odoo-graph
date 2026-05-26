@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-qr_login_provider_all,qr.login.provider,model_qr_login_provider,,1,0,0,0
-access_base_external_dbsource_group_system,base_external_dbsource_group_system,model_base_external_dbsource,base.group_system,1,1,1,1
-access_base_external_dbsource_all,base_external_dbsource_all,model_base_external_dbsource,,1,0,0,0
-access_res_country_area_all,res_country_area_all,model_res_country_area,,1,0,0,0
-
-access_sms_sms_user,sms.sms base.group_user,model_sms_sms,base.group_user,1,1,1,1
