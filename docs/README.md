@@ -10,4 +10,5 @@
 1. `guides/usage.md`
 2. `architecture/overview.md`
 3. `product/roadmap.md`
-4. `changes/README.md`
+4. `product/telemetry-design.md`
+5. `changes/README.md`
