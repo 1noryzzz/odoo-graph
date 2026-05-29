@@ -46,15 +46,15 @@ jobs:
 
       - name: Assert committed dump fixture exists
         run: |
-          test -s registry-probe/local_out/nodes.jsonl
-          test -s registry-probe/local_out/edges.jsonl
-          test -s registry-probe/local_out/edges_resolved.jsonl
-          test -s registry-probe/local_out/summary.json
-          python -c "import json; s=json.load(open('registry-probe/local_out/summary.json')); assert s['models'] > 500, s; assert s['edges_delegates_to_model'] > 0, s"
+          test -s odoo_graph/sample_data/17-oabay-ceshi/nodes.jsonl
+          test -s odoo_graph/sample_data/17-oabay-ceshi/edges.jsonl
+          test -s odoo_graph/sample_data/17-oabay-ceshi/edges_resolved.jsonl
+          test -s odoo_graph/sample_data/17-oabay-ceshi/summary.json
+          python -c "import json; s=json.load(open('odoo_graph/sample_data/17-oabay-ceshi/summary.json')); assert s['models'] > 500, s; assert s['edges_delegates_to_model'] > 0, s"
 
       - name: Run query commands end-to-end
         run: |
-          OUT_DIR=registry-probe/local_out
+          OUT_DIR=odoo_graph/sample_data/17-oabay-ceshi
           mkdir -p fixture-query-output
 
           odoo-graph field ifs.gar.entry.supplier.vat --out-dir "$OUT_DIR" -f json > fixture-query-output/field.json
