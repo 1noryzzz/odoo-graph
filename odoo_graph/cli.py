@@ -5,8 +5,9 @@ import argparse
 import difflib
 import os
 import sys
+import time
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 from . import __version__
 from .config import ConfigValues, load_config, merge
@@ -14,8 +15,25 @@ from .dump import DumpError, _default_cache_dir, dump as dump_registry
 from .formatters import FORMATS, emit
 from .graph import OdooGraph, load_graph
 from .logging import get_logger, setup_logging
+from .telemetry.report import build_report, render_report
+from .telemetry.runtime import (
+    TRACKED_COMMANDS,
+    InvocationRecorder,
+    dump_result_size,
+    field_meta,
+    model_meta,
+    telemetry_enabled,
+)
+from .telemetry.store import init_db
 
 log = get_logger(__name__)
+
+
+def _add_no_telemetry_arg(p: argparse.ArgumentParser) -> None:
+    p.add_argument(
+        "--no-telemetry", action="store_true", default=argparse.SUPPRESS,
+        help="Disable local telemetry for this invocation.",
+    )
 
 
 def _add_common_query_args(p: argparse.ArgumentParser) -> None:
@@ -32,6 +50,7 @@ def _add_common_query_args(p: argparse.ArgumentParser) -> None:
         "--format", "-f", choices=FORMATS, default="human",
         help="Output format (default: human).",
     )
+    _add_no_telemetry_arg(p)
 
 
 def _resolve_out_dir(args: argparse.Namespace) -> str:
@@ -53,7 +72,59 @@ def _resolve_out_dir(args: argparse.Namespace) -> str:
 
 
 def _load(args: argparse.Namespace) -> OdooGraph:
-    return load_graph(_resolve_out_dir(args))
+    out_dir = _resolve_out_dir(args)
+    t0 = time.monotonic()
+    graph = load_graph(out_dir)
+    rec = _telemetry(args)
+    if rec:
+        rec.record_load(time.monotonic() - t0, graph, out_dir)
+    return graph
+
+
+def _telemetry(args: argparse.Namespace) -> InvocationRecorder | None:
+    return getattr(args, "_telemetry", None)
+
+
+def _query_started() -> float:
+    return time.monotonic()
+
+
+def _query_done(args: argparse.Namespace, started: float) -> None:
+    rec = _telemetry(args)
+    if rec:
+        rec.add_query_seconds(time.monotonic() - started)
+
+
+def _telemetry_error(
+    args: argparse.Namespace,
+    result_status: str,
+    error_category: str,
+) -> None:
+    rec = _telemetry(args)
+    if rec:
+        rec.set_error(result_status, error_category)
+
+
+def _emit_payload(
+    args: argparse.Namespace,
+    payload: dict[str, Any],
+    *,
+    kind: str,
+    fmt: str,
+    summary: dict[str, Any] | None = None,
+    meta: dict[str, Any] | None = None,
+    size: int | None = None,
+    empty: bool = False,
+) -> None:
+    rec = _telemetry(args)
+    if rec:
+        rec.set_result(summary=summary, meta=meta, size=size, empty=empty)
+    t0 = time.monotonic()
+    try:
+        emit(payload, kind=kind, fmt=fmt)
+    finally:
+        if rec:
+            rec.add_output_seconds(time.monotonic() - t0)
 
 
 def _split_model_field(g: OdooGraph, target: str) -> Tuple[str, str]:
@@ -137,6 +208,7 @@ def cmd_dump(args: argparse.Namespace) -> int:
             conf_vals = load_config(args.config)
         except FileNotFoundError as exc:
             log.error("%s", exc)
+            _telemetry_error(args, "usage_error", "usage_error")
             return 1
         log.info("loaded config: %s", conf_vals.source_path)
         log.debug(
@@ -152,6 +224,7 @@ def cmd_dump(args: argparse.Namespace) -> int:
         log.error(
             "database name required: pass -d or set db_name in the config file",
         )
+        _telemetry_error(args, "usage_error", "usage_error")
         return 2
     log.debug(
         "effective: db=%s host=%s port=%s user=%s addons=%d dirs",
@@ -160,6 +233,7 @@ def cmd_dump(args: argparse.Namespace) -> int:
     )
 
     try:
+        t0 = _query_started()
         result = dump_registry(
             database=database,
             odoo_path=args.odoo_path,
@@ -171,90 +245,194 @@ def cmd_dump(args: argparse.Namespace) -> int:
             config_file=args.config,
             out_dir=args.out_dir,
         )
+        _query_done(args, t0)
     except DumpError as exc:
+        _query_done(args, t0)
         log.error("dump failed: %s", exc)
+        _telemetry_error(args, "dump_error", "dump_error")
         return 1
-    emit(result, kind="dump", fmt=args.format)
+    summary = result.get("summary") or {}
+    result_summary = {
+        "models_count": summary.get("models"),
+        "fields_count": summary.get("fields"),
+        "resolved_count": (result.get("resolve") or {}).get("resolved"),
+        "unresolved_count": (result.get("resolve") or {}).get("unresolved"),
+    }
+    _emit_payload(
+        args,
+        result,
+        kind="dump",
+        fmt=args.format,
+        summary=result_summary,
+        size=dump_result_size(summary),
+        empty=dump_result_size(summary) == 0,
+    )
     return 0
 
 
 def cmd_field(args: argparse.Namespace) -> int:
     g = _load(args)
     model, name = _split_model_field(g, args.target)
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind="field", raw=args.target, model=model, field=name)
     if not model or not name:
         log.error("field target must be 'model.field' (got %r)", args.target)
+        _telemetry_error(args, "usage_error", "usage_error")
         return 2
     log.debug("field query: model=%s name=%s", model, name)
+    t0 = _query_started()
     try:
         payload = g.field_lineage(model, name)
     except KeyError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
         log.info("\n%s", _suggest_field(g, args.target))
+        _telemetry_error(args, "not_found", "not_found")
         return 1
+    _query_done(args, t0)
     log.info(
         "field %s.%s: %d upstream / %d downstream",
         model, name, len(payload["upstream"]), len(payload["downstream"]),
     )
-    emit(payload, kind="field", fmt=args.format)
+    upstream_count = len(payload["upstream"])
+    downstream_count = len(payload["downstream"])
+    _emit_payload(
+        args,
+        payload,
+        kind="field",
+        fmt=args.format,
+        summary={
+            "upstream_count": upstream_count,
+            "downstream_count": downstream_count,
+            "primary_count_name": "downstream_count",
+        },
+        meta=field_meta(payload["field"], upstream_count=upstream_count),
+        size=upstream_count + downstream_count,
+        empty=upstream_count + downstream_count == 0,
+    )
     return 0
 
 
 def cmd_model(args: argparse.Namespace) -> int:
     g = _load(args)
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind="model", raw=args.target, model=args.target)
+    t0 = _query_started()
     try:
         payload = g.model_summary(args.target)
     except KeyError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
         candidates = [n["name"] for n in g.nodes_of_kind("Model")]
         log.info("\n%s", _suggest("model", candidates, args.target))
+        _telemetry_error(args, "not_found", "not_found")
         return 1
+    _query_done(args, t0)
     log.info(
         "model %s: extended by %d module(s), %d field group(s)",
         args.target, len(payload["extended_by_modules"]),
         len(payload["fields_by_module"]),
     )
-    emit(payload, kind="model", fmt=args.format)
+    fields_count = sum(len(v) for v in payload["fields_by_module"].values())
+    _emit_payload(
+        args,
+        payload,
+        kind="model",
+        fmt=args.format,
+        summary={
+            "extended_by_modules_count": len(payload["extended_by_modules"]),
+            "fields_by_module_count": len(payload["fields_by_module"]),
+            "delegation_chain_count": len(payload.get("delegation_chain") or []),
+        },
+        meta=model_meta(payload["model"]),
+        size=fields_count,
+        empty=fields_count == 0,
+    )
     return 0
 
 
 def cmd_module(args: argparse.Namespace) -> int:
     g = _load(args)
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind="module", raw=args.target, module=args.target)
+    t0 = _query_started()
     try:
         payload = g.module_summary(args.target)
     except KeyError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
         candidates = [n["name"] for n in g.nodes_of_kind("Module")]
         log.info("\n%s", _suggest("module", candidates, args.target))
+        _telemetry_error(args, "not_found", "not_found")
         return 1
+    _query_done(args, t0)
     log.info(
         "module %s: %d original models, %d extended models",
         args.target, len(payload["original_models"]),
         len(payload["extended_models"]),
     )
-    emit(payload, kind="module", fmt=args.format)
+    size = (
+        len(payload["original_models"])
+        + len(payload["extended_models"])
+        + len(payload["original_fields"])
+        + len(payload["extended_fields"])
+    )
+    _emit_payload(
+        args,
+        payload,
+        kind="module",
+        fmt=args.format,
+        summary={
+            "original_models_count": len(payload["original_models"]),
+            "extended_models_count": len(payload["extended_models"]),
+            "original_fields_count": len(payload["original_fields"]),
+            "extended_fields_count": len(payload["extended_fields"]),
+        },
+        size=size,
+        empty=size == 0,
+    )
     return 0
 
 
 def cmd_impact(args: argparse.Namespace) -> int:
     g = _load(args)
     model, name = _split_model_field(g, args.target)
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind="field", raw=args.target, model=model, field=name)
     if not model or not name:
         log.error("impact target must be 'model.field' (got %r)", args.target)
+        _telemetry_error(args, "usage_error", "usage_error")
         return 2
+    t0 = _query_started()
     try:
         hits = g.impact(model, name, max_depth=args.max_depth)
     except KeyError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
         log.info("\n%s", _suggest_field(g, args.target))
+        _telemetry_error(args, "not_found", "not_found")
         return 1
+    _query_done(args, t0)
     log.info(
         "impact %s.%s (depth<=%d): %d affected fields",
         model, name, args.max_depth, len(hits),
     )
-    emit(
-        {"target": {"model": model, "name": name},
-         "max_depth": args.max_depth, "impacted": hits},
+    payload = {
+        "target": {"model": model, "name": name},
+        "max_depth": args.max_depth,
+        "impacted": hits,
+    }
+    _emit_payload(
+        args,
+        payload,
         kind="impact", fmt=args.format,
+        summary={"impacted_count": len(hits)},
+        size=len(hits),
+        empty=len(hits) == 0,
     )
     return 0
 
@@ -272,17 +450,35 @@ def cmd_path(args: argparse.Namespace) -> int:
             start_model, start_field = sm, sf
         else:
             log.error("path start must be 'model' or 'model.field' (got %r)", args.start)
+            _telemetry_error(args, "usage_error", "usage_error")
             return 2
 
     target_model, target_field = _split_model_field(g, args.target)
     if not target_model or not target_field:
         log.error("path target must be 'model.field' (got %r)", args.target)
+        _telemetry_error(args, "usage_error", "usage_error")
         return 2
+
+    rec = _telemetry(args)
+    if rec:
+        rec.set_start(
+            kind="field" if start_field else "model",
+            raw=args.start,
+            model=start_model,
+            field=start_field,
+        )
+        rec.set_target(
+            kind="field",
+            raw=args.target,
+            model=target_model,
+            field=target_field,
+        )
 
     allow_kinds = None
     if args.allow_kinds:
         allow_kinds = [k.strip() for k in args.allow_kinds.split(",") if k.strip()]
 
+    t0 = _query_started()
     try:
         payload = g.find_path(
             start_model=start_model,
@@ -294,19 +490,36 @@ def cmd_path(args: argparse.Namespace) -> int:
             edge_kinds=allow_kinds,
         )
     except KeyError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
         log.info("\nstart suggestion:\n%s", _suggest_field(g, args.start))
         log.info("\ntarget suggestion:\n%s", _suggest_field(g, args.target))
+        _telemetry_error(args, "not_found", "not_found")
         return 1
     except ValueError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
+        _telemetry_error(args, "usage_error", "usage_error")
         return 2
+    _query_done(args, t0)
 
     log.info(
         "path %s -> %s.%s: %d path(s)",
         args.start, target_model, target_field, payload["summary"]["found_paths"],
     )
-    emit(payload, kind="path", fmt=args.format)
+    found_paths = payload["summary"]["found_paths"]
+    _emit_payload(
+        args,
+        payload,
+        kind="path",
+        fmt=args.format,
+        summary={
+            "found_paths": found_paths,
+            "truncated": payload.get("truncated"),
+        },
+        size=found_paths,
+        empty=found_paths == 0,
+    )
     return 0
 
 
@@ -315,12 +528,18 @@ def cmd_overrides(args: argparse.Namespace) -> int:
     # Methods follow the same model.method shape; reuse the splitter (it works
     # the same way — first prefix that matches a real model wins).
     model, method = _split_model_field(g, args.target)
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind="method", raw=args.target, model=model, method=method)
     if not model or not method:
         log.error("overrides target must be 'model.method' (got %r)", args.target)
+        _telemetry_error(args, "usage_error", "usage_error")
         return 2
+    t0 = _query_started()
     try:
         payload = g.overrides_of(model, method)
     except KeyError as exc:
+        _query_done(args, t0)
         log.error("%s", exc)
         # Suggest method names defined on this model, if we identified one.
         if g.node(g.model_id(model)) is not None:
@@ -329,12 +548,38 @@ def cmd_overrides(args: argparse.Namespace) -> int:
                 if n["model"] == model
             })
             log.info("\n%s", _suggest("method", method_names, method))
+        _telemetry_error(args, "not_found", "not_found")
         return 1
+    _query_done(args, t0)
     log.info(
         "overrides %s.%s: depth=%d",
         model, method, payload.get("override_depth", 0),
     )
-    emit(payload, kind="overrides", fmt=args.format)
+    class_count = len(payload.get("defined_in_classes") or [])
+    _emit_payload(
+        args,
+        payload,
+        kind="overrides",
+        fmt=args.format,
+        summary={
+            "override_depth": payload.get("override_depth"),
+            "defined_in_classes_count": class_count,
+        },
+        size=class_count,
+        empty=class_count == 0,
+    )
+    return 0
+
+
+def cmd_telemetry_init(args: argparse.Namespace) -> int:
+    path = init_db(args.db)
+    print(path)
+    return 0
+
+
+def cmd_telemetry_report(args: argparse.Namespace) -> int:
+    report = build_report(args.db, gap_seconds=args.gap_seconds)
+    print(render_report(report, fmt=args.format))
     return 0
 
 
@@ -355,6 +600,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "-q", "--quiet", action="store_true",
         help="Only print errors. Equivalent to --log-level ERROR.",
+    )
+    p.add_argument(
+        "--no-telemetry", action="store_true",
+        help="Disable local telemetry for this invocation.",
     )
     sub = p.add_subparsers(dest="cmd", required=True)
 
@@ -387,6 +636,7 @@ def build_parser() -> argparse.ArgumentParser:
     pd.add_argument("--out-dir", "-o", default=None,
                     help="Defaults to ~/.cache/odoo-graph/<db>/")
     pd.add_argument("--format", "-f", choices=FORMATS, default="human")
+    _add_no_telemetry_arg(pd)
     pd.set_defaults(func=cmd_dump)
 
     # field
@@ -434,6 +684,28 @@ def build_parser() -> argparse.ArgumentParser:
     _add_common_query_args(po)
     po.set_defaults(func=cmd_overrides)
 
+    # telemetry
+    pt = sub.add_parser("telemetry", help="Manage and analyze local CLI telemetry.")
+    tsub = pt.add_subparsers(dest="telemetry_cmd", required=True)
+
+    pti = tsub.add_parser("init", help="Initialize the local telemetry SQLite DB.")
+    pti.add_argument(
+        "--db", default=None,
+        help="Telemetry SQLite path. Default: ~/.cache/odoo-graph/telemetry.sqlite3 "
+             "or $ODOO_GRAPH_TELEMETRY_DB.",
+    )
+    pti.set_defaults(func=cmd_telemetry_init)
+
+    ptr = tsub.add_parser("report", help="Analyze collected telemetry.")
+    ptr.add_argument(
+        "--db", default=None,
+        help="Telemetry SQLite path. Default: ~/.cache/odoo-graph/telemetry.sqlite3 "
+             "or $ODOO_GRAPH_TELEMETRY_DB.",
+    )
+    ptr.add_argument("--gap-seconds", type=int, default=60)
+    ptr.add_argument("--format", "-f", choices=("human", "json"), default="human")
+    ptr.set_defaults(func=cmd_telemetry_report)
+
     return p
 
 
@@ -448,7 +720,24 @@ def main(argv: Optional[List[str]] = None) -> int:
         level = args.log_level
     setup_logging(level=level, verbosity=getattr(args, "verbose", 0))
     log.debug("argv=%r", argv if argv is not None else sys.argv[1:])
-    return int(args.func(args) or 0)
+    rec: InvocationRecorder | None = None
+    if args.cmd in TRACKED_COMMANDS and telemetry_enabled(args):
+        rec = InvocationRecorder.from_args(args, argv)
+        setattr(args, "_telemetry", rec)
+    try:
+        rc = int(args.func(args) or 0)
+    except SystemExit as exc:
+        if rec:
+            code = exc.code if isinstance(exc.code, int) else 1
+            rec.finish(code)
+        raise
+    except Exception as exc:
+        if rec:
+            rec.finish(1, exc)
+        raise
+    if rec:
+        rec.finish(rc)
+    return rc
 
 
 if __name__ == "__main__":
