@@ -70,7 +70,48 @@ odoo-graph overrides res.users.write --db odoo_demo
 - `-f json`：JSON 输出
 - `-f graphviz`：预留
 
-## 4. 日志
+## 4. 本地 telemetry
+
+业务子命令默认会记录到本地 SQLite，用于后续分析一次 task / session 内的多次 CLI 查询模式。
+
+默认路径：
+
+```text
+~/.cache/odoo-graph/telemetry.sqlite3
+```
+
+显式初始化：
+
+```bash
+odoo-graph telemetry init
+```
+
+生成报告：
+
+```bash
+odoo-graph telemetry report
+odoo-graph telemetry report --gap-seconds 60
+odoo-graph telemetry report -f json
+```
+
+报告会包含：
+
+- session 调用次数分布，以及 30s / 60s / 120s gap 敏感性分析
+- 命令频率、follow-up、retry、参数升级
+- `path` fan-out、批量 model / field 探索
+- graph load overhead
+
+配置与关闭：
+
+```bash
+ODOO_GRAPH_TELEMETRY_DB=/tmp/odoo-graph.sqlite3 odoo-graph telemetry report
+odoo-graph field res.partner.name --db odoo_demo --no-telemetry
+ODOO_GRAPH_TELEMETRY=0 odoo-graph model res.partner --db odoo_demo
+```
+
+`--help`、`--version`、root action 和 shell 层启动失败不会进入正式统计；telemetry 写入失败不会改变原命令的返回码。
+
+## 5. 日志
 
 日志写入 stderr，方便 stdout 作为机器可读输出。
 

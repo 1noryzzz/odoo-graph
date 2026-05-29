@@ -61,6 +61,31 @@ odoo-graph path child.record res.partner.name --db odoo_demo
 odoo-graph overrides res.users.write --db odoo_demo
 ```
 
+## 本地 telemetry
+
+`odoo-graph` 默认会把业务子命令调用写入本地 SQLite，用于分析 agent 在一个 session 内是否反复查询、扩展查询或触发批量探索模式。
+
+默认数据库路径：
+
+```text
+~/.cache/odoo-graph/telemetry.sqlite3
+```
+
+常用命令：
+
+```bash
+# 显式初始化 telemetry DB
+odoo-graph telemetry init
+
+# 生成后处理 + 分析报告
+odoo-graph telemetry report
+
+# 输出 JSON 报告，便于脚本处理
+odoo-graph telemetry report -f json
+```
+
+可用 `ODOO_GRAPH_TELEMETRY_DB` 覆盖数据库路径。若某次调用不希望记录，可追加 `--no-telemetry`，或设置 `ODOO_GRAPH_TELEMETRY=0` 关闭。
+
 ## 输出格式
 
 - `-f human`：默认文本输出

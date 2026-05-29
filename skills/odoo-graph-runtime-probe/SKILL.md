@@ -14,6 +14,7 @@ description: 指导 AI 在 Odoo 开发中何时使用 odoo-graph 运行时探针
 4. **方法 override 链**：同名方法在多模块中的 MRO 顺序。
 5. **起点到终点的路径证明**：想证明某业务对象是否能影响目标字段（`path` 命令）。
 6. **委托继承字段诊断**：字段在当前模型 `_fields` 可见、可通过 `write()` 更新，但可能真实来自 `_inherits` 父模型且不在当前模型 SQL 表中。
+7. **工具使用情况分析**：用户想了解 agent 对 `odoo-graph` 的调用模式、是否存在反复查询、fan-out 或批量探索时，使用 telemetry report。
 
 > 判断原则：如果问题明确涉及“模块叠加后最终行为”，就应使用本工具。
 
@@ -37,6 +38,7 @@ description: 指导 AI 在 Odoo 开发中何时使用 odoo-graph 运行时探针
 5. **dump 前先提醒并确认**：告知用户 dump 可能与本地正在运行的 Odoo 服务产生冲突/失败风险，先征求确认。
 6. **query 可多次复用**：所有查询离线读取缓存，不再启动 Odoo。
 7. 输出优先 `-f human` 给人看；需要脚本处理时用 `-f json`。
+8. 业务查询默认会写入本地 telemetry；除非用户要求分析工具使用情况，不要把 telemetry report 混入业务问题回答。
 
 ---
 
@@ -102,6 +104,22 @@ odoo-graph overrides <model.method> --db <db>
 **何时用**：排查方法调用链、super 顺序争议。  
 **输出**：跨模块 override 顺序（按 MRO 展示）。
 
+### 7) telemetry
+```bash
+odoo-graph telemetry report
+```
+**何时用**：用户明确要求查看 `odoo-graph` 使用情况、agent 调用模式、session 内多次查询、fan-out、批量探索或加载耗时时。  
+**输出**：本地 SQLite telemetry 的后处理与分析报告，包括 session 调用次数、命令频率、follow-up、retry、参数升级、`path` fan-out、批量 model / field 探索、load overhead，以及 30s / 60s / 120s gap 敏感性分析。
+
+相关命令：
+
+```bash
+odoo-graph telemetry init
+odoo-graph telemetry report -f json
+```
+
+默认 telemetry DB：`~/.cache/odoo-graph/telemetry.sqlite3`。可用 `ODOO_GRAPH_TELEMETRY_DB` 覆盖路径；单次业务命令可加 `--no-telemetry`，或用 `ODOO_GRAPH_TELEMETRY=0` 关闭采集。
+
 ---
 
 ## 输出解读规则（给 AI 的行为约束）
@@ -128,6 +146,10 @@ odoo-graph overrides <model.method> --db <db>
    - 若用户提到的 DB 在缓存中存在，可直接分析并告知“正在使用缓存”。
    - 若用户不选缓存或要求最新数据，可提供“先 dump 新缓存再分析”的选项。
    - 不要擅自在多数据库环境下猜测 DB 名称。
+7. **telemetry 使用规则**：
+   - 普通业务分析不需要主动运行 `telemetry report`。
+   - 当用户问“这些命令用得怎么样”“agent 是否反复查询”“是否需要批量命令/缓存/daemon”时，再运行 `odoo-graph telemetry report`。
+   - `--help`、`--version`、root action 和 shell 层启动失败不属于正式 telemetry 统计范围。
 
 ## `_inherits` 字段诊断回答模板
 当 `field` 输出显示 `kind=delegated` 或 `kind=delegated_related` 时，回答应覆盖：
@@ -148,6 +170,7 @@ odoo-graph overrides <model.method> --db <db>
 3. 若你想要最新数据或缓存缺失，我会先提醒 dump 可能与运行中的 Odoo 冲突，并征求你确认。
 4. 然后根据问题类型选择命令（field/model/module/impact/path/overrides）。
 5. 给出简短结论，并附关键输出要点与下一步建议。
+6. 若用户要求分析工具使用模式，再运行 `telemetry report` 并解释报告中的调用模式。
 
 ## 常见失败与处理
 - `dump` 失败：优先检查 `-c`、`-d`、`--odoo-path`、DB 凭据。
