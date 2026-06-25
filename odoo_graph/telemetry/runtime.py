@@ -46,6 +46,31 @@ def local_thread_scope() -> str:
     return f"local:{digest}"
 
 
+def client_context() -> dict[str, str | None]:
+    cursor_conversation_id = os.environ.get("CURSOR_CONVERSATION_ID")
+    if cursor_conversation_id:
+        return {
+            "client": "cursor",
+            "thread_scope": f"cursor:{cursor_conversation_id}",
+            "cursor_conversation_id": cursor_conversation_id,
+            "cursor_agent": os.environ.get("CURSOR_AGENT"),
+        }
+    codex_thread_id = os.environ.get("CODEX_THREAD_ID")
+    if codex_thread_id:
+        return {
+            "client": "codex",
+            "thread_scope": codex_thread_id,
+            "cursor_conversation_id": None,
+            "cursor_agent": None,
+        }
+    return {
+        "client": "local",
+        "thread_scope": local_thread_scope(),
+        "cursor_conversation_id": None,
+        "cursor_agent": None,
+    }
+
+
 def _arg_shape(args: Any) -> dict[str, Any]:
     return {
         "has_max_depth": hasattr(args, "max_depth"),
@@ -203,13 +228,19 @@ class InvocationRecorder:
         if self.error_category is None:
             self.error_category = "none" if success else "unexpected"
 
+        context = client_context()
         codex_thread_id = os.environ.get("CODEX_THREAD_ID")
         codex_turn_id = os.environ.get("CODEX_TURN_ID")
-        thread_scope = codex_thread_id or local_thread_scope()
+        thread_scope = context["thread_scope"]
         session_key = (
             f"{codex_thread_id}:{codex_turn_id}"
             if codex_thread_id and codex_turn_id
-            else None
+            else thread_scope if context["client"] == "cursor" else None
+        )
+        self.add_extra(
+            client=context["client"],
+            cursor_conversation_id=context["cursor_conversation_id"],
+            cursor_agent=context["cursor_agent"],
         )
         row = {
             "telemetry_schema_version": TELEMETRY_SCHEMA_VERSION,

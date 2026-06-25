@@ -111,6 +111,26 @@ def test_cli_writes_business_invocation_telemetry(tmp_path, monkeypatch, capsys)
     assert summary["upstream_count"] == 2
 
 
+def test_cursor_conversation_id_becomes_thread_scope(tmp_path, monkeypatch, capsys):
+    db = tmp_path / "telemetry.sqlite3"
+    out = _bootstrap(tmp_path / "dump")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+    monkeypatch.setenv("CURSOR_CONVERSATION_ID", "cursor-conversation-1")
+    monkeypatch.setenv("CURSOR_AGENT", "1")
+
+    rc = main(["model", "res.partner", "--out-dir", out, "-f", "json"])
+
+    assert rc == 0
+    json.loads(capsys.readouterr().out)
+    row = fetch_invocations(db)[0]
+    assert row["codex_thread_id"] == "cursor:cursor-conversation-1"
+    assert row["session_key"] == "cursor:cursor-conversation-1"
+    extra = json.loads(row["extra_json"])
+    assert extra["client"] == "cursor"
+    assert extra["cursor_conversation_id"] == "cursor-conversation-1"
+
+
 def test_no_telemetry_flag_skips_write(tmp_path, monkeypatch):
     db = tmp_path / "telemetry.sqlite3"
     out = _bootstrap(tmp_path / "dump")
@@ -135,7 +155,8 @@ def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
         max_depth=6,
         max_paths=3,
         duration_load_ms=2500,
-        extra_json={"graph_cache_key": "dump-1"},
+        argv_json={"argv": ["path", "model.a", "model.b.x", "--db", "db1", "-f", "json"], "arg_shape": {"format": "json"}},
+        extra_json={"graph_cache_key": "dump-1", "graph_source": "dump-1", "cwd": "/repo"},
     ), db)
     insert_invocation(_row(
         command="path",
@@ -147,7 +168,8 @@ def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
         max_depth=6,
         max_paths=3,
         duration_load_ms=2500,
-        extra_json={"graph_cache_key": "dump-1"},
+        argv_json={"argv": ["path", "model.a", "model.c.y", "--db", "db1", "-f", "json"], "arg_shape": {"format": "json"}},
+        extra_json={"graph_cache_key": "dump-1", "graph_source": "dump-1", "cwd": "/repo"},
     ), db)
     insert_invocation(_row(
         command="field",
@@ -155,6 +177,8 @@ def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
         target_raw="model.b.supplier_id",
         target_model="model.b",
         target_field="supplier_id",
+        argv_json={"argv": ["field", "model.b.supplier_id", "--db", "db1"], "arg_shape": {"format": "human"}},
+        extra_json={"cwd": "/repo"},
     ), db)
     insert_invocation(_row(
         command="field",
@@ -162,6 +186,8 @@ def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
         target_raw="model.c.supplier_id",
         target_model="model.c",
         target_field="supplier_id",
+        argv_json={"argv": ["field", "model.c.supplier_id", "--db", "db1"], "arg_shape": {"format": "human"}},
+        extra_json={"cwd": "/repo"},
     ), db)
     insert_invocation(_row(
         command="model",
@@ -170,6 +196,12 @@ def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
         target_kind="model",
         target_model="model.d",
         target_field=None,
+        success=0,
+        exit_code=1,
+        result_status="unexpected_error",
+        error_category="unexpected",
+        argv_json={"argv": ["model", "model.d", "--db", "db2", "--format", "graphviz"], "arg_shape": {"format": "graphviz"}},
+        extra_json={"cwd": "/other", "exception_type": "NotImplementedError", "traceback_tail": "graphviz output is not implemented yet"},
     ), db)
 
     report = build_report(str(db), gap_seconds=60)
@@ -183,3 +215,13 @@ def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
     assert groups[0]["target_field"] == "supplier_id"
     assert groups[0]["distinct_models"] == 2
     assert analysis["load_overhead"]["same_graph_repeated_load_count"] == 1
+    assert analysis["time_range"]["first_invocation"] == "2026-05-29T00:00:00.000Z"
+    assert analysis["time_range"]["last_invocation"] == "2026-05-29T00:02:30.000Z"
+    assert analysis["top_targets"][0]["command"] == "path"
+    assert analysis["top_sessions"][0]["invocation_count"] == 4
+    assert analysis["failure_details"][0]["exception_type"] == "NotImplementedError"
+    assert analysis["graph_source_load_stats"][0]["graph_source"] == "dump-1"
+    assert analysis["format_usage"][0]["value"] == "json"
+    assert analysis["cwd_usage"][0]["value"] == "/repo"
+    assert analysis["db_usage"][0]["value"] == "db1"
+    assert analysis["command_sequences"][0]["sequence"][0] == "path:model.b.x"

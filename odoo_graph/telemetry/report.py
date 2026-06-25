@@ -32,6 +32,92 @@ def _avg(values: Iterable[int | float]) -> float | None:
     return sum(vals) / len(vals)
 
 
+def _json_obj(row: dict[str, Any], column: str) -> dict[str, Any]:
+    raw = row.get(column)
+    if not raw:
+        return {}
+    if isinstance(raw, dict):
+        return raw
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return {}
+
+
+def _argv(row: dict[str, Any]) -> list[str]:
+    argv = _json_obj(row, "argv_json").get("argv") or []
+    return [str(arg) for arg in argv]
+
+
+def _arg_shape(row: dict[str, Any]) -> dict[str, Any]:
+    return _json_obj(row, "argv_json").get("arg_shape") or {}
+
+
+def _option_value(argv: list[str], *names: str) -> str | None:
+    for idx, item in enumerate(argv):
+        for name in names:
+            if item == name and idx + 1 < len(argv):
+                return argv[idx + 1]
+            prefix = f"{name}="
+            if item.startswith(prefix):
+                return item[len(prefix):]
+    return None
+
+
+def _format_value(row: dict[str, Any]) -> str:
+    value = _arg_shape(row).get("format")
+    if value:
+        return str(value)
+    return _option_value(_argv(row), "--format", "-f") or "human"
+
+
+def _db_value(row: dict[str, Any]) -> str:
+    argv = _argv(row)
+    if row["command"] == "dump":
+        return _option_value(argv, "--database", "-d") or "<none>"
+    return _option_value(argv, "--db") or "<none>"
+
+
+def _out_dir_value(row: dict[str, Any]) -> str:
+    return _option_value(_argv(row), "--out-dir", "-o") or "<auto>"
+
+
+def _extra_value(row: dict[str, Any], key: str) -> Any:
+    return _json_obj(row, "extra_json").get(key)
+
+
+def _client_value(row: dict[str, Any]) -> str:
+    explicit = _extra_value(row, "client")
+    if explicit:
+        return str(explicit)
+    thread = row.get("codex_thread_id") or ""
+    if thread.startswith("cursor:"):
+        return "cursor"
+    if thread.startswith("local:"):
+        return "local"
+    if thread:
+        return "codex"
+    return "unknown"
+
+
+def _top_dimension(
+    rows: list[dict[str, Any]],
+    value_fn: Any,
+    limit: int = 20,
+) -> list[dict[str, Any]]:
+    counts: Counter[str] = Counter()
+    failures: Counter[str] = Counter()
+    for row in rows:
+        value = value_fn(row)
+        counts[value] += 1
+        if not row.get("success"):
+            failures[value] += 1
+    return [
+        {"value": value, "count": count, "failures": failures[value]}
+        for value, count in counts.most_common(limit)
+    ]
+
+
 def _field_name(row: dict[str, Any]) -> str | None:
     if row.get("target_field"):
         return row["target_field"]
@@ -115,9 +201,34 @@ def analyze(rows: list[dict[str, Any]], gap_seconds: int = 60) -> dict[str, Any]
     same_prefix_groups: list[dict[str, Any]] = []
     multi_model_sessions = 0
     multi_field_sessions = 0
+    top_sessions: list[dict[str, Any]] = []
+    command_sequences: list[dict[str, Any]] = []
 
     for session in sessions:
         rows_in_session = session["rows"]
+        sequence = [r["command"] for r in rows_in_session]
+        compact_sequence = [
+            f"{r['command']}:{r.get('target_raw') or r.get('start_raw') or '-'}"
+            for r in rows_in_session
+        ]
+        top_sessions.append({
+            "session_key": session["session_key"],
+            "thread_id": session["thread_id"],
+            "client": _client_value(rows_in_session[0]),
+            "started_at": session["started_at"],
+            "ended_at": session["ended_at"],
+            "invocation_count": len(rows_in_session),
+            "commands": sequence,
+            "sequence": compact_sequence,
+        })
+        command_sequences.append({
+            "session_key": session["session_key"],
+            "thread_id": session["thread_id"],
+            "client": _client_value(rows_in_session[0]),
+            "started_at": session["started_at"],
+            "invocation_count": len(rows_in_session),
+            "sequence": compact_sequence,
+        })
         if len([r for r in rows_in_session if r["command"] == "model"]) >= 2:
             multi_model_sessions += 1
         if len([r for r in rows_in_session if r["command"] == "field"]) >= 2:
@@ -214,10 +325,62 @@ def analyze(rows: list[dict[str, Any]], gap_seconds: int = 60) -> dict[str, Any]
 
     loads = [row["duration_load_ms"] for row in flat if row.get("duration_load_ms") is not None]
     totals = [row["duration_total_ms"] for row in flat if row.get("duration_total_ms") is not None]
+    graph_source_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in flat:
+        if row.get("duration_load_ms") is None:
+            continue
+        graph_source_groups[str(_extra_value(row, "graph_source") or "<unknown>")].append(row)
+    graph_source_load_stats = []
+    for graph_source, group_rows in graph_source_groups.items():
+        group_loads = [r["duration_load_ms"] for r in group_rows]
+        graph_source_load_stats.append({
+            "graph_source": graph_source,
+            "count": len(group_rows),
+            "load_ms_average": _avg(group_loads),
+            "load_ms_p50": statistics.median(group_loads) if group_loads else None,
+            "load_ms_p90": _percentile(group_loads, 0.90),
+            "load_ms_min": min(group_loads) if group_loads else None,
+            "load_ms_max": max(group_loads) if group_loads else None,
+        })
+
+    failure_details = []
+    for row in flat:
+        if row.get("success"):
+            continue
+        failure_details.append({
+            "id": row.get("id"),
+            "started_at": row.get("started_at"),
+            "command": row.get("command"),
+            "target_raw": row.get("target_raw"),
+            "result_status": row.get("result_status"),
+            "error_category": row.get("error_category"),
+            "exit_code": row.get("exit_code"),
+            "client": _client_value(row),
+            "cwd": _extra_value(row, "cwd"),
+            "db": _db_value(row),
+            "out_dir": _out_dir_value(row),
+            "format": _format_value(row),
+            "exception_type": _extra_value(row, "exception_type"),
+            "traceback_tail": _extra_value(row, "traceback_tail"),
+        })
+
+    target_counts: Counter[tuple[str, str]] = Counter()
+    target_failures: Counter[tuple[str, str]] = Counter()
+    for row in flat:
+        key = (row["command"], row.get("target_raw") or "<none>")
+        target_counts[key] += 1
+        if not row.get("success"):
+            target_failures[key] += 1
+
     return {
         "gap_seconds": gap_seconds,
         "invocation_count": len(flat),
+        "time_range": {
+            "first_invocation": flat[0]["started_at"] if flat else None,
+            "last_invocation": flat[-1]["started_at"] if flat else None,
+        },
         "command_frequency": dict(Counter(row["command"] for row in flat).most_common()),
+        "client_frequency": dict(Counter(_client_value(row) for row in flat).most_common()),
         "session_metrics": {
             "session_count": len(sessions),
             "invocation_count_average": _avg(counts),
@@ -280,21 +443,40 @@ def analyze(rows: list[dict[str, Any]], gap_seconds: int = 60) -> dict[str, Any]
                 if row.get("duration_load_ms") is not None
             })),
         },
+        "top_targets": [
+            {
+                "command": command,
+                "target_raw": target,
+                "count": count,
+                "failures": target_failures[(command, target)],
+            }
+            for (command, target), count in target_counts.most_common(20)
+        ],
+        "top_sessions": sorted(
+            top_sessions,
+            key=lambda s: s["invocation_count"],
+            reverse=True,
+        )[:10],
+        "failure_details": failure_details[:20],
+        "graph_source_load_stats": sorted(
+            graph_source_load_stats,
+            key=lambda s: s["count"],
+            reverse=True,
+        )[:20],
+        "format_usage": _top_dimension(flat, _format_value),
+        "cwd_usage": _top_dimension(flat, lambda row: str(_extra_value(row, "cwd") or "<unknown>")),
+        "db_usage": _top_dimension(flat, _db_value),
+        "out_dir_usage": _top_dimension(flat, _out_dir_value),
+        "command_sequences": sorted(
+            command_sequences,
+            key=lambda s: s["invocation_count"],
+            reverse=True,
+        )[:20],
         "top_transitions": [
             {"from": src, "to": dst, "count": count}
             for (src, dst), count in transitions.most_common(20)
         ],
     }
-
-
-def _extra_value(row: dict[str, Any], key: str) -> Any:
-    raw = row.get("extra_json")
-    if not raw:
-        return None
-    try:
-        return json.loads(raw).get(key)
-    except json.JSONDecodeError:
-        return None
 
 
 def build_report(path: str | None = None, gap_seconds: int = 60) -> dict[str, Any]:
@@ -319,15 +501,32 @@ def render_report(report: dict[str, Any], fmt: str = "human") -> str:
         "================",
         f"gap seconds: {analysis['gap_seconds']}",
         f"invocations: {analysis['invocation_count']}",
+        f"first invocation: {analysis['time_range']['first_invocation']}",
+        f"last invocation: {analysis['time_range']['last_invocation']}",
         f"sessions: {session['session_count']}",
         f"calls/session avg: {_fmt(session['invocation_count_average'])}",
         f"calls/session p50/p90/p95: {session['invocation_count_p50']} / "
         f"{session['invocation_count_p90']} / {session['invocation_count_p95']}",
         "",
-        "Command frequency:",
+        "Client frequency:",
     ]
+    for client, count in analysis["client_frequency"].items():
+        lines.append(f"  {client}: {count}")
+    lines.extend([
+        "",
+        "Command frequency:",
+    ])
     for command, count in analysis["command_frequency"].items():
         lines.append(f"  {command}: {count}")
+    lines.extend([
+        "",
+        "Format usage:",
+    ])
+    for item in analysis["format_usage"][:8]:
+        lines.append(
+            f"  {item['value']}: {item['count']} "
+            f"(failures={item['failures']})"
+        )
     lines.extend([
         "",
         "Follow-up:",
@@ -350,6 +549,89 @@ def render_report(report: dict[str, Any], fmt: str = "human") -> str:
         "Batch exploration:",
         f"  multi-model sessions: {analysis['batch_exploration']['multi_model_session_count']}",
         f"  multi-field sessions: {analysis['batch_exploration']['multi_field_session_count']}",
+        "",
+        "Top targets:",
+    ])
+    for item in analysis["top_targets"][:10]:
+        lines.append(
+            f"  {item['command']} {item['target_raw']}: {item['count']} "
+            f"(failures={item['failures']})"
+        )
+    lines.extend([
+        "",
+        "Top sessions:",
+    ])
+    for item in analysis["top_sessions"][:5]:
+        lines.append(
+            f"  {item['session_key']}: {item['invocation_count']} calls "
+            f"[{item['client']}]"
+        )
+        lines.append(f"    {' -> '.join(item['commands'])}")
+    lines.extend([
+        "",
+        "Failure details:",
+    ])
+    if analysis["failure_details"]:
+        for item in analysis["failure_details"][:8]:
+            detail = item.get("exception_type") or item.get("error_category")
+            tail = item.get("traceback_tail") or ""
+            lines.append(
+                f"  #{item['id']} {item['command']} {item.get('target_raw')}: "
+                f"{item['result_status']} ({detail})"
+            )
+            if tail:
+                lines.append(f"    {tail}")
+    else:
+        lines.append("  none")
+    lines.extend([
+        "",
+        "Graph source load stats:",
+    ])
+    for item in analysis["graph_source_load_stats"][:5]:
+        lines.append(
+            f"  {item['graph_source']}: n={item['count']} "
+            f"avg={_fmt(item['load_ms_average'])}ms "
+            f"p50={item['load_ms_p50']}ms p90={item['load_ms_p90']}ms"
+        )
+    lines.extend([
+        "",
+        "CWD usage:",
+    ])
+    for item in analysis["cwd_usage"][:5]:
+        lines.append(
+            f"  {item['value']}: {item['count']} "
+            f"(failures={item['failures']})"
+        )
+    lines.extend([
+        "",
+        "DB usage:",
+    ])
+    for item in analysis["db_usage"][:5]:
+        lines.append(
+            f"  {item['value']}: {item['count']} "
+            f"(failures={item['failures']})"
+        )
+    lines.extend([
+        "",
+        "Out-dir usage:",
+    ])
+    for item in analysis["out_dir_usage"][:5]:
+        lines.append(
+            f"  {item['value']}: {item['count']} "
+            f"(failures={item['failures']})"
+        )
+    lines.extend([
+        "",
+        "Command sequences:",
+    ])
+    for item in analysis["command_sequences"][:5]:
+        lines.append(
+            f"  {item['session_key']}: "
+            + " -> ".join(item["sequence"][:12])
+        )
+        if len(item["sequence"]) > 12:
+            lines.append(f"    ... +{len(item['sequence']) - 12} more")
+    lines.extend([
         "",
         "Load overhead:",
         f"  load ms avg/p50/p90: {_fmt(analysis['load_overhead']['load_ms_average'])} / "

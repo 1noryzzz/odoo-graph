@@ -13,3 +13,7 @@ dist/
 
 # environment / tooling
 .python-version
+
+# macos system file
+.DS_Store
+

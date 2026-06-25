@@ -1,0 +1,604 @@
+{
+  "selected_gap_seconds": 60,
+  "sensitivity": {
+    "30": {
+      "session_count": 6,
+      "invocation_count_average": 4.5,
+      "invocation_count_p50": 2.0,
+      "invocation_count_p90": 5,
+      "invocation_count_p95": 16
+    },
+    "60": {
+      "session_count": 6,
+      "invocation_count_average": 4.5,
+      "invocation_count_p50": 2.0,
+      "invocation_count_p90": 5,
+      "invocation_count_p95": 16
+    },
+    "120": {
+      "session_count": 6,
+      "invocation_count_average": 4.5,
+      "invocation_count_p50": 2.0,
+      "invocation_count_p90": 5,
+      "invocation_count_p95": 16
+    }
+  },
+  "analysis": {
+    "gap_seconds": 60,
+    "invocation_count": 27,
+    "time_range": {
+      "first_invocation": "2026-05-29T16:55:16.205Z",
+      "last_invocation": "2026-06-25T03:35:33.835Z"
+    },
+    "command_frequency": {
+      "model": 19,
+      "dump": 4,
+      "field": 1,
+      "module": 1,
+      "impact": 1,
+      "overrides": 1
+    },
+    "client_frequency": {
+      "local": 21,
+      "codex": 6
+    },
+    "session_metrics": {
+      "session_count": 6,
+      "invocation_count_average": 4.5,
+      "invocation_count_p50": 2.0,
+      "invocation_count_p90": 5,
+      "invocation_count_p95": 16
+    },
+    "followup": {
+      "overall_count": 21,
+      "same_target_count": 2,
+      "different_target_count": 19
+    },
+    "retry": {
+      "exact_retry_count": 4,
+      "parameter_retry_count": 0,
+      "failure_retry_count": 2
+    },
+    "expansion": {
+      "depth_escalation_count": 0,
+      "path_expansion_count": 0,
+      "empty_result_expansion_count": 0
+    },
+    "path_fanout": {
+      "group_count": 0,
+      "groups": []
+    },
+    "batch_exploration": {
+      "multi_model_session_count": 2,
+      "multi_field_session_count": 0,
+      "same_model_multi_field_groups": [],
+      "same_field_cross_model_groups": [],
+      "same_prefix_groups": [
+        {
+          "session_key": "local:0d32fcf02b56:gap60:16:7",
+          "prefix": "ifs.gar",
+          "distinct_targets": 4
+        }
+      ]
+    },
+    "load_overhead": {
+      "load_ms_average": 1083.5454545454545,
+      "load_ms_p50": 1026.0,
+      "load_ms_p90": 1391,
+      "load_to_total_duration_ratio": 0.6356630489853604,
+      "same_graph_repeated_load_count": 19
+    },
+    "top_targets": [
+      {
+        "command": "dump",
+        "target_raw": "<none>",
+        "count": 4,
+        "failures": 1
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.gar.entry.merchant",
+        "count": 2,
+        "failures": 1
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.gar.invite.mixin",
+        "count": 2,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.gar.sub.loan.account",
+        "count": 2,
+        "failures": 1
+      },
+      {
+        "command": "model",
+        "target_raw": "res.partner",
+        "count": 2,
+        "failures": 0
+      },
+      {
+        "command": "field",
+        "target_raw": "ifs.gar.entry.supplier.vat",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.gar.entry.supplier",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "module",
+        "target_raw": "ifs_gar_entry",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "impact",
+        "target_raw": "res.partner.vat",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "overrides",
+        "target_raw": "res.users.write",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.gar.invite.merchant",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.base.company",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.gar.entry.mixin",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.contract.info",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.partner.merchant",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.partner.details.mixin",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.contract.info.sign.token",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.risk.manage.credits.mixin",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.step.by.step.mixin",
+        "count": 1,
+        "failures": 0
+      },
+      {
+        "command": "model",
+        "target_raw": "ifs.ir.sequence.mixin",
+        "count": 1,
+        "failures": 0
+      }
+    ],
+    "top_sessions": [
+      {
+        "session_key": "local:0d32fcf02b56:gap60:16:7",
+        "thread_id": "local:0d32fcf02b56",
+        "client": "local",
+        "started_at": "2026-06-22T06:12:54.596Z",
+        "ended_at": "2026-06-22T06:13:58.624Z",
+        "invocation_count": 16,
+        "commands": [
+          "dump",
+          "dump",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model",
+          "model"
+        ],
+        "sequence": [
+          "dump:-",
+          "dump:-",
+          "model:ifs.gar.entry.merchant",
+          "model:ifs.gar.entry.merchant",
+          "model:ifs.gar.invite.mixin",
+          "model:ifs.gar.invite.merchant",
+          "model:ifs.base.company",
+          "model:ifs.gar.entry.mixin",
+          "model:ifs.contract.info",
+          "model:ifs.gar.invite.mixin",
+          "model:ifs.partner.merchant",
+          "model:ifs.partner.details.mixin",
+          "model:ifs.contract.info.sign.token",
+          "model:ifs.risk.manage.credits.mixin",
+          "model:ifs.step.by.step.mixin",
+          "model:ifs.ir.sequence.mixin"
+        ]
+      },
+      {
+        "session_key": "019e7426-c3e7-7993-9207-7bdcb901d127:gap60:5:1",
+        "thread_id": "019e7426-c3e7-7993-9207-7bdcb901d127",
+        "client": "codex",
+        "started_at": "2026-05-29T16:55:16.205Z",
+        "ended_at": "2026-05-29T16:55:22.210Z",
+        "invocation_count": 5,
+        "commands": [
+          "field",
+          "model",
+          "module",
+          "impact",
+          "overrides"
+        ],
+        "sequence": [
+          "field:ifs.gar.entry.supplier.vat",
+          "model:ifs.gar.entry.supplier",
+          "module:ifs_gar_entry",
+          "impact:res.partner.vat",
+          "overrides:res.users.write"
+        ]
+      },
+      {
+        "session_key": "local:0d32fcf02b56:gap60:3:23",
+        "thread_id": "local:0d32fcf02b56",
+        "client": "local",
+        "started_at": "2026-06-23T01:35:55.025Z",
+        "ended_at": "2026-06-23T01:36:07.621Z",
+        "invocation_count": 3,
+        "commands": [
+          "model",
+          "dump",
+          "model"
+        ],
+        "sequence": [
+          "model:ifs.gar.sub.loan.account",
+          "dump:-",
+          "model:ifs.gar.sub.loan.account"
+        ]
+      },
+      {
+        "session_key": "019e9cf3-c00f-71d2-8708-eadf31eba563:gap60:1:6",
+        "thread_id": "019e9cf3-c00f-71d2-8708-eadf31eba563",
+        "client": "codex",
+        "started_at": "2026-06-06T15:48:09.579Z",
+        "ended_at": "2026-06-06T15:48:13.060Z",
+        "invocation_count": 1,
+        "commands": [
+          "dump"
+        ],
+        "sequence": [
+          "dump:-"
+        ]
+      },
+      {
+        "session_key": "local:719e83593e1c:gap60:1:26",
+        "thread_id": "local:719e83593e1c",
+        "client": "local",
+        "started_at": "2026-06-25T03:35:28.151Z",
+        "ended_at": "2026-06-25T03:35:29.191Z",
+        "invocation_count": 1,
+        "commands": [
+          "model"
+        ],
+        "sequence": [
+          "model:res.partner"
+        ]
+      },
+      {
+        "session_key": "local:0d32fcf02b56:gap60:1:27",
+        "thread_id": "local:0d32fcf02b56",
+        "client": "local",
+        "started_at": "2026-06-25T03:35:33.835Z",
+        "ended_at": "2026-06-25T03:35:34.807Z",
+        "invocation_count": 1,
+        "commands": [
+          "model"
+        ],
+        "sequence": [
+          "model:res.partner"
+        ]
+      }
+    ],
+    "failure_details": [
+      {
+        "id": 7,
+        "started_at": "2026-06-22T06:12:54.596Z",
+        "command": "dump",
+        "target_raw": null,
+        "result_status": "dump_error",
+        "error_category": "dump_error",
+        "exit_code": 1,
+        "client": "local",
+        "cwd": "/Users/1noryzzz/Odoo",
+        "db": "internal-dev",
+        "out_dir": "<auto>",
+        "format": "human",
+        "exception_type": null,
+        "traceback_tail": null
+      },
+      {
+        "id": 9,
+        "started_at": "2026-06-22T06:13:25.691Z",
+        "command": "model",
+        "target_raw": "ifs.gar.entry.merchant",
+        "result_status": "unexpected_error",
+        "error_category": "unexpected",
+        "exit_code": 1,
+        "client": "local",
+        "cwd": "/Users/1noryzzz/Odoo",
+        "db": "internal-dev",
+        "out_dir": "<auto>",
+        "format": "graphviz",
+        "exception_type": "NotImplementedError",
+        "traceback_tail": "NotImplementedError: graphviz output is not implemented yet. Phase 1 focuses on the human formatter; graphviz will plug into this same dispatch (see formatters.py)."
+      },
+      {
+        "id": 23,
+        "started_at": "2026-06-23T01:35:55.025Z",
+        "command": "model",
+        "target_raw": "ifs.gar.sub.loan.account",
+        "result_status": "unexpected_error",
+        "error_category": "unexpected",
+        "exit_code": 1,
+        "client": "local",
+        "cwd": "/Users/1noryzzz/Odoo",
+        "db": "ysb_m2_manual",
+        "out_dir": "<auto>",
+        "format": "human",
+        "exception_type": "FileNotFoundError",
+        "traceback_tail": "FileNotFoundError: Dump not found at /Users/1noryzzz/.cache/odoo-graph/ysb_m2_manual. Run `odoo-graph dump` first."
+      }
+    ],
+    "graph_source_load_stats": [
+      {
+        "graph_source": "/Users/1noryzzz/.cache/odoo-graph/internal-dev",
+        "count": 16,
+        "load_ms_average": 1173.1875,
+        "load_ms_p50": 1165.0,
+        "load_ms_p90": 1391,
+        "load_ms_min": 918,
+        "load_ms_max": 1393
+      },
+      {
+        "graph_source": "/Users/1noryzzz/repos/odoo-graph/odoo_graph/sample_data/17-oabay-ceshi",
+        "count": 5,
+        "load_ms_average": 834.0,
+        "load_ms_p50": 839,
+        "load_ms_p90": 845,
+        "load_ms_min": 819,
+        "load_ms_max": 845
+      },
+      {
+        "graph_source": "/Users/1noryzzz/.cache/odoo-graph/ysb_m2_manual",
+        "count": 1,
+        "load_ms_average": 897.0,
+        "load_ms_p50": 897,
+        "load_ms_p90": 897,
+        "load_ms_min": 897,
+        "load_ms_max": 897
+      }
+    ],
+    "format_usage": [
+      {
+        "value": "human",
+        "count": 21,
+        "failures": 2
+      },
+      {
+        "value": "json",
+        "count": 5,
+        "failures": 0
+      },
+      {
+        "value": "graphviz",
+        "count": 1,
+        "failures": 1
+      }
+    ],
+    "cwd_usage": [
+      {
+        "value": "/Users/1noryzzz/Odoo",
+        "count": 21,
+        "failures": 3
+      },
+      {
+        "value": "/Users/1noryzzz/repos/odoo-graph",
+        "count": 6,
+        "failures": 0
+      }
+    ],
+    "db_usage": [
+      {
+        "value": "internal-dev",
+        "count": 18,
+        "failures": 2
+      },
+      {
+        "value": "<none>",
+        "count": 6,
+        "failures": 0
+      },
+      {
+        "value": "ysb_m2_manual",
+        "count": 3,
+        "failures": 1
+      }
+    ],
+    "out_dir_usage": [
+      {
+        "value": "<auto>",
+        "count": 22,
+        "failures": 3
+      },
+      {
+        "value": "odoo_graph/sample_data/17-oabay-ceshi",
+        "count": 5,
+        "failures": 0
+      }
+    ],
+    "command_sequences": [
+      {
+        "session_key": "local:0d32fcf02b56:gap60:16:7",
+        "thread_id": "local:0d32fcf02b56",
+        "client": "local",
+        "started_at": "2026-06-22T06:12:54.596Z",
+        "invocation_count": 16,
+        "sequence": [
+          "dump:-",
+          "dump:-",
+          "model:ifs.gar.entry.merchant",
+          "model:ifs.gar.entry.merchant",
+          "model:ifs.gar.invite.mixin",
+          "model:ifs.gar.invite.merchant",
+          "model:ifs.base.company",
+          "model:ifs.gar.entry.mixin",
+          "model:ifs.contract.info",
+          "model:ifs.gar.invite.mixin",
+          "model:ifs.partner.merchant",
+          "model:ifs.partner.details.mixin",
+          "model:ifs.contract.info.sign.token",
+          "model:ifs.risk.manage.credits.mixin",
+          "model:ifs.step.by.step.mixin",
+          "model:ifs.ir.sequence.mixin"
+        ]
+      },
+      {
+        "session_key": "019e7426-c3e7-7993-9207-7bdcb901d127:gap60:5:1",
+        "thread_id": "019e7426-c3e7-7993-9207-7bdcb901d127",
+        "client": "codex",
+        "started_at": "2026-05-29T16:55:16.205Z",
+        "invocation_count": 5,
+        "sequence": [
+          "field:ifs.gar.entry.supplier.vat",
+          "model:ifs.gar.entry.supplier",
+          "module:ifs_gar_entry",
+          "impact:res.partner.vat",
+          "overrides:res.users.write"
+        ]
+      },
+      {
+        "session_key": "local:0d32fcf02b56:gap60:3:23",
+        "thread_id": "local:0d32fcf02b56",
+        "client": "local",
+        "started_at": "2026-06-23T01:35:55.025Z",
+        "invocation_count": 3,
+        "sequence": [
+          "model:ifs.gar.sub.loan.account",
+          "dump:-",
+          "model:ifs.gar.sub.loan.account"
+        ]
+      },
+      {
+        "session_key": "019e9cf3-c00f-71d2-8708-eadf31eba563:gap60:1:6",
+        "thread_id": "019e9cf3-c00f-71d2-8708-eadf31eba563",
+        "client": "codex",
+        "started_at": "2026-06-06T15:48:09.579Z",
+        "invocation_count": 1,
+        "sequence": [
+          "dump:-"
+        ]
+      },
+      {
+        "session_key": "local:719e83593e1c:gap60:1:26",
+        "thread_id": "local:719e83593e1c",
+        "client": "local",
+        "started_at": "2026-06-25T03:35:28.151Z",
+        "invocation_count": 1,
+        "sequence": [
+          "model:res.partner"
+        ]
+      },
+      {
+        "session_key": "local:0d32fcf02b56:gap60:1:27",
+        "thread_id": "local:0d32fcf02b56",
+        "client": "local",
+        "started_at": "2026-06-25T03:35:33.835Z",
+        "invocation_count": 1,
+        "sequence": [
+          "model:res.partner"
+        ]
+      }
+    ],
+    "top_transitions": [
+      {
+        "from": "model",
+        "to": "model",
+        "count": 13
+      },
+      {
+        "from": "dump",
+        "to": "model",
+        "count": 2
+      },
+      {
+        "from": "field",
+        "to": "model",
+        "count": 1
+      },
+      {
+        "from": "model",
+        "to": "module",
+        "count": 1
+      },
+      {
+        "from": "module",
+        "to": "impact",
+        "count": 1
+      },
+      {
+        "from": "impact",
+        "to": "overrides",
+        "count": 1
+      },
+      {
+        "from": "dump",
+        "to": "dump",
+        "count": 1
+      },
+      {
+        "from": "model",
+        "to": "dump",
+        "count": 1
+      }
+    ]
+  }
+}
