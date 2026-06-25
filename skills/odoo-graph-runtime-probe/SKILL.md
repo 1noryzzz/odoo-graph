@@ -37,7 +37,7 @@ description: 指导 AI 在 Odoo 开发中何时使用 odoo-graph 运行时探针
 4. **仅在必要时触发 dump**：无缓存、缓存过旧、或用户明确要求刷新时才建议 dump。
 5. **dump 前先提醒并确认**：告知用户 dump 可能与本地正在运行的 Odoo 服务产生冲突/失败风险，先征求确认。
 6. **query 可多次复用**：所有查询离线读取缓存，不再启动 Odoo。
-7. 输出优先 `-f human` 给人看；需要脚本处理时用 `-f json`。
+7. 输出格式仅使用 `-f human` 或 `-f json`：给人看优先 `human`，需要脚本处理时用 `json`。
 8. 业务查询默认会写入本地 telemetry；除非用户要求分析工具使用情况，不要把 telemetry report 混入业务问题回答。
 
 ---
@@ -109,7 +109,7 @@ odoo-graph overrides <model.method> --db <db>
 odoo-graph telemetry report
 ```
 **何时用**：用户明确要求查看 `odoo-graph` 使用情况、agent 调用模式、session 内多次查询、fan-out、批量探索或加载耗时时。  
-**输出**：本地 SQLite telemetry 的后处理与分析报告，包括 session 调用次数、命令频率、follow-up、retry、参数升级、`path` fan-out、批量 model / field 探索、load overhead，以及 30s / 60s / 120s gap 敏感性分析。
+**输出**：本地 SQLite telemetry 的后处理与分析报告，包括 first/last invocation、session 调用次数、命令频率、top targets、top sessions、command sequence、failure details、format / cwd / db / out-dir 使用分布、follow-up、retry、参数升级、`path` fan-out、批量 model / field 探索、graph source load stats、load overhead，以及 30s / 60s / 120s gap 敏感性分析。
 
 相关命令：
 

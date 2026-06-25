@@ -14,7 +14,7 @@
 
 - 同一 session 内存在明显的 `path` fan-out：同一个 start 连续查询多个不同 target。
 - 同一 session 内存在明显的批量探索：先查多个 `model`，再查一组相关 `field`。
-- graph load 在 burst 调用中反复出现，已观测样本中单次加载中位数约为 2.5s，说明加载耗时本身需要成为一等分析对象。
+- graph load 在 burst 调用中反复出现，已观测样本中单次加载中位数约为 2.5s，说明加载耗时本身需要成为一等分析对象；具体优化与 MCP / 常驻进程方案一起进入 Phase 2 评估。
 - 使用 30s、60s、120s 不同 gap 切分 session 会影响 session 数量和调用数分布，因此后处理应保留多阈值敏感性分析。
 
 ## 目标
@@ -138,7 +138,7 @@
 - `duration_output_ms`：渲染和输出耗时
 - `duration_total_ms`：总耗时
 
-这些指标用于判断是否需要 daemon、MCP server 内缓存、批量查询或更高信息密度的单命令输出。真实数据中已观察到 burst 调用反复加载同一张 graph，单次加载耗时约 2.5s，因此加载耗时不只是性能附属指标，而是判断是否需要缓存 / daemon / 批量命令的核心指标。
+这些指标用于判断是否需要 MCP server 内缓存、常驻进程、批量查询或更高信息密度的单命令输出。真实数据中已观察到 burst 调用反复加载同一张 graph，单次加载耗时约 2.5s，因此加载耗时不只是性能附属指标，而是 Phase 2 设计 MCP / 常驻查询入口时的核心输入。
 
 建议额外记录 graph 加载上下文，初期可放入 `extra_json`，后续稳定后再考虑提升为 columns：
 
@@ -508,9 +508,9 @@ PRAGMA busy_timeout = 3000;
 - `same_graph_repeated_load_count`
 - `graph_cache_hit_rate`
 
-目标：判断是否需要 daemon、MCP server 内缓存、跨调用 graph cache 或批量查询。
+目标：为 Phase 2 的 MCP 入口、常驻进程、server 内缓存、跨调用 graph cache 或批量查询提供数据依据。
 
-该指标来自真实数据校准：有加载日志的样本里，graph load 中位数约 2.5s，并且在连续调用中重复发生。即使命令本身很快，反复加载也会显著放大 agent 多次探索的成本。
+该指标来自真实数据校准：有加载日志的样本里，graph load 中位数约 2.5s，并且在连续调用中重复发生。即使命令本身很快，反复加载也会显著放大 agent 多次探索的成本；但具体优化不在 1.7 内处理，和 MCP / 常驻入口一起作为 Phase 2 设计问题。
 
 ## 后处理统计
 
@@ -774,4 +774,4 @@ ORDER BY distinct_models DESC;
 4. 先写核心 columns 和四个 JSON 扩展列，不急于拆更多表。
 5. 增加一个后处理命令或脚本，输出 session 指标、命令序列、retry、expansion、depth escalation。
 6. 后处理脚本第一版就包含 path fan-out、batch model / field exploration、load overhead、30s / 60s / 120s session gap 敏感性分析。
-7. 基于真实统计结果再决定新增批量 path、批量 model / field、局部子图、agent profile 输出或缓存 / daemon 方案。
+7. 基于真实统计结果再决定新增批量 path、批量 model / field、局部子图、agent profile 输出；graph load 优化、缓存和常驻进程方案与 MCP 入口一起放入 Phase 2。

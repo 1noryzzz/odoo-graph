@@ -90,7 +90,6 @@ odoo-graph telemetry report -f json
 
 - `-f human`：默认文本输出
 - `-f json`：结构化输出
-- `-f graphviz`：预留，暂未实现
 
 ## 文档导航
 

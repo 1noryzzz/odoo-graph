@@ -1,8 +1,8 @@
 """Output formatters.
 
 `human` prints a compact text tree. `json` emits a single JSON blob to stdout.
-`graphviz` is a hook — we keep the registration but raise NotImplementedError
-until the user actually needs it.
+Graphviz output is intentionally not exposed as a CLI format until it is
+implemented.
 """
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ import sys
 from typing import Any, Dict
 
 
-FORMATS = ("human", "json", "graphviz")
+FORMATS = ("human", "json")
 
 
 def render(payload: Dict[str, Any], kind: str, fmt: str) -> str:

@@ -68,7 +68,6 @@ odoo-graph overrides res.users.write --db odoo_demo
 
 - `-f human`：文本输出
 - `-f json`：JSON 输出
-- `-f graphviz`：预留
 
 ## 4. 本地 telemetry
 
