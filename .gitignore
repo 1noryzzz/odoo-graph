@@ -17,3 +17,4 @@ dist/
 # macos system file
 .DS_Store
 
+.codegraph
