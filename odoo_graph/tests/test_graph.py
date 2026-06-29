@@ -146,7 +146,8 @@ def test_context_summary_explicit_group_keeps_group_relationships(tmp_path):
     s = g.context_summary(["child.record", "res.partner"])
     assert s["mode"] == "explicit"
     assert any(r["kind"] == "delegates_to" for r in s["relationships"])
-    assert s["suggested_context_models"] == []
+    assert all(item["model"] != "res.partner" for item in s["suggested_context_models"])
+    assert any(item["model"] == "mail.thread" for item in s["suggested_context_models"])
 
 
 def test_context_summary_reports_inheritance_flags_relations_and_next_queries(tmp_path):

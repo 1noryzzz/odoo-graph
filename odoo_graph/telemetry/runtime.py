@@ -17,7 +17,7 @@ from odoo_graph.logging import get_logger
 from .store import TELEMETRY_SCHEMA_VERSION, insert_invocation
 
 
-TRACKED_COMMANDS = {"dump", "field", "model", "module", "impact", "path", "overrides"}
+TRACKED_COMMANDS = {"dump", "field", "model", "module", "context", "impact", "path", "overrides"}
 DEFAULT_SESSION_GAP_SECONDS = 60
 
 log = get_logger(__name__)
