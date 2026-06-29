@@ -29,6 +29,7 @@ def build_fixture(out_dir: str | os.PathLike) -> str:
         {"kind": "Module", "id": "module::base", "name": "base"},
         {"kind": "Module", "id": "module::ext",  "name": "ext"},
         {"kind": "Module", "id": "module::child", "name": "child"},
+        {"kind": "Module", "id": "module::mail", "name": "mail"},
 
         # model A lives in module base
         {"kind": "Model", "id": "model::res.partner", "name": "res.partner",
@@ -56,10 +57,15 @@ def build_fixture(out_dir: str | os.PathLike) -> str:
          "inherited": False},
 
         # child model with _inherits delegate
+        {"kind": "Model", "id": "model::mail.thread", "name": "mail.thread",
+         "description": "Thread", "abstract": True, "transient": False,
+         "original_module": "mail", "contributing_modules": ["mail"],
+         "inherit": [], "inherits": {}},
+
         {"kind": "Model", "id": "model::child.record", "name": "child.record",
          "description": "Delegate", "abstract": False, "transient": False,
          "original_module": "child", "contributing_modules": ["child"],
-         "inherit": [], "inherits": {"res.partner": "partner_id"}},
+         "inherit": ["mail.thread"], "inherits": {"res.partner": "partner_id"}},
         {"kind": "Field", "id": "field::child.record.partner_id",
          "model": "child.record", "name": "partner_id", "type": "many2one",
          "store": True, "readonly": False, "required": True,
@@ -101,6 +107,7 @@ def build_fixture(out_dir: str | os.PathLike) -> str:
     edges = [
         {"kind": "MODULE_DEPENDS_ON_MODULE", "src": "module::ext", "dst": "module::base"},
         {"kind": "MODULE_DEPENDS_ON_MODULE", "src": "module::child", "dst": "module::base"},
+        {"kind": "MODULE_DEPENDS_ON_MODULE", "src": "module::child", "dst": "module::mail"},
 
         {"kind": "MODULE_DEFINES_MODEL", "src": "module::base", "dst": "model::res.partner", "role": "original"},
         {"kind": "MODULE_DEFINES_MODEL", "src": "module::ext", "dst": "model::res.partner", "role": "extends"},
@@ -129,7 +136,8 @@ def build_fixture(out_dir: str | os.PathLike) -> str:
          "dst": "method::res.partner.write", "from_addon": "ext", "to_addon": "base",
          "from_class": "Partner", "to_class": "Partner"},
 
-        # child delegate
+        # child inheritance and delegate
+        {"kind": "MODEL_INHERITS_MODEL", "src": "model::child.record", "dst": "model::mail.thread"},
         {"kind": "MODEL_DELEGATES_TO_MODEL", "src": "model::child.record",
          "dst": "model::res.partner", "via_field": "partner_id"},
         {"kind": "MODEL_HAS_FIELD", "src": "model::child.record", "dst": "field::child.record.partner_id"},

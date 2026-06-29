@@ -6,10 +6,10 @@
 - Phase 1.5：支持起点到目标字段的路径查询。
 - Phase 1.6：增强字段诊断，支持 `_inherits` 委托链和可写性说明。
 - Phase 1.7：增加本地 SQLite telemetry，支持业务命令实时采集与 `telemetry report` 后处理分析。
+- Phase 1.8：新增 seed-first `context` 命令，压缩 agent 多模型探索流。
 
 ## 计划中
 
-- Phase 1.8：新增 seed-first `context` 命令，压缩 agent 多模型探索流；同时仅增强 missing cache / dump error 的可操作错误提示。
 - Phase 2：MCP 入口与常驻进程/缓存方向评估，结合 telemetry 中的 graph load 成本，减少 agent 连续查询时的重复加载。
 - Phase 2.x：改进 override 判定（签名与 `super()` 检查）。
 - Phase 3：补充方法体 AST 分析（compute/inverse 相关字段读写）。

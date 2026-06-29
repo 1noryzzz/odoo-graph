@@ -60,3 +60,21 @@ def test_human_path_output_contains_hops(tmp_path):
     assert "Path  child.record  ->  res.partner.name" in out
     assert "MODEL_DELEGATES_TO_MODEL" in out
     assert "child.record -> res.partner" in out
+
+
+def test_context_human_formatter():
+    payload = {
+        "mode": "seed",
+        "requested_models": ["child.record"],
+        "models": [{
+            "model": {"name": "child.record", "original_module": "child", "inherit": [], "inherits": {"res.partner": "partner_id"}},
+            "fields_by_module": {"child": [{"name": "partner_id"}]},
+            "extended_by_modules": ["child"],
+        }],
+        "relationships": [{"kind": "delegates_to", "from_model": "child.record", "to_model": "res.partner", "via_field": "partner_id", "source": "_inherits"}],
+        "suggested_context_models": [{"model": "res.partner", "reason": "delegation parent", "via": "partner_id"}],
+        "follow_up_command": "odoo-graph context child.record res.partner --db <db>",
+    }
+    out = render(payload, kind="context", fmt="human")
+    assert "Context  child.record" in out
+    assert "Suggested context models" in out

@@ -39,6 +39,8 @@ def _render_human(payload: Dict[str, Any], kind: str) -> str:
         return _h_path(payload)
     if kind == "overrides":
         return _h_overrides(payload)
+    if kind == "context":
+        return _h_context(payload)
     if kind == "dump":
         return _h_dump(payload)
     return _json.dumps(payload, ensure_ascii=False, indent=2, default=str)
@@ -215,6 +217,82 @@ def _h_path(p: Dict[str, Any]) -> str:
                 f"  ({detail})"
             )
 
+    return "\n".join(lines)
+
+
+def _h_context(p: Dict[str, Any]) -> str:
+    title_models = ", ".join(p.get("requested_models") or [])
+    lines = [_box(f"Context  {title_models}  [{p.get('mode')}]")]
+    lines.append(f"  requested models : {p.get('requested_models') or []}")
+
+    lines.append("")
+    lines.append("  Models:")
+    for item in p.get("models") or []:
+        md = item["model"]
+        field_count = sum(len(v) for v in item.get("fields_by_module", {}).values())
+        lines.append(
+            f"    - {md['name']}  module={md.get('original_module')}  "
+            f"fields={field_count}  contributing={item.get('extended_by_modules') or []}"
+        )
+        if md.get("inherit"):
+            lines.append(f"      _inherit: {md.get('inherit')}")
+        if md.get("inherits"):
+            lines.append(f"      _inherits: {md.get('inherits')}")
+
+    lines.append("")
+    lines.append(f"  Relationships: {len(p.get('relationships') or [])}")
+    for rel in p.get("relationships") or []:
+        via = f" via {rel.get('via_field')}" if rel.get("via_field") else ""
+        lines.append(
+            f"    - {rel.get('kind')}: {rel.get('from_model')} -> {rel.get('to_model')}"
+            f"{via} ({rel.get('source') or rel.get('field_type')})"
+        )
+
+    lines.append("")
+    lines.append(f"  Relation fields: {len(p.get('relations') or [])}")
+    for rel in p.get("relations") or []:
+        marker = "selected" if rel.get("target_selected") else "suggested" if rel.get("target_suggested") else "external"
+        lines.append(
+            f"    - {rel.get('model')}.{rel.get('field')} -> {rel.get('target_model')}"
+            f"  ({rel.get('field_type')}, {marker})"
+        )
+
+    lines.append("")
+    lines.append(f"  External references: {len(p.get('external_references') or [])}")
+    for item in p.get("external_references") or []:
+        lines.append(
+            f"    - {item.get('model')}  kind={item.get('kind')}  via={item.get('via')}"
+            f"  abstract={item.get('abstract')} transient={item.get('transient')}"
+        )
+
+    lines.append("")
+    lines.append("  High-signal fields:")
+    for model, fields in (p.get("high_signal_fields") or {}).items():
+        lines.append(f"    [{model}] {len(fields)}")
+        for fd in fields[:6]:
+            flags = []
+            if fd.get("compute"):
+                flags.append(f"compute={fd.get('compute')}")
+            if fd.get("related"):
+                flags.append("related=" + ".".join(str(x) for x in fd.get("related")))
+            if fd.get("inherited"):
+                flags.append("inherited")
+            if fd.get("comodel_name"):
+                flags.append(f"comodel={fd.get('comodel_name')}")
+            lines.append(f"      - {fd.get('name')} [{fd.get('type')}] {', '.join(flags)}")
+
+    lines.append("")
+    lines.append(f"  Suggested context models: {len(p.get('suggested_context_models') or [])}")
+    for item in p.get("suggested_context_models") or []:
+        lines.append(
+            f"    - {item['model']}  reason={item.get('reason')}  via={item.get('via')}"
+            f"  abstract={item.get('abstract')} transient={item.get('transient')}"
+        )
+    if p.get("suggested_next_queries"):
+        lines.append("")
+        lines.append("  Suggested next queries:")
+        for query in p.get("suggested_next_queries") or []:
+            lines.append(f"    $ {query}")
     return "\n".join(lines)
 
 

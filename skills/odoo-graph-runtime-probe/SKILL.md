@@ -12,9 +12,10 @@ description: 指导 AI 在 Odoo 开发中何时使用 odoo-graph 运行时探针
 2. **字段来源追踪**：字段由哪个模块定义、被哪些模块扩展，最终有效来源字段是什么。
 3. **模型继承结构**：`_inherit / _inherits / mixin` 合并后实际结构。
 4. **方法 override 链**：同名方法在多模块中的 MRO 顺序。
-5. **起点到终点的路径证明**：想证明某业务对象是否能影响目标字段（`path` 命令）。
-6. **委托继承字段诊断**：字段在当前模型 `_fields` 可见、可通过 `write()` 更新，但可能真实来自 `_inherits` 父模型且不在当前模型 SQL 表中。
-7. **工具使用情况分析**：用户想了解 agent 对 `odoo-graph` 的调用模式、是否存在反复查询、fan-out 或批量探索时，使用 telemetry report。
+5. **seed-first 上下文探索**：只知道一个模型、需要一次性发现相关继承/委托/关系模型时，使用 `context` 命令。
+6. **起点到终点的路径证明**：想证明某业务对象是否能影响目标字段（`path` 命令）。
+7. **委托继承字段诊断**：字段在当前模型 `_fields` 可见、可通过 `write()` 更新，但可能真实来自 `_inherits` 父模型且不在当前模型 SQL 表中。
+8. **工具使用情况分析**：用户想了解 agent 对 `odoo-graph` 的调用模式、是否存在反复查询、fan-out 或批量探索时，使用 telemetry report。
 
 > 判断原则：如果问题明确涉及“模块叠加后最终行为”，就应使用本工具。
 
@@ -79,14 +80,21 @@ odoo-graph module <module_name> --db <db>
 **何时用**：审计模块贡献（定义/扩展了什么）。  
 **输出**：该模块涉及的模型、字段、方法等。
 
-### 4) impact
+### 4) context
+```bash
+odoo-graph context <model> [<model> ...] --db <db>
+```
+**何时用**：agent 只知道一个 seed 模型、正在手工连续调用多个 `model` 命令拼上下文时，优先用它压缩探索；当已经知道模型集合时，可传入多个模型解释组内关系。
+**输出**：请求模型摘要、继承/委托/关系边、`suggested_context_models`，以及单 seed 模式下建议的 follow-up 命令。
+
+### 5) impact
 ```bash
 odoo-graph impact <model.field> --db <db> --max-depth 2
 ```
 **何时用**：改动评估、回归范围评估。  
 **输出**：BFS 下游影响节点（按深度）。
 
-### 5) path（重点）
+### 6) path（重点）
 ```bash
 odoo-graph path <start_node> <target_node> --db <db>
 ```
@@ -97,14 +105,14 @@ odoo-graph path child.record res.partner.name --db odoo_demo
 **何时用**：需要“可达性证据链”时（从业务起点到目标字段）。  
 **输出**：一条或多条从起点到终点的路径（节点序列 + 边关系）；不可达时明确无路径。
 
-### 6) overrides
+### 7) overrides
 ```bash
 odoo-graph overrides <model.method> --db <db>
 ```
 **何时用**：排查方法调用链、super 顺序争议。  
 **输出**：跨模块 override 顺序（按 MRO 展示）。
 
-### 7) telemetry
+### 8) telemetry
 ```bash
 odoo-graph telemetry report
 ```

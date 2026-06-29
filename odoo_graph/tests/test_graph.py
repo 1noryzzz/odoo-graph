@@ -130,3 +130,39 @@ def test_find_path_reports_truncated_when_max_paths_reached(tmp_path):
     )
     assert res["summary"]["found_paths"] == 1
     assert res["truncated"] is True
+
+
+def test_context_summary_seed_suggests_delegation_models(tmp_path):
+    g = _loaded(tmp_path)
+    s = g.context_summary(["child.record"])
+    assert s["mode"] == "seed"
+    assert any(r["kind"] == "delegates_to" and r["to_model"] == "res.partner" for r in s["relationships"])
+    assert s["suggested_context_models"][0]["model"] == "res.partner"
+    assert "odoo-graph context child.record res.partner" in s["follow_up_command"]
+
+
+def test_context_summary_explicit_group_keeps_group_relationships(tmp_path):
+    g = _loaded(tmp_path)
+    s = g.context_summary(["child.record", "res.partner"])
+    assert s["mode"] == "explicit"
+    assert any(r["kind"] == "delegates_to" for r in s["relationships"])
+    assert s["suggested_context_models"] == []
+
+
+def test_context_summary_reports_inheritance_flags_relations_and_next_queries(tmp_path):
+    g = _loaded(tmp_path)
+    s = g.context_summary(["child.record"])
+    assert any(r["kind"] == "inherits" and r["to_model"] == "mail.thread" for r in s["relationships"])
+    mail = next(item for item in s["suggested_context_models"] if item["model"] == "mail.thread")
+    assert mail["abstract"] is True
+    assert mail["transient"] is False
+    assert any(rel["field"] == "partner_id" and rel["target_suggested"] is True for rel in s["relations"])
+    assert "child.record" in s["high_signal_fields"]
+    assert any(q.startswith("odoo-graph context child.record") for q in s["suggested_next_queries"])
+
+
+def test_context_summary_dedupes_models_before_mode_selection(tmp_path):
+    g = _loaded(tmp_path)
+    s = g.context_summary(["child.record", "child.record"])
+    assert s["mode"] == "seed"
+    assert s["requested_models"] == ["child.record"]
