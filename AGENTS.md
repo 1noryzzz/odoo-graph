@@ -101,3 +101,23 @@ Release notes should be practical and user-facing:
 For example, the 1.7.0 release note lives at
 `docs/changes/1.7-event-tracking.md` and documents the telemetry commands,
 local SQLite path, opt-out controls, and compatibility details.
+
+## Cursor Cloud specific instructions
+
+`odoo-graph` is a pure-Python CLI (only runtime dep is `networkx`); there is no
+web/GUI service to run. The startup update script runs `uv sync --extra dev`,
+which provisions `.venv/` with the editable package plus test deps. `uv` is
+already installed in the VM image at `~/.local/bin` (on PATH for login and
+non-login shells).
+
+- Run anything through `uv run ...` (e.g. `uv run odoo-graph ...`,
+  `uv run python -m pytest -q`). Standard commands are in `README.md`.
+- The `dump` subcommand is the only part that needs external services (an Odoo
+  17 source tree + PostgreSQL + an initialized DB) and is NOT set up here. All
+  other (query/analysis) subcommands work fully offline.
+- For offline testing/demo of query commands, point at the committed fixture
+  dump with `--out-dir odoo_graph/sample_data/17-oabay-ceshi` instead of `--db`
+  (which would resolve to the absent `~/.cache/odoo-graph/<db>/`). The same
+  fixture backs the CI `fixture-smoke` job.
+- Telemetry writes to `~/.cache/odoo-graph/telemetry.sqlite3` by default; set
+  `ODOO_GRAPH_TELEMETRY_DB` or pass `--no-telemetry` to avoid touching it.
