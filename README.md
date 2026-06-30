@@ -51,6 +51,12 @@ odoo-graph model res.partner --db odoo_demo
 # 模块归属（定义与扩展）
 odoo-graph module mail --db odoo_demo
 
+# seed-first 上下文探索（从一个模型发现继承/委托/关系候选）
+odoo-graph context child.record --db odoo_demo
+
+# 显式多模型上下文（解释一组已知模型间的关系）
+odoo-graph context child.record res.partner --db odoo_demo
+
 # 影响分析（下游范围）
 odoo-graph impact res.partner.name --db odoo_demo --max-depth 2
 

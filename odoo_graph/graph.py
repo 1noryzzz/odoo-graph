@@ -558,6 +558,167 @@ class OdooGraph:
         walk(model, [], {model})
         return chains
 
+    def context_summary(self, models: List[str]) -> Dict[str, Any]:
+        if not models:
+            raise ValueError("context requires at least one model")
+        requested = list(dict.fromkeys(models))
+        missing = [m for m in requested if not self.node(self.model_id(m))]
+        if missing:
+            raise KeyError(f"Model not found: {missing[0]}")
+
+        seed_mode = len(requested) == 1
+        requested_set = set(requested)
+        model_summaries = [self.model_summary(m) for m in requested]
+
+        relationships: List[Dict[str, Any]] = []
+        relations: List[Dict[str, Any]] = []
+        external_references: List[Dict[str, Any]] = []
+        suggestions: Dict[str, Dict[str, Any]] = {}
+
+        def model_flags(model: str) -> Dict[str, Any]:
+            md = self.node(self.model_id(model)) or {}
+            return {
+                "abstract": bool(md.get("abstract")),
+                "transient": bool(md.get("transient")),
+            }
+
+        def add_external(kind: str, model: str, via: str | None, reason: str) -> None:
+            if model in requested_set or not self.node(self.model_id(model)):
+                return
+            item = {"kind": kind, "model": model, "via": via, "reason": reason}
+            item.update(model_flags(model))
+            if item not in external_references:
+                external_references.append(item)
+
+        def add_suggestion(model: str, reason: str, via: str | None, score: int) -> None:
+            if model in requested_set or not self.node(self.model_id(model)):
+                return
+            current = suggestions.get(model)
+            if current is None or score > current["score"]:
+                item = {"model": model, "reason": reason, "via": via, "score": score}
+                item.update(model_flags(model))
+                suggestions[model] = item
+
+        for model in requested:
+            mid = self.model_id(model)
+            for dst, _data in self.edges_out(mid, kind=EDGE_KINDS_INHERITS):
+                other = dst.replace("model::", "")
+                rel = {"kind": "inherits", "from_model": model, "to_model": other, "source": "_inherit"}
+                if seed_mode or other in requested_set:
+                    relationships.append(rel)
+                add_external("inheritance_parent", other, "_inherit", "inheritance parent")
+                add_suggestion(other, "inheritance parent", "_inherit", 90)
+            for src, _data in self.edges_in(mid, kind=EDGE_KINDS_INHERITS):
+                other = src.replace("model::", "")
+                rel = {"kind": "inherited_by", "from_model": other, "to_model": model, "source": "_inherit"}
+                if seed_mode or other in requested_set:
+                    relationships.append(rel)
+                add_external("inheritance_child", other, "_inherit", "model inheriting selected model")
+                add_suggestion(other, "model inheriting seed", "_inherit", 80)
+            for dst, data in self.edges_out(mid, kind=EDGE_KINDS_DELEGATES):
+                other = dst.replace("model::", "")
+                via = data.get("via_field")
+                rel = {
+                    "kind": "delegates_to",
+                    "from_model": model,
+                    "to_model": other,
+                    "via_field": via,
+                    "source": "_inherits",
+                }
+                if seed_mode or other in requested_set:
+                    relationships.append(rel)
+                add_external("delegation_parent", other, via, "delegation parent")
+                add_suggestion(other, "delegation parent", via or "_inherits", 95)
+            for src, data in self.edges_in(mid, kind=EDGE_KINDS_DELEGATES):
+                other = src.replace("model::", "")
+                via = data.get("via_field")
+                rel = {
+                    "kind": "delegated_by",
+                    "from_model": other,
+                    "to_model": model,
+                    "via_field": via,
+                    "source": "_inherits",
+                }
+                if seed_mode or other in requested_set:
+                    relationships.append(rel)
+                add_external("delegation_child", other, via, "delegating child")
+                add_suggestion(other, "delegating child", via or "_inherits", 85)
+            for field_id, _ in self.edges_out(mid, kind=EDGE_KINDS_HAS_FIELD):
+                fd = self.node(field_id)
+                if not fd or not fd.get("comodel_name"):
+                    continue
+                other = fd["comodel_name"]
+                target_selected = other in requested_set
+                target_suggested = other not in requested_set and self.node(self.model_id(other)) is not None
+                relation = {
+                    "model": model,
+                    "field": fd.get("name"),
+                    "field_type": fd.get("type"),
+                    "target_model": other,
+                    "target_selected": target_selected,
+                    "target_suggested": target_suggested,
+                }
+                if seed_mode or target_selected:
+                    relations.append(relation)
+                if target_selected:
+                    relationships.append({
+                        "kind": "relates_to",
+                        "from_model": model,
+                        "to_model": other,
+                        "via_field": fd.get("name"),
+                        "field_type": fd.get("type"),
+                    })
+                add_external("relation_comodel", other, fd.get("name"), f"{fd.get('type')} relation")
+                add_suggestion(other, f"{fd.get('type')} relation", fd.get("name") or "relation", 60)
+
+        suggested = sorted(suggestions.values(), key=lambda x: (-x["score"], x["model"]))[:8]
+        for item in suggested:
+            item.pop("score", None)
+
+        high_signal_fields: Dict[str, List[Dict[str, Any]]] = {}
+        for item in model_summaries:
+            md = item["model"]
+            fields: List[Dict[str, Any]] = []
+            for flist in item.get("fields_by_module", {}).values():
+                for fd in flist:
+                    if fd.get("compute") or fd.get("related") or fd.get("inherited") or fd.get("comodel_name"):
+                        fields.append({
+                            "name": fd.get("name"),
+                            "type": fd.get("type"),
+                            "module": fd.get("module"),
+                            "compute": fd.get("compute"),
+                            "related": fd.get("related"),
+                            "inherited": bool(fd.get("inherited")),
+                            "comodel_name": fd.get("comodel_name"),
+                        })
+            high_signal_fields[md["name"]] = sorted(
+                fields,
+                key=lambda f: (0 if f.get("compute") or f.get("related") else 1, f.get("name") or ""),
+            )[:12]
+
+        suggested_next_queries: List[str] = []
+        if seed_mode and suggested:
+            suggested_next_queries.append(
+                "odoo-graph context " + " ".join(requested + [s["model"] for s in suggested[:3]]) + " --db <db>"
+            )
+        for model, fields in high_signal_fields.items():
+            for field in fields[:2]:
+                suggested_next_queries.append(f"odoo-graph field {model}.{field['name']} --db <db>")
+        suggested_next_queries = suggested_next_queries[:6]
+
+        return {
+            "mode": "seed" if seed_mode else "explicit",
+            "requested_models": requested,
+            "models": model_summaries,
+            "relationships": relationships,
+            "relations": relations,
+            "external_references": external_references[:12],
+            "high_signal_fields": high_signal_fields,
+            "suggested_context_models": suggested,
+            "suggested_next_queries": suggested_next_queries,
+            "follow_up_command": suggested_next_queries[0] if seed_mode and suggested_next_queries else None,
+        }
+
     def module_summary(self, module: str) -> Dict[str, Any]:
         mid = self.module_id(module)
         md = self.node(mid)
@@ -601,6 +762,8 @@ def load_graph(out_dir: str) -> OdooGraph:
     layout = DumpLayout.at(out_dir)
     if not layout.is_valid():
         raise FileNotFoundError(
-            f"Dump not found at {layout.out_dir}. Run `odoo-graph dump` first."
+            f"Dump not found at {layout.out_dir}. Expected nodes.jsonl and edges.jsonl. "
+            "Run `odoo-graph dump -d <db>` to create or refresh this cache, "
+            "or pass --out-dir/--db for an existing dump."
         )
     return OdooGraph(layout)

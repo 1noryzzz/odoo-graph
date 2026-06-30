@@ -40,6 +40,15 @@ odoo-graph module mail --db odoo_demo
 
 用于查看模块定义和扩展内容。
 
+### 上下文探索
+
+```bash
+odoo-graph context child.record --db odoo_demo
+odoo-graph context child.record res.partner --db odoo_demo -f json
+```
+
+用于从一个 seed 模型发现下一步应查看的继承、委托和关系模型，或解释一组已知模型之间的运行时关系。单模型调用会输出 `suggested_context_models` 和可复制的 follow-up 命令；多模型调用会聚焦输入模型集合内部的关系。
+
 ### 影响分析
 
 ```bash

@@ -275,3 +275,28 @@ def test_dump_db_name_can_come_from_config(tmp_path):
         rc = main(["dump", "-c", str(conf), "--odoo-path", str(tmp_path)])
     assert rc == 0
     assert captured["database"] == "from-conf"
+
+
+def test_cli_context_json(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main(["context", "child.record", "--out-dir", out, "-f", "json"])
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["mode"] == "seed"
+    assert payload["suggested_context_models"][0]["model"] == "res.partner"
+
+
+def test_cli_context_unknown_model_suggests_close_models(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    rc = main(["context", "child.recod", "--out-dir", out])
+    assert rc == 1
+    err = capsys.readouterr().err
+    assert "Model not found" in err
+    assert "child.record" in err
+
+
+def test_cli_missing_cache_has_redump_hint(capsys, tmp_path):
+    rc = main(["context", "res.partner", "--out-dir", str(tmp_path / "missing")])
+    assert rc == 1
+    err = capsys.readouterr().err
+    assert "Run `odoo-graph dump -d <db>`" in err

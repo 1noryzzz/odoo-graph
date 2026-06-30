@@ -249,6 +249,10 @@ def cmd_dump(args: argparse.Namespace) -> int:
     except DumpError as exc:
         _query_done(args, t0)
         log.error("dump failed: %s", exc)
+        log.error(
+            "re-run with -v for the Odoo stderr tail; verify -c/-d, --odoo-path, "
+            "addons paths, and PostgreSQL connection settings before retrying"
+        )
         _telemetry_error(args, "dump_error", "dump_error")
         return 1
     summary = result.get("summary") or {}
@@ -571,6 +575,53 @@ def cmd_overrides(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_context(args: argparse.Namespace) -> int:
+    g = _load(args)
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind="model", raw=",".join(args.models), model=args.models[0])
+    t0 = _query_started()
+    try:
+        payload = g.context_summary(args.models)
+    except KeyError as exc:
+        _query_done(args, t0)
+        log.error("%s", exc)
+        candidates = [n["name"] for n in g.nodes_of_kind("Model")]
+        for model in args.models:
+            if g.node(g.model_id(model)) is None:
+                log.info("\n%s", _suggest("model", candidates, model))
+                break
+        _telemetry_error(args, "not_found", "not_found")
+        return 1
+    except ValueError as exc:
+        _query_done(args, t0)
+        log.error("%s", exc)
+        _telemetry_error(args, "usage_error", "usage_error")
+        return 2
+    _query_done(args, t0)
+    log.info(
+        "context %s: %d relationship(s), %d suggestion(s)",
+        ",".join(args.models),
+        len(payload.get("relationships") or []),
+        len(payload.get("suggested_context_models") or []),
+    )
+    _emit_payload(
+        args,
+        payload,
+        kind="context",
+        fmt=args.format,
+        summary={
+            "mode": payload.get("mode"),
+            "relationships_count": len(payload.get("relationships") or []),
+            "suggested_context_models_count": len(payload.get("suggested_context_models") or []),
+        },
+        meta={"models": payload.get("requested_models")},
+        size=len(payload.get("relationships") or []) + len(payload.get("suggested_context_models") or []),
+        empty=not payload.get("relationships") and not payload.get("suggested_context_models"),
+    )
+    return 0
+
+
 def cmd_telemetry_init(args: argparse.Namespace) -> int:
     path = init_db(args.db)
     print(path)
@@ -657,6 +708,12 @@ def build_parser() -> argparse.ArgumentParser:
     _add_common_query_args(pmod)
     pmod.set_defaults(func=cmd_module)
 
+    # context
+    pc = sub.add_parser("context", help="Seed-first model context and related model suggestions.")
+    pc.add_argument("models", nargs="+", help="One seed model or an explicit model group.")
+    _add_common_query_args(pc)
+    pc.set_defaults(func=cmd_context)
+
     # impact
     pi = sub.add_parser("impact", help="Downstream recompute impact of a field.")
     pi.add_argument("target", help="model.field")
@@ -731,6 +788,12 @@ def main(argv: Optional[List[str]] = None) -> int:
             code = exc.code if isinstance(exc.code, int) else 1
             rec.finish(code)
         raise
+    except FileNotFoundError as exc:
+        log.error("%s", exc)
+        if rec:
+            rec.set_error("not_found", "missing_cache")
+            rec.finish(1, exc)
+        return 1
     except Exception as exc:
         if rec:
             rec.finish(1, exc)
