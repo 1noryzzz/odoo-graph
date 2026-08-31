@@ -139,18 +139,24 @@ def _h_field_batch(p: Dict[str, Any]) -> str:
             f"  writable: {analysis.get('writable')}"
             f" ({analysis.get('writable_reason')})"
         )
-        lines.append(f"  upstream: {len(item.get('upstream') or [])}")
-        for edge in item.get("upstream") or []:
+        upstream = item.get("upstream") or []
+        lines.append(f"  upstream: {len(upstream)}")
+        for edge in upstream[:5]:
             lines.append(
                 f"    <- {edge['dst'].replace('field::', '')}"
                 f" (path: {edge.get('path')})"
             )
-        lines.append(f"  downstream: {len(item.get('downstream') or [])}")
-        for edge in item.get("downstream") or []:
+        if len(upstream) > 5:
+            lines.append(f"    ... +{len(upstream) - 5} more")
+        downstream = item.get("downstream") or []
+        lines.append(f"  downstream: {len(downstream)}")
+        for edge in downstream[:5]:
             lines.append(
                 f"    -> {edge['src'].replace('field::', '')}"
                 f" (path: {edge.get('path')})"
             )
+        if len(downstream) > 5:
+            lines.append(f"    ... +{len(downstream) - 5} more")
     summary = p["summary"]
     lines.extend([
         "",

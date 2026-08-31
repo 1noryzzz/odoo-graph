@@ -61,6 +61,10 @@ def test_human_field_batch_output_is_compact_and_reports_summary():
         ],
         "summary": {"requested": 2, "found": 1, "missing": 1},
     }
+    payload["targets"][0]["downstream"] = [
+        {"src": f"field::model.target_{index}", "path": "name"}
+        for index in range(6)
+    ]
 
     out = render(payload, kind="field_batch", fmt="human")
 
@@ -68,6 +72,8 @@ def test_human_field_batch_output_is_compact_and_reports_summary():
     assert "res.partner.name\n  status: found" in out
     assert "res.partner.nam\n  status: not_found" in out
     assert "Summary:\n  requested: 2\n  found: 1\n  missing: 1" in out
+    assert "    ... +1 more" in out
+    assert "model.target_5" not in out
     assert "====" not in out
 
 
