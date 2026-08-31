@@ -241,6 +241,7 @@ def test_dump_auto_path_resolution_is_recorded_in_telemetry(
     (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
     monkeypatch.chdir(tmp_path)
     monkeypatch.delenv("ODOO_PATH", raising=False)
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
     monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
 
     with mock.patch(
@@ -266,6 +267,7 @@ def test_dump_invalid_env_path_records_failure_reason(
     (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("ODOO_PATH", "./missing")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
     monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
 
     rc = main(["dump", "-d", "mydb"])
