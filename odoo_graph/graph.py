@@ -6,6 +6,7 @@ import os
 import time
 from collections import deque
 from dataclasses import dataclass
+from difflib import get_close_matches
 from pathlib import Path
 from typing import Any, Deque, Dict, Iterable, Iterator, List, Optional, Set, Tuple
 
@@ -562,13 +563,31 @@ class OdooGraph:
         if not models:
             raise ValueError("context requires at least one model")
         requested = list(dict.fromkeys(models))
-        missing = [m for m in requested if not self.node(self.model_id(m))]
-        if missing:
-            raise KeyError(f"Model not found: {missing[0]}")
-
+        selected = [m for m in requested if self.node(self.model_id(m))]
+        missing_names = [m for m in requested if m not in selected]
+        model_names = sorted(n["name"] for n in self.nodes_of_kind("Model"))
+        missing = [
+            {
+                "name": model,
+                "suggestions": get_close_matches(
+                    model,
+                    model_names,
+                    n=3,
+                    cutoff=0.5,
+                ),
+            }
+            for model in missing_names
+        ]
+        result = (
+            "success"
+            if not missing
+            else "partial"
+            if selected
+            else "not_found"
+        )
         seed_mode = len(requested) == 1
-        requested_set = set(requested)
-        model_summaries = [self.model_summary(m) for m in requested]
+        requested_set = set(selected)
+        model_summaries = [self.model_summary(m) for m in selected]
 
         relationships: List[Dict[str, Any]] = []
         relations: List[Dict[str, Any]] = []
@@ -599,7 +618,7 @@ class OdooGraph:
                 item.update(model_flags(model))
                 suggestions[model] = item
 
-        for model in requested:
+        for model in selected:
             mid = self.model_id(model)
             for dst, _data in self.edges_out(mid, kind=EDGE_KINDS_INHERITS):
                 other = dst.replace("model::", "")
@@ -707,8 +726,11 @@ class OdooGraph:
         suggested_next_queries = suggested_next_queries[:6]
 
         return {
-            "mode": "seed" if seed_mode else "explicit",
+            "mode": "seed" if seed_mode else "explicit_group",
+            "result": result,
             "requested_models": requested,
+            "selected_models": selected,
+            "missing_models": missing,
             "models": model_summaries,
             "relationships": relationships,
             "relations": relations,

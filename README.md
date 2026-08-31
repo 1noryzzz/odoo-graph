@@ -34,10 +34,14 @@ uv pip install -e .
 ### 1) 导出 registry
 
 ```bash
-odoo-graph dump -c odoo.conf -d odoo_demo --odoo-path ./odoo-17.0
+odoo-graph dump -c odoo.conf -d odoo_demo
 ```
 
 默认输出到：`~/.cache/odoo-graph/<db>/`
+
+未传 `--odoo-path` 时会按 `.`、`./odoo`、`./odoo-17.0`、
+`../odoo`、`../odoo-17.0` 的顺序查找 `odoo-bin`。也可用
+`ODOO_PATH` 或显式 `--odoo-path` 覆盖；显式路径无效时不会静默回退。
 
 ### 2) 本地查询
 
@@ -66,6 +70,9 @@ odoo-graph path child.record res.partner.name --db odoo_demo
 # override 链（跨模块方法覆盖）
 odoo-graph overrides res.users.write --db odoo_demo
 ```
+
+显式多模型 `context` 支持部分成功：有效模型仍会返回，缺失模型列在
+`missing_models` 并附最多 3 个保守建议；只有全部模型都不存在时才返回非零退出码。
 
 ## 本地 telemetry
 

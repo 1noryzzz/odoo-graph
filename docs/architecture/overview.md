@@ -24,7 +24,8 @@
 - `edges.jsonl`：原始边
 - `edges_resolved.jsonl`：解析后的字段依赖边
 - `summary.json`：统计信息
-- `meta.json`：环境信息
+- `meta.json`：环境与缓存来源信息（数据库、生成时间、Odoo 源码路径、
+  生成时工作目录、工具版本、addons、summary 和 resolve 计数）
 
 Telemetry 默认目录：`~/.cache/odoo-graph/telemetry.sqlite3`
 
@@ -33,5 +34,6 @@ Telemetry 默认目录：`~/.cache/odoo-graph/telemetry.sqlite3`
 ## 当前边界
 
 - `dump` 依赖本机可启动 Odoo。
+- `meta.json` provenance 仅供观察和人工核对，当前不会自动拒绝旧缓存。
 - 方法体内字段读写、XML 引用等复杂关系暂未覆盖。
 - telemetry 目前不统计 `--help`、`--version`、root action 或 shell 层启动失败。

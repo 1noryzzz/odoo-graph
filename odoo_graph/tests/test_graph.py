@@ -136,6 +136,9 @@ def test_context_summary_seed_suggests_delegation_models(tmp_path):
     g = _loaded(tmp_path)
     s = g.context_summary(["child.record"])
     assert s["mode"] == "seed"
+    assert s["result"] == "success"
+    assert s["selected_models"] == ["child.record"]
+    assert s["missing_models"] == []
     assert any(r["kind"] == "delegates_to" and r["to_model"] == "res.partner" for r in s["relationships"])
     assert s["suggested_context_models"][0]["model"] == "res.partner"
     assert "odoo-graph context child.record res.partner" in s["follow_up_command"]
@@ -144,7 +147,7 @@ def test_context_summary_seed_suggests_delegation_models(tmp_path):
 def test_context_summary_explicit_group_keeps_group_relationships(tmp_path):
     g = _loaded(tmp_path)
     s = g.context_summary(["child.record", "res.partner"])
-    assert s["mode"] == "explicit"
+    assert s["mode"] == "explicit_group"
     assert any(r["kind"] == "delegates_to" for r in s["relationships"])
     assert all(item["model"] != "res.partner" for item in s["suggested_context_models"])
     assert any(item["model"] == "mail.thread" for item in s["suggested_context_models"])
@@ -167,3 +170,37 @@ def test_context_summary_dedupes_models_before_mode_selection(tmp_path):
     s = g.context_summary(["child.record", "child.record"])
     assert s["mode"] == "seed"
     assert s["requested_models"] == ["child.record"]
+
+
+def test_context_summary_explicit_group_returns_partial_results(tmp_path):
+    g = _loaded(tmp_path)
+
+    s = g.context_summary(["child.record", "res.parner", "res.partner"])
+
+    assert s["result"] == "partial"
+    assert s["requested_models"] == [
+        "child.record",
+        "res.parner",
+        "res.partner",
+    ]
+    assert s["selected_models"] == ["child.record", "res.partner"]
+    assert s["missing_models"][0]["name"] == "res.parner"
+    assert s["missing_models"][0]["suggestions"][0] == "res.partner"
+    assert len(s["missing_models"][0]["suggestions"]) <= 3
+    assert any(r["kind"] == "delegates_to" for r in s["relationships"])
+
+
+def test_context_summary_all_missing_is_actionable_not_found(tmp_path):
+    g = _loaded(tmp_path)
+
+    s = g.context_summary(["res.parner", "child.recod"])
+
+    assert s["result"] == "not_found"
+    assert s["selected_models"] == []
+    assert [item["name"] for item in s["missing_models"]] == [
+        "res.parner",
+        "child.recod",
+    ]
+    assert s["missing_models"][0]["suggestions"][0] == "res.partner"
+    assert s["missing_models"][1]["suggestions"][0] == "child.record"
+    assert all(len(item["suggestions"]) <= 3 for item in s["missing_models"])

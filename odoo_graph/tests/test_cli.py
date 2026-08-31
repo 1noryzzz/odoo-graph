@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from odoo_graph.cli import main
+from odoo_graph.cli import build_parser, main
 from odoo_graph.resolve import resolve_paths
 from odoo_graph.tests.fixtures import build_fixture
 
@@ -163,6 +163,7 @@ def test_dump_reads_config_for_connection_and_addons(tmp_path, capsys):
     `odoo-bin`. We intercept dump_registry to inspect the effective kwargs.
     """
     (tmp_path / "addons-oabay").mkdir()
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
     conf = tmp_path / "odoo.conf"
     conf.write_text(
         "[options]\n"
@@ -212,6 +213,7 @@ def test_dump_cli_flag_wins_over_config(tmp_path):
     """Explicit --db-host on CLI should beat a value in the conf file."""
     conf = tmp_path / "odoo.conf"
     conf.write_text("[options]\ndb_host = from-conf\n", encoding="utf-8")
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
 
     captured = {}
 
@@ -250,11 +252,64 @@ def test_dump_requires_db_name_from_somewhere(tmp_path, capsys):
     assert "database name required" in err
 
 
+def test_dump_parser_leaves_odoo_path_unset(monkeypatch):
+    monkeypatch.setenv("ODOO_PATH", "/from/environment")
+
+    args = build_parser().parse_args(["dump", "-d", "mydb"])
+
+    assert args.odoo_path is None
+
+
+def test_dump_invalid_environment_path_does_not_probe_fallback(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("ODOO_PATH", "./missing")
+
+    with mock.patch("odoo_graph.cli.dump_registry") as dump_mock:
+        rc = main(["dump", "-d", "mydb", "--no-telemetry"])
+
+    assert rc == 1
+    dump_mock.assert_not_called()
+    err = capsys.readouterr().err
+    assert "env path:\n  ./missing" in err
+    assert "Found:\n  ./odoo-bin" in err
+    assert "odoo-graph dump -d mydb --odoo-path ." in err
+
+
+def test_dump_cli_path_takes_precedence_over_environment(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("ODOO_PATH", str(tmp_path))
+
+    with mock.patch("odoo_graph.cli.dump_registry") as dump_mock:
+        rc = main([
+            "dump",
+            "-d",
+            "mydb",
+            "--odoo-path",
+            "./missing",
+            "--no-telemetry",
+        ])
+
+    assert rc == 1
+    dump_mock.assert_not_called()
+    assert "cli path:\n  ./missing" in capsys.readouterr().err
+
+
 def test_dump_db_name_can_come_from_config(tmp_path):
     conf = tmp_path / "odoo.conf"
     conf.write_text(
         "[options]\ndb_name = from-conf\ndb_host = h\n", encoding="utf-8"
     )
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
 
     captured = {}
 
@@ -290,9 +345,33 @@ def test_cli_context_unknown_model_suggests_close_models(capsys, tmp_path):
     out = _bootstrap(tmp_path)
     rc = main(["context", "child.recod", "--out-dir", out])
     assert rc == 1
-    err = capsys.readouterr().err
-    assert "Model not found" in err
-    assert "child.record" in err
+    captured = capsys.readouterr()
+    assert "Missing models" in captured.out
+    assert "child.record" in captured.out
+    assert "Result: not_found" in captured.out
+
+
+def test_cli_context_explicit_group_partial_json(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+
+    rc = main([
+        "context",
+        "child.record",
+        "child.recod",
+        "res.partner",
+        "--out-dir",
+        out,
+        "-f",
+        "json",
+    ])
+
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["mode"] == "explicit_group"
+    assert payload["result"] == "partial"
+    assert payload["selected_models"] == ["child.record", "res.partner"]
+    assert payload["missing_models"][0]["name"] == "child.recod"
+    assert payload["missing_models"][0]["suggestions"][0] == "child.record"
 
 
 def test_cli_missing_cache_has_redump_hint(capsys, tmp_path):

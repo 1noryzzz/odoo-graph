@@ -1,5 +1,7 @@
 # 1.9 Robustness and Batch Primitives Design
 
+Implementation status: 1.9.1 is implemented; 1.9.2 remains planned.
+
 ## Background
 
 The 1.8 release introduced the `context` command to reduce repeated model-only exploration observed in the 1.7 telemetry baseline.

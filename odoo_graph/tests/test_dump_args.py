@@ -1,12 +1,14 @@
 """Make sure dump.py passes -c through to odoo-bin AND its own CLI flags still
 take precedence. We stub subprocess.run and never really launch Odoo.
 """
+import json
 import os
 from pathlib import Path
 from unittest import mock
 
 import pytest
 
+from odoo_graph import __version__
 from odoo_graph import dump as dump_module
 
 
@@ -57,6 +59,12 @@ def test_dump_passes_config_flag_to_odoo_bin(tmp_path):
     d_idx = cmd.index("-d")
     assert c_idx < d_idx, f"-c must precede -d; got: {cmd}"
     assert cmd[c_idx + 1] == str(conf.resolve())
+    meta = json.loads((out / "meta.json").read_text(encoding="utf-8"))
+    assert meta["database"] == "mydb"
+    assert meta["odoo_path"] == str(odoo_root.resolve())
+    assert meta["cwd"] == str(Path.cwd().resolve())
+    assert meta["package_version"] == __version__
+    assert meta["generated_at"].endswith("Z")
 
 
 def test_dump_without_config_does_not_pass_c(tmp_path):
@@ -89,3 +97,46 @@ def test_dump_fails_when_odoo_bin_missing(tmp_path):
             odoo_path=str(tmp_path),  # no odoo-bin here
             out_dir=str(tmp_path / "out"),
         )
+
+
+def test_resolve_odoo_path_uses_first_valid_candidate(tmp_path):
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
+    _setup_fake_odoo(tmp_path)
+
+    resolution = dump_module.resolve_odoo_path(
+        None,
+        source="auto",
+        cwd=tmp_path,
+    )
+
+    assert resolution.path == str(tmp_path.resolve())
+    assert resolution.source == "auto"
+    assert resolution.candidate == "."
+
+
+def test_resolve_explicit_invalid_path_does_not_fall_through(tmp_path):
+    _setup_fake_odoo(tmp_path)
+
+    with pytest.raises(dump_module.OdooPathResolutionError) as exc_info:
+        dump_module.resolve_odoo_path(
+            "./missing",
+            source="cli",
+            cwd=tmp_path,
+        )
+
+    error = exc_info.value
+    assert error.reason == "invalid_cli_path"
+    assert error.found_candidate == "./odoo"
+    assert error.checked == dump_module.ODOO_PATH_CANDIDATES
+    assert "Unable to resolve Odoo source path" in str(error)
+    assert "Found:\n  ./odoo/odoo-bin" in str(error)
+
+
+def test_resolve_odoo_path_reports_all_candidates_missing(tmp_path):
+    with pytest.raises(dump_module.OdooPathResolutionError) as exc_info:
+        dump_module.resolve_odoo_path(None, source="auto", cwd=tmp_path)
+
+    assert exc_info.value.reason == "no_candidate"
+    assert exc_info.value.found_candidate is None
+    for candidate in dump_module.ODOO_PATH_CANDIDATES:
+        assert f"  {candidate}" in str(exc_info.value)

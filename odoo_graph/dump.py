@@ -13,9 +13,12 @@ import shlex
 import subprocess
 import sys
 import time
+from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
+from . import __version__
 from .logging import get_logger
 from .resolve import resolve_paths
 
@@ -23,10 +26,105 @@ log = get_logger(__name__)
 _DEBUG = logging.DEBUG
 
 _PROBE_SCRIPT = Path(__file__).with_name("_probe_script.py")
+ODOO_PATH_CANDIDATES = (".", "./odoo", "./odoo-17.0", "../odoo", "../odoo-17.0")
 
 
 class DumpError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True)
+class OdooPathResolution:
+    path: str
+    source: str
+    candidate: str | None = None
+
+
+class OdooPathResolutionError(DumpError):
+    def __init__(
+        self,
+        *,
+        source: str,
+        requested: str | None,
+        cwd: Path,
+        found_candidate: str | None,
+    ) -> None:
+        self.source = source
+        self.requested = requested
+        self.cwd = cwd
+        self.checked = ODOO_PATH_CANDIDATES
+        self.found_candidate = found_candidate
+        if source == "auto":
+            self.reason = "no_candidate"
+        else:
+            self.reason = f"invalid_{source}_path"
+        super().__init__(self._message())
+
+    def _message(self) -> str:
+        lines = ["Unable to resolve Odoo source path."]
+        if self.requested is not None:
+            lines.extend(["", f"{self.source} path:", f"  {self.requested}"])
+        lines.extend(["", "cwd:", f"  {self.cwd}", "", "Checked:"])
+        lines.extend(f"  {candidate}" for candidate in self.checked)
+        if self.found_candidate:
+            launcher = (
+                "./odoo-bin"
+                if self.found_candidate == "."
+                else f"{self.found_candidate}/odoo-bin"
+            )
+            lines.extend(["", "Found:", f"  {launcher}"])
+        return "\n".join(lines)
+
+
+def _candidate_root(cwd: Path, candidate: str) -> Path:
+    return (cwd / candidate).expanduser().resolve()
+
+
+def _has_odoo_bin(root: Path) -> bool:
+    return (root / "odoo-bin").is_file()
+
+
+def resolve_odoo_path(
+    value: str | None,
+    *,
+    source: str,
+    cwd: str | os.PathLike[str] | None = None,
+) -> OdooPathResolution:
+    """Resolve an explicit Odoo path or probe the small documented candidate set."""
+    working_dir = Path(cwd or Path.cwd()).expanduser().resolve()
+    found_candidate = next(
+        (
+            candidate
+            for candidate in ODOO_PATH_CANDIDATES
+            if _has_odoo_bin(_candidate_root(working_dir, candidate))
+        ),
+        None,
+    )
+    if value is not None:
+        requested_root = Path(value).expanduser()
+        if not requested_root.is_absolute():
+            requested_root = working_dir / requested_root
+        requested_root = requested_root.resolve()
+        if _has_odoo_bin(requested_root):
+            return OdooPathResolution(path=str(requested_root), source=source)
+        raise OdooPathResolutionError(
+            source=source,
+            requested=value,
+            cwd=working_dir,
+            found_candidate=found_candidate,
+        )
+    if found_candidate is None:
+        raise OdooPathResolutionError(
+            source="auto",
+            requested=None,
+            cwd=working_dir,
+            found_candidate=None,
+        )
+    return OdooPathResolution(
+        path=str(_candidate_root(working_dir, found_candidate)),
+        source="auto",
+        candidate=found_candidate,
+    )
 
 
 def _default_cache_dir(db: str) -> Path:
@@ -170,7 +268,12 @@ def dump(
 
     meta = {
         "database": database,
+        "generated_at": datetime.now(timezone.utc).isoformat(
+            timespec="milliseconds"
+        ).replace("+00:00", "Z"),
         "odoo_path": odoo_root,
+        "cwd": str(Path.cwd().resolve()),
+        "package_version": __version__,
         "addons_path": addons_list,
         "out_dir": str(out),
         "summary": summary,

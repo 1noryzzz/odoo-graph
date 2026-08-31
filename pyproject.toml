@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "odoo-graph"
-version = "1.8.0"
+version = "1.9.1"
 description = "Odoo runtime registry reverse-dump + dependency graph analyzer"
 readme = "README.md"
 requires-python = ">=3.10"

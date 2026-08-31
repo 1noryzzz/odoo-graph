@@ -47,11 +47,17 @@ description: 指导 AI 在 Odoo 开发中何时使用 odoo-graph 运行时探针
 
 ### 0) dump
 ```bash
-odoo-graph dump -c odoo.conf -d <db> --odoo-path ./odoo-17.0
+odoo-graph dump -c odoo.conf -d <db>
 ```
 **何时用**：首次分析、数据库升级后、模块安装/升级后、或用户要求刷新缓存。  
 **前置动作**：先确认目标 DB，再提醒潜在冲突并征求用户确认。  
 **输出**：`~/.cache/odoo-graph/<db>/` 下的 `nodes.jsonl / edges.jsonl / edges_resolved.jsonl / summary.json / meta.json`。
+
+默认按 `.`、`./odoo`、`./odoo-17.0`、`../odoo`、`../odoo-17.0`
+的固定顺序发现直接包含 `odoo-bin` 的源码根。仅在自动发现不适用时显式传
+`--odoo-path /path/to/odoo`；`ODOO_PATH` 和 CLI 显式值无效时不会回退。
+`meta.json` 中的 `generated_at`、`odoo_path`、`cwd` 和
+`package_version` 应作为缓存来源核对依据，但 1.9.1 不自动判定缓存过期。
 
 ### 1) field
 ```bash
@@ -85,7 +91,7 @@ odoo-graph module <module_name> --db <db>
 odoo-graph context <model> [<model> ...] --db <db>
 ```
 **何时用**：agent 只知道一个 seed 模型、正在手工连续调用多个 `model` 命令拼上下文时，优先用它压缩探索；当已经知道模型集合时，可传入多个模型解释组内关系。
-**输出**：请求模型摘要、继承/委托/关系边、`suggested_context_models`，以及单 seed 模式下建议的 follow-up 命令。
+**输出**：请求模型摘要、继承/委托/关系边、`suggested_context_models`，以及单 seed 模式下建议的 follow-up 命令。显式组内部分模型缺失时读取 `result=partial`、`selected_models` 和 `missing_models` 后继续使用有效结果；只有 `result=not_found` 才表示全部目标无效。
 
 ### 5) impact
 ```bash
@@ -154,7 +160,10 @@ odoo-graph telemetry report -f json
    - 若用户提到的 DB 在缓存中存在，可直接分析并告知“正在使用缓存”。
    - 若用户不选缓存或要求最新数据，可提供“先 dump 新缓存再分析”的选项。
    - 不要擅自在多数据库环境下猜测 DB 名称。
-7. **telemetry 使用规则**：
+7. **`context` 部分结果规则**：
+   - `result=partial` 是可用证据，退出码为 `0`；不要因一个缺失模型丢弃已解析模型。
+   - 优先根据 `missing_models[].suggestions` 修正输入，不要自动扩展大范围关系图。
+8. **telemetry 使用规则**：
    - 普通业务分析不需要主动运行 `telemetry report`。
    - 当用户问“这些命令用得怎么样”“agent 是否反复查询”“是否需要批量命令/缓存/daemon”时，再运行 `odoo-graph telemetry report`。
    - `--help`、`--version`、root action 和 shell 层启动失败不属于正式 telemetry 统计范围。
@@ -181,7 +190,8 @@ odoo-graph telemetry report -f json
 6. 若用户要求分析工具使用模式，再运行 `telemetry report` 并解释报告中的调用模式。
 
 ## 常见失败与处理
-- `dump` 失败：优先检查 `-c`、`-d`、`--odoo-path`、DB 凭据。
+- `dump` 路径解析失败：先使用错误信息中的 `Suggested command`；仅在自动发现不适用时显式传 `--odoo-path`。
+- `dump` 启动后失败：优先检查 `-c`、`-d`、DB 凭据和 addons 路径。
 - 查询报找不到 DB 缓存：先确认 DB 名称是否正确，再执行 `odoo-graph dump ...`。
 - `path` 无路径：检查起点/终点标识是否准确，或链路被深度/解析能力限制。
 - `field` 没有显示委托链但怀疑是 `_inherits`：先跑 `model <model>` 确认是否存在 `_inherits`；若 dump 过旧或缺 `MODEL_DELEGATES_TO_MODEL` 边，需要重新 dump。

@@ -1,5 +1,6 @@
 import json
 import sqlite3
+from unittest import mock
 
 from odoo_graph.cli import main
 from odoo_graph.resolve import resolve_paths
@@ -56,6 +57,27 @@ def _row(**overrides):
     }
     row.update(overrides)
     return row
+
+
+def _empty_dump_result(tmp_path):
+    return {
+        "out_dir": str(tmp_path / "out"),
+        "summary": {
+            "models": 0,
+            "abstract_models": 0,
+            "transient_models": 0,
+            "fields": 0,
+            "fields_multi_module": 0,
+            "fields_computed": 0,
+            "fields_related": 0,
+            "fields_inherited_delegate": 0,
+            "methods_with_overrides": 0,
+            "edges_depends_field": 0,
+            "edges_method_overrides": 0,
+        },
+        "resolve": {"resolved": 0, "unresolved": 0},
+        "stderr_tail": "",
+    }
 
 
 def test_telemetry_init_creates_schema(tmp_path):
@@ -141,6 +163,122 @@ def test_no_telemetry_flag_skips_write(tmp_path, monkeypatch):
 
     assert rc == 0
     assert fetch_invocations(db) == []
+
+
+def test_context_partial_telemetry_keeps_compatible_success_status(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    db = tmp_path / "telemetry.sqlite3"
+    out = _bootstrap(tmp_path / "dump")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+
+    rc = main([
+        "context",
+        "child.record",
+        "child.recod",
+        "--out-dir",
+        out,
+        "-f",
+        "json",
+    ])
+
+    assert rc == 0
+    json.loads(capsys.readouterr().out)
+    row = fetch_invocations(db)[0]
+    assert row["target_raw"] == "child.record,child.recod"
+    assert row["result_status"] == "success_non_empty"
+    summary = json.loads(row["result_summary_json"])
+    assert summary["result"] == "partial"
+    assert summary["requested"] == 2
+    assert summary["resolved"] == 1
+    assert summary["missing"] == 1
+
+
+def test_context_all_missing_telemetry_is_not_found(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    db = tmp_path / "telemetry.sqlite3"
+    out = _bootstrap(tmp_path / "dump")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+
+    rc = main([
+        "context",
+        "child.recod",
+        "--out-dir",
+        out,
+        "-f",
+        "json",
+    ])
+
+    assert rc == 1
+    json.loads(capsys.readouterr().out)
+    row = fetch_invocations(db)[0]
+    assert row["result_status"] == "not_found"
+    summary = json.loads(row["result_summary_json"])
+    assert summary == {
+        "result": "not_found",
+        "requested": 1,
+        "resolved": 0,
+        "missing": 1,
+        "mode": "seed",
+        "relationships_count": 0,
+        "suggested_context_models_count": 0,
+    }
+
+
+def test_dump_auto_path_resolution_is_recorded_in_telemetry(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    db = tmp_path / "telemetry.sqlite3"
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("ODOO_PATH", raising=False)
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+
+    with mock.patch(
+        "odoo_graph.cli.dump_registry",
+        return_value=_empty_dump_result(tmp_path),
+    ):
+        rc = main(["dump", "-d", "mydb", "-f", "json"])
+
+    assert rc == 0
+    json.loads(capsys.readouterr().out)
+    row = fetch_invocations(db)[0]
+    extra = json.loads(row["extra_json"])
+    assert extra["odoo_path_source"] == "auto"
+    assert extra["odoo_path_resolved"] == str(tmp_path.resolve())
+
+
+def test_dump_invalid_env_path_records_failure_reason(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    db = tmp_path / "telemetry.sqlite3"
+    (tmp_path / "odoo-bin").write_text("", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("ODOO_PATH", "./missing")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+
+    rc = main(["dump", "-d", "mydb"])
+
+    assert rc == 1
+    assert "Suggested command" in capsys.readouterr().err
+    row = fetch_invocations(db)[0]
+    assert row["result_status"] == "dump_error"
+    extra = json.loads(row["extra_json"])
+    assert extra["odoo_path_source"] == "env"
+    assert extra["odoo_path_failure_reason"] == "invalid_env_path"
 
 
 def test_report_detects_fanout_batch_and_gap_sensitivity(tmp_path):
