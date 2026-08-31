@@ -10,6 +10,7 @@
 
 ## 计划中
 
+- 2026-08-31 telemetry 观察（本机 SQLite，未改本表优先级）：见 `docs/product/1.8-Context_Command/telemetry-report-2026-08-31.md`。证据更偏向批量 `overrides`/`field`、`context` fail-open、dump `--odoo-path` 纠错，以及 Phase 2 加载缓存；`context` 调用率仍接近 0。
 - Phase 2：MCP 入口与常驻进程/缓存方向评估，结合 telemetry 中的 graph load 成本，减少 agent 连续查询时的重复加载。
 - Phase 2.x：改进 override 判定（签名与 `super()` 检查）。
 - Phase 3：补充方法体 AST 分析（compute/inverse 相关字段读写）。

@@ -1,0 +1,2873 @@
+{
+  "report_date": "2026-08-31",
+  "telemetry_db": "/Users/1noryzzz/.cache/odoo-graph/telemetry.sqlite3",
+  "scope": {
+    "source": "local sqlite ~/.cache/odoo-graph/telemetry.sqlite3",
+    "excluded": [
+      "Aliyun RDS / live Odoo databases",
+      "dump cache mtimes as usage evidence"
+    ],
+    "window_start": "2026-06-30T00:00:00Z",
+    "window_end": "2026-08-31T23:59:59Z",
+    "window_note": "1.8.0 merge date through report date; recorded 1.8.0 rows are 2026-08-21 to 2026-08-30",
+    "baseline": "docs/product/1.7-Event_Tracking/telemetry-report-2026-06-25.md"
+  },
+  "all_time": {
+    "invocations": 85,
+    "first": "2026-05-29T16:55:16.205Z",
+    "last": "2026-08-30T15:14:25.657Z",
+    "by_version": {
+      "1.7.0": 27,
+      "1.8.0": 58
+    },
+    "by_month": {
+      "2026-05": 5,
+      "2026-06": 22,
+      "2026-08": 58
+    }
+  },
+  "baseline_pre_1_8": {
+    "selected_gap_seconds": 60,
+    "sensitivity": {
+      "30": {
+        "session_count": 6,
+        "invocation_count_average": 4.5,
+        "invocation_count_p50": 2.0,
+        "invocation_count_p90": 5,
+        "invocation_count_p95": 16
+      },
+      "60": {
+        "session_count": 6,
+        "invocation_count_average": 4.5,
+        "invocation_count_p50": 2.0,
+        "invocation_count_p90": 5,
+        "invocation_count_p95": 16
+      },
+      "120": {
+        "session_count": 6,
+        "invocation_count_average": 4.5,
+        "invocation_count_p50": 2.0,
+        "invocation_count_p90": 5,
+        "invocation_count_p95": 16
+      }
+    },
+    "analysis": {
+      "gap_seconds": 60,
+      "invocation_count": 27,
+      "time_range": {
+        "first_invocation": "2026-05-29T16:55:16.205Z",
+        "last_invocation": "2026-06-25T03:35:33.835Z"
+      },
+      "command_frequency": {
+        "model": 19,
+        "dump": 4,
+        "field": 1,
+        "module": 1,
+        "impact": 1,
+        "overrides": 1
+      },
+      "client_frequency": {
+        "local": 21,
+        "codex": 6
+      },
+      "session_metrics": {
+        "session_count": 6,
+        "invocation_count_average": 4.5,
+        "invocation_count_p50": 2.0,
+        "invocation_count_p90": 5,
+        "invocation_count_p95": 16
+      },
+      "followup": {
+        "overall_count": 21,
+        "same_target_count": 2,
+        "different_target_count": 19
+      },
+      "retry": {
+        "exact_retry_count": 4,
+        "parameter_retry_count": 0,
+        "failure_retry_count": 2
+      },
+      "expansion": {
+        "depth_escalation_count": 0,
+        "path_expansion_count": 0,
+        "empty_result_expansion_count": 0
+      },
+      "path_fanout": {
+        "group_count": 0,
+        "groups": []
+      },
+      "batch_exploration": {
+        "multi_model_session_count": 2,
+        "multi_field_session_count": 0,
+        "same_model_multi_field_groups": [],
+        "same_field_cross_model_groups": [],
+        "same_prefix_groups": [
+          {
+            "session_key": "local:0d32fcf02b56:gap60:16:7",
+            "prefix": "ifs.gar",
+            "distinct_targets": 4
+          }
+        ]
+      },
+      "load_overhead": {
+        "load_ms_average": 1083.5454545454545,
+        "load_ms_p50": 1026.0,
+        "load_ms_p90": 1391,
+        "load_to_total_duration_ratio": 0.6356630489853604,
+        "same_graph_repeated_load_count": 19
+      },
+      "top_targets": [
+        {
+          "command": "dump",
+          "target_raw": "<none>",
+          "count": 4,
+          "failures": 1
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.gar.entry.merchant",
+          "count": 2,
+          "failures": 1
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.gar.invite.mixin",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.gar.sub.loan.account",
+          "count": 2,
+          "failures": 1
+        },
+        {
+          "command": "model",
+          "target_raw": "res.partner",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.entry.supplier.vat",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.gar.entry.supplier",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "module",
+          "target_raw": "ifs_gar_entry",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "impact",
+          "target_raw": "res.partner.vat",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "res.users.write",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.gar.invite.merchant",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.base.company",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.gar.entry.mixin",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.contract.info",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.partner.merchant",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.partner.details.mixin",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.contract.info.sign.token",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.risk.manage.credits.mixin",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.step.by.step.mixin",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "model",
+          "target_raw": "ifs.ir.sequence.mixin",
+          "count": 1,
+          "failures": 0
+        }
+      ],
+      "top_sessions": [
+        {
+          "session_key": "local:0d32fcf02b56:gap60:16:7",
+          "thread_id": "local:0d32fcf02b56",
+          "client": "local",
+          "started_at": "2026-06-22T06:12:54.596Z",
+          "ended_at": "2026-06-22T06:13:58.624Z",
+          "invocation_count": 16,
+          "commands": [
+            "dump",
+            "dump",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model",
+            "model"
+          ],
+          "sequence": [
+            "dump:-",
+            "dump:-",
+            "model:ifs.gar.entry.merchant",
+            "model:ifs.gar.entry.merchant",
+            "model:ifs.gar.invite.mixin",
+            "model:ifs.gar.invite.merchant",
+            "model:ifs.base.company",
+            "model:ifs.gar.entry.mixin",
+            "model:ifs.contract.info",
+            "model:ifs.gar.invite.mixin",
+            "model:ifs.partner.merchant",
+            "model:ifs.partner.details.mixin",
+            "model:ifs.contract.info.sign.token",
+            "model:ifs.risk.manage.credits.mixin",
+            "model:ifs.step.by.step.mixin",
+            "model:ifs.ir.sequence.mixin"
+          ]
+        },
+        {
+          "session_key": "019e7426-c3e7-7993-9207-7bdcb901d127:gap60:5:1",
+          "thread_id": "019e7426-c3e7-7993-9207-7bdcb901d127",
+          "client": "codex",
+          "started_at": "2026-05-29T16:55:16.205Z",
+          "ended_at": "2026-05-29T16:55:22.210Z",
+          "invocation_count": 5,
+          "commands": [
+            "field",
+            "model",
+            "module",
+            "impact",
+            "overrides"
+          ],
+          "sequence": [
+            "field:ifs.gar.entry.supplier.vat",
+            "model:ifs.gar.entry.supplier",
+            "module:ifs_gar_entry",
+            "impact:res.partner.vat",
+            "overrides:res.users.write"
+          ]
+        },
+        {
+          "session_key": "local:0d32fcf02b56:gap60:3:23",
+          "thread_id": "local:0d32fcf02b56",
+          "client": "local",
+          "started_at": "2026-06-23T01:35:55.025Z",
+          "ended_at": "2026-06-23T01:36:07.621Z",
+          "invocation_count": 3,
+          "commands": [
+            "model",
+            "dump",
+            "model"
+          ],
+          "sequence": [
+            "model:ifs.gar.sub.loan.account",
+            "dump:-",
+            "model:ifs.gar.sub.loan.account"
+          ]
+        },
+        {
+          "session_key": "019e9cf3-c00f-71d2-8708-eadf31eba563:gap60:1:6",
+          "thread_id": "019e9cf3-c00f-71d2-8708-eadf31eba563",
+          "client": "codex",
+          "started_at": "2026-06-06T15:48:09.579Z",
+          "ended_at": "2026-06-06T15:48:13.060Z",
+          "invocation_count": 1,
+          "commands": [
+            "dump"
+          ],
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "local:719e83593e1c:gap60:1:26",
+          "thread_id": "local:719e83593e1c",
+          "client": "local",
+          "started_at": "2026-06-25T03:35:28.151Z",
+          "ended_at": "2026-06-25T03:35:29.191Z",
+          "invocation_count": 1,
+          "commands": [
+            "model"
+          ],
+          "sequence": [
+            "model:res.partner"
+          ]
+        },
+        {
+          "session_key": "local:0d32fcf02b56:gap60:1:27",
+          "thread_id": "local:0d32fcf02b56",
+          "client": "local",
+          "started_at": "2026-06-25T03:35:33.835Z",
+          "ended_at": "2026-06-25T03:35:34.807Z",
+          "invocation_count": 1,
+          "commands": [
+            "model"
+          ],
+          "sequence": [
+            "model:res.partner"
+          ]
+        }
+      ],
+      "failure_details": [
+        {
+          "id": 7,
+          "started_at": "2026-06-22T06:12:54.596Z",
+          "command": "dump",
+          "target_raw": null,
+          "result_status": "dump_error",
+          "error_category": "dump_error",
+          "exit_code": 1,
+          "client": "local",
+          "cwd": "/Users/1noryzzz/Odoo",
+          "db": "internal-dev",
+          "out_dir": "<auto>",
+          "format": "human",
+          "exception_type": null,
+          "traceback_tail": null
+        },
+        {
+          "id": 9,
+          "started_at": "2026-06-22T06:13:25.691Z",
+          "command": "model",
+          "target_raw": "ifs.gar.entry.merchant",
+          "result_status": "unexpected_error",
+          "error_category": "unexpected",
+          "exit_code": 1,
+          "client": "local",
+          "cwd": "/Users/1noryzzz/Odoo",
+          "db": "internal-dev",
+          "out_dir": "<auto>",
+          "format": "graphviz",
+          "exception_type": "NotImplementedError",
+          "traceback_tail": "NotImplementedError: graphviz output is not implemented yet. Phase 1 focuses on the human formatter; graphviz will plug into this same dispatch (see formatters.py)."
+        },
+        {
+          "id": 23,
+          "started_at": "2026-06-23T01:35:55.025Z",
+          "command": "model",
+          "target_raw": "ifs.gar.sub.loan.account",
+          "result_status": "unexpected_error",
+          "error_category": "unexpected",
+          "exit_code": 1,
+          "client": "local",
+          "cwd": "/Users/1noryzzz/Odoo",
+          "db": "ysb_m2_manual",
+          "out_dir": "<auto>",
+          "format": "human",
+          "exception_type": "FileNotFoundError",
+          "traceback_tail": "FileNotFoundError: Dump not found at /Users/1noryzzz/.cache/odoo-graph/ysb_m2_manual. Run `odoo-graph dump` first."
+        }
+      ],
+      "graph_source_load_stats": [
+        {
+          "graph_source": "/Users/1noryzzz/.cache/odoo-graph/internal-dev",
+          "count": 16,
+          "load_ms_average": 1173.1875,
+          "load_ms_p50": 1165.0,
+          "load_ms_p90": 1391,
+          "load_ms_min": 918,
+          "load_ms_max": 1393
+        },
+        {
+          "graph_source": "/Users/1noryzzz/repos/odoo-graph/odoo_graph/sample_data/17-oabay-ceshi",
+          "count": 5,
+          "load_ms_average": 834.0,
+          "load_ms_p50": 839,
+          "load_ms_p90": 845,
+          "load_ms_min": 819,
+          "load_ms_max": 845
+        },
+        {
+          "graph_source": "/Users/1noryzzz/.cache/odoo-graph/ysb_m2_manual",
+          "count": 1,
+          "load_ms_average": 897.0,
+          "load_ms_p50": 897,
+          "load_ms_p90": 897,
+          "load_ms_min": 897,
+          "load_ms_max": 897
+        }
+      ],
+      "format_usage": [
+        {
+          "value": "human",
+          "count": 21,
+          "failures": 2
+        },
+        {
+          "value": "json",
+          "count": 5,
+          "failures": 0
+        },
+        {
+          "value": "graphviz",
+          "count": 1,
+          "failures": 1
+        }
+      ],
+      "cwd_usage": [
+        {
+          "value": "/Users/1noryzzz/Odoo",
+          "count": 21,
+          "failures": 3
+        },
+        {
+          "value": "/Users/1noryzzz/repos/odoo-graph",
+          "count": 6,
+          "failures": 0
+        }
+      ],
+      "db_usage": [
+        {
+          "value": "internal-dev",
+          "count": 18,
+          "failures": 2
+        },
+        {
+          "value": "<none>",
+          "count": 6,
+          "failures": 0
+        },
+        {
+          "value": "ysb_m2_manual",
+          "count": 3,
+          "failures": 1
+        }
+      ],
+      "out_dir_usage": [
+        {
+          "value": "<auto>",
+          "count": 22,
+          "failures": 3
+        },
+        {
+          "value": "odoo_graph/sample_data/17-oabay-ceshi",
+          "count": 5,
+          "failures": 0
+        }
+      ],
+      "command_sequences": [
+        {
+          "session_key": "local:0d32fcf02b56:gap60:16:7",
+          "thread_id": "local:0d32fcf02b56",
+          "client": "local",
+          "started_at": "2026-06-22T06:12:54.596Z",
+          "invocation_count": 16,
+          "sequence": [
+            "dump:-",
+            "dump:-",
+            "model:ifs.gar.entry.merchant",
+            "model:ifs.gar.entry.merchant",
+            "model:ifs.gar.invite.mixin",
+            "model:ifs.gar.invite.merchant",
+            "model:ifs.base.company",
+            "model:ifs.gar.entry.mixin",
+            "model:ifs.contract.info",
+            "model:ifs.gar.invite.mixin",
+            "model:ifs.partner.merchant",
+            "model:ifs.partner.details.mixin",
+            "model:ifs.contract.info.sign.token",
+            "model:ifs.risk.manage.credits.mixin",
+            "model:ifs.step.by.step.mixin",
+            "model:ifs.ir.sequence.mixin"
+          ]
+        },
+        {
+          "session_key": "019e7426-c3e7-7993-9207-7bdcb901d127:gap60:5:1",
+          "thread_id": "019e7426-c3e7-7993-9207-7bdcb901d127",
+          "client": "codex",
+          "started_at": "2026-05-29T16:55:16.205Z",
+          "invocation_count": 5,
+          "sequence": [
+            "field:ifs.gar.entry.supplier.vat",
+            "model:ifs.gar.entry.supplier",
+            "module:ifs_gar_entry",
+            "impact:res.partner.vat",
+            "overrides:res.users.write"
+          ]
+        },
+        {
+          "session_key": "local:0d32fcf02b56:gap60:3:23",
+          "thread_id": "local:0d32fcf02b56",
+          "client": "local",
+          "started_at": "2026-06-23T01:35:55.025Z",
+          "invocation_count": 3,
+          "sequence": [
+            "model:ifs.gar.sub.loan.account",
+            "dump:-",
+            "model:ifs.gar.sub.loan.account"
+          ]
+        },
+        {
+          "session_key": "019e9cf3-c00f-71d2-8708-eadf31eba563:gap60:1:6",
+          "thread_id": "019e9cf3-c00f-71d2-8708-eadf31eba563",
+          "client": "codex",
+          "started_at": "2026-06-06T15:48:09.579Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "local:719e83593e1c:gap60:1:26",
+          "thread_id": "local:719e83593e1c",
+          "client": "local",
+          "started_at": "2026-06-25T03:35:28.151Z",
+          "invocation_count": 1,
+          "sequence": [
+            "model:res.partner"
+          ]
+        },
+        {
+          "session_key": "local:0d32fcf02b56:gap60:1:27",
+          "thread_id": "local:0d32fcf02b56",
+          "client": "local",
+          "started_at": "2026-06-25T03:35:33.835Z",
+          "invocation_count": 1,
+          "sequence": [
+            "model:res.partner"
+          ]
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "model",
+          "to": "model",
+          "count": 13
+        },
+        {
+          "from": "dump",
+          "to": "model",
+          "count": 2
+        },
+        {
+          "from": "field",
+          "to": "model",
+          "count": 1
+        },
+        {
+          "from": "model",
+          "to": "module",
+          "count": 1
+        },
+        {
+          "from": "module",
+          "to": "impact",
+          "count": 1
+        },
+        {
+          "from": "impact",
+          "to": "overrides",
+          "count": 1
+        },
+        {
+          "from": "dump",
+          "to": "dump",
+          "count": 1
+        },
+        {
+          "from": "model",
+          "to": "dump",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "window_1_8": {
+    "selected_gap_seconds": 60,
+    "sensitivity": {
+      "30": {
+        "session_count": 16,
+        "invocation_count_average": 3.625,
+        "invocation_count_p50": 1.5,
+        "invocation_count_p90": 10,
+        "invocation_count_p95": 10
+      },
+      "60": {
+        "session_count": 15,
+        "invocation_count_average": 3.8666666666666667,
+        "invocation_count_p50": 1,
+        "invocation_count_p90": 10,
+        "invocation_count_p95": 10
+      },
+      "120": {
+        "session_count": 14,
+        "invocation_count_average": 4.142857142857143,
+        "invocation_count_p50": 1.5,
+        "invocation_count_p90": 11,
+        "invocation_count_p95": 11
+      }
+    },
+    "analysis": {
+      "gap_seconds": 60,
+      "invocation_count": 58,
+      "time_range": {
+        "first_invocation": "2026-08-21T11:12:35.411Z",
+        "last_invocation": "2026-08-30T15:14:25.657Z"
+      },
+      "command_frequency": {
+        "overrides": 19,
+        "field": 16,
+        "dump": 13,
+        "module": 4,
+        "model": 4,
+        "impact": 1,
+        "context": 1
+      },
+      "client_frequency": {
+        "cursor": 47,
+        "codex": 11
+      },
+      "session_metrics": {
+        "session_count": 15,
+        "invocation_count_average": 3.8666666666666667,
+        "invocation_count_p50": 1,
+        "invocation_count_p90": 10,
+        "invocation_count_p95": 10
+      },
+      "followup": {
+        "overall_count": 43,
+        "same_target_count": 4,
+        "different_target_count": 39
+      },
+      "retry": {
+        "exact_retry_count": 3,
+        "parameter_retry_count": 0,
+        "failure_retry_count": 3
+      },
+      "expansion": {
+        "depth_escalation_count": 0,
+        "path_expansion_count": 0,
+        "empty_result_expansion_count": 1
+      },
+      "path_fanout": {
+        "group_count": 0,
+        "groups": []
+      },
+      "batch_exploration": {
+        "multi_model_session_count": 1,
+        "multi_field_session_count": 3,
+        "same_model_multi_field_groups": [
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "target_model": "ifs.gar.review.merchant.approve.wizard",
+            "distinct_fields": 4
+          },
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "target_model": "ifs.gar.review.merchant.funder.approve.wizard",
+            "distinct_fields": 4
+          },
+          {
+            "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+            "target_model": "ifs.gar.review.merchant.approve.wizard",
+            "distinct_fields": 3
+          }
+        ],
+        "same_field_cross_model_groups": [
+          {
+            "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+            "target_field": "product_plan_version_id",
+            "distinct_models": 2
+          },
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "target_field": "credit_term",
+            "distinct_models": 2
+          },
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "target_field": "repay_day",
+            "distinct_models": 2
+          },
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "target_field": "product_plan_version_id",
+            "distinct_models": 2
+          },
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "target_field": "term_days",
+            "distinct_models": 2
+          }
+        ],
+        "same_prefix_groups": [
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "prefix": "ifs.gar",
+            "distinct_targets": 17
+          },
+          {
+            "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+            "prefix": "ifs.gar",
+            "distinct_targets": 9
+          },
+          {
+            "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+            "prefix": "ifs.gar",
+            "distinct_targets": 8
+          }
+        ]
+      },
+      "load_overhead": {
+        "load_ms_average": 1050.2,
+        "load_ms_p50": 1052,
+        "load_ms_p90": 1142,
+        "load_to_total_duration_ratio": 0.5337708102735549,
+        "same_graph_repeated_load_count": 43
+      },
+      "top_targets": [
+        {
+          "command": "dump",
+          "target_raw": "<none>",
+          "count": 13,
+          "failures": 3
+        },
+        {
+          "command": "module",
+          "target_raw": "ifs_financial_product_entry",
+          "count": 4,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.entry.merchant.confirm_merchant",
+          "count": 3,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+          "count": 3,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.review.merchant.route.wizard.action_confirm",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.review.merchant.approve.wizard.credit_term",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.review.merchant.approve.wizard.action_confirm",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.review.merchant.approve.wizard.term_days",
+          "count": 2,
+          "failures": 0
+        },
+        {
+          "command": "impact",
+          "target_raw": "ifs.gar.loan.account.bill.repayment_date",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.loan.account.bill.repayment_date",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "overrides",
+          "target_raw": "ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.entry.merchant.product_plan_version_id",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.loan.account.credit_partition_mode",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.review.merchant.route.wizard.product_plan_version_id",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.review.merchant.approve.wizard.repay_day",
+          "count": 1,
+          "failures": 0
+        },
+        {
+          "command": "field",
+          "target_raw": "ifs.gar.review.merchant.funder.approve.wizard.credit_term",
+          "count": 1,
+          "failures": 0
+        }
+      ],
+      "top_sessions": [
+        {
+          "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+          "thread_id": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e",
+          "client": "cursor",
+          "started_at": "2026-08-29T08:10:24.361Z",
+          "ended_at": "2026-08-29T08:11:37.744Z",
+          "invocation_count": 18,
+          "commands": [
+            "field",
+            "field",
+            "overrides",
+            "overrides",
+            "overrides",
+            "field",
+            "field",
+            "field",
+            "field",
+            "field",
+            "field",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "model",
+            "module"
+          ],
+          "sequence": [
+            "field:ifs.gar.review.merchant.approve.wizard.credit_term",
+            "field:ifs.gar.review.merchant.approve.wizard.repay_day",
+            "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+            "overrides:ifs.gar.entry.merchant.confirm_merchant",
+            "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+            "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+            "field:ifs.gar.review.merchant.approve.wizard.term_days",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.credit_term",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.repay_day",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.product_plan_version_id",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.term_days",
+            "overrides:ifs.gar.review.merchant.approve.wizard.create",
+            "overrides:ifs.gar.review.merchant.approve.wizard.write",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.create",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.write",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "model:ifs.gar.review.merchant.approve.wizard",
+            "module:ifs_financial_product_entry"
+          ]
+        },
+        {
+          "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+          "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+          "client": "cursor",
+          "started_at": "2026-08-28T16:03:17.822Z",
+          "ended_at": "2026-08-28T16:03:33.355Z",
+          "invocation_count": 10,
+          "commands": [
+            "module",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "field",
+            "field",
+            "field"
+          ],
+          "sequence": [
+            "module:ifs_financial_product_entry",
+            "overrides:ifs.gar.entry.merchant.confirm_merchant",
+            "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "overrides:ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant",
+            "overrides:ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route",
+            "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval",
+            "field:ifs.gar.entry.merchant.product_plan_version_id",
+            "field:ifs.gar.loan.account.credit_partition_mode",
+            "field:ifs.gar.review.merchant.route.wizard.product_plan_version_id"
+          ]
+        },
+        {
+          "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+          "thread_id": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56",
+          "client": "cursor",
+          "started_at": "2026-08-29T10:12:40.542Z",
+          "ended_at": "2026-08-29T10:13:12.415Z",
+          "invocation_count": 10,
+          "commands": [
+            "dump",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "overrides",
+            "module",
+            "field",
+            "field",
+            "field"
+          ],
+          "sequence": [
+            "dump:-",
+            "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+            "overrides:ifs.gar.entry.merchant.confirm_merchant",
+            "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+            "module:ifs_financial_product_entry",
+            "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+            "field:ifs.gar.review.merchant.approve.wizard.term_days",
+            "field:ifs.gar.review.merchant.approve.wizard.credit_term"
+          ]
+        },
+        {
+          "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:5:80",
+          "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+          "client": "cursor",
+          "started_at": "2026-08-30T15:08:42.679Z",
+          "ended_at": "2026-08-30T15:09:20.516Z",
+          "invocation_count": 5,
+          "commands": [
+            "module",
+            "model",
+            "model",
+            "model",
+            "context"
+          ],
+          "sequence": [
+            "module:ifs_financial_product_entry",
+            "model:ifs.gar.entry.merchant",
+            "model:galaxy.open.api.app",
+            "model:ifs.financial.product.plan.version",
+            "context:ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order"
+          ]
+        },
+        {
+          "session_key": "01a04125-cabd-72f3-bc4a-04103658c848:gap60:3:36",
+          "thread_id": "01a04125-cabd-72f3-bc4a-04103658c848",
+          "client": "codex",
+          "started_at": "2026-08-27T03:00:11.456Z",
+          "ended_at": "2026-08-27T03:00:35.886Z",
+          "invocation_count": 3,
+          "commands": [
+            "dump",
+            "dump",
+            "dump"
+          ],
+          "sequence": [
+            "dump:-",
+            "dump:-",
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9:gap60:2:28",
+          "thread_id": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9",
+          "client": "cursor",
+          "started_at": "2026-08-21T11:12:35.411Z",
+          "ended_at": "2026-08-21T11:12:37.852Z",
+          "invocation_count": 2,
+          "commands": [
+            "impact",
+            "field"
+          ],
+          "sequence": [
+            "impact:ifs.gar.loan.account.bill.repayment_date",
+            "field:ifs.gar.loan.account.bill.repayment_date"
+          ]
+        },
+        {
+          "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:2:34",
+          "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+          "client": "codex",
+          "started_at": "2026-08-27T02:33:14.291Z",
+          "ended_at": "2026-08-27T02:33:25.216Z",
+          "invocation_count": 2,
+          "commands": [
+            "dump",
+            "dump"
+          ],
+          "sequence": [
+            "dump:-",
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:30",
+          "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+          "client": "codex",
+          "started_at": "2026-08-25T03:31:02.036Z",
+          "ended_at": "2026-08-25T03:31:06.109Z",
+          "invocation_count": 1,
+          "commands": [
+            "dump"
+          ],
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:31",
+          "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+          "client": "codex",
+          "started_at": "2026-08-25T03:48:54.936Z",
+          "ended_at": "2026-08-25T03:48:58.198Z",
+          "invocation_count": 1,
+          "commands": [
+            "dump"
+          ],
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:32",
+          "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+          "client": "codex",
+          "started_at": "2026-08-25T04:00:40.098Z",
+          "ended_at": "2026-08-25T04:00:43.429Z",
+          "invocation_count": 1,
+          "commands": [
+            "dump"
+          ],
+          "sequence": [
+            "dump:-"
+          ]
+        }
+      ],
+      "failure_details": [
+        {
+          "id": 34,
+          "started_at": "2026-08-27T02:33:14.291Z",
+          "command": "dump",
+          "target_raw": null,
+          "result_status": "dump_error",
+          "error_category": "dump_error",
+          "exit_code": 1,
+          "client": "codex",
+          "cwd": "/Users/1noryzzz/Odoo-unified-production",
+          "db": "unified-production-m2",
+          "out_dir": "<auto>",
+          "format": "human",
+          "exception_type": null,
+          "traceback_tail": null
+        },
+        {
+          "id": 36,
+          "started_at": "2026-08-27T03:00:11.456Z",
+          "command": "dump",
+          "target_raw": null,
+          "result_status": "dump_error",
+          "error_category": "dump_error",
+          "exit_code": 1,
+          "client": "codex",
+          "cwd": "/Users/1noryzzz/Odoo-unified-production",
+          "db": "unified-production-m2",
+          "out_dir": "<auto>",
+          "format": "human",
+          "exception_type": null,
+          "traceback_tail": null
+        },
+        {
+          "id": 37,
+          "started_at": "2026-08-27T03:00:20.893Z",
+          "command": "dump",
+          "target_raw": null,
+          "result_status": "dump_error",
+          "error_category": "dump_error",
+          "exit_code": 1,
+          "client": "codex",
+          "cwd": "/Users/1noryzzz/Odoo-unified-production",
+          "db": "unified-production-m2",
+          "out_dir": "<auto>",
+          "format": "human",
+          "exception_type": null,
+          "traceback_tail": null
+        },
+        {
+          "id": 84,
+          "started_at": "2026-08-30T15:09:19.527Z",
+          "command": "context",
+          "target_raw": "ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order",
+          "result_status": "not_found",
+          "error_category": "not_found",
+          "exit_code": 1,
+          "client": "cursor",
+          "cwd": "/Users/1noryzzz/Odoo-unified-production",
+          "db": "unified-production-m3-20260828",
+          "out_dir": "<auto>",
+          "format": "human",
+          "exception_type": null,
+          "traceback_tail": null
+        }
+      ],
+      "graph_source_load_stats": [
+        {
+          "graph_source": "/Users/1noryzzz/.cache/odoo-graph/unified-production-m3-20260828",
+          "count": 43,
+          "load_ms_average": 1046.9302325581396,
+          "load_ms_p50": 1039,
+          "load_ms_p90": 1120,
+          "load_ms_min": 909,
+          "load_ms_max": 1244
+        },
+        {
+          "graph_source": "/Users/1noryzzz/.cache/odoo-graph/ysb-dev",
+          "count": 2,
+          "load_ms_average": 1120.5,
+          "load_ms_p50": 1120.5,
+          "load_ms_p90": 1151,
+          "load_ms_min": 1090,
+          "load_ms_max": 1151
+        }
+      ],
+      "format_usage": [
+        {
+          "value": "human",
+          "count": 57,
+          "failures": 4
+        },
+        {
+          "value": "json",
+          "count": 1,
+          "failures": 0
+        }
+      ],
+      "cwd_usage": [
+        {
+          "value": "/Users/1noryzzz/Odoo-unified-production",
+          "count": 56,
+          "failures": 4
+        },
+        {
+          "value": "/Users/1noryzzz/Odoo",
+          "count": 2,
+          "failures": 0
+        }
+      ],
+      "db_usage": [
+        {
+          "value": "unified-production-m3-20260828",
+          "count": 46,
+          "failures": 1
+        },
+        {
+          "value": "unified-production-m2",
+          "count": 7,
+          "failures": 3
+        },
+        {
+          "value": "unified-production-dev",
+          "count": 3,
+          "failures": 0
+        },
+        {
+          "value": "ysb-dev",
+          "count": 2,
+          "failures": 0
+        }
+      ],
+      "out_dir_usage": [
+        {
+          "value": "<auto>",
+          "count": 58,
+          "failures": 4
+        }
+      ],
+      "command_sequences": [
+        {
+          "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+          "thread_id": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e",
+          "client": "cursor",
+          "started_at": "2026-08-29T08:10:24.361Z",
+          "invocation_count": 18,
+          "sequence": [
+            "field:ifs.gar.review.merchant.approve.wizard.credit_term",
+            "field:ifs.gar.review.merchant.approve.wizard.repay_day",
+            "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+            "overrides:ifs.gar.entry.merchant.confirm_merchant",
+            "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+            "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+            "field:ifs.gar.review.merchant.approve.wizard.term_days",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.credit_term",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.repay_day",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.product_plan_version_id",
+            "field:ifs.gar.review.merchant.funder.approve.wizard.term_days",
+            "overrides:ifs.gar.review.merchant.approve.wizard.create",
+            "overrides:ifs.gar.review.merchant.approve.wizard.write",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.create",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.write",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "model:ifs.gar.review.merchant.approve.wizard",
+            "module:ifs_financial_product_entry"
+          ]
+        },
+        {
+          "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+          "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+          "client": "cursor",
+          "started_at": "2026-08-28T16:03:17.822Z",
+          "invocation_count": 10,
+          "sequence": [
+            "module:ifs_financial_product_entry",
+            "overrides:ifs.gar.entry.merchant.confirm_merchant",
+            "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "overrides:ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant",
+            "overrides:ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route",
+            "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval",
+            "field:ifs.gar.entry.merchant.product_plan_version_id",
+            "field:ifs.gar.loan.account.credit_partition_mode",
+            "field:ifs.gar.review.merchant.route.wizard.product_plan_version_id"
+          ]
+        },
+        {
+          "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+          "thread_id": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56",
+          "client": "cursor",
+          "started_at": "2026-08-29T10:12:40.542Z",
+          "invocation_count": 10,
+          "sequence": [
+            "dump:-",
+            "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+            "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+            "overrides:ifs.gar.entry.merchant.confirm_merchant",
+            "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+            "module:ifs_financial_product_entry",
+            "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+            "field:ifs.gar.review.merchant.approve.wizard.term_days",
+            "field:ifs.gar.review.merchant.approve.wizard.credit_term"
+          ]
+        },
+        {
+          "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:5:80",
+          "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+          "client": "cursor",
+          "started_at": "2026-08-30T15:08:42.679Z",
+          "invocation_count": 5,
+          "sequence": [
+            "module:ifs_financial_product_entry",
+            "model:ifs.gar.entry.merchant",
+            "model:galaxy.open.api.app",
+            "model:ifs.financial.product.plan.version",
+            "context:ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order"
+          ]
+        },
+        {
+          "session_key": "01a04125-cabd-72f3-bc4a-04103658c848:gap60:3:36",
+          "thread_id": "01a04125-cabd-72f3-bc4a-04103658c848",
+          "client": "codex",
+          "started_at": "2026-08-27T03:00:11.456Z",
+          "invocation_count": 3,
+          "sequence": [
+            "dump:-",
+            "dump:-",
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9:gap60:2:28",
+          "thread_id": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9",
+          "client": "cursor",
+          "started_at": "2026-08-21T11:12:35.411Z",
+          "invocation_count": 2,
+          "sequence": [
+            "impact:ifs.gar.loan.account.bill.repayment_date",
+            "field:ifs.gar.loan.account.bill.repayment_date"
+          ]
+        },
+        {
+          "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:2:34",
+          "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+          "client": "codex",
+          "started_at": "2026-08-27T02:33:14.291Z",
+          "invocation_count": 2,
+          "sequence": [
+            "dump:-",
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:30",
+          "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+          "client": "codex",
+          "started_at": "2026-08-25T03:31:02.036Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:31",
+          "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+          "client": "codex",
+          "started_at": "2026-08-25T03:48:54.936Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:32",
+          "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+          "client": "codex",
+          "started_at": "2026-08-25T04:00:40.098Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:1:33",
+          "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+          "client": "codex",
+          "started_at": "2026-08-27T02:10:37.737Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a0488f-f8e8-76a3-8b2d-de581e1583f9:gap60:1:39",
+          "thread_id": "01a0488f-f8e8-76a3-8b2d-de581e1583f9",
+          "client": "codex",
+          "started_at": "2026-08-28T13:45:41.210Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:1:40",
+          "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+          "client": "cursor",
+          "started_at": "2026-08-28T16:02:05.168Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "01a0488f-f8e8-76a3-8b2d-de581e1583f9:gap60:1:51",
+          "thread_id": "01a0488f-f8e8-76a3-8b2d-de581e1583f9",
+          "client": "codex",
+          "started_at": "2026-08-29T08:07:24.617Z",
+          "invocation_count": 1,
+          "sequence": [
+            "dump:-"
+          ]
+        },
+        {
+          "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:1:85",
+          "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+          "client": "cursor",
+          "started_at": "2026-08-30T15:14:25.657Z",
+          "invocation_count": 1,
+          "sequence": [
+            "field:ifs.gar.sub.loan.account.used_quota"
+          ]
+        }
+      ],
+      "top_transitions": [
+        {
+          "from": "overrides",
+          "to": "overrides",
+          "count": 15
+        },
+        {
+          "from": "field",
+          "to": "field",
+          "count": 10
+        },
+        {
+          "from": "dump",
+          "to": "dump",
+          "count": 3
+        },
+        {
+          "from": "overrides",
+          "to": "field",
+          "count": 2
+        },
+        {
+          "from": "field",
+          "to": "overrides",
+          "count": 2
+        },
+        {
+          "from": "model",
+          "to": "model",
+          "count": 2
+        },
+        {
+          "from": "impact",
+          "to": "field",
+          "count": 1
+        },
+        {
+          "from": "module",
+          "to": "overrides",
+          "count": 1
+        },
+        {
+          "from": "overrides",
+          "to": "model",
+          "count": 1
+        },
+        {
+          "from": "model",
+          "to": "module",
+          "count": 1
+        },
+        {
+          "from": "dump",
+          "to": "overrides",
+          "count": 1
+        },
+        {
+          "from": "overrides",
+          "to": "module",
+          "count": 1
+        },
+        {
+          "from": "module",
+          "to": "field",
+          "count": 1
+        },
+        {
+          "from": "module",
+          "to": "model",
+          "count": 1
+        },
+        {
+          "from": "model",
+          "to": "context",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "window_by_db": {
+    "unified-production-m3-20260828": {
+      "selected_gap_seconds": 60,
+      "analysis": {
+        "gap_seconds": 60,
+        "invocation_count": 46,
+        "time_range": {
+          "first_invocation": "2026-08-28T16:02:05.168Z",
+          "last_invocation": "2026-08-30T15:14:25.657Z"
+        },
+        "command_frequency": {
+          "overrides": 19,
+          "field": 15,
+          "module": 4,
+          "model": 4,
+          "dump": 3,
+          "context": 1
+        },
+        "client_frequency": {
+          "cursor": 45,
+          "codex": 1
+        },
+        "session_metrics": {
+          "session_count": 7,
+          "invocation_count_average": 6.571428571428571,
+          "invocation_count_p50": 5,
+          "invocation_count_p90": 10,
+          "invocation_count_p95": 18
+        },
+        "followup": {
+          "overall_count": 39,
+          "same_target_count": 0,
+          "different_target_count": 39
+        },
+        "retry": {
+          "exact_retry_count": 0,
+          "parameter_retry_count": 0,
+          "failure_retry_count": 0
+        },
+        "expansion": {
+          "depth_escalation_count": 0,
+          "path_expansion_count": 0,
+          "empty_result_expansion_count": 1
+        },
+        "path_fanout": {
+          "group_count": 0,
+          "groups": []
+        },
+        "batch_exploration": {
+          "multi_model_session_count": 1,
+          "multi_field_session_count": 3,
+          "same_model_multi_field_groups": [
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "target_model": "ifs.gar.review.merchant.approve.wizard",
+              "distinct_fields": 4
+            },
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "target_model": "ifs.gar.review.merchant.funder.approve.wizard",
+              "distinct_fields": 4
+            },
+            {
+              "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+              "target_model": "ifs.gar.review.merchant.approve.wizard",
+              "distinct_fields": 3
+            }
+          ],
+          "same_field_cross_model_groups": [
+            {
+              "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+              "target_field": "product_plan_version_id",
+              "distinct_models": 2
+            },
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "target_field": "credit_term",
+              "distinct_models": 2
+            },
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "target_field": "repay_day",
+              "distinct_models": 2
+            },
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "target_field": "product_plan_version_id",
+              "distinct_models": 2
+            },
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "target_field": "term_days",
+              "distinct_models": 2
+            }
+          ],
+          "same_prefix_groups": [
+            {
+              "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+              "prefix": "ifs.gar",
+              "distinct_targets": 17
+            },
+            {
+              "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+              "prefix": "ifs.gar",
+              "distinct_targets": 9
+            },
+            {
+              "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+              "prefix": "ifs.gar",
+              "distinct_targets": 8
+            }
+          ]
+        },
+        "load_overhead": {
+          "load_ms_average": 1046.9302325581396,
+          "load_ms_p50": 1039,
+          "load_ms_p90": 1120,
+          "load_to_total_duration_ratio": 0.7648837841511485,
+          "same_graph_repeated_load_count": 42
+        },
+        "top_targets": [
+          {
+            "command": "module",
+            "target_raw": "ifs_financial_product_entry",
+            "count": 4,
+            "failures": 0
+          },
+          {
+            "command": "dump",
+            "target_raw": "<none>",
+            "count": 3,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.entry.merchant.confirm_merchant",
+            "count": 3,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+            "count": 3,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.review.merchant.route.wizard.action_confirm",
+            "count": 2,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.approve.wizard.credit_term",
+            "count": 2,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.review.merchant.approve.wizard.action_confirm",
+            "count": 2,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+            "count": 2,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+            "count": 2,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.approve.wizard.term_days",
+            "count": 2,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "overrides",
+            "target_raw": "ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.entry.merchant.product_plan_version_id",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.loan.account.credit_partition_mode",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.route.wizard.product_plan_version_id",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.approve.wizard.repay_day",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.funder.approve.wizard.credit_term",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.funder.approve.wizard.repay_day",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.review.merchant.funder.approve.wizard.product_plan_version_id",
+            "count": 1,
+            "failures": 0
+          }
+        ],
+        "top_sessions": [
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "thread_id": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e",
+            "client": "cursor",
+            "started_at": "2026-08-29T08:10:24.361Z",
+            "ended_at": "2026-08-29T08:11:37.744Z",
+            "invocation_count": 18,
+            "commands": [
+              "field",
+              "field",
+              "overrides",
+              "overrides",
+              "overrides",
+              "field",
+              "field",
+              "field",
+              "field",
+              "field",
+              "field",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "model",
+              "module"
+            ],
+            "sequence": [
+              "field:ifs.gar.review.merchant.approve.wizard.credit_term",
+              "field:ifs.gar.review.merchant.approve.wizard.repay_day",
+              "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+              "overrides:ifs.gar.entry.merchant.confirm_merchant",
+              "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+              "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+              "field:ifs.gar.review.merchant.approve.wizard.term_days",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.credit_term",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.repay_day",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.product_plan_version_id",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.term_days",
+              "overrides:ifs.gar.review.merchant.approve.wizard.create",
+              "overrides:ifs.gar.review.merchant.approve.wizard.write",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.create",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.write",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+              "model:ifs.gar.review.merchant.approve.wizard",
+              "module:ifs_financial_product_entry"
+            ]
+          },
+          {
+            "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+            "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+            "client": "cursor",
+            "started_at": "2026-08-28T16:03:17.822Z",
+            "ended_at": "2026-08-28T16:03:33.355Z",
+            "invocation_count": 10,
+            "commands": [
+              "module",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "field",
+              "field",
+              "field"
+            ],
+            "sequence": [
+              "module:ifs_financial_product_entry",
+              "overrides:ifs.gar.entry.merchant.confirm_merchant",
+              "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+              "overrides:ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant",
+              "overrides:ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route",
+              "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval",
+              "field:ifs.gar.entry.merchant.product_plan_version_id",
+              "field:ifs.gar.loan.account.credit_partition_mode",
+              "field:ifs.gar.review.merchant.route.wizard.product_plan_version_id"
+            ]
+          },
+          {
+            "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+            "thread_id": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56",
+            "client": "cursor",
+            "started_at": "2026-08-29T10:12:40.542Z",
+            "ended_at": "2026-08-29T10:13:12.415Z",
+            "invocation_count": 10,
+            "commands": [
+              "dump",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "overrides",
+              "module",
+              "field",
+              "field",
+              "field"
+            ],
+            "sequence": [
+              "dump:-",
+              "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+              "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+              "overrides:ifs.gar.entry.merchant.confirm_merchant",
+              "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+              "module:ifs_financial_product_entry",
+              "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+              "field:ifs.gar.review.merchant.approve.wizard.term_days",
+              "field:ifs.gar.review.merchant.approve.wizard.credit_term"
+            ]
+          },
+          {
+            "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:5:80",
+            "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+            "client": "cursor",
+            "started_at": "2026-08-30T15:08:42.679Z",
+            "ended_at": "2026-08-30T15:09:20.516Z",
+            "invocation_count": 5,
+            "commands": [
+              "module",
+              "model",
+              "model",
+              "model",
+              "context"
+            ],
+            "sequence": [
+              "module:ifs_financial_product_entry",
+              "model:ifs.gar.entry.merchant",
+              "model:galaxy.open.api.app",
+              "model:ifs.financial.product.plan.version",
+              "context:ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order"
+            ]
+          },
+          {
+            "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:1:40",
+            "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+            "client": "cursor",
+            "started_at": "2026-08-28T16:02:05.168Z",
+            "ended_at": "2026-08-28T16:02:08.946Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a0488f-f8e8-76a3-8b2d-de581e1583f9:gap60:1:51",
+            "thread_id": "01a0488f-f8e8-76a3-8b2d-de581e1583f9",
+            "client": "codex",
+            "started_at": "2026-08-29T08:07:24.617Z",
+            "ended_at": "2026-08-29T08:07:28.594Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:1:85",
+            "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+            "client": "cursor",
+            "started_at": "2026-08-30T15:14:25.657Z",
+            "ended_at": "2026-08-30T15:14:26.687Z",
+            "invocation_count": 1,
+            "commands": [
+              "field"
+            ],
+            "sequence": [
+              "field:ifs.gar.sub.loan.account.used_quota"
+            ]
+          }
+        ],
+        "failure_details": [
+          {
+            "id": 84,
+            "started_at": "2026-08-30T15:09:19.527Z",
+            "command": "context",
+            "target_raw": "ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order",
+            "result_status": "not_found",
+            "error_category": "not_found",
+            "exit_code": 1,
+            "client": "cursor",
+            "cwd": "/Users/1noryzzz/Odoo-unified-production",
+            "db": "unified-production-m3-20260828",
+            "out_dir": "<auto>",
+            "format": "human",
+            "exception_type": null,
+            "traceback_tail": null
+          }
+        ],
+        "graph_source_load_stats": [
+          {
+            "graph_source": "/Users/1noryzzz/.cache/odoo-graph/unified-production-m3-20260828",
+            "count": 43,
+            "load_ms_average": 1046.9302325581396,
+            "load_ms_p50": 1039,
+            "load_ms_p90": 1120,
+            "load_ms_min": 909,
+            "load_ms_max": 1244
+          }
+        ],
+        "format_usage": [
+          {
+            "value": "human",
+            "count": 45,
+            "failures": 1
+          },
+          {
+            "value": "json",
+            "count": 1,
+            "failures": 0
+          }
+        ],
+        "cwd_usage": [
+          {
+            "value": "/Users/1noryzzz/Odoo-unified-production",
+            "count": 46,
+            "failures": 1
+          }
+        ],
+        "db_usage": [
+          {
+            "value": "unified-production-m3-20260828",
+            "count": 46,
+            "failures": 1
+          }
+        ],
+        "out_dir_usage": [
+          {
+            "value": "<auto>",
+            "count": 46,
+            "failures": 1
+          }
+        ],
+        "command_sequences": [
+          {
+            "session_key": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52",
+            "thread_id": "cursor:820a553e-d3a7-4530-a071-6edd41bcc49e",
+            "client": "cursor",
+            "started_at": "2026-08-29T08:10:24.361Z",
+            "invocation_count": 18,
+            "sequence": [
+              "field:ifs.gar.review.merchant.approve.wizard.credit_term",
+              "field:ifs.gar.review.merchant.approve.wizard.repay_day",
+              "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+              "overrides:ifs.gar.entry.merchant.confirm_merchant",
+              "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+              "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+              "field:ifs.gar.review.merchant.approve.wizard.term_days",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.credit_term",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.repay_day",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.product_plan_version_id",
+              "field:ifs.gar.review.merchant.funder.approve.wizard.term_days",
+              "overrides:ifs.gar.review.merchant.approve.wizard.create",
+              "overrides:ifs.gar.review.merchant.approve.wizard.write",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.create",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.write",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+              "model:ifs.gar.review.merchant.approve.wizard",
+              "module:ifs_financial_product_entry"
+            ]
+          },
+          {
+            "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41",
+            "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+            "client": "cursor",
+            "started_at": "2026-08-28T16:03:17.822Z",
+            "invocation_count": 10,
+            "sequence": [
+              "module:ifs_financial_product_entry",
+              "overrides:ifs.gar.entry.merchant.confirm_merchant",
+              "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+              "overrides:ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant",
+              "overrides:ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route",
+              "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval",
+              "field:ifs.gar.entry.merchant.product_plan_version_id",
+              "field:ifs.gar.loan.account.credit_partition_mode",
+              "field:ifs.gar.review.merchant.route.wizard.product_plan_version_id"
+            ]
+          },
+          {
+            "session_key": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70",
+            "thread_id": "cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56",
+            "client": "cursor",
+            "started_at": "2026-08-29T10:12:40.542Z",
+            "invocation_count": 10,
+            "sequence": [
+              "dump:-",
+              "overrides:ifs.gar.review.merchant.route.wizard.action_confirm",
+              "overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm",
+              "overrides:ifs.gar.review.merchant.approve.wizard.action_confirm",
+              "overrides:ifs.gar.entry.merchant.confirm_merchant",
+              "overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval",
+              "module:ifs_financial_product_entry",
+              "field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id",
+              "field:ifs.gar.review.merchant.approve.wizard.term_days",
+              "field:ifs.gar.review.merchant.approve.wizard.credit_term"
+            ]
+          },
+          {
+            "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:5:80",
+            "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+            "client": "cursor",
+            "started_at": "2026-08-30T15:08:42.679Z",
+            "invocation_count": 5,
+            "sequence": [
+              "module:ifs_financial_product_entry",
+              "model:ifs.gar.entry.merchant",
+              "model:galaxy.open.api.app",
+              "model:ifs.financial.product.plan.version",
+              "context:ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order"
+            ]
+          },
+          {
+            "session_key": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:1:40",
+            "thread_id": "cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b",
+            "client": "cursor",
+            "started_at": "2026-08-28T16:02:05.168Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a0488f-f8e8-76a3-8b2d-de581e1583f9:gap60:1:51",
+            "thread_id": "01a0488f-f8e8-76a3-8b2d-de581e1583f9",
+            "client": "codex",
+            "started_at": "2026-08-29T08:07:24.617Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:1:85",
+            "thread_id": "cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1",
+            "client": "cursor",
+            "started_at": "2026-08-30T15:14:25.657Z",
+            "invocation_count": 1,
+            "sequence": [
+              "field:ifs.gar.sub.loan.account.used_quota"
+            ]
+          }
+        ],
+        "top_transitions": [
+          {
+            "from": "overrides",
+            "to": "overrides",
+            "count": 15
+          },
+          {
+            "from": "field",
+            "to": "field",
+            "count": 10
+          },
+          {
+            "from": "overrides",
+            "to": "field",
+            "count": 2
+          },
+          {
+            "from": "field",
+            "to": "overrides",
+            "count": 2
+          },
+          {
+            "from": "model",
+            "to": "model",
+            "count": 2
+          },
+          {
+            "from": "module",
+            "to": "overrides",
+            "count": 1
+          },
+          {
+            "from": "overrides",
+            "to": "model",
+            "count": 1
+          },
+          {
+            "from": "model",
+            "to": "module",
+            "count": 1
+          },
+          {
+            "from": "dump",
+            "to": "overrides",
+            "count": 1
+          },
+          {
+            "from": "overrides",
+            "to": "module",
+            "count": 1
+          },
+          {
+            "from": "module",
+            "to": "field",
+            "count": 1
+          },
+          {
+            "from": "module",
+            "to": "model",
+            "count": 1
+          },
+          {
+            "from": "model",
+            "to": "context",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "unified-production-m2": {
+      "selected_gap_seconds": 60,
+      "analysis": {
+        "gap_seconds": 60,
+        "invocation_count": 7,
+        "time_range": {
+          "first_invocation": "2026-08-27T02:10:37.737Z",
+          "last_invocation": "2026-08-28T13:45:41.210Z"
+        },
+        "command_frequency": {
+          "dump": 7
+        },
+        "client_frequency": {
+          "codex": 7
+        },
+        "session_metrics": {
+          "session_count": 4,
+          "invocation_count_average": 1.75,
+          "invocation_count_p50": 1.5,
+          "invocation_count_p90": 3,
+          "invocation_count_p95": 3
+        },
+        "followup": {
+          "overall_count": 3,
+          "same_target_count": 3,
+          "different_target_count": 0
+        },
+        "retry": {
+          "exact_retry_count": 3,
+          "parameter_retry_count": 0,
+          "failure_retry_count": 3
+        },
+        "expansion": {
+          "depth_escalation_count": 0,
+          "path_expansion_count": 0,
+          "empty_result_expansion_count": 0
+        },
+        "path_fanout": {
+          "group_count": 0,
+          "groups": []
+        },
+        "batch_exploration": {
+          "multi_model_session_count": 0,
+          "multi_field_session_count": 0,
+          "same_model_multi_field_groups": [],
+          "same_field_cross_model_groups": [],
+          "same_prefix_groups": []
+        },
+        "load_overhead": {
+          "load_ms_average": null,
+          "load_ms_p50": null,
+          "load_ms_p90": null,
+          "load_to_total_duration_ratio": null,
+          "same_graph_repeated_load_count": 0
+        },
+        "top_targets": [
+          {
+            "command": "dump",
+            "target_raw": "<none>",
+            "count": 7,
+            "failures": 3
+          }
+        ],
+        "top_sessions": [
+          {
+            "session_key": "01a04125-cabd-72f3-bc4a-04103658c848:gap60:3:36",
+            "thread_id": "01a04125-cabd-72f3-bc4a-04103658c848",
+            "client": "codex",
+            "started_at": "2026-08-27T03:00:11.456Z",
+            "ended_at": "2026-08-27T03:00:35.886Z",
+            "invocation_count": 3,
+            "commands": [
+              "dump",
+              "dump",
+              "dump"
+            ],
+            "sequence": [
+              "dump:-",
+              "dump:-",
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:2:34",
+            "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+            "client": "codex",
+            "started_at": "2026-08-27T02:33:14.291Z",
+            "ended_at": "2026-08-27T02:33:25.216Z",
+            "invocation_count": 2,
+            "commands": [
+              "dump",
+              "dump"
+            ],
+            "sequence": [
+              "dump:-",
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:1:33",
+            "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+            "client": "codex",
+            "started_at": "2026-08-27T02:10:37.737Z",
+            "ended_at": "2026-08-27T02:10:42.157Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a0488f-f8e8-76a3-8b2d-de581e1583f9:gap60:1:39",
+            "thread_id": "01a0488f-f8e8-76a3-8b2d-de581e1583f9",
+            "client": "codex",
+            "started_at": "2026-08-28T13:45:41.210Z",
+            "ended_at": "2026-08-28T13:45:46.127Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          }
+        ],
+        "failure_details": [
+          {
+            "id": 34,
+            "started_at": "2026-08-27T02:33:14.291Z",
+            "command": "dump",
+            "target_raw": null,
+            "result_status": "dump_error",
+            "error_category": "dump_error",
+            "exit_code": 1,
+            "client": "codex",
+            "cwd": "/Users/1noryzzz/Odoo-unified-production",
+            "db": "unified-production-m2",
+            "out_dir": "<auto>",
+            "format": "human",
+            "exception_type": null,
+            "traceback_tail": null
+          },
+          {
+            "id": 36,
+            "started_at": "2026-08-27T03:00:11.456Z",
+            "command": "dump",
+            "target_raw": null,
+            "result_status": "dump_error",
+            "error_category": "dump_error",
+            "exit_code": 1,
+            "client": "codex",
+            "cwd": "/Users/1noryzzz/Odoo-unified-production",
+            "db": "unified-production-m2",
+            "out_dir": "<auto>",
+            "format": "human",
+            "exception_type": null,
+            "traceback_tail": null
+          },
+          {
+            "id": 37,
+            "started_at": "2026-08-27T03:00:20.893Z",
+            "command": "dump",
+            "target_raw": null,
+            "result_status": "dump_error",
+            "error_category": "dump_error",
+            "exit_code": 1,
+            "client": "codex",
+            "cwd": "/Users/1noryzzz/Odoo-unified-production",
+            "db": "unified-production-m2",
+            "out_dir": "<auto>",
+            "format": "human",
+            "exception_type": null,
+            "traceback_tail": null
+          }
+        ],
+        "graph_source_load_stats": [],
+        "format_usage": [
+          {
+            "value": "human",
+            "count": 7,
+            "failures": 3
+          }
+        ],
+        "cwd_usage": [
+          {
+            "value": "/Users/1noryzzz/Odoo-unified-production",
+            "count": 7,
+            "failures": 3
+          }
+        ],
+        "db_usage": [
+          {
+            "value": "unified-production-m2",
+            "count": 7,
+            "failures": 3
+          }
+        ],
+        "out_dir_usage": [
+          {
+            "value": "<auto>",
+            "count": 7,
+            "failures": 3
+          }
+        ],
+        "command_sequences": [
+          {
+            "session_key": "01a04125-cabd-72f3-bc4a-04103658c848:gap60:3:36",
+            "thread_id": "01a04125-cabd-72f3-bc4a-04103658c848",
+            "client": "codex",
+            "started_at": "2026-08-27T03:00:11.456Z",
+            "invocation_count": 3,
+            "sequence": [
+              "dump:-",
+              "dump:-",
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:2:34",
+            "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+            "client": "codex",
+            "started_at": "2026-08-27T02:33:14.291Z",
+            "invocation_count": 2,
+            "sequence": [
+              "dump:-",
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a03bd1-5d20-7e70-88ad-01156a86a754:gap60:1:33",
+            "thread_id": "01a03bd1-5d20-7e70-88ad-01156a86a754",
+            "client": "codex",
+            "started_at": "2026-08-27T02:10:37.737Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a0488f-f8e8-76a3-8b2d-de581e1583f9:gap60:1:39",
+            "thread_id": "01a0488f-f8e8-76a3-8b2d-de581e1583f9",
+            "client": "codex",
+            "started_at": "2026-08-28T13:45:41.210Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          }
+        ],
+        "top_transitions": [
+          {
+            "from": "dump",
+            "to": "dump",
+            "count": 3
+          }
+        ]
+      }
+    },
+    "unified-production-dev": {
+      "selected_gap_seconds": 60,
+      "analysis": {
+        "gap_seconds": 60,
+        "invocation_count": 3,
+        "time_range": {
+          "first_invocation": "2026-08-25T03:31:02.036Z",
+          "last_invocation": "2026-08-25T04:00:40.098Z"
+        },
+        "command_frequency": {
+          "dump": 3
+        },
+        "client_frequency": {
+          "codex": 3
+        },
+        "session_metrics": {
+          "session_count": 3,
+          "invocation_count_average": 1.0,
+          "invocation_count_p50": 1,
+          "invocation_count_p90": 1,
+          "invocation_count_p95": 1
+        },
+        "followup": {
+          "overall_count": 0,
+          "same_target_count": 0,
+          "different_target_count": 0
+        },
+        "retry": {
+          "exact_retry_count": 0,
+          "parameter_retry_count": 0,
+          "failure_retry_count": 0
+        },
+        "expansion": {
+          "depth_escalation_count": 0,
+          "path_expansion_count": 0,
+          "empty_result_expansion_count": 0
+        },
+        "path_fanout": {
+          "group_count": 0,
+          "groups": []
+        },
+        "batch_exploration": {
+          "multi_model_session_count": 0,
+          "multi_field_session_count": 0,
+          "same_model_multi_field_groups": [],
+          "same_field_cross_model_groups": [],
+          "same_prefix_groups": []
+        },
+        "load_overhead": {
+          "load_ms_average": null,
+          "load_ms_p50": null,
+          "load_ms_p90": null,
+          "load_to_total_duration_ratio": null,
+          "same_graph_repeated_load_count": 0
+        },
+        "top_targets": [
+          {
+            "command": "dump",
+            "target_raw": "<none>",
+            "count": 3,
+            "failures": 0
+          }
+        ],
+        "top_sessions": [
+          {
+            "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:30",
+            "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+            "client": "codex",
+            "started_at": "2026-08-25T03:31:02.036Z",
+            "ended_at": "2026-08-25T03:31:06.109Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:31",
+            "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+            "client": "codex",
+            "started_at": "2026-08-25T03:48:54.936Z",
+            "ended_at": "2026-08-25T03:48:58.198Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:32",
+            "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+            "client": "codex",
+            "started_at": "2026-08-25T04:00:40.098Z",
+            "ended_at": "2026-08-25T04:00:43.429Z",
+            "invocation_count": 1,
+            "commands": [
+              "dump"
+            ],
+            "sequence": [
+              "dump:-"
+            ]
+          }
+        ],
+        "failure_details": [],
+        "graph_source_load_stats": [],
+        "format_usage": [
+          {
+            "value": "human",
+            "count": 3,
+            "failures": 0
+          }
+        ],
+        "cwd_usage": [
+          {
+            "value": "/Users/1noryzzz/Odoo-unified-production",
+            "count": 3,
+            "failures": 0
+          }
+        ],
+        "db_usage": [
+          {
+            "value": "unified-production-dev",
+            "count": 3,
+            "failures": 0
+          }
+        ],
+        "out_dir_usage": [
+          {
+            "value": "<auto>",
+            "count": 3,
+            "failures": 0
+          }
+        ],
+        "command_sequences": [
+          {
+            "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:30",
+            "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+            "client": "codex",
+            "started_at": "2026-08-25T03:31:02.036Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:31",
+            "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+            "client": "codex",
+            "started_at": "2026-08-25T03:48:54.936Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          },
+          {
+            "session_key": "01a01442-7edd-7423-9376-db4e347ab37a:gap60:1:32",
+            "thread_id": "01a01442-7edd-7423-9376-db4e347ab37a",
+            "client": "codex",
+            "started_at": "2026-08-25T04:00:40.098Z",
+            "invocation_count": 1,
+            "sequence": [
+              "dump:-"
+            ]
+          }
+        ],
+        "top_transitions": []
+      }
+    },
+    "ysb-dev": {
+      "selected_gap_seconds": 60,
+      "analysis": {
+        "gap_seconds": 60,
+        "invocation_count": 2,
+        "time_range": {
+          "first_invocation": "2026-08-21T11:12:35.411Z",
+          "last_invocation": "2026-08-21T11:12:36.702Z"
+        },
+        "command_frequency": {
+          "impact": 1,
+          "field": 1
+        },
+        "client_frequency": {
+          "cursor": 2
+        },
+        "session_metrics": {
+          "session_count": 1,
+          "invocation_count_average": 2.0,
+          "invocation_count_p50": 2,
+          "invocation_count_p90": 2,
+          "invocation_count_p95": 2
+        },
+        "followup": {
+          "overall_count": 1,
+          "same_target_count": 1,
+          "different_target_count": 0
+        },
+        "retry": {
+          "exact_retry_count": 0,
+          "parameter_retry_count": 0,
+          "failure_retry_count": 0
+        },
+        "expansion": {
+          "depth_escalation_count": 0,
+          "path_expansion_count": 0,
+          "empty_result_expansion_count": 0
+        },
+        "path_fanout": {
+          "group_count": 0,
+          "groups": []
+        },
+        "batch_exploration": {
+          "multi_model_session_count": 0,
+          "multi_field_session_count": 0,
+          "same_model_multi_field_groups": [],
+          "same_field_cross_model_groups": [],
+          "same_prefix_groups": []
+        },
+        "load_overhead": {
+          "load_ms_average": 1120.5,
+          "load_ms_p50": 1120.5,
+          "load_ms_p90": 1151,
+          "load_to_total_duration_ratio": 0.9467680608365019,
+          "same_graph_repeated_load_count": 1
+        },
+        "top_targets": [
+          {
+            "command": "impact",
+            "target_raw": "ifs.gar.loan.account.bill.repayment_date",
+            "count": 1,
+            "failures": 0
+          },
+          {
+            "command": "field",
+            "target_raw": "ifs.gar.loan.account.bill.repayment_date",
+            "count": 1,
+            "failures": 0
+          }
+        ],
+        "top_sessions": [
+          {
+            "session_key": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9:gap60:2:28",
+            "thread_id": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9",
+            "client": "cursor",
+            "started_at": "2026-08-21T11:12:35.411Z",
+            "ended_at": "2026-08-21T11:12:37.852Z",
+            "invocation_count": 2,
+            "commands": [
+              "impact",
+              "field"
+            ],
+            "sequence": [
+              "impact:ifs.gar.loan.account.bill.repayment_date",
+              "field:ifs.gar.loan.account.bill.repayment_date"
+            ]
+          }
+        ],
+        "failure_details": [],
+        "graph_source_load_stats": [
+          {
+            "graph_source": "/Users/1noryzzz/.cache/odoo-graph/ysb-dev",
+            "count": 2,
+            "load_ms_average": 1120.5,
+            "load_ms_p50": 1120.5,
+            "load_ms_p90": 1151,
+            "load_ms_min": 1090,
+            "load_ms_max": 1151
+          }
+        ],
+        "format_usage": [
+          {
+            "value": "human",
+            "count": 2,
+            "failures": 0
+          }
+        ],
+        "cwd_usage": [
+          {
+            "value": "/Users/1noryzzz/Odoo",
+            "count": 2,
+            "failures": 0
+          }
+        ],
+        "db_usage": [
+          {
+            "value": "ysb-dev",
+            "count": 2,
+            "failures": 0
+          }
+        ],
+        "out_dir_usage": [
+          {
+            "value": "<auto>",
+            "count": 2,
+            "failures": 0
+          }
+        ],
+        "command_sequences": [
+          {
+            "session_key": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9:gap60:2:28",
+            "thread_id": "cursor:6aa2fc6d-927b-4243-8132-a77607674de9",
+            "client": "cursor",
+            "started_at": "2026-08-21T11:12:35.411Z",
+            "invocation_count": 2,
+            "sequence": [
+              "impact:ifs.gar.loan.account.bill.repayment_date",
+              "field:ifs.gar.loan.account.bill.repayment_date"
+            ]
+          }
+        ],
+        "top_transitions": [
+          {
+            "from": "impact",
+            "to": "field",
+            "count": 1
+          }
+        ]
+      }
+    }
+  },
+  "window_daily": {
+    "2026-08-21": 2,
+    "2026-08-25": 3,
+    "2026-08-27": 6,
+    "2026-08-28": 12,
+    "2026-08-29": 29,
+    "2026-08-30": 6
+  },
+  "window_human_report": "Telemetry Report\n================\ngap seconds: 60\ninvocations: 58\nfirst invocation: 2026-08-21T11:12:35.411Z\nlast invocation: 2026-08-30T15:14:25.657Z\nsessions: 15\ncalls/session avg: 3.87\ncalls/session p50/p90/p95: 1 / 10 / 10\n\nClient frequency:\n  cursor: 47\n  codex: 11\n\nCommand frequency:\n  overrides: 19\n  field: 16\n  dump: 13\n  module: 4\n  model: 4\n  impact: 1\n  context: 1\n\nFormat usage:\n  human: 57 (failures=4)\n  json: 1 (failures=0)\n\nFollow-up:\n  overall: 43\n  same target: 4\n  different target: 39\n\nExpansion:\n  depth escalation: 0\n  path expansion: 0\n  empty result expansion: 1\n\nPath fan-out:\n  groups: 0\n\nBatch exploration:\n  multi-model sessions: 1\n  multi-field sessions: 3\n\nTop targets:\n  dump <none>: 13 (failures=3)\n  module ifs_financial_product_entry: 4 (failures=0)\n  overrides ifs.gar.entry.merchant.confirm_merchant: 3 (failures=0)\n  overrides ifs.gar.review.merchant.funder.approve.wizard.action_confirm: 3 (failures=0)\n  overrides ifs.gar.review.merchant.route.wizard.action_confirm: 2 (failures=0)\n  field ifs.gar.review.merchant.approve.wizard.credit_term: 2 (failures=0)\n  overrides ifs.gar.review.merchant.approve.wizard.action_confirm: 2 (failures=0)\n  overrides ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval: 2 (failures=0)\n  field ifs.gar.review.merchant.approve.wizard.product_plan_version_id: 2 (failures=0)\n  field ifs.gar.review.merchant.approve.wizard.term_days: 2 (failures=0)\n\nTop sessions:\n  cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52: 18 calls [cursor]\n    field -> field -> overrides -> overrides -> overrides -> field -> field -> field -> field -> field -> field -> overrides -> overrides -> overrides -> overrides -> overrides -> model -> module\n  cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41: 10 calls [cursor]\n    module -> overrides -> overrides -> overrides -> overrides -> overrides -> overrides -> field -> field -> field\n  cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70: 10 calls [cursor]\n    dump -> overrides -> overrides -> overrides -> overrides -> overrides -> module -> field -> field -> field\n  cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:5:80: 5 calls [cursor]\n    module -> model -> model -> model -> context\n  01a04125-cabd-72f3-bc4a-04103658c848:gap60:3:36: 3 calls [codex]\n    dump -> dump -> dump\n\nFailure details:\n  #34 dump None: dump_error (dump_error)\n  #36 dump None: dump_error (dump_error)\n  #37 dump None: dump_error (dump_error)\n  #84 context ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order: not_found (not_found)\n\nGraph source load stats:\n  /Users/1noryzzz/.cache/odoo-graph/unified-production-m3-20260828: n=43 avg=1046.93ms p50=1039ms p90=1120ms\n  /Users/1noryzzz/.cache/odoo-graph/ysb-dev: n=2 avg=1120.50ms p50=1120.5ms p90=1151ms\n\nCWD usage:\n  /Users/1noryzzz/Odoo-unified-production: 56 (failures=4)\n  /Users/1noryzzz/Odoo: 2 (failures=0)\n\nDB usage:\n  unified-production-m3-20260828: 46 (failures=1)\n  unified-production-m2: 7 (failures=3)\n  unified-production-dev: 3 (failures=0)\n  ysb-dev: 2 (failures=0)\n\nOut-dir usage:\n  <auto>: 58 (failures=4)\n\nCommand sequences:\n  cursor:820a553e-d3a7-4530-a071-6edd41bcc49e:gap60:18:52: field:ifs.gar.review.merchant.approve.wizard.credit_term -> field:ifs.gar.review.merchant.approve.wizard.repay_day -> overrides:ifs.gar.review.merchant.approve.wizard.action_confirm -> overrides:ifs.gar.entry.merchant.confirm_merchant -> overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval -> field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id -> field:ifs.gar.review.merchant.approve.wizard.term_days -> field:ifs.gar.review.merchant.funder.approve.wizard.credit_term -> field:ifs.gar.review.merchant.funder.approve.wizard.repay_day -> field:ifs.gar.review.merchant.funder.approve.wizard.product_plan_version_id -> field:ifs.gar.review.merchant.funder.approve.wizard.term_days -> overrides:ifs.gar.review.merchant.approve.wizard.create\n    ... +6 more\n  cursor:d9ef82fb-7c77-4706-8d56-d31e83d9410b:gap60:10:41: module:ifs_financial_product_entry -> overrides:ifs.gar.entry.merchant.confirm_merchant -> overrides:ifs.gar.review.merchant.route.wizard.action_confirm -> overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm -> overrides:ifs.gar.entry.merchant._ensure_loan_and_sub_accounts_for_confirmed_merchant -> overrides:ifs.gar.entry.merchant._lock_product_plan_version_after_factor_route -> overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_funder_approval -> field:ifs.gar.entry.merchant.product_plan_version_id -> field:ifs.gar.loan.account.credit_partition_mode -> field:ifs.gar.review.merchant.route.wizard.product_plan_version_id\n  cursor:ab55d1c3-9ceb-4eca-9f01-f94400538c56:gap60:10:70: dump:- -> overrides:ifs.gar.review.merchant.route.wizard.action_confirm -> overrides:ifs.gar.review.merchant.funder.approve.wizard.action_confirm -> overrides:ifs.gar.review.merchant.approve.wizard.action_confirm -> overrides:ifs.gar.entry.merchant.confirm_merchant -> overrides:ifs.gar.entry.merchant._revalidate_locked_product_plan_version_for_supplier_approval -> module:ifs_financial_product_entry -> field:ifs.gar.review.merchant.approve.wizard.product_plan_version_id -> field:ifs.gar.review.merchant.approve.wizard.term_days -> field:ifs.gar.review.merchant.approve.wizard.credit_term\n  cursor:0d95d4f8-5ce3-4327-926c-17361ee09cf1:gap60:5:80: module:ifs_financial_product_entry -> model:ifs.gar.entry.merchant -> model:galaxy.open.api.app -> model:ifs.financial.product.plan.version -> context:ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order\n  01a04125-cabd-72f3-bc4a-04103658c848:gap60:3:36: dump:- -> dump:- -> dump:-\n\nLoad overhead:\n  load ms avg/p50/p90: 1050.20 / 1052 / 1142\n  load/total ratio: 0.53\n\nGap sensitivity:\n  30s: sessions=16 p50=1.5 p90=10\n  60s: sessions=15 p50=1 p90=10\n  120s: sessions=14 p50=1.5 p90=11",
+  "notes": {
+    "context_calls": [
+      {
+        "id": 84,
+        "started_at": "2026-08-30T15:09:19.527Z",
+        "target_raw": "ifs.gar.trade.order,ifs.gar.payment.order,ifs.gar.loan.account.bill,ifs.gar.repayment.order",
+        "result_status": "not_found",
+        "argv": [
+          "context",
+          "ifs.gar.trade.order",
+          "ifs.gar.payment.order",
+          "ifs.gar.loan.account.bill",
+          "ifs.gar.repayment.order",
+          "--db",
+          "unified-production-m3-20260828",
+          "-f",
+          "human"
+        ],
+        "db": "unified-production-m3-20260828",
+        "client": "cursor"
+      }
+    ],
+    "dump_failures": [
+      {
+        "id": 34,
+        "started_at": "2026-08-27T02:33:14.291Z",
+        "argv": [
+          "dump",
+          "-c",
+          "odoo.conf",
+          "-d",
+          "unified-production-m2"
+        ],
+        "duration_total_ms": 0,
+        "result_status": "dump_error"
+      },
+      {
+        "id": 36,
+        "started_at": "2026-08-27T03:00:11.456Z",
+        "argv": [
+          "dump",
+          "-c",
+          "odoo.conf",
+          "-d",
+          "unified-production-m2",
+          "--odoo-path",
+          "./odoo-17.0"
+        ],
+        "duration_total_ms": 0,
+        "result_status": "dump_error"
+      },
+      {
+        "id": 37,
+        "started_at": "2026-08-27T03:00:20.893Z",
+        "argv": [
+          "dump",
+          "-c",
+          "odoo.conf",
+          "-d",
+          "unified-production-m2",
+          "--odoo-path",
+          "./odoo"
+        ],
+        "duration_total_ms": 0,
+        "result_status": "dump_error"
+      }
+    ],
+    "empty_field": [
+      {
+        "id": 49,
+        "target_raw": "ifs.gar.loan.account.credit_partition_mode",
+        "db": "unified-production-m3-20260828"
+      },
+      {
+        "id": 50,
+        "target_raw": "ifs.gar.review.merchant.route.wizard.product_plan_version_id",
+        "db": "unified-production-m3-20260828"
+      }
+    ]
+  }
+}

@@ -427,3 +427,18 @@ Use telemetry after 1.8 to check:
 - missing-cache failures lead to a `dump` retry without manual clarification.
 
 The expected improvement is not that all follow-up disappears. The goal is that one `context` call replaces repetitive model-only context assembly.
+
+## Telemetry follow-up (2026-08-31)
+
+Source: local `telemetry.sqlite3` only. Dated write-up:
+[telemetry-report-2026-08-31.md](./telemetry-report-2026-08-31.md).
+Per-invocation export: [odoo_graph_usage.csv](./odoo_graph_usage.csv).
+
+Observed in the 1.8 window (recorded rows: 2026-08-21 to 2026-08-30):
+
+- `context` was called once, as an explicit four-model group, and failed `not_found`. There were no seed-first calls.
+- `model` volume fell (19/27 in the 2026-06-25 baseline → 4/58), but the dominant commands became `overrides` (19) and `field` (16). That is a task-mix shift, not evidence that `context` compressed model bursts.
+- Different-target follow-up remained the main pattern (39 vs 4 same-target), now as override/field bursts on `ifs.gar.*` wizards rather than `model` fan-out.
+- Missing-cache → dump retry had no sample. The dump failures were `--odoo-path` misses (0ms).
+
+These observations are recorded for the next iteration discussion. They do not by themselves change 1.8 command semantics.

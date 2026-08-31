@@ -17,6 +17,8 @@
 - graph load 在 burst 调用中反复出现，已观测样本中单次加载中位数约为 2.5s，说明加载耗时本身需要成为一等分析对象；具体优化与 MCP / 常驻进程方案一起进入 Phase 2 评估。
 - 使用 30s、60s、120s 不同 gap 切分 session 会影响 session 数量和调用数分布，因此后处理应保留多阈值敏感性分析。
 
+2026-08-31 用本机 `telemetry.sqlite3` 做了第二次校准（1.8 发布后两个月窗口）。只统计 CLI 写入记录，不以 dump 缓存或远程 Odoo 库补使用量。观察结论见 [../1.8-Context_Command/telemetry-report-2026-08-31.md](../1.8-Context_Command/telemetry-report-2026-08-31.md)，逐次调用表见 [../1.8-Context_Command/odoo_graph_usage.csv](../1.8-Context_Command/odoo_graph_usage.csv)。相对 2026-05-29 CSV / 2026-06-25 报告，新的稳定信号是 `overrides`/`field` 连打和同名字段跨模型，而不是 `path` fan-out 或 seed-first `context`。
+
 ## 目标
 
 埋点要回答的核心问题是：
