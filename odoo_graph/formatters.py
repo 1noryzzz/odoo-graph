@@ -226,7 +226,7 @@ def _h_context(p: Dict[str, Any]) -> str:
     lines.append(f"  requested models : {p.get('requested_models') or []}")
 
     lines.append("")
-    lines.append("  Models:")
+    lines.append("  Resolved models:")
     for item in p.get("models") or []:
         md = item["model"]
         field_count = sum(len(v) for v in item.get("fields_by_module", {}).values())
@@ -238,6 +238,16 @@ def _h_context(p: Dict[str, Any]) -> str:
             lines.append(f"      _inherit: {md.get('inherit')}")
         if md.get("inherits"):
             lines.append(f"      _inherits: {md.get('inherits')}")
+
+    if p.get("missing_models"):
+        lines.append("")
+        lines.append("  Missing models:")
+        for item in p["missing_models"]:
+            lines.append(f"    - {item['name']}")
+            if item.get("suggestions"):
+                lines.append("      suggestions:")
+                for suggestion in item["suggestions"]:
+                    lines.append(f"        - {suggestion}")
 
     lines.append("")
     lines.append(f"  Relationships: {len(p.get('relationships') or [])}")
@@ -293,6 +303,8 @@ def _h_context(p: Dict[str, Any]) -> str:
         lines.append("  Suggested next queries:")
         for query in p.get("suggested_next_queries") or []:
             lines.append(f"    $ {query}")
+    lines.append("")
+    lines.append(f"  Result: {p.get('result', 'success')}")
     return "\n".join(lines)
 
 

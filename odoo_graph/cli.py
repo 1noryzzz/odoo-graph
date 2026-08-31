@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import difflib
 import os
+import shlex
 import sys
 import time
 from pathlib import Path
@@ -11,7 +12,13 @@ from typing import Any, List, Optional, Tuple
 
 from . import __version__
 from .config import ConfigValues, load_config, merge
-from .dump import DumpError, _default_cache_dir, dump as dump_registry
+from .dump import (
+    DumpError,
+    OdooPathResolutionError,
+    _default_cache_dir,
+    dump as dump_registry,
+    resolve_odoo_path,
+)
 from .formatters import FORMATS, emit
 from .graph import OdooGraph, load_graph
 from .logging import get_logger, setup_logging
@@ -232,11 +239,38 @@ def cmd_dump(args: argparse.Namespace) -> int:
         effective.db_user, len(effective.addons_path),
     )
 
+    env_odoo_path = os.environ.get("ODOO_PATH")
+    requested_odoo_path = (
+        args.odoo_path if args.odoo_path is not None else env_odoo_path
+    )
+    path_source = (
+        "cli"
+        if args.odoo_path is not None
+        else "env"
+        if env_odoo_path is not None
+        else "auto"
+    )
+    rec = _telemetry(args)
+    if rec:
+        rec.add_extra(odoo_path_source=path_source)
+
     try:
         t0 = _query_started()
+        resolution = resolve_odoo_path(
+            requested_odoo_path,
+            source=path_source,
+        )
+        if rec:
+            rec.add_extra(odoo_path_resolved=resolution.path)
+        if resolution.source == "auto":
+            log.debug(
+                "resolved odoo_path from cwd candidate %s: %s",
+                resolution.candidate,
+                resolution.path,
+            )
         result = dump_registry(
             database=database,
-            odoo_path=args.odoo_path,
+            odoo_path=resolution.path,
             addons_path=effective.addons_path or None,
             db_host=effective.db_host or "127.0.0.1",
             db_port=effective.db_port or 5432,
@@ -246,6 +280,22 @@ def cmd_dump(args: argparse.Namespace) -> int:
             out_dir=args.out_dir,
         )
         _query_done(args, t0)
+    except OdooPathResolutionError as exc:
+        _query_done(args, t0)
+        log.error("%s", exc)
+        if exc.found_candidate:
+            command = ["odoo-graph", "dump"]
+            if args.config:
+                command.extend(["-c", args.config])
+            command.extend(["-d", database, "--odoo-path", exc.found_candidate])
+            log.error(
+                "\nSuggested command:\n  %s",
+                " ".join(shlex.quote(part) for part in command),
+            )
+        if rec:
+            rec.add_extra(odoo_path_failure_reason=exc.reason)
+        _telemetry_error(args, "dump_error", "dump_error")
+        return 1
     except DumpError as exc:
         _query_done(args, t0)
         log.error("dump failed: %s", exc)
@@ -583,27 +633,27 @@ def cmd_context(args: argparse.Namespace) -> int:
     t0 = _query_started()
     try:
         payload = g.context_summary(args.models)
-    except KeyError as exc:
-        _query_done(args, t0)
-        log.error("%s", exc)
-        candidates = [n["name"] for n in g.nodes_of_kind("Model")]
-        for model in args.models:
-            if g.node(g.model_id(model)) is None:
-                log.info("\n%s", _suggest("model", candidates, model))
-                break
-        _telemetry_error(args, "not_found", "not_found")
-        return 1
     except ValueError as exc:
         _query_done(args, t0)
         log.error("%s", exc)
         _telemetry_error(args, "usage_error", "usage_error")
         return 2
     _query_done(args, t0)
+    resolved_count = len(payload.get("selected_models") or [])
+    missing_count = len(payload.get("missing_models") or [])
     log.info(
-        "context %s: %d relationship(s), %d suggestion(s)",
+        "context %s: %d resolved, %d missing, %d relationship(s), %d suggestion(s)",
         ",".join(args.models),
+        resolved_count,
+        missing_count,
         len(payload.get("relationships") or []),
         len(payload.get("suggested_context_models") or []),
+    )
+    result = payload["result"]
+    size = (
+        resolved_count
+        + len(payload.get("relationships") or [])
+        + len(payload.get("suggested_context_models") or [])
     )
     _emit_payload(
         args,
@@ -611,14 +661,21 @@ def cmd_context(args: argparse.Namespace) -> int:
         kind="context",
         fmt=args.format,
         summary={
+            "result": result,
+            "requested": len(payload.get("requested_models") or []),
+            "resolved": resolved_count,
+            "missing": missing_count,
             "mode": payload.get("mode"),
             "relationships_count": len(payload.get("relationships") or []),
             "suggested_context_models_count": len(payload.get("suggested_context_models") or []),
         },
         meta={"models": payload.get("requested_models")},
-        size=len(payload.get("relationships") or []) + len(payload.get("suggested_context_models") or []),
-        empty=not payload.get("relationships") and not payload.get("suggested_context_models"),
+        size=size,
+        empty=result == "not_found",
     )
+    if result == "not_found":
+        _telemetry_error(args, "not_found", "not_found")
+        return 1
     return 0
 
 
@@ -670,9 +727,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     pd.add_argument("-d", "--database", default=None,
                     help="Odoo database name (or read from conf 'db_name')")
-    pd.add_argument("--odoo-path", default=os.environ.get("ODOO_PATH", "./odoo-17.0"),
+    pd.add_argument("--odoo-path", default=None,
                     help="Path to Odoo source tree (contains odoo-bin). "
-                         "Default: $ODOO_PATH or ./odoo-17.0")
+                         "Default: $ODOO_PATH, then deterministic cwd probing.")
     pd.add_argument("--addons-path", action="append", default=[],
                     help="Extra addons dir (repeatable). Merged with "
                          "addons_path from -c.")

@@ -65,7 +65,10 @@ def test_human_path_output_contains_hops(tmp_path):
 def test_context_human_formatter():
     payload = {
         "mode": "seed",
+        "result": "success",
         "requested_models": ["child.record"],
+        "selected_models": ["child.record"],
+        "missing_models": [],
         "models": [{
             "model": {"name": "child.record", "original_module": "child", "inherit": [], "inherits": {"res.partner": "partner_id"}},
             "fields_by_module": {"child": [{"name": "partner_id"}]},
@@ -77,4 +80,28 @@ def test_context_human_formatter():
     }
     out = render(payload, kind="context", fmt="human")
     assert "Context  child.record" in out
+    assert "Resolved models" in out
     assert "Suggested context models" in out
+    assert "Result: success" in out
+
+
+def test_context_human_formatter_shows_missing_models():
+    payload = {
+        "mode": "explicit_group",
+        "result": "partial",
+        "requested_models": ["child.record", "child.recod"],
+        "selected_models": ["child.record"],
+        "missing_models": [
+            {"name": "child.recod", "suggestions": ["child.record"]}
+        ],
+        "models": [],
+        "relationships": [],
+        "suggested_context_models": [],
+    }
+
+    out = render(payload, kind="context", fmt="human")
+
+    assert "Missing models" in out
+    assert "child.recod" in out
+    assert "child.record" in out
+    assert "Result: partial" in out

@@ -7,12 +7,30 @@
 用于导出 Odoo registry 数据。
 
 ```bash
-odoo-graph dump -c odoo.conf -d odoo_demo --odoo-path ./odoo-17.0
+odoo-graph dump -c odoo.conf -d odoo_demo
 ```
 
 参数优先级：命令行参数 > `-c` 配置文件 > 默认值。
 
 输出目录默认是：`~/.cache/odoo-graph/<db>/`。
+
+Odoo 源码路径按以下优先级解析：
+
+1. 显式 `--odoo-path`；
+2. `ODOO_PATH`；
+3. 从当前工作目录依次探测 `.`、`./odoo`、`./odoo-17.0`、
+   `../odoo`、`../odoo-17.0`。
+
+候选目录必须直接包含 `odoo-bin`。显式参数或环境变量指向无效目录时，
+命令会报告已检查的候选和可复制的修正命令，不会自动回退。需要覆盖自动发现时可用：
+
+```bash
+odoo-graph dump -c odoo.conf -d odoo_demo --odoo-path /path/to/odoo
+```
+
+成功导出后，`meta.json` 会记录数据库、生成时间、Odoo 源码路径、生成时
+工作目录、`odoo-graph` 版本和 registry 汇总计数。这些信息用于人工核对
+缓存来源；1.9.1 不会自动拒绝旧缓存。
 
 ## 2. 查询命令
 
@@ -48,6 +66,11 @@ odoo-graph context child.record res.partner --db odoo_demo -f json
 ```
 
 用于从一个 seed 模型发现下一步应查看的继承、委托和关系模型，或解释一组已知模型之间的运行时关系。单模型调用会输出 `suggested_context_models` 和可复制的 follow-up 命令；多模型调用会聚焦输入模型集合内部的关系。
+
+显式模型组中的部分名称不存在时，命令仍返回有效模型，并通过
+`result=partial`、`selected_models` 和 `missing_models` 明确区分结果。
+缺失项附最多 3 个保守建议，部分成功退出码为 `0`；全部缺失时
+`result=not_found` 且退出码非零。
 
 ### 影响分析
 
