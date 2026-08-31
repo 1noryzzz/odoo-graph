@@ -34,6 +34,7 @@ from .telemetry.runtime import (
 from .telemetry.store import init_db
 
 log = get_logger(__name__)
+MAX_BATCH_TARGETS = 50
 
 
 def _add_no_telemetry_arg(p: argparse.ArgumentParser) -> None:
@@ -197,6 +198,89 @@ def _suggest_field(g: OdooGraph, target: str) -> str:
     return "\n".join(out)
 
 
+def _field_suggestions(g: OdooGraph, target: str, n: int = 3) -> list[str]:
+    model, name = _split_model_field(g, target)
+    if model and g.node(g.model_id(model)) is not None:
+        field_names = [
+            node["name"]
+            for node in g.nodes_of_kind("Field")
+            if node["model"] == model
+        ]
+        return [
+            f"{model}.{match}"
+            for match in difflib.get_close_matches(
+                name,
+                field_names,
+                n=n,
+                cutoff=0.5,
+            )
+        ]
+    model_names = [node["name"] for node in g.nodes_of_kind("Model")]
+    return difflib.get_close_matches(model, model_names, n=n, cutoff=0.5)
+
+
+def _method_suggestions(
+    g: OdooGraph,
+    model: str,
+    method: str,
+    n: int = 3,
+) -> list[str]:
+    if g.node(g.model_id(model)) is None:
+        model_names = [node["name"] for node in g.nodes_of_kind("Model")]
+        return difflib.get_close_matches(model, model_names, n=n, cutoff=0.5)
+    method_names = sorted({
+        node["name"]
+        for node in g.nodes_of_kind("Method")
+        if node["model"] == model
+    })
+    return [
+        f"{model}.{match}"
+        for match in difflib.get_close_matches(
+            method,
+            method_names,
+            n=n,
+            cutoff=0.5,
+        )
+    ]
+
+
+def _batch_result(found: int, requested: int) -> str:
+    if found == requested:
+        return "success"
+    if found:
+        return "partial"
+    return "not_found"
+
+
+def _validate_batch_size(
+    args: argparse.Namespace,
+    targets: list[str],
+    *,
+    kind: str,
+) -> bool:
+    rec = _telemetry(args)
+    if rec:
+        rec.set_target(kind=kind, raw=",".join(targets))
+    if len(targets) <= MAX_BATCH_TARGETS:
+        return True
+    log.error(
+        "%s accepts at most %d targets (got %d)",
+        args.cmd,
+        MAX_BATCH_TARGETS,
+        len(targets),
+    )
+    if rec:
+        rec.set_result(
+            summary={
+                "requested": len(targets),
+                "limit": MAX_BATCH_TARGETS,
+            },
+            empty=True,
+        )
+    _telemetry_error(args, "usage_error", "usage_error")
+    return False
+
+
 # ---------- subcommands ----------------------------------------------------
 
 def cmd_dump(args: argparse.Namespace) -> int:
@@ -324,14 +408,17 @@ def cmd_dump(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_field(args: argparse.Namespace) -> int:
-    g = _load(args)
-    model, name = _split_model_field(g, args.target)
+def _cmd_field_single(
+    args: argparse.Namespace,
+    g: OdooGraph,
+    target: str,
+) -> int:
+    model, name = _split_model_field(g, target)
     rec = _telemetry(args)
     if rec:
-        rec.set_target(kind="field", raw=args.target, model=model, field=name)
+        rec.set_target(kind="field", raw=target, model=model, field=name)
     if not model or not name:
-        log.error("field target must be 'model.field' (got %r)", args.target)
+        log.error("field target must be 'model.field' (got %r)", target)
         _telemetry_error(args, "usage_error", "usage_error")
         return 2
     log.debug("field query: model=%s name=%s", model, name)
@@ -341,7 +428,7 @@ def cmd_field(args: argparse.Namespace) -> int:
     except KeyError as exc:
         _query_done(args, t0)
         log.error("%s", exc)
-        log.info("\n%s", _suggest_field(g, args.target))
+        log.info("\n%s", _suggest_field(g, target))
         _telemetry_error(args, "not_found", "not_found")
         return 1
     _query_done(args, t0)
@@ -365,6 +452,79 @@ def cmd_field(args: argparse.Namespace) -> int:
         size=upstream_count + downstream_count,
         empty=upstream_count + downstream_count == 0,
     )
+    return 0
+
+
+def cmd_field(args: argparse.Namespace) -> int:
+    targets = args.targets
+    if not _validate_batch_size(args, targets, kind="field"):
+        return 2
+    g = _load(args)
+    if len(targets) == 1:
+        return _cmd_field_single(args, g, targets[0])
+
+    t0 = _query_started()
+    items: list[dict[str, Any]] = []
+    found = 0
+    for target in targets:
+        model, name = _split_model_field(g, target)
+        if not model or not name:
+            items.append({
+                "target": target,
+                "status": "not_found",
+                "suggestions": _field_suggestions(g, target),
+            })
+            continue
+        try:
+            field_payload = g.field_lineage(model, name)
+        except KeyError:
+            items.append({
+                "target": target,
+                "status": "not_found",
+                "suggestions": _field_suggestions(g, target),
+            })
+            continue
+        items.append({
+            "target": target,
+            "status": "found",
+            **field_payload,
+        })
+        found += 1
+    _query_done(args, t0)
+    missing = len(targets) - found
+    result = _batch_result(found, len(targets))
+    payload = {
+        "kind": "field_batch",
+        "targets": items,
+        "summary": {
+            "requested": len(targets),
+            "found": found,
+            "missing": missing,
+        },
+    }
+    log.info(
+        "field batch: %d requested, %d found, %d missing",
+        len(targets),
+        found,
+        missing,
+    )
+    _emit_payload(
+        args,
+        payload,
+        kind="field_batch",
+        fmt=args.format,
+        summary={
+            "result": result,
+            "requested": len(targets),
+            "found": found,
+            "missing": missing,
+        },
+        size=found,
+        empty=found == 0,
+    )
+    if result == "not_found":
+        _telemetry_error(args, "not_found", "not_found")
+        return 1
     return 0
 
 
@@ -577,16 +737,19 @@ def cmd_path(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_overrides(args: argparse.Namespace) -> int:
-    g = _load(args)
+def _cmd_overrides_single(
+    args: argparse.Namespace,
+    g: OdooGraph,
+    target: str,
+) -> int:
     # Methods follow the same model.method shape; reuse the splitter (it works
     # the same way — first prefix that matches a real model wins).
-    model, method = _split_model_field(g, args.target)
+    model, method = _split_model_field(g, target)
     rec = _telemetry(args)
     if rec:
-        rec.set_target(kind="method", raw=args.target, model=model, method=method)
+        rec.set_target(kind="method", raw=target, model=model, method=method)
     if not model or not method:
-        log.error("overrides target must be 'model.method' (got %r)", args.target)
+        log.error("overrides target must be 'model.method' (got %r)", target)
         _telemetry_error(args, "usage_error", "usage_error")
         return 2
     t0 = _query_started()
@@ -622,6 +785,79 @@ def cmd_overrides(args: argparse.Namespace) -> int:
         size=class_count,
         empty=class_count == 0,
     )
+    return 0
+
+
+def cmd_overrides(args: argparse.Namespace) -> int:
+    targets = args.targets
+    if not _validate_batch_size(args, targets, kind="method"):
+        return 2
+    g = _load(args)
+    if len(targets) == 1:
+        return _cmd_overrides_single(args, g, targets[0])
+
+    t0 = _query_started()
+    items: list[dict[str, Any]] = []
+    found = 0
+    for target in targets:
+        model, method = _split_model_field(g, target)
+        if not model or not method:
+            items.append({
+                "target": target,
+                "status": "not_found",
+                "suggestions": _method_suggestions(g, model, method),
+            })
+            continue
+        try:
+            override_payload = g.overrides_of(model, method)
+        except KeyError:
+            items.append({
+                "target": target,
+                "status": "not_found",
+                "suggestions": _method_suggestions(g, model, method),
+            })
+            continue
+        items.append({
+            "target": target,
+            "status": "found",
+            **override_payload,
+        })
+        found += 1
+    _query_done(args, t0)
+    missing = len(targets) - found
+    result = _batch_result(found, len(targets))
+    payload = {
+        "kind": "overrides_batch",
+        "targets": items,
+        "summary": {
+            "requested": len(targets),
+            "found": found,
+            "missing": missing,
+        },
+    }
+    log.info(
+        "override batch: %d requested, %d found, %d missing",
+        len(targets),
+        found,
+        missing,
+    )
+    _emit_payload(
+        args,
+        payload,
+        kind="overrides_batch",
+        fmt=args.format,
+        summary={
+            "result": result,
+            "requested": len(targets),
+            "found": found,
+            "missing": missing,
+        },
+        size=found,
+        empty=found == 0,
+    )
+    if result == "not_found":
+        _telemetry_error(args, "not_found", "not_found")
+        return 1
     return 0
 
 
@@ -749,7 +985,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     # field
     pf = sub.add_parser("field", help="Lineage (upstream/downstream) for a field.")
-    pf.add_argument("target", help="model.field, e.g. res.partner.name")
+    pf.add_argument(
+        "targets",
+        nargs="+",
+        help="One or more model.field targets (maximum 50).",
+    )
     _add_common_query_args(pf)
     pf.set_defaults(func=cmd_field)
 
@@ -794,7 +1034,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     # overrides
     po = sub.add_parser("overrides", help="Override chain of a method.")
-    po.add_argument("target", help="model.method, e.g. res.users.write")
+    po.add_argument(
+        "targets",
+        nargs="+",
+        help="One or more model.method targets (maximum 50).",
+    )
     _add_common_query_args(po)
     po.set_defaults(func=cmd_overrides)
 

@@ -4,6 +4,7 @@ from unittest import mock
 import pytest
 
 from odoo_graph.cli import build_parser, main
+from odoo_graph.graph import load_graph
 from odoo_graph.resolve import resolve_paths
 from odoo_graph.tests.fixtures import build_fixture
 
@@ -45,6 +46,140 @@ def test_cli_overrides(capsys, tmp_path):
     assert rc == 0
     payload = json.loads(capsys.readouterr().out)
     assert payload["override_depth"] == 3
+
+
+def test_cli_field_batch_partial_preserves_order_and_payload(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    targets = [
+        "res.partner.display_name",
+        "res.partner.display_nam",
+        "child.record.name",
+    ]
+
+    rc = main(["field", *targets, "--out-dir", out, "-f", "json"])
+
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["kind"] == "field_batch"
+    assert [item["target"] for item in payload["targets"]] == targets
+    assert payload["summary"] == {"requested": 3, "found": 2, "missing": 1}
+    found = payload["targets"][0]
+    assert found["status"] == "found"
+    assert {"field", "analysis", "upstream", "downstream"} <= found.keys()
+    missing = payload["targets"][1]
+    assert missing == {
+        "target": "res.partner.display_nam",
+        "status": "not_found",
+        "suggestions": ["res.partner.display_name"],
+    }
+
+
+def test_cli_field_batch_all_missing_exits_non_zero(capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+
+    rc = main([
+        "field",
+        "res.partner.missing_one",
+        "child.record.missing_two",
+        "--out-dir",
+        out,
+        "-f",
+        "json",
+    ])
+
+    assert rc == 1
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["summary"] == {"requested": 2, "found": 0, "missing": 2}
+    assert all(item["status"] == "not_found" for item in payload["targets"])
+
+
+def test_cli_overrides_batch_partial_preserves_order_and_payload(
+    capsys,
+    tmp_path,
+):
+    out = _bootstrap(tmp_path)
+    targets = ["res.partner.write", "res.partner.writ"]
+
+    rc = main(["overrides", *targets, "--out-dir", out, "-f", "json"])
+
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["kind"] == "overrides_batch"
+    assert [item["target"] for item in payload["targets"]] == targets
+    assert payload["summary"] == {"requested": 2, "found": 1, "missing": 1}
+    assert payload["targets"][0]["defined_in_classes"][0]["addon"] == "ext"
+    assert payload["targets"][1]["suggestions"] == ["res.partner.write"]
+
+
+@pytest.mark.parametrize(
+    ("command", "targets"),
+    [
+        ("field", ["res.partner.name", "child.record.name"]),
+        ("overrides", ["res.partner.write", "res.partner.writ"]),
+    ],
+)
+def test_cli_batch_loads_graph_once(command, targets, capsys, tmp_path):
+    out = _bootstrap(tmp_path)
+    graph = load_graph(out)
+
+    with mock.patch("odoo_graph.cli._load", return_value=graph) as load_mock:
+        rc = main([command, *targets, "--out-dir", out, "-f", "json"])
+
+    assert rc == 0
+    json.loads(capsys.readouterr().out)
+    load_mock.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    ("command", "target"),
+    [
+        ("field", "res.partner.name"),
+        ("overrides", "res.partner.write"),
+    ],
+)
+def test_cli_batch_limit_is_checked_before_graph_load(
+    command,
+    target,
+    capsys,
+):
+    targets = [target] * 51
+
+    with mock.patch("odoo_graph.cli._load") as load_mock:
+        rc = main([command, *targets, "--out-dir", "unused"])
+
+    assert rc == 2
+    load_mock.assert_not_called()
+    assert "accepts at most 50 targets (got 51)" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    ("command", "target", "single_marker", "batch_marker"),
+    [
+        ("field", "res.partner.name", "Field  res.partner.name", "Field batch"),
+        (
+            "overrides",
+            "res.partner.write",
+            "Overrides  res.partner.write",
+            "Override batch",
+        ),
+    ],
+)
+def test_cli_single_target_human_output_stays_compatible(
+    command,
+    target,
+    single_marker,
+    batch_marker,
+    capsys,
+    tmp_path,
+):
+    out = _bootstrap(tmp_path)
+
+    rc = main([command, target, "--out-dir", out])
+
+    assert rc == 0
+    text = capsys.readouterr().out
+    assert single_marker in text
+    assert batch_marker not in text
 
 
 def test_cli_path_from_model_json(capsys, tmp_path):

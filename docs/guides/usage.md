@@ -38,9 +38,18 @@ odoo-graph dump -c odoo.conf -d odoo_demo --odoo-path /path/to/odoo
 
 ```bash
 odoo-graph field res.partner.name --db odoo_demo
+odoo-graph field \
+  res.partner.name \
+  res.partner.display_name \
+  child.record.name \
+  --db odoo_demo
 ```
 
 用于查看字段上下游关系和字段诊断信息。
+
+单目标调用保持原有 human/JSON 输出。两个及以上目标只加载一次图，并返回
+`kind=field_batch` envelope；每个目标独立标记 `found` 或 `not_found`，
+命中项包含完整单目标语义 payload。部分命中退出 `0`，全部缺失退出非零。
 
 ### 模型查询
 
@@ -92,9 +101,19 @@ odoo-graph path child.record res.partner.name --db odoo_demo
 
 ```bash
 odoo-graph overrides res.users.write --db odoo_demo
+odoo-graph overrides \
+  res.users.write \
+  res.partner.write \
+  --db odoo_demo
 ```
 
 用于查看跨模块方法 override 链。
+
+两个及以上目标返回 `kind=overrides_batch`，保持输入顺序并复用一次图加载。
+单个方法缺失不会丢弃其他 override 链。
+
+`field` 和 `overrides` 每次最多接受 50 个目标。超过上限会在加载图之前返回
+usage error，不会执行前 50 项。
 
 ## 3. 输出格式
 

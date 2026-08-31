@@ -31,6 +31,46 @@ def test_human_field_output_contains_delegation_diagnostics(tmp_path):
     assert "shadowing risk" in out
 
 
+def test_human_field_batch_output_is_compact_and_reports_summary():
+    payload = {
+        "kind": "field_batch",
+        "targets": [
+            {
+                "target": "res.partner.name",
+                "status": "found",
+                "field": {
+                    "model": "res.partner",
+                    "name": "name",
+                    "type": "char",
+                    "module": "base",
+                },
+                "analysis": {
+                    "kind": "local",
+                    "storage": "stored",
+                    "writable": True,
+                    "writable_reason": "stored field",
+                },
+                "upstream": [],
+                "downstream": [],
+            },
+            {
+                "target": "res.partner.nam",
+                "status": "not_found",
+                "suggestions": ["res.partner.name"],
+            },
+        ],
+        "summary": {"requested": 2, "found": 1, "missing": 1},
+    }
+
+    out = render(payload, kind="field_batch", fmt="human")
+
+    assert out.startswith("Field batch  targets=2")
+    assert "res.partner.name\n  status: found" in out
+    assert "res.partner.nam\n  status: not_found" in out
+    assert "Summary:\n  requested: 2\n  found: 1\n  missing: 1" in out
+    assert "====" not in out
+
+
 def test_json_format_is_valid_json(tmp_path):
     build_fixture(tmp_path)
     resolve_paths(str(tmp_path))
@@ -60,6 +100,39 @@ def test_human_path_output_contains_hops(tmp_path):
     assert "Path  child.record  ->  res.partner.name" in out
     assert "MODEL_DELEGATES_TO_MODEL" in out
     assert "child.record -> res.partner" in out
+
+
+def test_human_overrides_batch_output_reports_each_target():
+    payload = {
+        "kind": "overrides_batch",
+        "targets": [
+            {
+                "target": "res.partner.write",
+                "status": "found",
+                "override_depth": 1,
+                "defined_in_classes": [
+                    {
+                        "class": "Partner",
+                        "addon": "base",
+                        "module": "odoo.addons.base.models",
+                    }
+                ],
+            },
+            {
+                "target": "res.partner.writ",
+                "status": "not_found",
+                "suggestions": ["res.partner.write"],
+            },
+        ],
+        "summary": {"requested": 2, "found": 1, "missing": 1},
+    }
+
+    out = render(payload, kind="overrides_batch", fmt="human")
+
+    assert out.startswith("Override batch  targets=2")
+    assert "res.partner.write\n  status: found" in out
+    assert "res.partner.writ\n  status: not_found" in out
+    assert "Summary:\n  requested: 2\n  found: 1\n  missing: 1" in out
 
 
 def test_context_human_formatter():

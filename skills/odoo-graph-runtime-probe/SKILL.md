@@ -61,7 +61,7 @@ odoo-graph dump -c odoo.conf -d <db>
 
 ### 1) field
 ```bash
-odoo-graph field <model.field> --db <db>
+odoo-graph field <model.field> [<model.field> ...] --db <db>
 ```
 **何时用**：看某字段上下游依赖、字段来源、委托链、可写性原因。  
 **输出**：该字段的 upstream/downstream 关系与统计；human/json 中包含 `analysis`：
@@ -71,6 +71,9 @@ odoo-graph field <model.field> --db <db>
 - `writable` + `writable_reason`: 是否可通过 ORM 写入及原因
 - `delegation_chain`: `_inherits` 逐跳链路，含 `via_field`、`path`、`source_field`
 - `shadowing`: 同名 delegated parent field 的覆盖/遮蔽风险
+
+已知多个字段时应在一次调用中传入，避免重复加载同一图。两个及以上目标返回
+`field_batch`，每项独立标记 `found/not_found`；最多 50 项。
 
 ### 2) model
 ```bash
@@ -113,10 +116,11 @@ odoo-graph path child.record res.partner.name --db odoo_demo
 
 ### 7) overrides
 ```bash
-odoo-graph overrides <model.method> --db <db>
+odoo-graph overrides <model.method> [<model.method> ...] --db <db>
 ```
 **何时用**：排查方法调用链、super 顺序争议。  
-**输出**：跨模块 override 顺序（按 MRO 展示）。
+**输出**：跨模块 override 顺序（按 MRO 展示）。已知多个方法时放入一次调用；
+两个及以上目标返回 `overrides_batch`，保持输入顺序并复用一次图加载，最多 50 项。
 
 ### 8) telemetry
 ```bash
@@ -163,7 +167,11 @@ odoo-graph telemetry report -f json
 7. **`context` 部分结果规则**：
    - `result=partial` 是可用证据，退出码为 `0`；不要因一个缺失模型丢弃已解析模型。
    - 优先根据 `missing_models[].suggestions` 修正输入，不要自动扩展大范围关系图。
-8. **telemetry 使用规则**：
+8. **批量查询规则**：
+   - 已知多个字段或方法时，分别使用单次 batch `field` 或 `overrides`，不要循环启动 CLI。
+   - batch 的每项结果独立；部分命中是可用证据，只有全部缺失才整体失败。
+   - 一次不得超过 50 项，也不要混合字段和方法到同一命令。
+9. **telemetry 使用规则**：
    - 普通业务分析不需要主动运行 `telemetry report`。
    - 当用户问“这些命令用得怎么样”“agent 是否反复查询”“是否需要批量命令/缓存/daemon”时，再运行 `odoo-graph telemetry report`。
    - `--help`、`--version`、root action 和 shell 层启动失败不属于正式 telemetry 统计范围。

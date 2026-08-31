@@ -1,6 +1,6 @@
 # 1.9 Robustness and Batch Primitives Design
 
-Implementation status: 1.9.1 is implemented; 1.9.2 remains planned.
+Implementation status: 1.9.1 and 1.9.2 are implemented.
 
 ## Background
 
