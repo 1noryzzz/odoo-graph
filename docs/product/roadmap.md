@@ -8,10 +8,11 @@
 - Phase 1.7：增加本地 SQLite telemetry，支持业务命令实时采集与 `telemetry report` 后处理分析。
 - Phase 1.8：新增 seed-first `context` 命令，压缩 agent 多模型探索流。
 - Phase 1.9.1：增强 `context` 部分成功、dump 源码路径发现与最小缓存 provenance。
+- Phase 1.9.2：为 `field` / `overrides` 增加一次加载、多目标独立结果的 batch primitives。
 
 ## 计划中
 
-- Phase 1.9.2：为 `field` / `overrides` 增加一次加载、多目标独立结果的 batch primitives。
+- Phase 1.9 telemetry 复盘：验证 batch 是否降低重复调用和 graph load，并观察部分结果频率。
 - Phase 2：MCP 入口与常驻进程/缓存方向评估，结合 telemetry 中的 graph load 成本，减少 agent 连续查询时的重复加载。
 - Phase 2.x：改进 override 判定（签名与 `super()` 检查）。
 - Phase 3：补充方法体 AST 分析（compute/inverse 相关字段读写）。

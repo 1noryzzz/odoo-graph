@@ -49,6 +49,9 @@ odoo-graph dump -c odoo.conf -d odoo_demo
 # 字段血缘（上游 + 下游）
 odoo-graph field res.partner.name --db odoo_demo
 
+# 批量字段血缘（一次加载，最多 50 项）
+odoo-graph field res.partner.name res.partner.display_name --db odoo_demo
+
 # 模型全景（继承关系、字段分布、委托链）
 odoo-graph model res.partner --db odoo_demo
 
@@ -69,10 +72,16 @@ odoo-graph path child.record res.partner.name --db odoo_demo
 
 # override 链（跨模块方法覆盖）
 odoo-graph overrides res.users.write --db odoo_demo
+
+# 批量 override 链（一次加载，最多 50 项）
+odoo-graph overrides res.users.write res.partner.write --db odoo_demo
 ```
 
 显式多模型 `context` 支持部分成功：有效模型仍会返回，缺失模型列在
 `missing_models` 并附最多 3 个保守建议；只有全部模型都不存在时才返回非零退出码。
+
+`field` 和 `overrides` 接受最多 50 个位置参数。单目标输出保持兼容；
+两个及以上目标返回独立的 batch 结果，部分命中退出 `0`，全部缺失才返回非零。
 
 ## 本地 telemetry
 

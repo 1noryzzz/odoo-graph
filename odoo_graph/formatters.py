@@ -29,6 +29,8 @@ def render(payload: Dict[str, Any], kind: str, fmt: str) -> str:
 def _render_human(payload: Dict[str, Any], kind: str) -> str:
     if kind == "field":
         return _h_field(payload)
+    if kind == "field_batch":
+        return _h_field_batch(payload)
     if kind == "model":
         return _h_model(payload)
     if kind == "module":
@@ -39,6 +41,8 @@ def _render_human(payload: Dict[str, Any], kind: str) -> str:
         return _h_path(payload)
     if kind == "overrides":
         return _h_overrides(payload)
+    if kind == "overrides_batch":
+        return _h_overrides_batch(payload)
     if kind == "context":
         return _h_context(payload)
     if kind == "dump":
@@ -110,6 +114,57 @@ def _h_field(p: Dict[str, Any]) -> str:
     for d in p["downstream"]:
         src_name = d["src"].replace("field::", "")
         lines.append(f"    -> {src_name}   (path: {d['path']})")
+    return "\n".join(lines)
+
+
+def _h_field_batch(p: Dict[str, Any]) -> str:
+    lines = [f"Field batch  targets={len(p.get('targets') or [])}"]
+    for item in p.get("targets") or []:
+        lines.extend(["", item["target"], f"  status: {item['status']}"])
+        if item["status"] == "not_found":
+            if item.get("suggestions"):
+                lines.append("  suggestions:")
+                lines.extend(
+                    f"    {suggestion}"
+                    for suggestion in item["suggestions"]
+                )
+            continue
+        field = item["field"]
+        analysis = item.get("analysis") or {}
+        lines.append(f"  type: {field.get('type')}")
+        lines.append(f"  module: {field.get('module')}")
+        lines.append(f"  kind: {analysis.get('kind')}")
+        lines.append(f"  storage: {analysis.get('storage')}")
+        lines.append(
+            f"  writable: {analysis.get('writable')}"
+            f" ({analysis.get('writable_reason')})"
+        )
+        upstream = item.get("upstream") or []
+        lines.append(f"  upstream: {len(upstream)}")
+        for edge in upstream[:5]:
+            lines.append(
+                f"    <- {edge['dst'].replace('field::', '')}"
+                f" (path: {edge.get('path')})"
+            )
+        if len(upstream) > 5:
+            lines.append(f"    ... +{len(upstream) - 5} more")
+        downstream = item.get("downstream") or []
+        lines.append(f"  downstream: {len(downstream)}")
+        for edge in downstream[:5]:
+            lines.append(
+                f"    -> {edge['src'].replace('field::', '')}"
+                f" (path: {edge.get('path')})"
+            )
+        if len(downstream) > 5:
+            lines.append(f"    ... +{len(downstream) - 5} more")
+    summary = p["summary"]
+    lines.extend([
+        "",
+        "Summary:",
+        f"  requested: {summary['requested']}",
+        f"  found: {summary['found']}",
+        f"  missing: {summary['missing']}",
+    ])
     return "\n".join(lines)
 
 
@@ -188,6 +243,37 @@ def _h_overrides(p: Dict[str, Any]) -> str:
         lines.append(f"{arrow}[{i}] class={c['class']}  addon={c.get('addon')}  module={c.get('module')}")
     if chain:
         lines.append("  └─ (base)")
+    return "\n".join(lines)
+
+
+def _h_overrides_batch(p: Dict[str, Any]) -> str:
+    lines = [f"Override batch  targets={len(p.get('targets') or [])}"]
+    for item in p.get("targets") or []:
+        lines.extend(["", item["target"], f"  status: {item['status']}"])
+        if item["status"] == "not_found":
+            if item.get("suggestions"):
+                lines.append("  suggestions:")
+                lines.extend(
+                    f"    {suggestion}"
+                    for suggestion in item["suggestions"]
+                )
+            continue
+        lines.append(f"  depth: {item.get('override_depth', 0)}")
+        lines.append("  chain:")
+        for entry in item.get("defined_in_classes") or []:
+            lines.append(
+                f"    {entry.get('class')}"
+                f"  addon={entry.get('addon')}"
+                f"  module={entry.get('module')}"
+            )
+    summary = p["summary"]
+    lines.extend([
+        "",
+        "Summary:",
+        f"  requested: {summary['requested']}",
+        f"  found: {summary['found']}",
+        f"  missing: {summary['missing']}",
+    ])
     return "\n".join(lines)
 
 

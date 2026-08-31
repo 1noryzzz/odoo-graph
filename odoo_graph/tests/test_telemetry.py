@@ -232,6 +232,60 @@ def test_context_all_missing_telemetry_is_not_found(
     }
 
 
+def test_field_batch_partial_telemetry_records_target_counts(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    db = tmp_path / "telemetry.sqlite3"
+    out = _bootstrap(tmp_path / "dump")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+    targets = ["res.partner.name", "res.partner.nam"]
+
+    rc = main(["field", *targets, "--out-dir", out, "-f", "json"])
+
+    assert rc == 0
+    json.loads(capsys.readouterr().out)
+    row = fetch_invocations(db)[0]
+    assert row["target_raw"] == ",".join(targets)
+    assert row["result_status"] == "success_non_empty"
+    summary = json.loads(row["result_summary_json"])
+    assert summary == {
+        "result": "partial",
+        "requested": 2,
+        "found": 1,
+        "missing": 1,
+    }
+
+
+def test_overrides_batch_all_missing_telemetry_is_not_found(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    db = tmp_path / "telemetry.sqlite3"
+    out = _bootstrap(tmp_path / "dump")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY", "1")
+    monkeypatch.setenv("ODOO_GRAPH_TELEMETRY_DB", str(db))
+    targets = ["res.partner.missing_one", "child.record.missing_two"]
+
+    rc = main(["overrides", *targets, "--out-dir", out, "-f", "json"])
+
+    assert rc == 1
+    json.loads(capsys.readouterr().out)
+    row = fetch_invocations(db)[0]
+    assert row["target_raw"] == ",".join(targets)
+    assert row["result_status"] == "not_found"
+    summary = json.loads(row["result_summary_json"])
+    assert summary == {
+        "result": "not_found",
+        "requested": 2,
+        "found": 0,
+        "missing": 2,
+    }
+
+
 def test_dump_auto_path_resolution_is_recorded_in_telemetry(
     tmp_path,
     monkeypatch,
