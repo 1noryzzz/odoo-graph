@@ -105,10 +105,14 @@ local SQLite path, opt-out controls, and compatibility details.
 ## Cursor Cloud specific instructions
 
 `odoo-graph` is a pure-Python CLI (only runtime dep is `networkx`); there is no
-web/GUI service to run. The startup update script runs `uv sync --extra dev`,
-which provisions `.venv/` with the editable package plus test deps. `uv` is
-already installed in the VM image at `~/.local/bin` (on PATH for login and
-non-login shells).
+web/GUI service to run.
+
+Cloud Agent environment builds run `.cursor/install.sh` (see
+`.cursor/environment.json`). That script installs `uv` if it is missing, copies
+it to `/usr/local/bin` so agent shells can find it, then runs
+`uv sync --extra dev` to provision `.venv/` with the editable package plus test
+deps. Do not assume the base image already contains `uv`: Cursor's default
+snapshot does not, and agent PATH typically omits `~/.local/bin`.
 
 - Run anything through `uv run ...` (e.g. `uv run odoo-graph ...`,
   `uv run python -m pytest -q`). Standard commands are in `README.md`.
