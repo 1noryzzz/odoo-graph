@@ -1,0 +1,4 @@
+{
+  "name": "odoo-graph",
+  "install": "bash .cursor/install.sh"
+}
