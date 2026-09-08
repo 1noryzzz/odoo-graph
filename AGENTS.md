@@ -1,7 +1,8 @@
 # AGENTS.md
 
-This repository is developed in a design-first workflow. For non-trivial work,
-move through three phases: feature design, implementation, and release.
+This repository uses a design-first workflow for broad feature changes.
+Focused fixes and documentation maintenance do not need to repeat feature
+design. Apply release requirements only when the task includes a versioned release.
 
 ## 1. Feature Design
 
@@ -10,9 +11,10 @@ contains ideas, questions, rough goals, or observed usage data.
 
 Use that document as the starting point:
 
-- Read the relevant product doc and nearby docs before proposing changes.
-- Discuss the problem until the goal, non-goals, success criteria, and tradeoffs
-  are clear.
+- Read the relevant product doc and supporting docs needed for the change.
+- When the accepted design and task context establish the goal, non-goals,
+  success criteria, and tradeoffs, continue implementation. Clarify only unresolved
+  decisions that materially affect scope, compatibility, or acceptance.
 - Turn loose ideas into a concrete design: user-facing behavior, CLI shape,
   storage/schema changes if any, analysis/reporting expectations, and testing
   strategy.
@@ -37,6 +39,10 @@ General rules:
   abstractions.
 - Keep changes scoped to the feature. Avoid unrelated cleanup in the same
   commit.
+- Complete authorized investigation, implementation, verification, and fixes
+  for regressions introduced by this change or required for acceptance within
+  the authorized scope. Report unrelated pre-existing issues without fixing them;
+  do not stop at a preliminary implementation or investigation handoff.
 - Use standard-library capabilities when they are enough; this project currently
   keeps runtime dependencies small.
 - Preserve existing CLI output behavior unless the feature explicitly changes
@@ -53,26 +59,39 @@ Testing expectations:
   behavior where practical.
 - For report/analysis code, test derived metrics with small fixture rows rather
   than relying only on large sample data.
-- Run the full test suite before handing off:
+- Run checks appropriate to the affected behavior and complete required checks.
+  For documentation-only changes, check the changed wording, references, and diff;
+  run code tests only when the change affects executable behavior.
+- Once relevant checks pass, broaden or repeat them only for new changes,
+  failures, or unresolved concerns. Report validation actually performed and
+  material unverified gaps.
 
-```bash
-uv run python -m pytest -q
-```
+### Runtime-probe skill maintenance
 
-For the 1.7 telemetry work, the implementation was split into storage,
-runtime collection, report analysis, CLI integration, and tests. Use that as a
-model for future features that have both runtime behavior and offline analysis.
+Incrementally maintain `skills/odoo-graph-runtime-probe/` when implemented
+behavior affects its guidance; do not regenerate it from scratch each release.
+
+- Keep applicability, evidence boundaries, environment/cache constraints, query
+  selection, and stopping conditions in `SKILL.md`. Put command examples,
+  parameters, and output explanations in `references/cli.md`, linked for on-demand use.
+- Ground changes in current implementation, CLI help, and relevant tests.
+  Proposals and historical release notes alone do not prove current behavior.
+- Avoid fixed command sequences, repeated confirmation, mandatory answer
+  templates, and consumer-project-specific paths, databases, or environment settings.
+- Update only guidance affected by the change. Verify modified references and
+  command descriptions; follow the testing scope and stopping conditions above.
 
 ## 3. Release
 
 Before a versioned release, update public-facing docs and version metadata.
 
-Documentation checklist:
+Check the following documentation surfaces and update those affected by the release:
 
 - `README.md`: quick-start and major user-visible commands.
 - `docs/guides/usage.md`: detailed usage, options, examples, and caveats.
-- `skills/odoo-graph-runtime-probe/SKILL.md`: agent-facing instructions for
-  when and how to use the tool.
+- `skills/odoo-graph-runtime-probe/`: agent-facing instructions and on-demand
+  references, following the maintenance rules above. Verify the release archive
+  includes the required files and preserves their relative paths so links resolve.
 - `docs/changes/`: release note or change note for the version.
 - `docs/changes/README.md`: index entry for the new change note.
 - `docs/product/roadmap.md`: move completed phases out of planned work.
@@ -89,7 +108,7 @@ Version checklist:
   `uv.lock` stay consistent.
 - Confirm `uv.lock` shows the project package with the same version as
   `pyproject.toml`.
-- Run the full test suite after the version change.
+- Run the full test suite after the version change: `uv run python -m pytest -q`.
 
 Release notes should be practical and user-facing:
 
